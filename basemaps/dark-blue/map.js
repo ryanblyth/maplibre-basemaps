@@ -6,12 +6,13 @@ maplibregl.addProtocol("pmtiles", protocol.tile);
 
 // Initialize map (disable default attribution control)
 const map = new maplibregl.Map({
-  container: "map",
+  container: "map-container",
   style: "./style.json",
   center: [-105.7821, 39.5501],
   zoom: 8,
   hash: false,
-  attributionControl: false
+  attributionControl: false,
+  canvasContextAttributes: { antialias: true }
 });
 
 // Add navigation control
@@ -24,11 +25,17 @@ const attributionControl = new maplibregl.AttributionControl({
 });
 map.addControl(attributionControl);
 
-// Set globe projection when style loads
+// Create and attach the starry background
+// Configuration is now contained in shared/js/maplibre-gl-starfield.js
+// You can override defaults by passing options here if needed
+const starryBg = new MapLibreStarryBackground();
+
+// Set globe projection and attach starfield when style loads
 map.on('style.load', () => {
   map.setProjection({
     type: 'globe'
   });
+  starryBg.attachToMap(map, "starfield-container", "globe-glow");
 });
 
 // Log zoom level changes (useful for debugging)
