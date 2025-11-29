@@ -110,7 +110,10 @@
           "interpolate", ["linear"], ["zoom"],
           0, 0.4, 6, 1.2
         ],
-        "line-opacity": 0.8
+        "line-opacity": [
+          "interpolate", ["linear"], ["zoom"],
+          0, 0.25, 3, 0.25, 6, 0.75
+        ]
       }
     },
     {
@@ -139,7 +142,7 @@
       "type": "line",
       "source": "world_low",
       "source-layer": "boundary",
-      "minzoom": 0,
+      "minzoom": 3,
       "maxzoom": 6,
       "filter": ["==", ["get", "admin_level"], 4],
       "paint": {
@@ -574,17 +577,33 @@
       "filter": [
         "all",
         ["==", ["get", "class"], "continent"],
-        ["<=", ["zoom"], 2.5]
+        ["<=", ["zoom"], 2.5],
+        ["!=", ["coalesce", ["get", "name:en"], ["get", "name"]], "America"]
       ],
       "layout": {
-        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-field": [
+          "case",
+          ["==", ["coalesce", ["get", "name:en"], ["get", "name"]], "North America"],
+          "NORTH\nAMERICA",
+          ["==", ["coalesce", ["get", "name:en"], ["get", "name"]], "South America"],
+          "SOUTH\nAMERICA",
+          ["upcase", ["coalesce", ["get", "name:en"], ["get", "name"]]]
+        ],
         "text-font": ["Noto Sans Regular"],
         "text-size": [
           "interpolate", ["linear"], ["zoom"],
-          0, 12, 2.5, 18
+          0, 12, 2.5, 16
         ],
-        "text-transform": "uppercase",
-        "text-letter-spacing": 0.1
+        "text-transform": "none",
+        "text-letter-spacing": 0.1,
+        "text-offset": [
+          "case",
+          ["==", ["coalesce", ["get", "name:en"], ["get", "name"]], "North America"],
+          ["literal", [2.0, 4.0]],
+          ["==", ["coalesce", ["get", "name:en"], ["get", "name"]], "South America"],
+          ["literal", [0, -2.0]],
+          ["literal", [0, 0]]
+        ]
       },
       "paint": {
         "text-color": "#a8b8d0",
