@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dark Blue Basemap Preview</title>
+  <link href="https://unpkg.com/maplibre-gl@3.6.0/dist/maplibre-gl.css" rel="stylesheet" />
+  <style>
+    html, body { height: 100%; margin: 0; }
+    #map { height: 100vh; width: 100%; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/maplibre-gl@3.6.0/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
+  <script>
+    // Register PMTiles protocol
+    const protocol = new pmtiles.Protocol();
+    maplibregl.addProtocol("pmtiles", protocol.tile);
+
+    // Initialize map
+    const map = new maplibregl.Map({
+      container: "map",
+      style: "./style.json",
+      center: [-105.7821, 39.5501],
+      zoom: 8,
+      hash: false
+    });
+
+    map.addControl(new maplibregl.NavigationControl(), "top-right");
+
+    map.on("error", (e) => console.error("Map error:", e?.error || e));
+  </script>
+</body>
+</html>
+
