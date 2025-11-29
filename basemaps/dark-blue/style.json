@@ -580,12 +580,8 @@
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
         "text-font": ["Noto Sans Regular"],
         "text-size": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          0, 10,
-          3, 14,
-          6, 18
+          "interpolate", ["linear"], ["zoom"],
+          0, 10, 3, 14, 6, 18
         ],
         "text-transform": "uppercase",
         "text-letter-spacing": 0.1
@@ -609,12 +605,8 @@
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
         "text-font": ["Noto Sans Regular"],
         "text-size": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          2, 12,
-          6, 18,
-          10, 24
+          "interpolate", ["linear"], ["zoom"],
+          2, 12, 6, 18, 10, 24
         ],
         "text-transform": "uppercase",
         "text-letter-spacing": 0.1
