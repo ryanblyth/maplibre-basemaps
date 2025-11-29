@@ -10,6 +10,7 @@ const map = new maplibregl.Map({
   style: "./style.json",
   center: [-105.7821, 39.5501],
   zoom: 8,
+  minZoom: 2,
   hash: false,
   attributionControl: false,
   canvasContextAttributes: { antialias: true }
