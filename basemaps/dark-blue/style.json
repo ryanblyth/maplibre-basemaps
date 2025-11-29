@@ -4,10 +4,6 @@
   "glyphs": "http://localhost:8080/shared/assets/glyphs/{fontstack}/{range}.pbf",
   "sprite": "http://localhost:8080/shared/assets/sprites/basemap",
   "sources": {
-    "openmaptiles": {
-      "type": "vector",
-      "url": "pmtiles://https://data.storypath.studio/pmtiles/colorado.pmtiles"
-    },
     "world_low": {
       "type": "vector",
       "url": "pmtiles://https://data.storypath.studio/pmtiles/world_z0-5.pmtiles",
@@ -188,97 +184,12 @@
       }
     },
     {
-      "id": "landcover",
-      "type": "fill",
-      "source": "openmaptiles",
-      "source-layer": "landcover",
-      "paint": {
-        "fill-color": [
-          "match", ["get", "class"],
-          "wood", "#0f141b",
-          "grass", "#10161e",
-          "scrub", "#10161e",
-          "cropland", "#0f141b",
-          "#0f141b"
-        ],
-        "fill-opacity": 0.6
-      }
-    },
-    {
-      "id": "landuse",
-      "type": "fill",
-      "source": "openmaptiles",
-      "source-layer": "landuse",
-      "paint": {
-        "fill-color": [
-          "match", ["get", "class"],
-          "park", "#11161d",
-          "cemetery", "#11161d",
-          "pitch", "#121923",
-          "stadium", "#121923",
-          "residential", "#0e131a",
-          "#0e131a"
-        ],
-        "fill-opacity": 0.6
-      }
-    },
-    {
-      "id": "water",
-      "type": "fill",
-      "source": "openmaptiles",
-      "source-layer": "water",
-      "paint": {
-        "fill-color": "#0a2846"
-      }
-    },
-    {
-      "id": "waterway",
-      "type": "line",
-      "source": "openmaptiles",
-      "source-layer": "waterway",
-      "paint": {
-        "line-color": "#103457",
-        "line-width": [
-          "interpolate", ["linear"], ["zoom"],
-          8, 0.2, 12, 0.6, 14, 1.0
-        ]
-      }
-    },
-    {
-      "id": "admin-country",
-      "type": "line",
-      "source": "openmaptiles",
-      "source-layer": "boundary",
-      "filter": ["==", ["get", "admin_level"], 2],
-      "paint": {
-        "line-color": "#3b82f6",
-        "line-width": [
-          "interpolate", ["linear"], ["zoom"],
-          2, 0.6, 6, 1.2, 10, 2.0
-        ],
-        "line-opacity": 0.8
-      }
-    },
-    {
-      "id": "admin-state",
-      "type": "line",
-      "source": "openmaptiles",
-      "source-layer": "boundary",
-      "filter": ["==", ["get", "admin_level"], 4],
-      "paint": {
-        "line-color": "#284a7c",
-        "line-width": [
-          "interpolate", ["linear"], ["zoom"],
-          4, 0.3, 8, 0.8, 10, 1.2
-        ],
-        "line-opacity": 0.6
-      }
-    },
-    {
       "id": "road-tunnel-casing",
       "type": "line",
-      "source": "openmaptiles",
+      "source": "us_high",
       "source-layer": "transportation",
+      "minzoom": 6,
+      "maxzoom": 15,
       "filter": ["==", ["get", "brunnel"], "tunnel"],
       "layout": {
         "line-cap": "round",
@@ -296,8 +207,10 @@
     {
       "id": "road-tunnel",
       "type": "line",
-      "source": "openmaptiles",
+      "source": "us_high",
       "source-layer": "transportation",
+      "minzoom": 6,
+      "maxzoom": 15,
       "filter": ["==", ["get", "brunnel"], "tunnel"],
       "layout": {
         "line-cap": "round",
@@ -328,8 +241,10 @@
     {
       "id": "road-casing",
       "type": "line",
-      "source": "openmaptiles",
+      "source": "us_high",
       "source-layer": "transportation",
+      "minzoom": 6,
+      "maxzoom": 15,
       "filter": [
         "all",
         ["!=", ["get", "brunnel"], "tunnel"],
@@ -349,42 +264,12 @@
       }
     },
     {
-      "id": "road",
-      "type": "line",
-      "source": "openmaptiles",
-      "source-layer": "transportation",
-      "filter": [
-        "all",
-        ["!=", ["get", "brunnel"], "tunnel"],
-        ["!=", ["get", "brunnel"], "bridge"],
-        ["match", ["get", "class"], ["motorway", "trunk", "primary", "secondary", "tertiary", "residential", "service"], true, false]
-      ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round"
-      },
-      "paint": {
-        "line-color": [
-          "match", ["get", "class"],
-          "motorway", "#3a4657",
-          "trunk", "#374251",
-          "primary", "#34404f",
-          "secondary", "#313b49",
-          "tertiary", "#2d3744",
-          "residential", "#2a333f",
-          "#28313d"
-        ],
-        "line-width": [
-          "interpolate", ["linear"], ["zoom"],
-          8, 0.4, 12, 1.0, 14, 1.6
-        ]
-      }
-    },
-    {
       "id": "paths",
       "type": "line",
-      "source": "openmaptiles",
+      "source": "us_high",
       "source-layer": "transportation",
+      "minzoom": 6,
+      "maxzoom": 15,
       "filter": [
         "match", ["get", "class"],
         ["path", "track", "footway", "cycleway"],
@@ -406,8 +291,10 @@
     {
       "id": "road-bridge-casing",
       "type": "line",
-      "source": "openmaptiles",
+      "source": "us_high",
       "source-layer": "transportation",
+      "minzoom": 6,
+      "maxzoom": 15,
       "filter": ["==", ["get", "brunnel"], "bridge"],
       "layout": {
         "line-cap": "round",
@@ -424,8 +311,10 @@
     {
       "id": "road-bridge",
       "type": "line",
-      "source": "openmaptiles",
+      "source": "us_high",
       "source-layer": "transportation",
+      "minzoom": 6,
+      "maxzoom": 15,
       "filter": ["==", ["get", "brunnel"], "bridge"],
       "layout": {
         "line-cap": "round",
@@ -451,8 +340,10 @@
     {
       "id": "railway",
       "type": "line",
-      "source": "openmaptiles",
+      "source": "us_high",
       "source-layer": "transportation",
+      "minzoom": 6,
+      "maxzoom": 15,
       "filter": ["==", ["get", "class"], "rail"],
       "paint": {
         "line-color": "#222b36",
@@ -465,8 +356,10 @@
     {
       "id": "building",
       "type": "fill",
-      "source": "openmaptiles",
+      "source": "us_high",
       "source-layer": "building",
+      "minzoom": 6,
+      "maxzoom": 15,
       "paint": {
         "fill-color": "#151a22",
         "fill-outline-color": "#0f141b",
@@ -707,14 +600,11 @@
     {
       "id": "country-label",
       "type": "symbol",
-      "source": "openmaptiles",
+      "source": "us_high",
       "source-layer": "place",
-      "minzoom": 2,
-      "filter": [
-        "==",
-        ["get", "class"],
-        "country"
-      ],
+      "minzoom": 6,
+      "maxzoom": 15,
+      "filter": ["==", ["get", "class"], "country"],
       "layout": {
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
         "text-font": ["Noto Sans Regular"],
