@@ -13,7 +13,21 @@ const map = new maplibregl.Map({
   hash: false
 });
 
+// Set globe projection when style loads
+map.on('style.load', () => {
+  map.setProjection({
+    type: 'globe'
+  });
+});
+
+// Add navigation control
 map.addControl(new maplibregl.NavigationControl(), "top-right");
 
-map.on("error", (e) => console.error("Map error:", e?.error || e));
+// Log zoom level changes (useful for debugging)
+map.on('zoom', () => {
+  const zoom = map.getZoom();
+  console.log(`Zoom level: ${zoom.toFixed(2)}`);
+});
 
+// Error handling
+map.on("error", (e) => console.error("Map error:", e?.error || e));
