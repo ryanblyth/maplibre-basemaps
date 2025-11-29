@@ -14,24 +14,7 @@
   <div id="map"></div>
   <script src="https://unpkg.com/maplibre-gl@3.6.0/dist/maplibre-gl.js"></script>
   <script src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
-  <script>
-    // Register PMTiles protocol
-    const protocol = new pmtiles.Protocol();
-    maplibregl.addProtocol("pmtiles", protocol.tile);
-
-    // Initialize map
-    const map = new maplibregl.Map({
-      container: "map",
-      style: "./style.json",
-      center: [-105.7821, 39.5501],
-      zoom: 8,
-      hash: false
-    });
-
-    map.addControl(new maplibregl.NavigationControl(), "top-right");
-
-    map.on("error", (e) => console.error("Map error:", e?.error || e));
-  </script>
+  <script src="./map.js"></script>
 </body>
 </html>
 
