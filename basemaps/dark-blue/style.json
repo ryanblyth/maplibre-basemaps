@@ -10,6 +10,12 @@
       "minzoom": 0,
       "maxzoom": 5
     },
+    "world_mid": {
+      "type": "vector",
+      "url": "pmtiles://https://data.storypath.studio/pmtiles/world_z6-10.pmtiles",
+      "minzoom": 6,
+      "maxzoom": 10
+    },
     "us_high": {
       "type": "vector",
       "url": "pmtiles://https://data.storypath.studio/pmtiles/us_z0-15.pmtiles",
@@ -31,6 +37,27 @@
       "source": "world_low",
       "source-layer": "landcover",
       "minzoom": 0,
+      "maxzoom": 5,
+      "paint": {
+        "fill-color": [
+          "match",
+          ["get", "class"],
+          "wood", "#0f141b",
+          "grass", "#10161e",
+          "scrub", "#10161e",
+          "cropland", "#0f141b",
+          "#0f141b"
+        ],
+        "fill-opacity": 0.6
+      }
+    },
+    {
+      "id": "landcover-world-mid",
+      "type": "fill",
+      "source": "world_mid",
+      "source-layer": "landcover",
+      "minzoom": 6,
+      "maxzoom": 10,
       "paint": {
         "fill-color": [
           "match",
@@ -50,6 +77,28 @@
       "source": "world_low",
       "source-layer": "landuse",
       "minzoom": 0,
+      "maxzoom": 5,
+      "paint": {
+        "fill-color": [
+          "match",
+          ["get", "class"],
+          "park", "#11161d",
+          "cemetery", "#11161d",
+          "pitch", "#121923",
+          "stadium", "#121923",
+          "residential", "#0e131a",
+          "#0e131a"
+        ],
+        "fill-opacity": 0.6
+      }
+    },
+    {
+      "id": "landuse-world-mid",
+      "type": "fill",
+      "source": "world_mid",
+      "source-layer": "landuse",
+      "minzoom": 6,
+      "maxzoom": 10,
       "paint": {
         "fill-color": [
           "match",
@@ -70,6 +119,18 @@
       "source": "world_low",
       "source-layer": "water",
       "minzoom": 0,
+      "maxzoom": 5,
+      "paint": {
+        "fill-color": "#0a2846"
+      }
+    },
+    {
+      "id": "water-world-mid",
+      "type": "fill",
+      "source": "world_mid",
+      "source-layer": "water",
+      "minzoom": 6,
+      "maxzoom": 10,
       "paint": {
         "fill-color": "#0a2846"
       }
@@ -80,6 +141,7 @@
       "source": "world_low",
       "source-layer": "waterway",
       "minzoom": 0,
+      "maxzoom": 5,
       "paint": {
         "line-color": "#103457",
         "line-width": [
@@ -89,11 +151,27 @@
       }
     },
     {
+      "id": "waterway-world-mid",
+      "type": "line",
+      "source": "world_mid",
+      "source-layer": "waterway",
+      "minzoom": 6,
+      "maxzoom": 10,
+      "paint": {
+        "line-color": "#103457",
+        "line-width": [
+          "interpolate", ["linear"], ["zoom"],
+          6, 0.4, 10, 0.8
+        ]
+      }
+    },
+    {
       "id": "boundary-country-world",
       "type": "line",
       "source": "world_low",
       "source-layer": "boundary",
       "minzoom": 0,
+      "maxzoom": 5,
       "filter": [
         "all",
         ["==", ["get", "admin_level"], 2],
@@ -112,11 +190,36 @@
       }
     },
     {
+      "id": "boundary-country-world-mid",
+      "type": "line",
+      "source": "world_mid",
+      "source-layer": "boundary",
+      "minzoom": 6,
+      "maxzoom": 10,
+      "filter": [
+        "all",
+        ["==", ["get", "admin_level"], 2],
+        ["!=", ["get", "maritime"], 1]
+      ],
+      "paint": {
+        "line-color": "#3b82f6",
+        "line-width": [
+          "interpolate", ["linear"], ["zoom"],
+          6, 1.2, 10, 2.0
+        ],
+        "line-opacity": [
+          "interpolate", ["linear"], ["zoom"],
+          6, 0.75, 10, 0.8
+        ]
+      }
+    },
+    {
       "id": "boundary-maritime-world",
       "type": "line",
       "source": "world_low",
       "source-layer": "boundary",
       "minzoom": 0,
+      "maxzoom": 5,
       "filter": [
         "all",
         ["==", ["get", "admin_level"], 2],
@@ -132,11 +235,33 @@
       }
     },
     {
+      "id": "boundary-maritime-world-mid",
+      "type": "line",
+      "source": "world_mid",
+      "source-layer": "boundary",
+      "minzoom": 6,
+      "maxzoom": 10,
+      "filter": [
+        "all",
+        ["==", ["get", "admin_level"], 2],
+        ["==", ["get", "maritime"], 1]
+      ],
+      "paint": {
+        "line-color": "#3b82f6",
+        "line-width": [
+          "interpolate", ["linear"], ["zoom"],
+          6, 1.2, 10, 2.0
+        ],
+        "line-opacity": 0
+      }
+    },
+    {
       "id": "boundary-state-world",
       "type": "line",
       "source": "world_low",
       "source-layer": "boundary",
       "minzoom": 3,
+      "maxzoom": 5,
       "filter": ["==", ["get", "admin_level"], 4],
       "paint": {
         "line-color": "#284a7c",
@@ -148,11 +273,29 @@
       }
     },
     {
+      "id": "boundary-state-world-mid",
+      "type": "line",
+      "source": "world_mid",
+      "source-layer": "boundary",
+      "minzoom": 6,
+      "maxzoom": 10,
+      "filter": ["==", ["get", "admin_level"], 4],
+      "paint": {
+        "line-color": "#284a7c",
+        "line-width": [
+          "interpolate", ["linear"], ["zoom"],
+          6, 0.8, 10, 1.2
+        ],
+        "line-opacity": 0.6
+      }
+    },
+    {
       "id": "road-world",
       "type": "line",
       "source": "world_low",
       "source-layer": "transportation",
       "minzoom": 0,
+      "maxzoom": 5,
       "filter": [
         "all",
         ["!=", ["get", "brunnel"], "tunnel"],
@@ -175,6 +318,38 @@
         "line-width": [
           "interpolate", ["linear"], ["zoom"],
           0, 0.2, 6, 0.6
+        ]
+      }
+    },
+    {
+      "id": "road-world-mid",
+      "type": "line",
+      "source": "world_mid",
+      "source-layer": "transportation",
+      "minzoom": 6,
+      "maxzoom": 10,
+      "filter": [
+        "all",
+        ["!=", ["get", "brunnel"], "tunnel"],
+        ["!=", ["get", "brunnel"], "bridge"],
+        ["match", ["get", "class"], ["motorway","trunk","primary","secondary"], true, false]
+      ],
+      "layout": {
+        "line-cap": "round",
+        "line-join": "round"
+      },
+      "paint": {
+        "line-color": [
+          "match", ["get", "class"],
+          "motorway", "#3a4657",
+          "trunk", "#374251",
+          "primary", "#34404f",
+          "secondary", "#313b49",
+          "#28313d"
+        ],
+        "line-width": [
+          "interpolate", ["linear"], ["zoom"],
+          6, 0.6, 10, 1.0
         ]
       }
     },
@@ -547,6 +722,7 @@
       "source": "world_low",
       "source-layer": "place",
       "minzoom": 0,
+      "maxzoom": 5,
       "filter": [
         "all",
         ["==", ["get", "class"], "continent"],
@@ -587,11 +763,42 @@
       }
     },
     {
+      "id": "country-label-world-mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "place",
+      "minzoom": 6,
+      "maxzoom": 10,
+      "filter": [
+        "all",
+        ["==", ["get", "class"], "country"],
+        [">", ["zoom"], 2.5]
+      ],
+      "layout": {
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate", ["linear"], ["zoom"],
+          6, 16, 10, 20
+        ],
+        "text-transform": "uppercase",
+        "text-letter-spacing": 0.1
+      },
+      "paint": {
+        "text-color": "#a8b8d0",
+        "text-halo-color": "#0b0f14",
+        "text-halo-width": 2,
+        "text-halo-blur": 1,
+        "text-opacity": 0.75
+      }
+    },
+    {
       "id": "state-label-us-world",
       "type": "symbol",
       "source": "world_low",
       "source-layer": "place",
       "minzoom": 3.33,
+      "maxzoom": 5,
       "filter": [
         "all",
         ["==", ["get", "class"], "state"],
@@ -644,11 +851,57 @@
       }
     },
     {
+      "id": "state-label-world-mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "place",
+      "minzoom": 6,
+      "maxzoom": 10,
+      "filter": [
+        "all",
+        ["==", ["get", "class"], "state"],
+        ["match", ["coalesce", ["get", "name:en"], ["get", "name"]],
+          "Alabama", false, "Alaska", false, "Arizona", false, "Arkansas", false,
+          "California", false, "Colorado", false, "Connecticut", false, "Delaware", false,
+          "Florida", false, "Georgia", false, "Hawaii", false, "Idaho", false,
+          "Illinois", false, "Indiana", false, "Iowa", false, "Kansas", false,
+          "Kentucky", false, "Louisiana", false, "Maine", false, "Maryland", false,
+          "Massachusetts", false, "Michigan", false, "Minnesota", false, "Mississippi", false,
+          "Missouri", false, "Montana", false, "Nebraska", false, "Nevada", false,
+          "New Hampshire", false, "New Jersey", false, "New Mexico", false, "New York", false,
+          "North Carolina", false, "North Dakota", false, "Ohio", false, "Oklahoma", false,
+          "Oregon", false, "Pennsylvania", false, "Rhode Island", false, "South Carolina", false,
+          "South Dakota", false, "Tennessee", false, "Texas", false, "Utah", false,
+          "Vermont", false, "Virginia", false, "Washington", false, "West Virginia", false,
+          "Wisconsin", false, "Wyoming", false,
+          true
+        ]
+      ],
+      "layout": {
+        "text-field": ["upcase", ["coalesce", ["get", "name:en"], ["get", "name"]]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate", ["linear"], ["zoom"],
+          6, 12, 10, 16
+        ],
+        "text-transform": "none",
+        "text-letter-spacing": 0.1
+      },
+      "paint": {
+        "text-color": "#a8b8d0",
+        "text-halo-color": "#0b0f14",
+        "text-halo-width": 2,
+        "text-halo-blur": 1,
+        "text-opacity": 0.5
+      }
+    },
+    {
       "id": "state-label-world",
       "type": "symbol",
       "source": "world_low",
       "source-layer": "place",
       "minzoom": 4,
+      "maxzoom": 5,
       "filter": [
         "all",
         ["==", ["get", "class"], "state"],
@@ -693,6 +946,7 @@
       "source": "world_low",
       "source-layer": "place",
       "minzoom": 1,
+      "maxzoom": 5,
       "filter": [
         "all",
         ["==", ["get", "class"], "city"],
@@ -722,6 +976,7 @@
       "source": "world_low",
       "source-layer": "place",
       "minzoom": 0,
+      "maxzoom": 5,
       "filter": [
         "all",
         ["==", ["get", "class"], "country"],
@@ -741,6 +996,36 @@
         "text-color": "#a8b8d0",
         "text-halo-color": "#0b0f14",
         "text-halo-width": 2,
+        "text-halo-blur": 1,
+        "text-opacity": 0.75
+      }
+    },
+    {
+      "id": "city-label-world-mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "place",
+      "minzoom": 6,
+      "maxzoom": 10,
+      "filter": [
+        "all",
+        ["==", ["get", "class"], "city"],
+        ["<=", ["coalesce", ["get", "rank"], 10], 2]
+      ],
+      "layout": {
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate", ["linear"], ["zoom"],
+          6, 14, 10, 18
+        ],
+        "text-transform": "none",
+        "text-letter-spacing": 0.05
+      },
+      "paint": {
+        "text-color": "#a8b8d0",
+        "text-halo-color": "#0b0f14",
+        "text-halo-width": 1.5,
         "text-halo-blur": 1,
         "text-opacity": 0.75
       }
