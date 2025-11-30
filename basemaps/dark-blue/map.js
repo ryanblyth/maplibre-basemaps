@@ -5,12 +5,14 @@ const protocol = new pmtiles.Protocol();
 maplibregl.addProtocol("pmtiles", protocol.tile);
 
 // Initialize map (disable default attribution control)
+// maxZoom set high to allow overzooming beyond source limits (6 for world, 15 for US)
 const map = new maplibregl.Map({
   container: "map-container",
   style: "./style.json",
   center: [-105.7821, 39.5501],
   zoom: 8,
   minZoom: 2,
+  maxZoom: 22,
   hash: false,
   attributionControl: false,
   canvasContextAttributes: { antialias: true }
