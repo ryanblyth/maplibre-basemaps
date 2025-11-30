@@ -1048,8 +1048,26 @@
         "text-font": ["Noto Sans Regular"],
         "text-size": [
           "interpolate", ["linear"], ["zoom"],
-          6, ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 20, 17],
-          10, ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 31, 26]
+          6, [
+            "max",
+            ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 20, 17],
+            ["case", ["has", "capital"], 12, 0]
+          ],
+          7, [
+            "max",
+            ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 22, 19],
+            ["case", ["has", "capital"], 14, 0]
+          ],
+          10, [
+            "max",
+            ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 31, 26],
+            ["case", ["has", "capital"], 14, 0]
+          ],
+          12, [
+            "max",
+            ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 35, 30],
+            ["case", ["has", "capital"], 14, 0]
+          ]
         ],
         "text-transform": "none",
         "text-letter-spacing": 0.05
@@ -1080,16 +1098,44 @@
         "text-size": [
           "interpolate", ["linear"], ["zoom"],
           6, [
-            "case",
-            ["all", [">=", ["coalesce", ["get", "rank"], 6], 3], ["<=", ["coalesce", ["get", "rank"], 6], 4]], 13.2,
-            ["all", [">=", ["coalesce", ["get", "rank"], 6], 5], ["<=", ["coalesce", ["get", "rank"], 6], 6]], 11,
-            11
+            "max",
+            [
+              "case",
+              ["all", [">=", ["coalesce", ["get", "rank"], 6], 3], ["<=", ["coalesce", ["get", "rank"], 6], 4]], 13.2,
+              ["all", [">=", ["coalesce", ["get", "rank"], 6], 5], ["<=", ["coalesce", ["get", "rank"], 6], 6]], 11,
+              11
+            ],
+            ["case", ["has", "capital"], 12, 0]
+          ],
+          7, [
+            "max",
+            [
+              "case",
+              ["all", [">=", ["coalesce", ["get", "rank"], 6], 3], ["<=", ["coalesce", ["get", "rank"], 6], 4]], 15,
+              ["all", [">=", ["coalesce", ["get", "rank"], 6], 5], ["<=", ["coalesce", ["get", "rank"], 6], 6]], 13,
+              13
+            ],
+            ["case", ["has", "capital"], 14, 0]
           ],
           10, [
-            "case",
-            ["all", [">=", ["coalesce", ["get", "rank"], 6], 3], ["<=", ["coalesce", ["get", "rank"], 6], 4]], 26,
-            ["all", [">=", ["coalesce", ["get", "rank"], 6], 5], ["<=", ["coalesce", ["get", "rank"], 6], 6]], 22,
-            22
+            "max",
+            [
+              "case",
+              ["all", [">=", ["coalesce", ["get", "rank"], 6], 3], ["<=", ["coalesce", ["get", "rank"], 6], 4]], 26,
+              ["all", [">=", ["coalesce", ["get", "rank"], 6], 5], ["<=", ["coalesce", ["get", "rank"], 6], 6]], 22,
+              22
+            ],
+            ["case", ["has", "capital"], 14, 0]
+          ],
+          12, [
+            "max",
+            [
+              "case",
+              ["all", [">=", ["coalesce", ["get", "rank"], 6], 3], ["<=", ["coalesce", ["get", "rank"], 6], 4]], 28,
+              ["all", [">=", ["coalesce", ["get", "rank"], 6], 5], ["<=", ["coalesce", ["get", "rank"], 6], 6]], 24,
+              24
+            ],
+            ["case", ["has", "capital"], 14, 0]
           ]
         ],
         "text-transform": "none",
@@ -1120,17 +1166,45 @@
         "text-font": ["Noto Sans Regular"],
         "text-size": [
           "interpolate", ["linear"], ["zoom"],
+          7, [
+            "max",
+            [
+              "case",
+              ["all", [">=", ["coalesce", ["get", "rank"], 10], 7], ["<=", ["coalesce", ["get", "rank"], 10], 8]], 14,
+              ["all", [">=", ["coalesce", ["get", "rank"], 10], 9], ["<=", ["coalesce", ["get", "rank"], 10], 10]], 12,
+              12
+            ],
+            ["case", ["has", "capital"], 14, 0]
+          ],
           8, [
-            "case",
-            ["all", [">=", ["coalesce", ["get", "rank"], 10], 7], ["<=", ["coalesce", ["get", "rank"], 10], 8]], 16,
-            ["all", [">=", ["coalesce", ["get", "rank"], 10], 9], ["<=", ["coalesce", ["get", "rank"], 10], 10]], 13,
-            13
+            "max",
+            [
+              "case",
+              ["all", [">=", ["coalesce", ["get", "rank"], 10], 7], ["<=", ["coalesce", ["get", "rank"], 10], 8]], 16,
+              ["all", [">=", ["coalesce", ["get", "rank"], 10], 9], ["<=", ["coalesce", ["get", "rank"], 10], 10]], 13,
+              13
+            ],
+            ["case", ["has", "capital"], 14, 0]
           ],
           10, [
-            "case",
-            ["all", [">=", ["coalesce", ["get", "rank"], 10], 7], ["<=", ["coalesce", ["get", "rank"], 10], 8]], 21,
-            ["all", [">=", ["coalesce", ["get", "rank"], 10], 9], ["<=", ["coalesce", ["get", "rank"], 10], 10]], 17,
-            17
+            "max",
+            [
+              "case",
+              ["all", [">=", ["coalesce", ["get", "rank"], 10], 7], ["<=", ["coalesce", ["get", "rank"], 10], 8]], 21,
+              ["all", [">=", ["coalesce", ["get", "rank"], 10], 9], ["<=", ["coalesce", ["get", "rank"], 10], 10]], 17,
+              17
+            ],
+            ["case", ["has", "capital"], 14, 0]
+          ],
+          12, [
+            "max",
+            [
+              "case",
+              ["all", [">=", ["coalesce", ["get", "rank"], 10], 7], ["<=", ["coalesce", ["get", "rank"], 10], 8]], 24,
+              ["all", [">=", ["coalesce", ["get", "rank"], 10], 9], ["<=", ["coalesce", ["get", "rank"], 10], 10]], 20,
+              20
+            ],
+            ["case", ["has", "capital"], 14, 0]
           ]
         ],
         "text-transform": "none",
@@ -1176,61 +1250,119 @@
         "text-size": [
           "interpolate", ["linear"], ["zoom"],
           6, [
-            "case",
-            ["has", "rank"],
+            "max",
             [
               "case",
-              ["<=", ["get", "rank"], 1], 10.4,
-              ["<=", ["get", "rank"], 2], 8.8,
-              ["<=", ["get", "rank"], 4], 7.6,
-              ["<=", ["get", "rank"], 6], 6.8,
-              ["<=", ["get", "rank"], 10], 6,
-              8
+              ["has", "rank"],
+              [
+                "case",
+                ["<=", ["get", "rank"], 1], 10.4,
+                ["<=", ["get", "rank"], 2], 8.8,
+                ["<=", ["get", "rank"], 4], 7.6,
+                ["<=", ["get", "rank"], 6], 6.8,
+                ["<=", ["get", "rank"], 10], 6,
+                8
+              ],
+              [
+                "match", ["get", "class"],
+                "city", 9.6,
+                "town", 8,
+                6.8
+              ]
             ],
+            ["case", ["has", "capital"], 12, 0]
+          ],
+          7, [
+            "max",
             [
-              "match", ["get", "class"],
-              "city", 9.6,
-              "town", 8,
-              6.8
-            ]
+              "case",
+              ["has", "rank"],
+              [
+                "case",
+                ["<=", ["get", "rank"], 1], 12,
+                ["<=", ["get", "rank"], 2], 10,
+                ["<=", ["get", "rank"], 4], 9,
+                ["<=", ["get", "rank"], 6], 8,
+                ["<=", ["get", "rank"], 10], 7,
+                9
+              ],
+              [
+                "match", ["get", "class"],
+                "city", 11,
+                "town", 9,
+                8
+              ]
+            ],
+            ["case", ["has", "capital"], 14, 0]
           ],
           10, [
-            "case",
-            ["has", "rank"],
+            "max",
             [
               "case",
-              ["<=", ["get", "rank"], 1], 19,
-              ["<=", ["get", "rank"], 2], 16,
-              ["<=", ["get", "rank"], 4], 14,
-              ["<=", ["get", "rank"], 6], 12,
-              ["<=", ["get", "rank"], 10], 11,
-              14
+              ["has", "rank"],
+              [
+                "case",
+                ["<=", ["get", "rank"], 1], 19,
+                ["<=", ["get", "rank"], 2], 16,
+                ["<=", ["get", "rank"], 4], 14,
+                ["<=", ["get", "rank"], 6], 12,
+                ["<=", ["get", "rank"], 10], 11,
+                14
+              ],
+              [
+                "match", ["get", "class"],
+                "city", 17,
+                "town", 14,
+                12
+              ]
             ],
+            ["case", ["has", "capital"], 14, 0]
+          ],
+          12, [
+            "max",
             [
-              "match", ["get", "class"],
-              "city", 17,
-              "town", 14,
-              12
-            ]
+              "case",
+              ["has", "rank"],
+              [
+                "case",
+                ["<=", ["get", "rank"], 1], 22,
+                ["<=", ["get", "rank"], 2], 19,
+                ["<=", ["get", "rank"], 4], 16,
+                ["<=", ["get", "rank"], 6], 15,
+                ["<=", ["get", "rank"], 10], 13,
+                17
+              ],
+              [
+                "match", ["get", "class"],
+                "city", 21,
+                "town", 17,
+                15
+              ]
+            ],
+            ["case", ["has", "capital"], 14, 0]
           ],
           15, [
-            "case",
-            ["has", "rank"],
+            "max",
             [
               "case",
-              ["<=", ["get", "rank"], 1], 22,
-              ["<=", ["get", "rank"], 2], 19,
-              ["<=", ["get", "rank"], 4], 16,
-              ["<=", ["get", "rank"], 6], 15,
-              ["<=", ["get", "rank"], 10], 13,
-              17
+              ["has", "rank"],
+              [
+                "case",
+                ["<=", ["get", "rank"], 1], 22,
+                ["<=", ["get", "rank"], 2], 19,
+                ["<=", ["get", "rank"], 4], 16,
+                ["<=", ["get", "rank"], 6], 15,
+                ["<=", ["get", "rank"], 10], 13,
+                17
+              ],
+              [
+                "match", ["get", "class"],
+                "city", 21,
+                "town", 17,
+                15
+              ]
             ],
-            [
-              "match", ["get", "class"],
-              "city", 21,
-              "town", 17,
-              15
-            ]
+            ["case", ["has", "capital"], 20, 0]
           ]
         ],
         "text-transform": "none",
