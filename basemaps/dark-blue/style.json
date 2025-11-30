@@ -6,15 +6,14 @@
   "sources": {
     "world_low": {
       "type": "vector",
-      "url": "pmtiles://https://data.storypath.studio/pmtiles/world_z0-5.pmtiles",
+      "url": "pmtiles://https://data.storypath.studio/pmtiles/world_z0-6.pmtiles",
       "minzoom": 0,
-      "maxzoom": 5
+      "maxzoom": 6
     },
     "world_mid": {
       "type": "vector",
       "url": "pmtiles://https://data.storypath.studio/pmtiles/world_z6-10.pmtiles",
-      "minzoom": 6,
-      "maxzoom": 10
+      "minzoom": 6
     },
     "us_high": {
       "type": "vector",
@@ -37,7 +36,7 @@
       "source": "world_low",
       "source-layer": "landcover",
       "minzoom": 0,
-      "maxzoom": 5,
+      "maxzoom": 6,
       "paint": {
         "fill-color": [
           "match",
@@ -57,7 +56,6 @@
       "source": "world_mid",
       "source-layer": "landcover",
       "minzoom": 6,
-      "maxzoom": 10,
       "paint": {
         "fill-color": [
           "match",
@@ -77,7 +75,7 @@
       "source": "world_low",
       "source-layer": "landuse",
       "minzoom": 0,
-      "maxzoom": 5,
+      "maxzoom": 6,
       "paint": {
         "fill-color": [
           "match",
@@ -98,7 +96,6 @@
       "source": "world_mid",
       "source-layer": "landuse",
       "minzoom": 6,
-      "maxzoom": 10,
       "paint": {
         "fill-color": [
           "match",
@@ -119,7 +116,7 @@
       "source": "world_low",
       "source-layer": "water",
       "minzoom": 0,
-      "maxzoom": 5,
+      "maxzoom": 6,
       "paint": {
         "fill-color": "#0a2846"
       }
@@ -130,7 +127,6 @@
       "source": "world_mid",
       "source-layer": "water",
       "minzoom": 6,
-      "maxzoom": 10,
       "paint": {
         "fill-color": "#0a2846"
       }
@@ -141,7 +137,7 @@
       "source": "world_low",
       "source-layer": "waterway",
       "minzoom": 0,
-      "maxzoom": 5,
+      "maxzoom": 6,
       "paint": {
         "line-color": "#103457",
         "line-width": [
@@ -156,7 +152,6 @@
       "source": "world_mid",
       "source-layer": "waterway",
       "minzoom": 6,
-      "maxzoom": 10,
       "paint": {
         "line-color": "#103457",
         "line-width": [
@@ -171,7 +166,7 @@
       "source": "world_low",
       "source-layer": "boundary",
       "minzoom": 0,
-      "maxzoom": 5,
+      "maxzoom": 6,
       "filter": [
         "all",
         ["==", ["get", "admin_level"], 2],
@@ -195,7 +190,6 @@
       "source": "world_mid",
       "source-layer": "boundary",
       "minzoom": 6,
-      "maxzoom": 10,
       "filter": [
         "all",
         ["==", ["get", "admin_level"], 2],
@@ -219,7 +213,7 @@
       "source": "world_low",
       "source-layer": "boundary",
       "minzoom": 0,
-      "maxzoom": 5,
+      "maxzoom": 6,
       "filter": [
         "all",
         ["==", ["get", "admin_level"], 2],
@@ -240,7 +234,6 @@
       "source": "world_mid",
       "source-layer": "boundary",
       "minzoom": 6,
-      "maxzoom": 10,
       "filter": [
         "all",
         ["==", ["get", "admin_level"], 2],
@@ -261,7 +254,7 @@
       "source": "world_low",
       "source-layer": "boundary",
       "minzoom": 3,
-      "maxzoom": 5,
+      "maxzoom": 6,
       "filter": ["==", ["get", "admin_level"], 4],
       "paint": {
         "line-color": "#284a7c",
@@ -278,7 +271,6 @@
       "source": "world_mid",
       "source-layer": "boundary",
       "minzoom": 6,
-      "maxzoom": 10,
       "filter": ["==", ["get", "admin_level"], 4],
       "paint": {
         "line-color": "#284a7c",
@@ -295,7 +287,7 @@
       "source": "world_low",
       "source-layer": "transportation",
       "minzoom": 0,
-      "maxzoom": 5,
+      "maxzoom": 6,
       "filter": [
         "all",
         ["!=", ["get", "brunnel"], "tunnel"],
@@ -327,7 +319,6 @@
       "source": "world_mid",
       "source-layer": "transportation",
       "minzoom": 6,
-      "maxzoom": 10,
       "filter": [
         "all",
         ["!=", ["get", "brunnel"], "tunnel"],
@@ -722,7 +713,7 @@
       "source": "world_low",
       "source-layer": "place",
       "minzoom": 0,
-      "maxzoom": 5,
+      "maxzoom": 6,
       "filter": [
         "all",
         ["==", ["get", "class"], "continent"],
@@ -768,7 +759,6 @@
       "source": "world_mid",
       "source-layer": "place",
       "minzoom": 6,
-      "maxzoom": 10,
       "filter": [
         "all",
         ["==", ["get", "class"], "country"],
@@ -798,7 +788,7 @@
       "source": "world_low",
       "source-layer": "place",
       "minzoom": 3.33,
-      "maxzoom": 5,
+      "maxzoom": 6,
       "filter": [
         "all",
         ["==", ["get", "class"], "state"],
@@ -856,7 +846,6 @@
       "source": "world_mid",
       "source-layer": "place",
       "minzoom": 6,
-      "maxzoom": 10,
       "filter": [
         "all",
         ["==", ["get", "class"], "state"],
@@ -901,7 +890,7 @@
       "source": "world_low",
       "source-layer": "place",
       "minzoom": 4,
-      "maxzoom": 5,
+      "maxzoom": 6,
       "filter": [
         "all",
         ["==", ["get", "class"], "state"],
@@ -946,7 +935,7 @@
       "source": "world_low",
       "source-layer": "place",
       "minzoom": 1,
-      "maxzoom": 5,
+      "maxzoom": 6,
       "filter": [
         "all",
         ["==", ["get", "class"], "city"],
@@ -959,7 +948,7 @@
           "interpolate", ["linear"], ["zoom"],
           1, ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 10.8, 9],
           3, ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 14.4, 12],
-          5, ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 16.8, 14]
+          6, ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 16.8, 14]
         ],
         "text-transform": "none",
         "text-letter-spacing": 0.05
@@ -978,7 +967,7 @@
       "source": "world_low",
       "source-layer": "place",
       "minzoom": 4,
-      "maxzoom": 5,
+      "maxzoom": 6,
       "filter": [
         "all",
         ["==", ["get", "class"], "city"],
@@ -996,7 +985,7 @@
             ["all", [">=", ["coalesce", ["get", "rank"], 6], 5], ["<=", ["coalesce", ["get", "rank"], 6], 6]], 9,
             9
           ],
-          5, [
+          6, [
             "case",
             ["all", [">=", ["coalesce", ["get", "rank"], 6], 3], ["<=", ["coalesce", ["get", "rank"], 6], 4]], 13.2,
             ["all", [">=", ["coalesce", ["get", "rank"], 6], 5], ["<=", ["coalesce", ["get", "rank"], 6], 6]], 11,
@@ -1020,7 +1009,7 @@
       "source": "world_low",
       "source-layer": "place",
       "minzoom": 0,
-      "maxzoom": 5,
+      "maxzoom": 6,
       "filter": [
         "all",
         ["==", ["get", "class"], "country"],
@@ -1050,7 +1039,6 @@
       "source": "world_mid",
       "source-layer": "place",
       "minzoom": 6,
-      "maxzoom": 10,
       "filter": [
         "all",
         ["==", ["get", "class"], "city"],
@@ -1081,7 +1069,6 @@
       "source": "world_mid",
       "source-layer": "place",
       "minzoom": 6,
-      "maxzoom": 10,
       "filter": [
         "all",
         ["==", ["get", "class"], "city"],
@@ -1123,7 +1110,6 @@
       "source": "world_mid",
       "source-layer": "place",
       "minzoom": 7,
-      "maxzoom": 10,
       "filter": [
         "all",
         ["==", ["get", "class"], "city"],
