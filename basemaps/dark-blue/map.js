@@ -41,11 +41,5 @@ map.on('style.load', () => {
   starryBg.attachToMap(map, "starfield-container", "globe-glow");
 });
 
-// Log zoom level changes (useful for debugging)
-map.on('zoom', () => {
-  const zoom = map.getZoom();
-  console.log(`Zoom level: ${zoom.toFixed(2)}`);
-});
-
 // Error handling
 map.on("error", (e) => console.error("Map error:", e?.error || e));
