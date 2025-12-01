@@ -99,6 +99,25 @@ The `serve.js` server handles:
 - Check browser console for errors
 - See `docs/MAP_ELEMENTS.md` for MapLibre style reference
 
+### State Label Handling
+
+State labels are handled differently for US states vs. world states due to PMTiles source availability:
+
+**US States:**
+- **Zoom 3.33-6**: Uses `world_low` source via `state-label-us-world` layer
+  - Filters for all 50 US states by name using a `match` expression
+  - Includes stacked text formatting for multi-word states (e.g., "NEW\nYORK")
+- **Zoom 6-15**: Uses `us_high` source via `state-label-us` layer
+  - Higher detail source becomes available at zoom 6
+  - Same styling and stacked text formatting
+
+**World States (Non-US):**
+- **Zoom 4-6**: Uses `world_low` source via `state-label-world` layer
+  - Filters to exclude all 50 US states using a `match` expression
+  - Simple uppercase formatting (no stacked text)
+
+This dual-layer approach ensures US states appear earlier (zoom 3.33) while world states appear later (zoom 4), and US states transition to higher detail data at zoom 6.
+
 ## Troubleshooting
 
 - **White screen**: Check browser console for errors. Common issues:
