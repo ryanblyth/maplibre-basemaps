@@ -1,5 +1,25 @@
 /* global maplibregl, pmtiles */
 
+/**
+ * Dark Blue Basemap - Map Initialization
+ * 
+ * This map uses the generated style.json which is built from TypeScript:
+ *   npm run build:styles
+ * 
+ * For programmatic usage (e.g., in a bundled application), you can import directly:
+ * 
+ *   import { createDarkBlueStyle } from './styles/darkBlueStyle.js';
+ *   
+ *   const map = new maplibregl.Map({
+ *     container: "map-container",
+ *     style: createDarkBlueStyle(),
+ *     // ... other options
+ *   });
+ * 
+ * For static hosting or simple HTML pages, use the generated JSON:
+ *   style: "./style.json"  // or "./style.generated.json"
+ */
+
 // Register PMTiles protocol
 const protocol = new pmtiles.Protocol();
 maplibregl.addProtocol("pmtiles", protocol.tile);
