@@ -42,6 +42,8 @@ function roadClassWidthAtZoom(widths: RoadClassWidths, zoomKey: keyof ZoomWidths
     "tertiary", widths.tertiary[zoomKey] ?? widths.default[zoomKey],
     "residential", widths.residential[zoomKey] ?? widths.default[zoomKey],
     "service", widths.service[zoomKey] ?? widths.default[zoomKey],
+    "minor", widths.residential[zoomKey] ?? widths.default[zoomKey],  // minor roads use residential width
+    "unclassified", widths.residential[zoomKey] ?? widths.default[zoomKey],  // unclassified roads use residential width
     widths.default[zoomKey] ?? 0.5
   ];
 }
@@ -58,9 +60,9 @@ export function roadWidthExpr(widths: RoadClassWidths): unknown {
 /** Creates interpolated road casing width expression from theme */
 export function roadCasingWidthExpr(widths: RoadClassWidths): unknown {
   return ["interpolate", ["linear"], ["zoom"],
-    8, roadClassWidthAtZoom(widths, "z8"),
+    6, roadClassWidthAtZoom(widths, "z6"),
     12, roadClassWidthAtZoom(widths, "z12"),
-    14, roadClassWidthAtZoom(widths, "z14")
+    15, roadClassWidthAtZoom(widths, "z15")
   ];
 }
 
@@ -111,6 +113,9 @@ export function roadColorWithTertiaryExpr(c: ThemeColors): unknown {
     "secondary", c.road.secondary, 
     "tertiary", c.road.tertiary, 
     "residential", c.road.residential, 
+    "service", c.road.service, 
+    "minor", c.road.residential,  // minor roads styled like residential
+    "unclassified", c.road.residential,  // unclassified roads styled like residential
     c.road.other
   ];
 }
@@ -125,6 +130,8 @@ export function tunnelColorExpr(c: ThemeColors): unknown {
     "tertiary", c.road.tunnel.tertiary, 
     "residential", c.road.tunnel.residential, 
     "service", c.road.tunnel.service, 
+    "minor", c.road.tunnel.residential,
+    "unclassified", c.road.tunnel.residential,
     c.road.tunnel.default
   ];
 }
@@ -138,6 +145,8 @@ export function bridgeColorExpr(c: ThemeColors): unknown {
     "secondary", c.road.bridge.secondary, 
     "tertiary", c.road.bridge.tertiary, 
     "residential", c.road.bridge.residential, 
+    "minor", c.road.bridge.residential,
+    "unclassified", c.road.bridge.residential,
     c.road.bridge.default
   ];
 }
@@ -149,7 +158,12 @@ export function bridgeColorExpr(c: ThemeColors): unknown {
 export const filters = {
   hasName: ["any", ["has", "name"], ["has", "name:en"]],
   majorRoad: ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["match", ["get", "class"], ["motorway", "trunk", "primary", "secondary"], true, false]],
-  normalRoad: ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["match", ["get", "class"], ["motorway", "trunk", "primary", "secondary", "tertiary", "residential", "service"], true, false]],
+  // Normal roads excluding alleys and parking aisles (they have separate layers with higher minzoom)
+  normalRoad: ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["match", ["get", "class"], ["motorway", "trunk", "primary", "secondary", "tertiary", "residential", "service", "minor", "unclassified"], true, false], ["!=", ["get", "service"], "alley"], ["!=", ["get", "service"], "parking_aisle"]],
+  // Alleys only (service roads with service=alley)
+  alley: ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["==", ["get", "class"], "service"], ["==", ["get", "service"], "alley"]],
+  // Parking aisles only (service roads with service=parking_aisle)
+  parkingAisle: ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["==", ["get", "class"], "service"], ["==", ["get", "service"], "parking_aisle"]],
   tunnel: ["==", ["get", "brunnel"], "tunnel"],
   bridge: ["==", ["get", "brunnel"], "bridge"],
   path: ["match", ["get", "class"], ["path", "track", "footway", "cycleway"], true, false],

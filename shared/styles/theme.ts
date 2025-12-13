@@ -58,9 +58,11 @@ export interface ThemeColors {
     tertiary: string;
     residential: string;
     service: string;
+    parkingAisle?: string;  // Optional - falls back to service if not set
     other: string;
     casing: string;
-    tunnel: {
+    // Tunnel colors - optional, inherit from road colors if not set
+    tunnel?: {
       motorway: string;
       trunk: string;
       primary: string;
@@ -70,7 +72,8 @@ export interface ThemeColors {
       service: string;
       default: string;
     };
-    bridge: {
+    // Bridge colors - optional, inherit from road colors if not set
+    bridge?: {
       motorway: string;
       trunk: string;
       primary: string;
@@ -80,7 +83,7 @@ export interface ThemeColors {
       default: string;
       casing: string;
     };
-    tunnelCasing: string;
+    tunnelCasing?: string;  // Optional - falls back to casing if not set
   };
   path: string;
   railway: string;
@@ -146,10 +149,14 @@ export interface ThemeWidths {
   };
   road: RoadClassWidths;
   roadCasing: RoadClassWidths;
-  tunnel: ZoomWidths;
-  tunnelCasing: ZoomWidths;
-  bridge: ZoomWidths;
-  bridgeCasing: ZoomWidths;
+  // Tunnel/bridge widths - optional, inherit from road if not set
+  tunnel?: ZoomWidths;
+  tunnelCasing?: ZoomWidths;
+  bridge?: ZoomWidths;
+  bridgeCasing?: ZoomWidths;
+  // Tunnel/bridge road class widths - optional, inherit from road if not set
+  tunnelRoad?: RoadClassWidths;
+  bridgeRoad?: RoadClassWidths;
   path: ZoomWidths;
   railway: ZoomWidths;
 }
