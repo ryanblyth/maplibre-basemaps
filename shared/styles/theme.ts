@@ -184,6 +184,27 @@ export interface ThemeOpacities {
 }
 
 // ============================================================================
+// THEME SETTINGS
+// ============================================================================
+
+/** Theme settings for behavior configuration */
+export interface ThemeSettings {
+  /** 
+   * When true, road widths scale proportionally to real-world sizes at zoom 15+.
+   * Roads will double in pixel width with each zoom level to match map scale.
+   * Default: false (uses fixed pixel widths that don't scale with zoom)
+   */
+  realWorldScale?: boolean;
+  
+  /**
+   * The zoom level at which real-world scaling begins.
+   * Below this zoom, roads use fixed pixel widths.
+   * Default: 15
+   */
+  realWorldScaleMinZoom?: number;
+}
+
+// ============================================================================
 // COMPLETE THEME TYPE
 // ============================================================================
 
@@ -194,4 +215,5 @@ export interface Theme {
   colors: ThemeColors;
   widths: ThemeWidths;
   opacities: ThemeOpacities;
+  settings?: ThemeSettings;
 }

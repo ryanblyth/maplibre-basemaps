@@ -57,12 +57,81 @@ export function roadWidthExpr(widths: RoadClassWidths): unknown {
   ];
 }
 
+/**
+ * Creates road width expression with real-world scaling at high zoom levels.
+ * 
+ * At zoom levels below minZoom, uses linear interpolation (fixed pixel sizes).
+ * At zoom levels >= minZoom, uses exponential base 2 (widths double each zoom level).
+ * This makes roads scale proportionally to buildings and other features at high zoom.
+ * 
+ * @param widths - Road class widths from theme
+ * @param minZoom - Zoom level where real-world scaling begins (default: 15)
+ */
+export function roadWidthExprRealWorld(widths: RoadClassWidths, minZoom: number = 15): unknown {
+  // Get the width at the transition zoom level
+  const baseWidth = roadClassWidthAtZoom(widths, "z15");
+  
+  // Calculate width at zoom 20 (5 zoom levels = 2^5 = 32x the base width)
+  // We need to create a match expression for z20 widths
+  const z20Multiplier = Math.pow(2, 20 - minZoom); // 2^5 = 32 for minZoom=15
+  
+  const z20Width = ["match", ["get", "class"],
+    "motorway", (widths.motorway.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "trunk", (widths.trunk.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "primary", (widths.primary.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "secondary", (widths.secondary.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "tertiary", (widths.tertiary.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "residential", (widths.residential.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "service", (widths.service.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "minor", (widths.residential.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "unclassified", (widths.residential.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    (widths.default.z15 ?? 1) * z20Multiplier
+  ];
+  
+  // Use exponential interpolation with base 2 for real-world scaling
+  return ["interpolate", ["exponential", 2], ["zoom"],
+    6, roadClassWidthAtZoom(widths, "z6"),
+    12, roadClassWidthAtZoom(widths, "z12"),
+    minZoom, baseWidth,
+    20, z20Width
+  ];
+}
+
 /** Creates interpolated road casing width expression from theme */
 export function roadCasingWidthExpr(widths: RoadClassWidths): unknown {
   return ["interpolate", ["linear"], ["zoom"],
     6, roadClassWidthAtZoom(widths, "z6"),
     12, roadClassWidthAtZoom(widths, "z12"),
     15, roadClassWidthAtZoom(widths, "z15")
+  ];
+}
+
+/**
+ * Creates road casing width expression with real-world scaling.
+ * Casings scale the same as roads to maintain proportional outlines at high zoom.
+ */
+export function roadCasingWidthExprRealWorld(widths: RoadClassWidths, minZoom: number = 15): unknown {
+  const baseWidth = roadClassWidthAtZoom(widths, "z15");
+  const z20Multiplier = Math.pow(2, 20 - minZoom);
+  
+  const z20Width = ["match", ["get", "class"],
+    "motorway", (widths.motorway.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "trunk", (widths.trunk.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "primary", (widths.primary.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "secondary", (widths.secondary.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "tertiary", (widths.tertiary.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "residential", (widths.residential.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "service", (widths.service.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "minor", (widths.residential.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "unclassified", (widths.residential.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    (widths.default.z15 ?? 1) * z20Multiplier
+  ];
+  
+  return ["interpolate", ["exponential", 2], ["zoom"],
+    6, roadClassWidthAtZoom(widths, "z6"),
+    12, roadClassWidthAtZoom(widths, "z12"),
+    minZoom, baseWidth,
+    20, z20Width
   ];
 }
 

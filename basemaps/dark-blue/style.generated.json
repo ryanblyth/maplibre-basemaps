@@ -798,7 +798,8 @@
         "line-width": [
           "interpolate",
           [
-            "linear"
+            "exponential",
+            2
           ],
           [
             "zoom"
@@ -857,7 +858,7 @@
             1,
             1
           ],
-          15,
+          16,
           [
             "match",
             [
@@ -883,6 +884,33 @@
             "unclassified",
             4,
             4
+          ],
+          20,
+          [
+            "match",
+            [
+              "get",
+              "class"
+            ],
+            "motorway",
+            160,
+            "trunk",
+            160,
+            "primary",
+            160,
+            "secondary",
+            120,
+            "tertiary",
+            96,
+            "residential",
+            64,
+            "service",
+            64,
+            "minor",
+            64,
+            "unclassified",
+            64,
+            64
           ]
         ],
         "line-dasharray": [
@@ -1140,7 +1168,8 @@
         "line-width": [
           "interpolate",
           [
-            "linear"
+            "exponential",
+            2
           ],
           [
             "zoom"
@@ -1199,7 +1228,7 @@
             1,
             1
           ],
-          15,
+          16,
           [
             "match",
             [
@@ -1225,6 +1254,33 @@
             "unclassified",
             4,
             4
+          ],
+          20,
+          [
+            "match",
+            [
+              "get",
+              "class"
+            ],
+            "motorway",
+            160,
+            "trunk",
+            160,
+            "primary",
+            160,
+            "secondary",
+            120,
+            "tertiary",
+            96,
+            "residential",
+            64,
+            "service",
+            64,
+            "minor",
+            64,
+            "unclassified",
+            64,
+            64
           ]
         ]
       }
@@ -1753,7 +1809,8 @@
         "line-width": [
           "interpolate",
           [
-            "linear"
+            "exponential",
+            2
           ],
           [
             "zoom"
@@ -1812,7 +1869,7 @@
             1,
             1
           ],
-          15,
+          16,
           [
             "match",
             [
@@ -1838,6 +1895,33 @@
             "unclassified",
             4,
             4
+          ],
+          20,
+          [
+            "match",
+            [
+              "get",
+              "class"
+            ],
+            "motorway",
+            160,
+            "trunk",
+            160,
+            "primary",
+            160,
+            "secondary",
+            120,
+            "tertiary",
+            96,
+            "residential",
+            64,
+            "service",
+            64,
+            "minor",
+            64,
+            "unclassified",
+            64,
+            64
           ]
         ]
       }
@@ -2087,7 +2171,8 @@
         "line-width": [
           "interpolate",
           [
-            "linear"
+            "exponential",
+            2
           ],
           [
             "zoom"
@@ -2146,7 +2231,7 @@
             1,
             1
           ],
-          15,
+          16,
           [
             "match",
             [
@@ -2172,6 +2257,33 @@
             "unclassified",
             4,
             4
+          ],
+          20,
+          [
+            "match",
+            [
+              "get",
+              "class"
+            ],
+            "motorway",
+            160,
+            "trunk",
+            160,
+            "primary",
+            160,
+            "secondary",
+            120,
+            "tertiary",
+            96,
+            "residential",
+            64,
+            "service",
+            64,
+            "minor",
+            64,
+            "unclassified",
+            64,
+            64
           ]
         ]
       }

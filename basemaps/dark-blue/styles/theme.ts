@@ -18,6 +18,27 @@ import {
 } from "../../../shared/styles/theme.js";
 
 // ============================================================================
+// SETTINGS
+// ============================================================================
+
+export const darkBlueSettings = {
+  /**
+   * When true, road widths scale proportionally to real-world sizes at zoom 15+.
+   * Roads will double in pixel width with each zoom level to match map scale.
+   * This makes roads proportional to buildings at high zoom levels.
+   * 
+   * Set to true to enable, false to use fixed pixel widths.
+   */
+  realWorldScale: true,
+  
+  /**
+   * The zoom level at which real-world scaling begins.
+   * Below this zoom, roads use fixed pixel widths.
+   */
+  realWorldScaleMinZoom: 16,
+};
+
+// ============================================================================
 // COLORS
 // ============================================================================
 
@@ -162,15 +183,16 @@ export const darkBlueWidths: ThemeWidths = {
   },
   
   // Road casing widths (slightly larger than road - using same zoom stops)
+  // Note: Casing currently uses fixed scaling, not real-world scaling
   roadCasing: {
-    motorway: { z6: 1.5, z12: 4, z15: 11 },      // +0.5, +1, +1 wider than road
-    trunk: { z6: 1.2, z12: 3.5, z15: 11 },       // +0.4, +0.75, +1 wider than road
-    primary: { z6: 1.0, z12: 2.8, z15: 11 },      // +0.3, +0.8, +1 wider than road
-    secondary: { z6: 0.9, z12: 2.2, z15: 8.5 },  // +0.3, +0.7, +1 wider than road
-    tertiary: { z6: 0.8, z12: 2.2, z15: 7 },     // +0.3, +0.7, +1 wider than road
-    residential: { z6: 0.7, z12: 1.8, z15: 5 },  // +0.3, +0.8, +1 wider than road
-    service: { z6: 0.5, z12: 1.5, z15: 5 },      // +0.3, +0.5, +1 wider than road
-    default: { z6: 0.7, z12: 1.8, z15: 5 },      // +0.3, +0.8, +1 wider than road
+    motorway: { z6: 1.5, z12: 4, z15: 11 },
+    trunk: { z6: 1.2, z12: 3.5, z15: 11 },
+    primary: { z6: 1.0, z12: 2.8, z15: 11 },
+    secondary: { z6: 0.9, z12: 2.2, z15: 8.5 },
+    tertiary: { z6: 0.8, z12: 2.2, z15: 7 },
+    residential: { z6: 0.7, z12: 1.8, z15: 5 },
+    service: { z6: 0.5, z12: 1.5, z15: 5 },
+    default: { z6: 0.7, z12: 1.8, z15: 5 },
   },
   
   // Tunnel widths (legacy - kept for reference)
@@ -248,4 +270,5 @@ export const darkBlueTheme: Theme = {
   colors: darkBlueColors,
   widths: darkBlueWidths,
   opacities: darkBlueOpacities,
+  settings: darkBlueSettings,
 };
