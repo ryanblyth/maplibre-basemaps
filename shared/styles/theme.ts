@@ -58,9 +58,11 @@ export interface ThemeColors {
     tertiary: string;
     residential: string;
     service: string;
+    parkingAisle?: string;  // Optional - falls back to service if not set
     other: string;
     casing: string;
-    tunnel: {
+    // Tunnel colors - optional, inherit from road colors if not set
+    tunnel?: {
       motorway: string;
       trunk: string;
       primary: string;
@@ -70,7 +72,8 @@ export interface ThemeColors {
       service: string;
       default: string;
     };
-    bridge: {
+    // Bridge colors - optional, inherit from road colors if not set
+    bridge?: {
       motorway: string;
       trunk: string;
       primary: string;
@@ -80,7 +83,7 @@ export interface ThemeColors {
       default: string;
       casing: string;
     };
-    tunnelCasing: string;
+    tunnelCasing?: string;  // Optional - falls back to casing if not set
   };
   path: string;
   railway: string;
@@ -104,6 +107,76 @@ export interface ThemeColors {
       color: string;
       halo: string;
     };
+    /** Highway shield label styling */
+    shield?: {
+      interstate: { textColor: string; };
+      usHighway: { textColor: string; };
+      stateHighway: { textColor: string; };
+    };
+  };
+}
+
+// ============================================================================
+// SHIELD TYPES - Highway shield configuration
+// ============================================================================
+
+/** Highway shield visibility and styling */
+export interface ThemeShields {
+  /** Whether to show highway shields at all */
+  enabled: boolean;
+  /** Minimum zoom level to show shields */
+  minZoom?: number;
+  /** Interstate shield settings */
+  interstate: {
+    enabled: boolean;
+    sprite: string;
+    textColor: string;
+    minZoom?: number;
+    /** Text padding [top, right, bottom, left] in pixels */
+    textPadding?: [number, number, number, number];
+    /** Font size at different zoom levels [minZoom, minSize, maxZoom, maxSize] */
+    textSize?: [number, number, number, number];
+    /** Font family (e.g., "Noto Sans Bold") */
+    textFont?: string[];
+    /** Custom shield colors (only for shield-interstate-custom sprite) */
+    upperBackground?: string;
+    lowerBackground?: string;
+    strokeColor?: string;
+    strokeWidth?: number;
+  };
+  /** US Highway shield settings */
+  usHighway: {
+    enabled: boolean;
+    sprite: string;
+    textColor: string;
+    minZoom?: number;
+    /** Text padding [top, right, bottom, left] in pixels */
+    textPadding?: [number, number, number, number];
+    /** Font size at different zoom levels [minZoom, minSize, maxZoom, maxSize] */
+    textSize?: [number, number, number, number];
+    /** Font family (e.g., "Noto Sans Bold") */
+    textFont?: string[];
+    /** Custom shield colors (only for shield-ushighway-custom sprite) */
+    background?: string;
+    strokeColor?: string;
+    strokeWidth?: number;
+  };
+  /** State Highway shield settings */
+  stateHighway: {
+    enabled: boolean;
+    sprite: string;
+    textColor: string;
+    minZoom?: number;
+    /** Text padding [top, right, bottom, left] in pixels */
+    textPadding?: [number, number, number, number];
+    /** Font size at different zoom levels [minZoom, minSize, maxZoom, maxSize] */
+    textSize?: [number, number, number, number];
+    /** Font family (e.g., "Noto Sans Bold") */
+    textFont?: string[];
+    /** Custom shield colors (only for shield-state-custom sprite) */
+    background?: string;
+    strokeColor?: string;
+    strokeWidth?: number;
   };
 }
 
@@ -146,10 +219,14 @@ export interface ThemeWidths {
   };
   road: RoadClassWidths;
   roadCasing: RoadClassWidths;
-  tunnel: ZoomWidths;
-  tunnelCasing: ZoomWidths;
-  bridge: ZoomWidths;
-  bridgeCasing: ZoomWidths;
+  // Tunnel/bridge widths - optional, inherit from road if not set
+  tunnel?: ZoomWidths;
+  tunnelCasing?: ZoomWidths;
+  bridge?: ZoomWidths;
+  bridgeCasing?: ZoomWidths;
+  // Tunnel/bridge road class widths - optional, inherit from road if not set
+  tunnelRoad?: RoadClassWidths;
+  bridgeRoad?: RoadClassWidths;
   path: ZoomWidths;
   railway: ZoomWidths;
 }
@@ -177,6 +254,27 @@ export interface ThemeOpacities {
 }
 
 // ============================================================================
+// THEME SETTINGS
+// ============================================================================
+
+/** Theme settings for behavior configuration */
+export interface ThemeSettings {
+  /** 
+   * When true, road widths scale proportionally to real-world sizes at zoom 15+.
+   * Roads will double in pixel width with each zoom level to match map scale.
+   * Default: false (uses fixed pixel widths that don't scale with zoom)
+   */
+  realWorldScale?: boolean;
+  
+  /**
+   * The zoom level at which real-world scaling begins.
+   * Below this zoom, roads use fixed pixel widths.
+   * Default: 15
+   */
+  realWorldScaleMinZoom?: number;
+}
+
+// ============================================================================
 // COMPLETE THEME TYPE
 // ============================================================================
 
@@ -187,4 +285,7 @@ export interface Theme {
   colors: ThemeColors;
   widths: ThemeWidths;
   opacities: ThemeOpacities;
+  settings?: ThemeSettings;
+  /** Highway shield configuration - optional, defaults to enabled with standard sprites */
+  shields?: ThemeShields;
 }

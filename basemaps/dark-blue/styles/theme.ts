@@ -18,6 +18,27 @@ import {
 } from "../../../shared/styles/theme.js";
 
 // ============================================================================
+// SETTINGS
+// ============================================================================
+
+export const darkBlueSettings = {
+  /**
+   * When true, road widths scale proportionally to real-world sizes at zoom 15+.
+   * Roads will double in pixel width with each zoom level to match map scale.
+   * This makes roads proportional to buildings at high zoom levels.
+   * 
+   * Set to true to enable, false to use fixed pixel widths.
+   */
+  realWorldScale: true,
+  
+  /**
+   * The zoom level at which real-world scaling begins.
+   * Below this zoom, roads use fixed pixel widths.
+   */
+  realWorldScaleMinZoom: 16,
+};
+
+// ============================================================================
 // COLORS
 // ============================================================================
 
@@ -65,31 +86,40 @@ export const darkBlueColors: ThemeColors = {
     primary: "#34404f",
     secondary: "#313b49",
     tertiary: "#2d3744",
-    residential: "#2a333f",
-    service: "#28313d",
-    other: "#28313d",
+    residential: "#2a333f", 
+    service: "#28313d", 
+    parkingAisle: "#252a35",  // Slightly darker than service for subtle distinction
+    other: "#28313d", 
     casing: "#0e131a",
-    tunnel: {
-      motorway: "#364252",
-      trunk: "#323c4a",
-      primary: "#2f3947",
-      secondary: "#2b3441",
-      tertiary: "#29323e",
-      residential: "#27303b",
-      service: "#252d38",
-      default: "#242b35",
-    },
-    bridge: {
-      motorway: "#3f4a5b",
-      trunk: "#3a4655",
-      primary: "#374252",
-      secondary: "#343e4c",
-      tertiary: "#303a47",
-      residential: "#2d3542",
-      default: "#2a3240",
-      casing: "#0f1520",
-    },
-    tunnelCasing: "#0a0e13",
+    
+    // Tunnel colors - COMMENTED OUT: tunnels inherit road colors by default
+    // Uncomment to override with custom tunnel colors:
+    // tunnel: {
+    //   motorway: "#364252",
+    //   trunk: "#323c4a",
+    //   primary: "#2f3947",
+    //   secondary: "#2b3441",
+    //   tertiary: "#29323e",
+    //   residential: "#27303b",
+    //   service: "#252d38",
+    //   default: "#242b35",
+    // },
+    
+    // Bridge colors - COMMENTED OUT: bridges inherit road colors by default
+    // Uncomment to override with custom bridge colors:
+    // bridge: {
+    //   motorway: "#3f4a5b",
+    //   trunk: "#3a4655",
+    //   primary: "#374252",
+    //   secondary: "#343e4c",
+    //   tertiary: "#303a47",
+    //   residential: "#2d3542",
+    //   default: "#2a3240",
+    //   casing: "#0f1520",
+    // },
+    
+    // Tunnel casing color - COMMENTED OUT: uses road casing color by default
+    // tunnelCasing: "#0a0e13",
   },
   
   // Paths
@@ -142,35 +172,62 @@ export const darkBlueWidths: ThemeWidths = {
   
   // Road widths by class
   road: {
-    motorway: { z6: 0.9, z12: 2.0, z15: 3.0 },
-    trunk: { z6: 0.8, z12: 1.7, z15: 2.5 },
-    primary: { z6: 0.7, z12: 1.4, z15: 2.0 },
-    secondary: { z6: 0.6, z12: 1.2, z15: 1.7 },
-    tertiary: { z6: 0.5, z12: 1.0, z15: 1.4 },
-    residential: { z6: 0.4, z12: 0.8, z15: 1.1 },
-    service: { z6: 0.2, z12: 0.5, z15: 0.8 },
-    default: { z6: 0.4, z12: 0.8, z15: 1.1 },
+    motorway: { z6: 1, z12: 3, z15: 10 },
+    trunk: { z6: 0.8, z12: 2.75, z15: 10 },
+    primary: { z6: 0.7, z12: 2, z15: 10 },
+    secondary: { z6: 0.6, z12: 1.5, z15: 7.5 },
+    tertiary: { z6: 0.5, z12: 1.5, z15: 6 },
+    residential: { z6: 0.4, z12: 1, z15: 4 },
+    service: { z6: 0.2, z12: 1, z15: 4 },
+    default: { z6: 0.4, z12: 1, z15: 4 },
   },
   
-  // Road casing widths (slightly larger than road)
+  // Road casing widths (slightly larger than road - using same zoom stops)
+  // Note: Casing currently uses fixed scaling, not real-world scaling
   roadCasing: {
-    motorway: { z8: 1.0, z12: 2.3, z14: 3.5 },
-    trunk: { z8: 0.9, z12: 2.0, z14: 3.0 },
-    primary: { z8: 0.8, z12: 1.7, z14: 2.5 },
-    secondary: { z8: 0.7, z12: 1.5, z14: 2.2 },
-    tertiary: { z8: 0.6, z12: 1.3, z14: 1.9 },
-    residential: { z8: 0.5, z12: 1.1, z14: 1.6 },
-    service: { z8: 0.3, z12: 0.6, z14: 0.9 },
-    default: { z8: 0.5, z12: 1.1, z14: 1.6 },
+    motorway: { z6: 1.5, z12: 4, z15: 11 },
+    trunk: { z6: 1.2, z12: 3.5, z15: 11 },
+    primary: { z6: 1.0, z12: 2.8, z15: 11 },
+    secondary: { z6: 0.9, z12: 2.2, z15: 8.5 },
+    tertiary: { z6: 0.8, z12: 2.2, z15: 7 },
+    residential: { z6: 0.7, z12: 1.8, z15: 5 },
+    service: { z6: 0.5, z12: 1.5, z15: 5 },
+    default: { z6: 0.7, z12: 1.8, z15: 5 },
   },
   
-  // Tunnel widths
+  // Tunnel widths (legacy - kept for reference)
   tunnel: { z10: 0.4, z12: 1.0, z14: 1.6 },
   tunnelCasing: { z10: 0.5, z12: 1.2, z14: 2.0 },
   
-  // Bridge widths
+  // Tunnel road class widths - COMMENTED OUT: tunnels inherit road widths by default
+  // Uncomment to override with custom tunnel widths:
+  // tunnelRoad: {
+  //   motorway: { z6: 1, z12: 3, z15: 10 },
+  //   trunk: { z6: 0.8, z12: 2.75, z15: 10 },
+  //   primary: { z6: 0.7, z12: 2, z15: 10 },
+  //   secondary: { z6: 0.6, z12: 1.5, z15: 7.5 },
+  //   tertiary: { z6: 0.5, z12: 1.5, z15: 6 },
+  //   residential: { z6: 0.4, z12: 1, z15: 4 },
+  //   service: { z6: 0.2, z12: 1, z15: 4 },
+  //   default: { z6: 0.4, z12: 1, z15: 4 },
+  // },
+  
+  // Bridge widths (legacy - kept for reference)
   bridge: { z10: 0.5, z12: 1.1, z14: 1.8 },
   bridgeCasing: { z10: 0.6, z12: 1.3, z14: 2.2 },
+  
+  // Bridge road class widths - COMMENTED OUT: bridges inherit road widths by default
+  // Uncomment to override with custom bridge widths:
+  // bridgeRoad: {
+  //   motorway: { z6: 2, z12: 6, z15: 20 },
+  //   trunk: { z6: 1.6, z12: 5.5, z15: 20 },
+  //   primary: { z6: 1.4, z12: 4, z15: 20 },
+  //   secondary: { z6: 1.2, z12: 3, z15: 15 },
+  //   tertiary: { z6: 1, z12: 3, z15: 12 },
+  //   residential: { z6: 0.8, z12: 2, z15: 8 },
+  //   service: { z6: 0.4, z12: 2, z15: 8 },
+  //   default: { z6: 0.8, z12: 2, z15: 8 },
+  // },
   
   // Path widths
   path: { z12: 0.2, z14: 0.6 },
@@ -204,6 +261,66 @@ export const darkBlueOpacities: ThemeOpacities = {
 };
 
 // ============================================================================
+// HIGHWAY SHIELDS
+// ============================================================================
+
+// To build shield icons and styles, run: npx tsx scripts/build-shields.ts && npm run build:styles
+
+export const darkBlueShields = {
+  /** Whether to show highway shields */
+  enabled: true,
+  
+  /** Global minimum zoom for all shields */
+  minZoom: 6,
+  
+  /** Interstate shields (I-70, I-95, etc.) */
+  interstate: {
+    enabled: true,
+    sprite: "shield-interstate-custom",
+    textColor: "#d0dae8",                 // Light blue-gray text
+    minZoom: 6,
+    textPadding: [5, 5, 5, 5],        // [top, right, bottom, left]
+    textSize: [6, 9, 14, 13],             // [minZoom, minSize, maxZoom, maxSize]
+    textFont: ["Noto Sans Bold"],         // Font family
+    // Custom shield appearance - subtle two-tone for dark theme
+    upperBackground: "#1a2433",           // Slightly lighter dark blue
+    lowerBackground: "#141c28",           // Darker blue background
+    strokeColor: "#3a4a5c",               // Subtle blue-gray border
+    strokeWidth: 2,
+  },
+  
+  /** US Highway shields (US-1, US-66, etc.) */
+  usHighway: {
+    enabled: true,
+    sprite: "shield-ushighway-custom",
+    textColor: "#d0dae8",                 // Light blue-gray text
+    minZoom: 7,
+    textPadding: [5, 5, 5, 5],        // [top, right, bottom, left]
+    textSize: [6, 9, 14, 13],             // [minZoom, minSize, maxZoom, maxSize]
+    textFont: ["Noto Sans Bold"],         // Font family
+    // Custom shield appearance - subtle for dark theme
+    background: "#182030",                // Dark blue background
+    strokeColor: "#3a4a5c",               // Subtle blue-gray border
+    strokeWidth: 2.5,
+  },
+  
+  /** State Highway shields */
+  stateHighway: {
+    enabled: true,
+    sprite: "shield-state-custom",
+    textColor: "#d0dae8",                 // Light blue-gray text
+    minZoom: 8,
+    textPadding: [5, 5, 5, 5],        // [top, right, bottom, left]
+    textSize: [8, 8, 14, 12],             // [minZoom, minSize, maxZoom, maxSize]
+    textFont: ["Noto Sans Bold"],         // Font family
+    // Custom shield appearance - subtle circle for dark theme
+    background: "#1a2433",                // Dark blue background
+    strokeColor: "#3a4a5c",               // Subtle blue-gray border
+    strokeWidth: 1.5,
+  },
+};
+
+// ============================================================================
 // COMPLETE THEME
 // ============================================================================
 
@@ -213,4 +330,6 @@ export const darkBlueTheme: Theme = {
   colors: darkBlueColors,
   widths: darkBlueWidths,
   opacities: darkBlueOpacities,
+  settings: darkBlueSettings,
+  shields: darkBlueShields,
 };

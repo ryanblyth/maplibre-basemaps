@@ -42,6 +42,8 @@ function roadClassWidthAtZoom(widths: RoadClassWidths, zoomKey: keyof ZoomWidths
     "tertiary", widths.tertiary[zoomKey] ?? widths.default[zoomKey],
     "residential", widths.residential[zoomKey] ?? widths.default[zoomKey],
     "service", widths.service[zoomKey] ?? widths.default[zoomKey],
+    "minor", widths.residential[zoomKey] ?? widths.default[zoomKey],  // minor roads use residential width
+    "unclassified", widths.residential[zoomKey] ?? widths.default[zoomKey],  // unclassified roads use residential width
     widths.default[zoomKey] ?? 0.5
   ];
 }
@@ -55,12 +57,81 @@ export function roadWidthExpr(widths: RoadClassWidths): unknown {
   ];
 }
 
+/**
+ * Creates road width expression with real-world scaling at high zoom levels.
+ * 
+ * At zoom levels below minZoom, uses linear interpolation (fixed pixel sizes).
+ * At zoom levels >= minZoom, uses exponential base 2 (widths double each zoom level).
+ * This makes roads scale proportionally to buildings and other features at high zoom.
+ * 
+ * @param widths - Road class widths from theme
+ * @param minZoom - Zoom level where real-world scaling begins (default: 15)
+ */
+export function roadWidthExprRealWorld(widths: RoadClassWidths, minZoom: number = 15): unknown {
+  // Get the width at the transition zoom level
+  const baseWidth = roadClassWidthAtZoom(widths, "z15");
+  
+  // Calculate width at zoom 20 (5 zoom levels = 2^5 = 32x the base width)
+  // We need to create a match expression for z20 widths
+  const z20Multiplier = Math.pow(2, 20 - minZoom); // 2^5 = 32 for minZoom=15
+  
+  const z20Width = ["match", ["get", "class"],
+    "motorway", (widths.motorway.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "trunk", (widths.trunk.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "primary", (widths.primary.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "secondary", (widths.secondary.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "tertiary", (widths.tertiary.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "residential", (widths.residential.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "service", (widths.service.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "minor", (widths.residential.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "unclassified", (widths.residential.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    (widths.default.z15 ?? 1) * z20Multiplier
+  ];
+  
+  // Use exponential interpolation with base 2 for real-world scaling
+  return ["interpolate", ["exponential", 2], ["zoom"],
+    6, roadClassWidthAtZoom(widths, "z6"),
+    12, roadClassWidthAtZoom(widths, "z12"),
+    minZoom, baseWidth,
+    20, z20Width
+  ];
+}
+
 /** Creates interpolated road casing width expression from theme */
 export function roadCasingWidthExpr(widths: RoadClassWidths): unknown {
   return ["interpolate", ["linear"], ["zoom"],
-    8, roadClassWidthAtZoom(widths, "z8"),
+    6, roadClassWidthAtZoom(widths, "z6"),
     12, roadClassWidthAtZoom(widths, "z12"),
-    14, roadClassWidthAtZoom(widths, "z14")
+    15, roadClassWidthAtZoom(widths, "z15")
+  ];
+}
+
+/**
+ * Creates road casing width expression with real-world scaling.
+ * Casings scale the same as roads to maintain proportional outlines at high zoom.
+ */
+export function roadCasingWidthExprRealWorld(widths: RoadClassWidths, minZoom: number = 15): unknown {
+  const baseWidth = roadClassWidthAtZoom(widths, "z15");
+  const z20Multiplier = Math.pow(2, 20 - minZoom);
+  
+  const z20Width = ["match", ["get", "class"],
+    "motorway", (widths.motorway.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "trunk", (widths.trunk.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "primary", (widths.primary.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "secondary", (widths.secondary.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "tertiary", (widths.tertiary.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "residential", (widths.residential.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "service", (widths.service.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "minor", (widths.residential.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    "unclassified", (widths.residential.z15 ?? widths.default.z15 ?? 1) * z20Multiplier,
+    (widths.default.z15 ?? 1) * z20Multiplier
+  ];
+  
+  return ["interpolate", ["exponential", 2], ["zoom"],
+    6, roadClassWidthAtZoom(widths, "z6"),
+    12, roadClassWidthAtZoom(widths, "z12"),
+    minZoom, baseWidth,
+    20, z20Width
   ];
 }
 
@@ -111,6 +182,9 @@ export function roadColorWithTertiaryExpr(c: ThemeColors): unknown {
     "secondary", c.road.secondary, 
     "tertiary", c.road.tertiary, 
     "residential", c.road.residential, 
+    "service", c.road.service, 
+    "minor", c.road.residential,  // minor roads styled like residential
+    "unclassified", c.road.residential,  // unclassified roads styled like residential
     c.road.other
   ];
 }
@@ -125,6 +199,8 @@ export function tunnelColorExpr(c: ThemeColors): unknown {
     "tertiary", c.road.tunnel.tertiary, 
     "residential", c.road.tunnel.residential, 
     "service", c.road.tunnel.service, 
+    "minor", c.road.tunnel.residential,
+    "unclassified", c.road.tunnel.residential,
     c.road.tunnel.default
   ];
 }
@@ -138,6 +214,8 @@ export function bridgeColorExpr(c: ThemeColors): unknown {
     "secondary", c.road.bridge.secondary, 
     "tertiary", c.road.bridge.tertiary, 
     "residential", c.road.bridge.residential, 
+    "minor", c.road.bridge.residential,
+    "unclassified", c.road.bridge.residential,
     c.road.bridge.default
   ];
 }
@@ -149,7 +227,12 @@ export function bridgeColorExpr(c: ThemeColors): unknown {
 export const filters = {
   hasName: ["any", ["has", "name"], ["has", "name:en"]],
   majorRoad: ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["match", ["get", "class"], ["motorway", "trunk", "primary", "secondary"], true, false]],
-  normalRoad: ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["match", ["get", "class"], ["motorway", "trunk", "primary", "secondary", "tertiary", "residential", "service"], true, false]],
+  // Normal roads excluding alleys and parking aisles (they have separate layers with higher minzoom)
+  normalRoad: ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["match", ["get", "class"], ["motorway", "trunk", "primary", "secondary", "tertiary", "residential", "service", "minor", "unclassified"], true, false], ["!=", ["get", "service"], "alley"], ["!=", ["get", "service"], "parking_aisle"]],
+  // Alleys only (service roads with service=alley)
+  alley: ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["==", ["get", "class"], "service"], ["==", ["get", "service"], "alley"]],
+  // Parking aisles only (service roads with service=parking_aisle)
+  parkingAisle: ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["==", ["get", "class"], "service"], ["==", ["get", "service"], "parking_aisle"]],
   tunnel: ["==", ["get", "brunnel"], "tunnel"],
   bridge: ["==", ["get", "brunnel"], "bridge"],
   path: ["match", ["get", "class"], ["path", "track", "footway", "cycleway"], true, false],

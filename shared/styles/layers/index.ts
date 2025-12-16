@@ -17,7 +17,8 @@ export { createWaterLayers, createUSWaterLayers } from "./water.js";
 export { createBoundaryLayers, createUSBoundaryLayers } from "./boundaries.js";
 export { createWorldRoadLayers, createUSRoadLayers, createUSOverlayRoadLayers } from "./roads.js";
 export { 
-  createRoadLabelLayers, 
+  createRoadLabelLayers,
+  createHighwayShieldLayers,
   createWaterLabelLayersFromWorldLabels, 
   createWaterLabelLayersFromBasemapSources, 
   createWaterwayLabelLayers,
@@ -35,7 +36,8 @@ import { createWaterLayers, createUSWaterLayers } from "./water.js";
 import { createBoundaryLayers, createUSBoundaryLayers } from "./boundaries.js";
 import { createWorldRoadLayers, createUSRoadLayers, createUSOverlayRoadLayers } from "./roads.js";
 import { 
-  createRoadLabelLayers, 
+  createRoadLabelLayers,
+  createHighwayShieldLayers,
   createWaterLabelLayersFromWorldLabels, 
   createWaterLabelLayersFromBasemapSources, 
   createWaterwayLabelLayers,
@@ -62,6 +64,7 @@ export function createAllLayers(theme: Theme): LayerSpecification[] {
     ...createUSBoundaryLayers(theme),
     ...createUSOverlayRoadLayers(theme),
     ...createRoadLabelLayers(theme),
+    ...createHighwayShieldLayers(theme),
     ...createWaterLabelLayersFromWorldLabels(theme),
     ...createWaterLabelLayersFromBasemapSources(theme),
     ...createWaterwayLabelLayers(theme),

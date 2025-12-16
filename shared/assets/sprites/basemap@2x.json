@@ -118,5 +118,26 @@
     "x": 216,
     "y": 0,
     "sdf": true
+  },
+  "shield-interstate-custom": {
+    "width": 56,
+    "height": 56,
+    "x": 0,
+    "y": 1628,
+    "pixelRatio": 2
+  },
+  "shield-ushighway-custom": {
+    "width": 52,
+    "height": 52,
+    "x": 0,
+    "y": 1684,
+    "pixelRatio": 2
+  },
+  "shield-state-custom": {
+    "width": 44,
+    "height": 44,
+    "x": 0,
+    "y": 1736,
+    "pixelRatio": 2
   }
 }
