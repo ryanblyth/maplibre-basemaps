@@ -125,7 +125,6 @@ function setupRoadClickHandler() {
         'road-tunnel-casing',
         'road-tunnel',
         'road-casing',
-        'road-bridge-casing',
         'road-bridge',
         'road-casing-us',
         'road-us',
@@ -133,6 +132,8 @@ function setupRoadClickHandler() {
         'road-parking-aisle',
         'road-other',
         'road-bridge-us',
+        'road-world',
+        'road-world-mid',
         'paths',
         'railway'
       ]
@@ -183,6 +184,19 @@ function setupRoadClickHandler() {
       console.log('Network:', props.network || 'N/A');
       console.log('Ref:', props.ref || 'N/A');
       console.log('All Properties:', props);
+      
+      // Also query the transportation_name layer for highway shield data
+      const labelFeatures = map.queryRenderedFeatures(bbox, {
+        layers: ['road-label-major', 'road-label-secondary', 'road-label-tertiary', 'road-label-other']
+      });
+      if (labelFeatures.length > 0) {
+        const labelProps = labelFeatures[0].properties;
+        console.log('--- Highway Label Data ---');
+        console.log('Label Ref:', labelProps.ref || 'N/A');
+        console.log('Label Network:', labelProps.network || 'N/A');
+        console.log('Label Route Num:', labelProps.ref_length || 'N/A');
+        console.log('Label Properties:', labelProps);
+      }
       console.groupEnd();
     } else {
       // Query ALL features at this point to see what's there

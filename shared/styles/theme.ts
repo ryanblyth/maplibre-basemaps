@@ -107,6 +107,76 @@ export interface ThemeColors {
       color: string;
       halo: string;
     };
+    /** Highway shield label styling */
+    shield?: {
+      interstate: { textColor: string; };
+      usHighway: { textColor: string; };
+      stateHighway: { textColor: string; };
+    };
+  };
+}
+
+// ============================================================================
+// SHIELD TYPES - Highway shield configuration
+// ============================================================================
+
+/** Highway shield visibility and styling */
+export interface ThemeShields {
+  /** Whether to show highway shields at all */
+  enabled: boolean;
+  /** Minimum zoom level to show shields */
+  minZoom?: number;
+  /** Interstate shield settings */
+  interstate: {
+    enabled: boolean;
+    sprite: string;
+    textColor: string;
+    minZoom?: number;
+    /** Text padding [top, right, bottom, left] in pixels */
+    textPadding?: [number, number, number, number];
+    /** Font size at different zoom levels [minZoom, minSize, maxZoom, maxSize] */
+    textSize?: [number, number, number, number];
+    /** Font family (e.g., "Noto Sans Bold") */
+    textFont?: string[];
+    /** Custom shield colors (only for shield-interstate-custom sprite) */
+    upperBackground?: string;
+    lowerBackground?: string;
+    strokeColor?: string;
+    strokeWidth?: number;
+  };
+  /** US Highway shield settings */
+  usHighway: {
+    enabled: boolean;
+    sprite: string;
+    textColor: string;
+    minZoom?: number;
+    /** Text padding [top, right, bottom, left] in pixels */
+    textPadding?: [number, number, number, number];
+    /** Font size at different zoom levels [minZoom, minSize, maxZoom, maxSize] */
+    textSize?: [number, number, number, number];
+    /** Font family (e.g., "Noto Sans Bold") */
+    textFont?: string[];
+    /** Custom shield colors (only for shield-ushighway-custom sprite) */
+    background?: string;
+    strokeColor?: string;
+    strokeWidth?: number;
+  };
+  /** State Highway shield settings */
+  stateHighway: {
+    enabled: boolean;
+    sprite: string;
+    textColor: string;
+    minZoom?: number;
+    /** Text padding [top, right, bottom, left] in pixels */
+    textPadding?: [number, number, number, number];
+    /** Font size at different zoom levels [minZoom, minSize, maxZoom, maxSize] */
+    textSize?: [number, number, number, number];
+    /** Font family (e.g., "Noto Sans Bold") */
+    textFont?: string[];
+    /** Custom shield colors (only for shield-state-custom sprite) */
+    background?: string;
+    strokeColor?: string;
+    strokeWidth?: number;
   };
 }
 
@@ -216,4 +286,6 @@ export interface Theme {
   widths: ThemeWidths;
   opacities: ThemeOpacities;
   settings?: ThemeSettings;
+  /** Highway shield configuration - optional, defaults to enabled with standard sprites */
+  shields?: ThemeShields;
 }

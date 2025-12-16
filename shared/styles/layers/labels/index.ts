@@ -2,7 +2,7 @@
  * Label layer exports
  */
 
-export { createRoadLabelLayers } from "./road.js";
+export { createRoadLabelLayers, createHighwayShieldLayers } from "./road.js";
 export { 
   createWaterLabelLayersFromWorldLabels, 
   createWaterLabelLayersFromBasemapSources, 

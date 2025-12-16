@@ -261,6 +261,66 @@ export const darkBlueOpacities: ThemeOpacities = {
 };
 
 // ============================================================================
+// HIGHWAY SHIELDS
+// ============================================================================
+
+// To build shield icons and styles, run: npx tsx scripts/build-shields.ts && npm run build:styles
+
+export const darkBlueShields = {
+  /** Whether to show highway shields */
+  enabled: true,
+  
+  /** Global minimum zoom for all shields */
+  minZoom: 6,
+  
+  /** Interstate shields (I-70, I-95, etc.) */
+  interstate: {
+    enabled: true,
+    sprite: "shield-interstate-custom",
+    textColor: "#d0dae8",                 // Light blue-gray text
+    minZoom: 6,
+    textPadding: [5, 5, 5, 5],        // [top, right, bottom, left]
+    textSize: [6, 9, 14, 13],             // [minZoom, minSize, maxZoom, maxSize]
+    textFont: ["Noto Sans Bold"],         // Font family
+    // Custom shield appearance - subtle two-tone for dark theme
+    upperBackground: "#1a2433",           // Slightly lighter dark blue
+    lowerBackground: "#141c28",           // Darker blue background
+    strokeColor: "#3a4a5c",               // Subtle blue-gray border
+    strokeWidth: 2,
+  },
+  
+  /** US Highway shields (US-1, US-66, etc.) */
+  usHighway: {
+    enabled: true,
+    sprite: "shield-ushighway-custom",
+    textColor: "#d0dae8",                 // Light blue-gray text
+    minZoom: 7,
+    textPadding: [5, 5, 5, 5],        // [top, right, bottom, left]
+    textSize: [6, 9, 14, 13],             // [minZoom, minSize, maxZoom, maxSize]
+    textFont: ["Noto Sans Bold"],         // Font family
+    // Custom shield appearance - subtle for dark theme
+    background: "#182030",                // Dark blue background
+    strokeColor: "#3a4a5c",               // Subtle blue-gray border
+    strokeWidth: 2.5,
+  },
+  
+  /** State Highway shields */
+  stateHighway: {
+    enabled: true,
+    sprite: "shield-state-custom",
+    textColor: "#d0dae8",                 // Light blue-gray text
+    minZoom: 8,
+    textPadding: [5, 5, 5, 5],        // [top, right, bottom, left]
+    textSize: [8, 8, 14, 12],             // [minZoom, minSize, maxZoom, maxSize]
+    textFont: ["Noto Sans Bold"],         // Font family
+    // Custom shield appearance - subtle circle for dark theme
+    background: "#1a2433",                // Dark blue background
+    strokeColor: "#3a4a5c",               // Subtle blue-gray border
+    strokeWidth: 1.5,
+  },
+};
+
+// ============================================================================
 // COMPLETE THEME
 // ============================================================================
 
@@ -271,4 +331,5 @@ export const darkBlueTheme: Theme = {
   widths: darkBlueWidths,
   opacities: darkBlueOpacities,
   settings: darkBlueSettings,
+  shields: darkBlueShields,
 };
