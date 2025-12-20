@@ -277,7 +277,7 @@ export const darkBlueShields = {
   interstate: {
     enabled: true,
     sprite: "shield-interstate-custom",
-    textColor: "#d0dae8",                 // Light blue-gray text
+    textColor: "#687383",                 // Light blue-gray text
     minZoom: 6,
     textPadding: [5, 5, 5, 5],            // [top, right, bottom, left]
     textSize: [6, 9, 14, 13],             // [minZoom, minSize, maxZoom, maxSize]
@@ -293,7 +293,7 @@ export const darkBlueShields = {
   usHighway: {
     enabled: true,
     sprite: "shield-ushighway-custom",
-    textColor: "#d0dae8",                 // Light blue-gray text
+    textColor: "#687383",                 // Light blue-gray text
     minZoom: 7,
     textPadding: [5, 5, 5, 5],            // [top, right, bottom, left]
     textSize: [6, 9, 14, 13],             // [minZoom, minSize, maxZoom, maxSize]
@@ -308,7 +308,7 @@ export const darkBlueShields = {
   stateHighway: {
     enabled: true,
     sprite: "shield-state-custom",
-    textColor: "#d0dae8",                 // Light blue-gray text
+    textColor: "#687383",                 // Light blue-gray text
     minZoom: 8,
     textPadding: [4, 1, 4, 1],            // [top, right, bottom, left]
     textSize: [8, 8, 14, 12],             // [minZoom, minSize, maxZoom, maxSize]

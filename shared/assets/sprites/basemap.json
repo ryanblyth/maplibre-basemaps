@@ -123,21 +123,21 @@
     "width": 28,
     "height": 28,
     "x": 0,
-    "y": 3739,
+    "y": 4003,
     "pixelRatio": 1
   },
   "shield-ushighway-custom": {
     "width": 26,
     "height": 26,
     "x": 0,
-    "y": 3767,
+    "y": 4031,
     "pixelRatio": 1
   },
   "shield-state-custom": {
     "width": 32,
     "height": 34,
     "x": 0,
-    "y": 3793,
+    "y": 4057,
     "pixelRatio": 1
   }
 }
