@@ -279,7 +279,7 @@ export const darkBlueShields = {
     sprite: "shield-interstate-custom",
     textColor: "#d0dae8",                 // Light blue-gray text
     minZoom: 6,
-    textPadding: [5, 5, 5, 5],        // [top, right, bottom, left]
+    textPadding: [5, 5, 5, 5],            // [top, right, bottom, left]
     textSize: [6, 9, 14, 13],             // [minZoom, minSize, maxZoom, maxSize]
     textFont: ["Noto Sans Bold"],         // Font family
     // Custom shield appearance - subtle two-tone for dark theme
@@ -295,7 +295,7 @@ export const darkBlueShields = {
     sprite: "shield-ushighway-custom",
     textColor: "#d0dae8",                 // Light blue-gray text
     minZoom: 7,
-    textPadding: [5, 5, 5, 5],        // [top, right, bottom, left]
+    textPadding: [5, 5, 5, 5],            // [top, right, bottom, left]
     textSize: [6, 9, 14, 13],             // [minZoom, minSize, maxZoom, maxSize]
     textFont: ["Noto Sans Bold"],         // Font family
     // Custom shield appearance - subtle for dark theme
@@ -310,13 +310,13 @@ export const darkBlueShields = {
     sprite: "shield-state-custom",
     textColor: "#d0dae8",                 // Light blue-gray text
     minZoom: 8,
-    textPadding: [5, 5, 5, 5],        // [top, right, bottom, left]
+    textPadding: [4, 1, 4, 1],            // [top, right, bottom, left]
     textSize: [8, 8, 14, 12],             // [minZoom, minSize, maxZoom, maxSize]
     textFont: ["Noto Sans Bold"],         // Font family
-    // Custom shield appearance - subtle circle for dark theme
+    // Custom shield appearance - subtle oval for dark theme
     background: "#1a2433",                // Dark blue background
     strokeColor: "#3a4a5c",               // Subtle blue-gray border
-    strokeWidth: 1.5,
+    strokeWidth: 1,                       // Border thickness (adjustable - reduce if cutoff occurs)
   },
 };
 

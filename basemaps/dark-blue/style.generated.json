@@ -7879,7 +7879,7 @@
           "get",
           "ref"
         ],
-        "icon-text-fit": "both",
+        "icon-text-fit": "height",
         "icon-size": [
           "interpolate",
           [
@@ -7898,10 +7898,10 @@
         "text-letter-spacing": 0.05,
         "icon-image": "shield-state-custom",
         "icon-text-fit-padding": [
-          5,
-          5,
-          5,
-          5
+          4,
+          1,
+          4,
+          1
         ],
         "text-size": [
           "interpolate",

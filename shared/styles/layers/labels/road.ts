@@ -136,7 +136,8 @@ export function createHighwayShieldLayers(theme: Theme): LayerSpecification[] {
       layout: { 
         ...baseShieldLayout,
         "icon-image": stateHighwayConfig.sprite,
-        "icon-text-fit-padding": stateHighwayConfig.textPadding || [2, 4, 2, 4],
+        "icon-text-fit": "height" as const,  // Maintain height, let width scale to keep oval wider
+        "icon-text-fit-padding": stateHighwayConfig.textPadding || [5, 5, 5, 5],  // Equal padding to maintain aspect ratio
         "text-size": buildTextSize(stateHighwayConfig.textSize),
         "text-font": stateHighwayConfig.textFont || theme.fonts.bold || theme.fonts.regular,
       }, 
