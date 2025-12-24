@@ -27,6 +27,12 @@ export function createBasemapSources(config: BaseStyleConfig): Record<string, So
       minzoom: 6,
       maxzoom: 15,
     },
+    poi_us: {
+      type: "vector",
+      url: `pmtiles://${config.dataBaseUrl}/pmtiles/poi_us_z12-15.pmtiles`,
+      minzoom: 12,
+      maxzoom: 15,
+    },
   };
 }
 

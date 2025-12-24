@@ -14,7 +14,8 @@ import {
   type Theme, 
   type ThemeColors, 
   type ThemeWidths, 
-  type ThemeOpacities 
+  type ThemeOpacities,
+  type ThemePOIs
 } from "../../../shared/styles/theme.js";
 
 // ============================================================================
@@ -151,6 +152,13 @@ export const darkBlueColors: ThemeColors = {
       color: "#5b8db8",
       halo: "#0a2846",
     },
+    poi: {
+      iconColor: "#7a8ba3",           // Light blue-gray for icons
+      iconSize: 0.8,                   // Slightly smaller icons
+      textColor: "#a8b8d0",            // Light blue-gray for labels
+      textHalo: "#0b0f14",             // Dark halo for contrast
+      textHaloWidth: 1.5,
+    },
   },
 };
 
@@ -277,11 +285,11 @@ export const darkBlueShields = {
   interstate: {
     enabled: true,
     sprite: "shield-interstate-custom",
-    textColor: "#d0dae8",                 // Light blue-gray text
+    textColor: "#687383",                 // Light blue-gray text
     minZoom: 6,
-    textPadding: [5, 5, 5, 5],        // [top, right, bottom, left]
-    textSize: [6, 9, 14, 13],             // [minZoom, minSize, maxZoom, maxSize]
-    textFont: ["Noto Sans Bold"],         // Font family
+    textPadding: [5, 5, 5, 5] as [number, number, number, number],  // [top, right, bottom, left]
+    textSize: [6, 9, 14, 13] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
+    textFont: ["Noto Sans SemiBold"],     // Font family
     // Custom shield appearance - subtle two-tone for dark theme
     upperBackground: "#1a2433",           // Slightly lighter dark blue
     lowerBackground: "#141c28",           // Darker blue background
@@ -293,11 +301,11 @@ export const darkBlueShields = {
   usHighway: {
     enabled: true,
     sprite: "shield-ushighway-custom",
-    textColor: "#d0dae8",                 // Light blue-gray text
+    textColor: "#687383",                 // Light blue-gray text
     minZoom: 7,
-    textPadding: [5, 5, 5, 5],        // [top, right, bottom, left]
-    textSize: [6, 9, 14, 13],             // [minZoom, minSize, maxZoom, maxSize]
-    textFont: ["Noto Sans Bold"],         // Font family
+    textPadding: [5, 5, 5, 5] as [number, number, number, number],  // [top, right, bottom, left]
+    textSize: [6, 9, 14, 13] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
+    textFont: ["Noto Sans SemiBold"],     // Font family
     // Custom shield appearance - subtle for dark theme
     background: "#182030",                // Dark blue background
     strokeColor: "#3a4a5c",               // Subtle blue-gray border
@@ -308,15 +316,81 @@ export const darkBlueShields = {
   stateHighway: {
     enabled: true,
     sprite: "shield-state-custom",
-    textColor: "#d0dae8",                 // Light blue-gray text
+    textColor: "#687383",                 // Light blue-gray text
     minZoom: 8,
-    textPadding: [5, 5, 5, 5],        // [top, right, bottom, left]
-    textSize: [8, 8, 14, 12],             // [minZoom, minSize, maxZoom, maxSize]
-    textFont: ["Noto Sans Bold"],         // Font family
-    // Custom shield appearance - subtle circle for dark theme
+    textPadding: [4, 4, 4, 4] as [number, number, number, number],  // [top, right, bottom, left]
+    textSize: [8, 8, 14, 12] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
+    textFont: ["Noto Sans SemiBold"],     // Font family
+    // Custom shield appearance - subtle oval for dark theme
     background: "#1a2433",                // Dark blue background
     strokeColor: "#3a4a5c",               // Subtle blue-gray border
-    strokeWidth: 1.5,
+    strokeWidth: 2,                       // Border thickness (adjustable - reduce if cutoff occurs)
+  },
+};
+
+// ============================================================================
+// POI CONFIGURATION
+// ============================================================================
+
+export const darkBluePOIs: ThemePOIs = {
+  /** Whether to show POIs at all */
+  enabled: true,
+  
+  /** Global minimum zoom for all POIs */
+  minZoom: 12,
+  
+  /** Airport POI settings */
+  airport: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** Airfield POI settings */
+  airfield: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** Hospital POI settings */
+  hospital: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** Museum POI settings */
+  museum: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** Zoo POI settings */
+  zoo: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** Stadium POI settings */
+  stadium: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** Park POI settings */
+  park: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** Railway station POI settings */
+  rail: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** School/College/University POI settings */
+  school: {
+    enabled: true,
+    minZoom: 12,
   },
 };
 
@@ -332,4 +406,5 @@ export const darkBlueTheme: Theme = {
   opacities: darkBlueOpacities,
   settings: darkBlueSettings,
   shields: darkBlueShields,
+  pois: darkBluePOIs,
 };

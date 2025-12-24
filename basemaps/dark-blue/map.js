@@ -59,6 +59,7 @@ map.on('style.load', () => {
     type: 'globe'
   });
   starryBg.attachToMap(map, "starfield-container", "globe-glow");
+  
 });
 
 // Error handling
@@ -106,6 +107,7 @@ setTimeout(() => {
     setupZoomLogging();
   }
 }, 1000);
+
 
 // ============================================================================
 // Debug: Show road/street information on click
@@ -224,6 +226,95 @@ function setupRoadClickHandler() {
       }
     }
   });
+
+  // Airport/Airfield Inspector: Query airport and airfield features at click location
+  map.on('click', (e) => {
+    console.group('✈️ Airport/Airfield Inspector');
+    console.log('Click Location:', e.lngLat);
+    console.log('Zoom Level:', map.getZoom().toFixed(2));
+    
+    // Query rendered features for airports/airfields
+    const bbox = [
+      [e.point.x - 10, e.point.y - 10],
+      [e.point.x + 10, e.point.y + 10]
+    ];
+    const renderedFeatures = map.queryRenderedFeatures(bbox);
+    
+    // Filter for airport/airfield layers
+    const airportFeatures = renderedFeatures.filter(f => 
+      f.layer?.id?.includes('airport') || 
+      f.layer?.id?.includes('airfield') ||
+      f.layer?.id?.includes('aerodrome')
+    );
+    
+    if (airportFeatures.length > 0) {
+      console.log(`\n✈️ Airport/Airfield Analysis (${airportFeatures.length} features):`);
+      airportFeatures.forEach((f, i) => {
+        console.log(`  ${i + 1}. ${f.properties?.name || f.properties?.['name:en'] || 'unnamed'}`);
+        console.log(`     Class: ${f.properties?.class || 'N/A'}`);
+        console.log(`     Subclass: ${f.properties?.subclass || 'N/A'}`);
+        console.log(`     Place: ${f.properties?.place || 'N/A'}`);
+        console.log(`     Source Layer: ${f.sourceLayer || 'N/A'}`);
+        console.log(`     Layer: ${f.layer?.id || 'N/A'}`);
+        console.log(`     All properties:`, f.properties);
+      });
+    } else {
+      console.log('\nℹ️  No airports/airfields found in rendered features at this location');
+      
+      // Check source features to see if airports/airfields exist but aren't rendering
+      const sources = ['world_low', 'world_mid', 'us_high', 'poi_us', 'world_labels'];
+      console.log('\n🔍 Checking source features for airports/airfields...');
+      sources.forEach(sourceName => {
+        try {
+          // Check aerodrome_label layer
+          try {
+            const aerodromeFeatures = map.querySourceFeatures(sourceName, {
+              sourceLayer: 'aerodrome_label',
+              filter: undefined
+            });
+            if (aerodromeFeatures.length > 0) {
+              console.log(`\n✅ Found ${aerodromeFeatures.length} aerodrome_label features in ${sourceName}:`);
+              aerodromeFeatures.slice(0, 3).forEach((f, i) => {
+                console.log(`  ${i + 1}. ${f.properties?.name || f.properties?.['name:en'] || 'unnamed'}`);
+                console.log(`     All properties:`, f.properties);
+              });
+            }
+          } catch (err) {
+            // Source-layer may not exist, ignore
+          }
+          
+          // Check poi layer for airports/airfields
+          const poiFeatures = map.querySourceFeatures(sourceName, {
+            sourceLayer: 'poi',
+            filter: undefined
+          });
+          
+          const airportPoiFeatures = poiFeatures.filter(f => {
+            const props = f.properties || {};
+            const classVal = (props.class || '').toLowerCase();
+            const subclass = (props.subclass || '').toLowerCase();
+            return classVal.includes('airport') || classVal.includes('transport') ||
+                   subclass.includes('airport') || subclass.includes('airfield');
+          });
+          
+          if (airportPoiFeatures.length > 0) {
+            console.log(`\n✅ Found ${airportPoiFeatures.length} airport/airfield POI features in ${sourceName}:`);
+            airportPoiFeatures.slice(0, 3).forEach((f, i) => {
+              console.log(`  ${i + 1}. ${f.properties?.name || f.properties?.['name:en'] || 'unnamed'}`);
+              console.log(`     Class: ${f.properties?.class || 'N/A'}`);
+              console.log(`     Subclass: ${f.properties?.subclass || 'N/A'}`);
+              console.log(`     All properties:`, f.properties);
+            });
+          }
+        } catch (err) {
+          // Source or source-layer may not exist, ignore
+        }
+      });
+    }
+    
+    console.groupEnd();
+  });
+  
 }
 
 /**

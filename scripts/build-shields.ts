@@ -1,21 +1,44 @@
 /**
- * Build highway shield sprites
+ * Build highway shield sprites for a specific basemap
  * 
  * Converts SVG shields to PNG and adds them to the sprite sheet.
- * Reads Interstate custom shield colors from theme.ts.
+ * Reads shield colors from the basemap's theme.ts.
  * 
- * Usage: npx tsx scripts/build-shields.ts
+ * Usage: npx tsx scripts/build-shields.ts <basemap-name>
+ * Example: npx tsx scripts/build-shields.ts dark-blue
  * 
  * Note: Requires 'sharp' package: npm install sharp --save-dev
  */
 
-import { readFileSync, writeFileSync, existsSync, renameSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, renameSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import sharp from 'sharp';
-import { darkBlueShields } from '../basemaps/dark-blue/styles/theme.js';
 
-const SPRITES_DIR = 'shared/assets/sprites';
-const SHIELDS_DIR = join(SPRITES_DIR, 'shields');
+// Get basemap name from command line argument
+const basemapName = process.argv[2] || 'dark-blue';
+const BASEMAP_DIR = join('basemaps', basemapName);
+const SPRITES_DIR = join(BASEMAP_DIR, 'sprites');
+const SHIELDS_DIR = join('shared', 'assets', 'sprites', 'shields');
+
+// Dynamically import theme based on basemap name
+async function getBasemapShields() {
+  try {
+    // Try to import the theme module
+    const themeModule = await import(`../${BASEMAP_DIR}/styles/theme.js`);
+    const theme = themeModule[`${basemapName.replace(/-([a-z])/g, (_, c) => c.toUpperCase())}Theme`] || 
+                  themeModule[`${basemapName}Theme`] ||
+                  themeModule.default;
+    
+    if (theme?.shields) {
+      return theme.shields;
+    }
+    
+    throw new Error(`No shields configuration found in theme for ${basemapName}`);
+  } catch (error) {
+    console.error(`Error loading theme for ${basemapName}:`, error);
+    throw error;
+  }
+}
 
 interface SpriteDefinition {
   width: number;
@@ -31,18 +54,16 @@ interface SpriteSheet {
 }
 
 const shields = [
-  // Custom shields (uses theme colors from darkBlueShields)
+  // Custom shields (uses theme colors from basemap theme)
   { name: 'shield-interstate-custom', file: 'shield-interstate-custom.svg', width: 28, height: 28, useTheme: 'interstate' },
   { name: 'shield-ushighway-custom', file: 'shield-ushighway-custom.svg', width: 26, height: 26, useTheme: 'usHighway' },
-  { name: 'shield-state-custom', file: 'shield-state-custom.svg', width: 22, height: 22, useTheme: 'stateHighway' },
+  { name: 'shield-state-custom', file: 'shield-state-custom.svg', width: 32, height: 34, useTheme: 'stateHighway' },
 ];
 
 /**
  * Generate custom Interstate shield SVG with theme colors
  */
-function generateCustomInterstateShield(): string {
-  const config = darkBlueShields.interstate;
-  
+function generateCustomInterstateShield(config: any): string {
   // Default values if not specified in theme
   const upperBg = config.upperBackground || '#2a3444';
   const lowerBg = config.lowerBackground || '#1e2530';
@@ -69,9 +90,7 @@ function generateCustomInterstateShield(): string {
 /**
  * Generate custom US Highway shield SVG with theme colors
  */
-function generateCustomUSHighwayShield(): string {
-  const config = darkBlueShields.usHighway;
-  
+function generateCustomUSHighwayShield(config: any): string {
   // Default values if not specified in theme
   const background = config.background || '#1e2530';
   const stroke = config.strokeColor || '#4a5a6a';
@@ -94,9 +113,7 @@ function generateCustomUSHighwayShield(): string {
 /**
  * Generate custom State Highway shield SVG with theme colors
  */
-function generateCustomStateHighwayShield(): string {
-  const config = darkBlueShields.stateHighway;
-  
+function generateCustomStateHighwayShield(config: any): string {
   // Default values if not specified in theme
   const background = config.background || '#1e2530';
   const stroke = config.strokeColor || '#4a5a6a';
@@ -107,31 +124,46 @@ function generateCustomStateHighwayShield(): string {
   console.log(`    Stroke color: ${stroke}`);
   console.log(`    Stroke width: ${strokeWidth}`);
   
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
-  <!-- State Route Shield - configurable circle -->
-  <circle cx="11" cy="11" r="9.5" fill="${background}" stroke="${stroke}" stroke-width="${strokeWidth}"/>
-</svg>`;
+  // Read the SVG template and replace template variables
+  const svgPath = join(SHIELDS_DIR, 'shield-state-custom.svg');
+  let svgTemplate = readFileSync(svgPath, 'utf8');
+  
+  // Replace template variables
+  svgTemplate = svgTemplate.replace(/\{\{background\}\}/g, background);
+  svgTemplate = svgTemplate.replace(/\{\{stroke\}\}/g, stroke);
+  svgTemplate = svgTemplate.replace(/\{\{strokeWidth\}\}/g, strokeWidth.toString());
+  
+  return svgTemplate;
 }
 
 async function buildShields() {
-  console.log('Building highway shield sprites...\n');
+  console.log(`Building highway shield sprites for basemap: ${basemapName}\n`);
+  
+  // Ensure sprite directory exists
+  mkdirSync(SPRITES_DIR, { recursive: true });
+  
+  // Load basemap-specific theme
+  const basemapShields = await getBasemapShields();
   
   // Build both 1x and 2x versions
-  await buildSpriteSheet(1);
-  await buildSpriteSheet(2);
+  await buildSpriteSheet(1, basemapShields);
+  await buildSpriteSheet(2, basemapShields);
   
-  console.log('\n✓ Highway shields added to sprite sheets!');
+  console.log(`\n✓ Highway shields added to sprite sheets for ${basemapName}!`);
 }
 
-async function buildSpriteSheet(pixelRatio: number) {
+async function buildSpriteSheet(pixelRatio: number, basemapShields: any) {
   const suffix = pixelRatio === 1 ? '' : `@${pixelRatio}x`;
   const jsonPath = join(SPRITES_DIR, `basemap${suffix}.json`);
   const pngPath = join(SPRITES_DIR, `basemap${suffix}.png`);
   
   console.log(`\nBuilding ${pixelRatio}x sprite sheet...`);
   
-  // Load existing sprite sheet JSON
-  const spriteJson: SpriteSheet = JSON.parse(readFileSync(jsonPath, 'utf8'));
+  // Load existing sprite sheet JSON (or create empty if doesn't exist)
+  let spriteJson: SpriteSheet = {};
+  if (existsSync(jsonPath)) {
+    spriteJson = JSON.parse(readFileSync(jsonPath, 'utf8'));
+  }
   
   // Find the max Y position in existing sprites (in logical pixels)
   let maxY = 0;
@@ -163,9 +195,19 @@ async function buildSpriteSheet(pixelRatio: number) {
   writeFileSync(jsonPath, JSON.stringify(spriteJson, null, 2), 'utf8');
   console.log(`  Updated ${jsonPath}`);
   
-  // Load existing sprite sheet
-  const existingSprite = sharp(pngPath);
-  const metadata = await existingSprite.metadata();
+  // Load existing sprite sheet or create new one
+  let existingSprite: sharp.Sharp | null = null;
+  let metadata: sharp.Metadata | null = null;
+  let spriteWidth = 0;
+  
+  if (existsSync(pngPath)) {
+    existingSprite = sharp(pngPath);
+    metadata = await existingSprite.metadata();
+    spriteWidth = metadata.width || 0;
+  } else {
+    // Create new sprite sheet - determine width from shields
+    spriteWidth = Math.max(...shields.map(s => s.width)) * pixelRatio;
+  }
   
   // Create composite operations for new shields
   const composites: any[] = [];
@@ -177,13 +219,13 @@ async function buildSpriteSheet(pixelRatio: number) {
     
     if (shieldWithTheme.useTheme === 'interstate') {
       // Generate custom Interstate shield with theme colors
-      svgBuffer = Buffer.from(generateCustomInterstateShield());
+      svgBuffer = Buffer.from(generateCustomInterstateShield(basemapShields.interstate));
     } else if (shieldWithTheme.useTheme === 'usHighway') {
       // Generate custom US Highway shield with theme colors
-      svgBuffer = Buffer.from(generateCustomUSHighwayShield());
+      svgBuffer = Buffer.from(generateCustomUSHighwayShield(basemapShields.usHighway));
     } else if (shieldWithTheme.useTheme === 'stateHighway') {
       // Generate custom State Highway shield with theme colors
-      svgBuffer = Buffer.from(generateCustomStateHighwayShield());
+      svgBuffer = Buffer.from(generateCustomStateHighwayShield(basemapShields.stateHighway));
     } else {
       // Use existing SVG file
       const svgPath = join(SHIELDS_DIR, shield.file);
@@ -212,25 +254,43 @@ async function buildSpriteSheet(pixelRatio: number) {
   
   // Extend the sprite sheet height and add shields
   const newHeight = currentY;
-  await sharp({
-    create: {
-      width: metadata.width!,
-      height: newHeight,
-      channels: 4,
-      background: { r: 0, g: 0, b: 0, alpha: 0 },
-    },
-  })
-    .composite([
-      { input: pngPath, left: 0, top: 0 },
-      ...composites,
-    ])
-    .png()
-    .toFile(pngPath + '.new');
+  const existingHeight = metadata?.height || 0;
   
-  // Replace old file
-  renameSync(pngPath + '.new', pngPath);
+  if (existsSync(pngPath)) {
+    // Extend existing sprite
+    await sharp({
+      create: {
+        width: spriteWidth,
+        height: newHeight,
+        channels: 4,
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      },
+    })
+      .composite([
+        { input: pngPath, left: 0, top: 0 },
+        ...composites,
+      ])
+      .png()
+      .toFile(pngPath + '.new');
+    
+    // Replace old file
+    renameSync(pngPath + '.new', pngPath);
+  } else {
+    // Create new sprite
+    await sharp({
+      create: {
+        width: spriteWidth,
+        height: newHeight,
+        channels: 4,
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      },
+    })
+      .composite(composites)
+      .png()
+      .toFile(pngPath);
+  }
   
-  console.log(`  Updated ${pngPath} (new height: ${newHeight}px)`);
+  console.log(`  Updated ${pngPath} (${spriteWidth}x${newHeight}px)`);
 }
 
 buildShields().catch(console.error);
