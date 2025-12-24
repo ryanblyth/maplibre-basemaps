@@ -30,29 +30,25 @@ Sprites are image atlases that contain icons used on the map. The system uses a 
 
 ### POI Icons (Shared)
 
-These 15 icons are the same across all basemaps and are duplicated in each basemap's sprite sheet for self-containment:
+POI icons are stored in `shared/assets/sprites/icons/` and built into each basemap's sprite sheet. Currently, the system includes 9 POI icons:
 
 - `airport` - Airports
-- `bar` - Bars/pubs
-- `bus` - Bus stops/stations
-- `cafe` - Cafes/coffee shops
-- `charging-station` - EV charging stations
-- `fuel` - Gas stations
-- `hospital` - Hospitals/medical facilities
-- `lodging` - Hotels/accommodations
+- `airfield` - Airfields/private airstrips
+- `hospital` - Hospitals
 - `museum` - Museums
-- `park` - Parks
-- `parking` - Parking lots/garages
-- `police` - Police stations
+- `park` - Parks (national/state parks)
 - `rail` - Railway stations
-- `restaurant` - Restaurants
-- `school` - Schools/educational institutions
+- `school` - Colleges/universities
+- `stadium` - Sports stadiums
+- `zoo` - Zoos
 
 **Properties:**
 - All are **SDF (Signed Distance Field)** sprites
 - Size: 21x21px (1x) / 42x42px (2x)
 - Color can be changed at runtime via `icon-color` in MapLibre
 - Size can be scaled via `icon-size` in MapLibre
+
+For detailed information on POI configuration, filtering, and maintenance, see [POI Features Documentation](./pois.md).
 
 ### Highway Shields (Basemap-Specific)
 
@@ -276,11 +272,17 @@ The JSON format:
 
 ### Missing POI Icons
 
-POI icons are extracted from `shared/assets/sprites/basemap.png`. If this file doesn't exist or is outdated, rebuild it using the Docker/Spreet process (see `docs/DOCKER.md`).
+POI icons are built directly from SVG files in `shared/assets/sprites/icons/`. If an icon is missing:
+
+1. **Verify the SVG file exists** in `shared/assets/sprites/icons/`
+2. **Check the icon is listed** in `scripts/rebuild-sprites.ts` `poiIcons` array
+3. **Rebuild sprites**: `npx tsx scripts/rebuild-sprites.ts dark-blue`
+
+For more details, see [POI Features Documentation](./pois.md).
 
 ## Related Documentation
 
+- [POI Features](./pois.md) - Complete guide to POI configuration, filtering, and maintenance
 - [Road Features](./roads.md) - Details on highway shields and road styling
 - [Customizing Themes](./customizing-themes.md) - How to modify shield colors
-- [Docker Sprite Building](./DOCKER.md) - Building POI icons from SVG
 
