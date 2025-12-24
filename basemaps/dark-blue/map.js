@@ -108,6 +108,167 @@ setTimeout(() => {
 }, 1000);
 
 // ============================================================================
+// POI Inspector: Check available POI data in PMTiles
+// ============================================================================
+function inspectPOIData() {
+  console.group('🔍 POI Data Inspection');
+  console.log('Checking PMTiles sources for POI data...\n');
+  
+  const sources = ['world_low', 'world_mid', 'us_high', 'world_labels'];
+  const poiData = {};
+  const allPOIClasses = new Set();
+  const allPOISubclasses = new Set();
+  const samplePOIs = [];
+  
+  // First, check what source layers are available
+  console.log('📋 Available Source Layers:');
+  sources.forEach(sourceName => {
+    try {
+      const source = map.getSource(sourceName);
+      if (source) {
+        // Check if source has vectorLayers property (available after tiles load)
+        if (source.vectorLayers && Array.isArray(source.vectorLayers)) {
+          const layerNames = source.vectorLayers.map(l => l.id).sort();
+          console.log(`  ${sourceName}: ${layerNames.length} layers`);
+          console.log(`    → ${layerNames.join(', ')}`);
+          
+          if (layerNames.includes('poi')) {
+            console.log(`    ✅ POI layer EXISTS in ${sourceName}!`);
+            poiData[sourceName] = { hasPOILayer: true, layers: layerNames };
+          } else {
+            console.log(`    ❌ No POI layer in ${sourceName}`);
+          }
+        } else {
+          console.log(`  ${sourceName}: Source exists but vectorLayers not yet available`);
+          console.log(`    (This is normal - layers load asynchronously with tiles)`);
+        }
+      } else {
+        console.log(`  ${sourceName}: Source not found`);
+      }
+    } catch (err) {
+      console.log(`  ${sourceName}: Error checking source - ${err.message}`);
+    }
+  });
+  
+  // Try to query POI features from sources that have the layer
+  console.log('\n🔎 Sampling POI Features:');
+  const currentZoom = map.getZoom();
+  const currentCenter = map.getCenter();
+  
+  // Query at current view (if zoomed in enough)
+  if (currentZoom >= 10) {
+    sources.forEach(sourceName => {
+      try {
+        const source = map.getSource(sourceName);
+        if (source && source.vectorLayers && source.vectorLayers.some(l => l.id === 'poi')) {
+          try {
+            // Query source features - this queries all loaded tiles
+            const features = map.querySourceFeatures(sourceName, {
+              sourceLayer: 'poi',
+              filter: undefined
+            });
+            
+            if (features.length > 0) {
+              console.log(`  ✅ ${sourceName}: Found ${features.length} POI features at current view`);
+              
+              poiData[sourceName] = {
+                ...poiData[sourceName],
+                featureCount: features.length,
+                sampled: true
+              };
+              
+              // Collect class and subclass information
+              features.slice(0, 100).forEach(f => {
+                const props = f.properties || {};
+                if (props.class) allPOIClasses.add(props.class);
+                if (props.subclass) allPOISubclasses.add(props.subclass);
+                
+                // Store sample POIs
+                if (samplePOIs.length < 30) {
+                  samplePOIs.push({
+                    source: sourceName,
+                    class: props.class,
+                    subclass: props.subclass,
+                    name: props.name || props['name:en'],
+                    amenity: props.amenity,
+                    shop: props.shop,
+                    tourism: props.tourism,
+                    leisure: props.leisure,
+                    rank: props.rank
+                  });
+                }
+              });
+            } else {
+              console.log(`  ⚠️  ${sourceName}: POI layer exists but no features found at current zoom (${currentZoom.toFixed(1)})`);
+              console.log(`     Try zooming in more (POIs typically appear at zoom 12+)`);
+            }
+          } catch (err) {
+            console.log(`  ⚠️  ${sourceName}: Error querying POI features - ${err.message}`);
+          }
+        }
+      } catch (err) {
+        // Source check failed
+      }
+    });
+  } else {
+    console.log(`  ℹ️  Current zoom (${currentZoom.toFixed(1)}) is too low for POI data`);
+    console.log(`     POIs typically appear at zoom 12+. Try zooming in to a city.`);
+  }
+  
+  // Report summary
+  console.log('\n📊 Summary:');
+  const sourcesWithPOI = Object.keys(poiData).filter(s => poiData[s].hasPOILayer);
+  if (sourcesWithPOI.length > 0) {
+    console.log(`✅ POI layer found in ${sourcesWithPOI.length} source(s): ${sourcesWithPOI.join(', ')}`);
+    
+    if (allPOIClasses.size > 0) {
+      console.log(`\n📊 POI Classes Found (${allPOIClasses.size}):`);
+      const sortedClasses = Array.from(allPOIClasses).sort();
+      console.log(sortedClasses.join(', '));
+    }
+    
+    if (allPOISubclasses.size > 0) {
+      console.log(`\n📊 POI Subclasses Found (${allPOISubclasses.size}):`);
+      const sortedSubclasses = Array.from(allPOISubclasses).sort();
+      // Show first 20 to avoid console spam
+      if (sortedSubclasses.length <= 20) {
+        console.log(sortedSubclasses.join(', '));
+      } else {
+        console.log(sortedSubclasses.slice(0, 20).join(', ') + `, ... and ${sortedSubclasses.length - 20} more`);
+      }
+    }
+    
+    if (samplePOIs.length > 0) {
+      console.log(`\n📝 Sample POIs (${Math.min(samplePOIs.length, 15)} of ${samplePOIs.length}):`);
+      samplePOIs.slice(0, 15).forEach((poi, i) => {
+        const name = poi.name || '(no name)';
+        const classInfo = poi.class ? `[${poi.class}${poi.subclass ? '/' + poi.subclass : ''}]` : '';
+        console.log(`  ${i + 1}. ${name} ${classInfo}`);
+      });
+    }
+  } else {
+    console.log('❌ No POI layer found in any PMTiles source');
+    console.log('\n💡 To add POI data, you will need to:');
+    console.log('   1. Create new PMTiles that include a "poi" source-layer');
+    console.log('   2. Use OpenMapTiles schema or similar that includes POI data');
+    console.log('   3. Update your PMTiles sources to include the new file(s)');
+  }
+  
+  console.groupEnd();
+}
+
+// Run POI inspection when map is fully loaded and tiles are available
+map.on('idle', () => {
+  // Only run once
+  if (!window.poiInspectionDone) {
+    window.poiInspectionDone = true;
+    setTimeout(() => {
+      inspectPOIData();
+    }, 1000);
+  }
+});
+
+// ============================================================================
 // Debug: Show road/street information on click
 // ============================================================================
 function setupRoadClickHandler() {
@@ -222,6 +383,79 @@ function setupRoadClickHandler() {
       } else {
         console.log('ℹ️  Clicked location has no features at all');
       }
+    }
+  });
+
+  // POI Inspector: Query POI features at click location
+  map.on('click', (e) => {
+    // Small bounding box around click point
+    const bbox = [
+      [e.point.x - 10, e.point.y - 10],
+      [e.point.x + 10, e.point.y + 10]
+    ];
+    
+    // Query all sources for POI features
+    const sources = ['world_low', 'world_mid', 'us_high', 'world_labels'];
+    const poiFeatures = [];
+    
+    sources.forEach(sourceName => {
+      try {
+        const features = map.querySourceFeatures(sourceName, {
+          sourceLayer: 'poi',
+          filter: undefined
+        });
+        if (features.length > 0) {
+          poiFeatures.push(...features);
+        }
+      } catch (err) {
+        // Source or source-layer may not exist, ignore
+      }
+    });
+    
+    // Also try querying rendered features for POI layers
+    const renderedFeatures = map.queryRenderedFeatures(bbox);
+    const renderedPOIs = renderedFeatures.filter(f => 
+      f.sourceLayer === 'poi' || 
+      (f.layer?.id && f.layer.id.includes('poi'))
+    );
+    
+    if (poiFeatures.length > 0 || renderedPOIs.length > 0) {
+      console.group('📍 POI Features Found');
+      console.log('Zoom Level:', map.getZoom().toFixed(2));
+      console.log('Click Location:', e.lngLat);
+      
+      if (poiFeatures.length > 0) {
+        console.log(`\n📦 Source Features (${poiFeatures.length}):`);
+        poiFeatures.slice(0, 10).forEach((f, i) => {
+          console.log(`POI ${i + 1}:`, {
+            source: f.source,
+            class: f.properties?.class,
+            subclass: f.properties?.subclass,
+            name: f.properties?.name || f.properties?.['name:en'],
+            amenity: f.properties?.amenity,
+            shop: f.properties?.shop,
+            tourism: f.properties?.tourism,
+            leisure: f.properties?.leisure,
+            allProperties: f.properties
+          });
+        });
+      }
+      
+      if (renderedPOIs.length > 0) {
+        console.log(`\n🎨 Rendered POI Layers (${renderedPOIs.length}):`);
+        renderedPOIs.slice(0, 10).forEach((f, i) => {
+          console.log(`Rendered ${i + 1}:`, {
+            layer: f.layer?.id,
+            source: f.source,
+            sourceLayer: f.sourceLayer,
+            class: f.properties?.class,
+            subclass: f.properties?.subclass,
+            name: f.properties?.name || f.properties?.['name:en']
+          });
+        });
+      }
+      
+      console.groupEnd();
     }
   });
 }

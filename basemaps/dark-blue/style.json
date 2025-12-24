@@ -7757,7 +7757,7 @@
           13
         ],
         "text-font": [
-          "Noto Sans Bold"
+          "Noto Sans SemiBold"
         ]
       },
       "paint": {
@@ -7834,7 +7834,7 @@
           13
         ],
         "text-font": [
-          "Noto Sans Bold"
+          "Noto Sans SemiBold"
         ]
       },
       "paint": {
@@ -7879,7 +7879,7 @@
           "get",
           "ref"
         ],
-        "icon-text-fit": "height",
+        "icon-text-fit": "both",
         "icon-size": [
           "interpolate",
           [
@@ -7899,9 +7899,9 @@
         "icon-image": "shield-state-custom",
         "icon-text-fit-padding": [
           4,
-          1,
           4,
-          1
+          4,
+          4
         ],
         "text-size": [
           "interpolate",
@@ -7917,7 +7917,7 @@
           12
         ],
         "text-font": [
-          "Noto Sans Bold"
+          "Noto Sans SemiBold"
         ]
       },
       "paint": {
