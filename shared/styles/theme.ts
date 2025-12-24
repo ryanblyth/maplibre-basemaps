@@ -107,6 +107,14 @@ export interface ThemeColors {
       color: string;
       halo: string;
     };
+    /** POI icon and label styling */
+    poi?: {
+      iconColor: string;
+      iconSize?: number;
+      textColor: string;
+      textHalo: string;
+      textHaloWidth?: number;
+    };
     /** Highway shield label styling */
     shield?: {
       interstate: { textColor: string; };

@@ -9,4 +9,5 @@ export {
   createWaterwayLabelLayers 
 } from "./water.js";
 export { createPlaceLabelLayers } from "./place.js";
+export { createPOILayers } from "./poi.js";
 

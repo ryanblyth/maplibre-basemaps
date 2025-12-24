@@ -22,7 +22,8 @@ export {
   createWaterLabelLayersFromWorldLabels, 
   createWaterLabelLayersFromBasemapSources, 
   createWaterwayLabelLayers,
-  createPlaceLabelLayers 
+  createPlaceLabelLayers,
+  createPOILayers
 } from "./labels/index.js";
 
 // Re-export expressions for custom layer builders
@@ -41,7 +42,8 @@ import {
   createWaterLabelLayersFromWorldLabels, 
   createWaterLabelLayersFromBasemapSources, 
   createWaterwayLabelLayers,
-  createPlaceLabelLayers 
+  createPlaceLabelLayers,
+  createPOILayers
 } from "./labels/index.js";
 import { createBaseStyle } from "../baseStyle.js";
 
@@ -69,6 +71,7 @@ export function createAllLayers(theme: Theme): LayerSpecification[] {
     ...createWaterLabelLayersFromBasemapSources(theme),
     ...createWaterwayLabelLayers(theme),
     ...createPlaceLabelLayers(theme),
+    ...createPOILayers(theme),
   ];
 }
 
