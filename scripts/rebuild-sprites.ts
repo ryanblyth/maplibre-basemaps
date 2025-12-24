@@ -1,22 +1,46 @@
 /**
- * Rebuild clean sprite sheet with only POI icons and used shields
+ * Rebuild clean sprite sheet with only POI icons and used shields for a specific basemap
  * 
  * Removes the large gap in the sprite sheet and keeps only:
  * - POI icons (airport, bar, bus, cafe, charging-station, fuel, hospital, lodging, museum, park, parking, police, rail, restaurant, school)
  * - Custom shields (shield-interstate-custom, shield-ushighway-custom, shield-state-custom)
  * 
- * Usage: npx tsx scripts/rebuild-sprites.ts
+ * Usage: npx tsx scripts/rebuild-sprites.ts <basemap-name>
+ * Example: npx tsx scripts/rebuild-sprites.ts dark-blue
  * 
  * Note: Requires 'sharp' package: npm install sharp --save-dev
  */
 
-import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import sharp from 'sharp';
-import { darkBlueShields } from '../basemaps/dark-blue/styles/theme.js';
 
-const SPRITES_DIR = 'shared/assets/sprites';
-const SHIELDS_DIR = join(SPRITES_DIR, 'shields');
+// Get basemap name from command line argument
+const basemapName = process.argv[2] || 'dark-blue';
+const BASEMAP_DIR = join('basemaps', basemapName);
+const BASEMAP_SPRITES_DIR = join(BASEMAP_DIR, 'sprites');
+const SHARED_SPRITES_DIR = 'shared/assets/sprites';
+const SHIELDS_DIR = join(SHARED_SPRITES_DIR, 'shields');
+
+// Dynamically import theme based on basemap name
+async function getBasemapShields() {
+  try {
+    // Try to import the theme module
+    const themeModule = await import(`../${BASEMAP_DIR}/styles/theme.js`);
+    const theme = themeModule[`${basemapName.replace(/-([a-z])/g, (_, c) => c.toUpperCase())}Theme`] || 
+                  themeModule[`${basemapName}Theme`] ||
+                  themeModule.default;
+    
+    if (theme?.shields) {
+      return theme.shields;
+    }
+    
+    throw new Error(`No shields configuration found in theme for ${basemapName}`);
+  } catch (error) {
+    console.error(`Error loading theme for ${basemapName}:`, error);
+    throw error;
+  }
+}
 
 interface SpriteDefinition {
   width: number;
@@ -31,7 +55,7 @@ interface SpriteSheet {
   [name: string]: SpriteDefinition;
 }
 
-// POI icons to keep (all of them)
+// POI icons to keep (all of them - same across all basemaps)
 const poiIcons = [
   'airport', 'bar', 'bus', 'cafe', 'charging-station', 'fuel',
   'hospital', 'lodging', 'museum', 'park', 'parking', 'police',
@@ -48,8 +72,7 @@ const shields = [
 /**
  * Generate custom Interstate shield SVG with theme colors
  */
-function generateCustomInterstateShield(): string {
-  const config = darkBlueShields.interstate;
+function generateCustomInterstateShield(config: any): string {
   const upperBg = config.upperBackground || '#2a3444';
   const lowerBg = config.lowerBackground || '#1e2530';
   const stroke = config.strokeColor || '#4a5a6a';
@@ -65,8 +88,7 @@ function generateCustomInterstateShield(): string {
 /**
  * Generate custom US Highway shield SVG with theme colors
  */
-function generateCustomUSHighwayShield(): string {
-  const config = darkBlueShields.usHighway;
+function generateCustomUSHighwayShield(config: any): string {
   const background = config.background || '#1e2530';
   const stroke = config.strokeColor || '#4a5a6a';
   const strokeWidth = config.strokeWidth || 3;
@@ -80,62 +102,89 @@ function generateCustomUSHighwayShield(): string {
 /**
  * Generate custom State Highway shield SVG with theme colors
  */
-function generateCustomStateHighwayShield(): string {
-  const config = darkBlueShields.stateHighway;
+function generateCustomStateHighwayShield(config: any): string {
   const background = config.background || '#1a2433';
   const stroke = config.strokeColor || '#3a4a5c';
   const strokeWidth = config.strokeWidth || 2;
   
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 34">
-  <rect x="2" y="5" width="28" height="24" rx="1" ry="1" fill="${background}" stroke="${stroke}" stroke-width="${strokeWidth}"/>
-</svg>`;
+  // Read the SVG template and replace template variables
+  const svgPath = join(SHIELDS_DIR, 'shield-state-custom.svg');
+  let svgTemplate = readFileSync(svgPath, 'utf8');
+  
+  // Replace template variables
+  svgTemplate = svgTemplate.replace(/\{\{background\}\}/g, background);
+  svgTemplate = svgTemplate.replace(/\{\{stroke\}\}/g, stroke);
+  svgTemplate = svgTemplate.replace(/\{\{strokeWidth\}\}/g, strokeWidth.toString());
+  
+  return svgTemplate;
 }
 
 async function rebuildSprites() {
-  console.log('Rebuilding clean sprite sheets...\n');
+  console.log(`Rebuilding clean sprite sheets for basemap: ${basemapName}\n`);
   
-  await rebuildSpriteSheet(1);
-  await rebuildSpriteSheet(2);
+  // Ensure basemap sprite directory exists
+  mkdirSync(BASEMAP_SPRITES_DIR, { recursive: true });
   
-  console.log('\n✓ Clean sprite sheets rebuilt!');
-  console.log('  - POI icons: ' + poiIcons.length + ' icons');
-  console.log('  - Shields: ' + shields.length + ' custom shields');
+  // Load basemap-specific theme
+  const basemapShields = await getBasemapShields();
+  
+  // POI icons come from shared location (they're the same across basemaps)
+  const sharedJsonPath = join(SHARED_SPRITES_DIR, 'basemap.json');
+  const sharedPngPath = join(SHARED_SPRITES_DIR, 'basemap.png');
+  
+  if (!existsSync(sharedJsonPath) || !existsSync(sharedPngPath)) {
+    console.error(`Error: Shared POI icons not found at ${sharedJsonPath}`);
+    console.error('Please run the POI icon build process first.');
+    process.exit(1);
+  }
+  
+  await rebuildSpriteSheet(1, basemapShields, sharedJsonPath, sharedPngPath);
+  await rebuildSpriteSheet(2, basemapShields, 
+    join(SHARED_SPRITES_DIR, 'basemap@2x.json'),
+    join(SHARED_SPRITES_DIR, 'basemap@2x.png'));
+  
+  console.log(`\n✓ Clean sprite sheets rebuilt for ${basemapName}!`);
+  console.log('  - POI icons: ' + poiIcons.length + ' icons (from shared)');
+  console.log('  - Shields: ' + shields.length + ' custom shields (basemap-specific)');
 }
 
-async function rebuildSpriteSheet(pixelRatio: number) {
+async function rebuildSpriteSheet(
+  pixelRatio: number, 
+  basemapShields: any,
+  sharedJsonPath: string,
+  sharedPngPath: string
+) {
   const suffix = pixelRatio === 1 ? '' : `@${pixelRatio}x`;
-  const jsonPath = join(SPRITES_DIR, `basemap${suffix}.json`);
-  const pngPath = join(SPRITES_DIR, `basemap${suffix}.png`);
+  const jsonPath = join(BASEMAP_SPRITES_DIR, `basemap${suffix}.json`);
+  const pngPath = join(BASEMAP_SPRITES_DIR, `basemap${suffix}.png`);
   
   console.log(`\nBuilding ${pixelRatio}x sprite sheet...`);
   
-  // Load existing sprite sheet to extract POI icons
-  const existingJson: SpriteSheet = JSON.parse(readFileSync(jsonPath, 'utf8'));
-  const existingPng = sharp(pngPath);
-  const metadata = await existingPng.metadata();
+  // Load shared sprite sheet to extract POI icons
+  const sharedJson: SpriteSheet = JSON.parse(readFileSync(sharedJsonPath, 'utf8'));
+  const sharedPng = sharp(sharedPngPath);
   
-  // Extract POI icons from existing sprite, preserving their layout
+  // Extract POI icons from shared sprite, preserving their layout
   const poiDefinitions: { name: string; def: SpriteDefinition; buffer: Buffer }[] = [];
   let maxPoiY = 0;
   let maxPoiX = 0;
   
-  console.log('  Extracting POI icons...');
+  console.log('  Extracting POI icons from shared sprite...');
   for (const iconName of poiIcons) {
-    const def = existingJson[iconName];
+    const def = sharedJson[iconName];
     if (!def) {
-      console.warn(`    Warning: ${iconName} not found in existing sprite`);
+      console.warn(`    Warning: ${iconName} not found in shared sprite`);
       continue;
     }
     
-    // POI icons are already at the correct pixel ratio in the existing sprite
-    // We just need to extract them as-is
+    // POI icons are already at the correct pixel ratio in the shared sprite
     const physicalWidth = def.width;
     const physicalHeight = def.height;
     const physicalX = def.x;
     const physicalY = def.y;
     
-    // Extract icon from existing sprite
-    const iconBuffer = await existingPng
+    // Extract icon from shared sprite
+    const iconBuffer = await sharedPng
       .clone()
       .extract({
         left: physicalX,
@@ -181,8 +230,8 @@ async function rebuildSpriteSheet(pixelRatio: number) {
   
   console.log(`  POI icons: ${poiDefinitions.length} icons in ${poiSheetWidth}x${poiSheetHeight}px`);
   
-  // Build shields
-  console.log('  Building shields...');
+  // Build shields with basemap-specific colors
+  console.log('  Building shields with basemap-specific colors...');
   let shieldY = poiSheetHeight;
   const shieldComposites: any[] = [];
   let maxShieldWidth = 0;
@@ -192,11 +241,11 @@ async function rebuildSpriteSheet(pixelRatio: number) {
     const shieldWithTheme = shield as any;
     
     if (shieldWithTheme.useTheme === 'interstate') {
-      svgBuffer = Buffer.from(generateCustomInterstateShield());
+      svgBuffer = Buffer.from(generateCustomInterstateShield(basemapShields.interstate));
     } else if (shieldWithTheme.useTheme === 'usHighway') {
-      svgBuffer = Buffer.from(generateCustomUSHighwayShield());
+      svgBuffer = Buffer.from(generateCustomUSHighwayShield(basemapShields.usHighway));
     } else if (shieldWithTheme.useTheme === 'stateHighway') {
-      svgBuffer = Buffer.from(generateCustomStateHighwayShield());
+      svgBuffer = Buffer.from(generateCustomStateHighwayShield(basemapShields.stateHighway));
     } else {
       const svgPath = join(SHIELDS_DIR, shield.file);
       if (!existsSync(svgPath)) {
@@ -258,4 +307,3 @@ async function rebuildSpriteSheet(pixelRatio: number) {
 }
 
 rebuildSprites().catch(console.error);
-

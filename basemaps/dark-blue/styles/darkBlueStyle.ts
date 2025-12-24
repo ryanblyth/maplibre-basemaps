@@ -29,5 +29,10 @@ import { darkBlueTheme } from "./theme.js";
  * });
  */
 export function createDarkBlueStyle(config: BaseStyleConfig = defaultConfig): StyleSpecification {
-  return createBasemapStyle(darkBlueTheme, config);
+  // Use basemap-specific sprite path
+  const basemapConfig: BaseStyleConfig = {
+    ...config,
+    spritePath: 'basemaps/dark-blue/sprites/basemap',
+  };
+  return createBasemapStyle(darkBlueTheme, basemapConfig);
 }

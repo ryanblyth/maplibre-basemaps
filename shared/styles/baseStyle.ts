@@ -13,6 +13,8 @@ export interface BaseStyleConfig {
   glyphsBaseUrl: string;
   /** Base URL for sprite files (e.g., "http://localhost:8080") */
   spriteBaseUrl: string;
+  /** Sprite path relative to spriteBaseUrl (e.g., "basemaps/dark-blue/sprites/basemap"). Defaults to "shared/assets/sprites/basemap" for backward compatibility */
+  spritePath?: string;
   /** Base URL for PMTiles data (e.g., "https://data.storypath.studio") */
   dataBaseUrl: string;
 }
@@ -47,11 +49,13 @@ export function createGlobalSources(config: BaseStyleConfig): Record<string, Sou
  * - An empty layers array (to be extended by basemaps)
  */
 export function createBaseStyle(config: BaseStyleConfig = defaultConfig): StyleSpecification {
+  // Use configurable sprite path, defaulting to shared location for backward compatibility
+  const spritePath = config.spritePath || 'shared/assets/sprites/basemap';
   return {
     version: 8,
     name: "Base Style",
     glyphs: `${config.glyphsBaseUrl}/shared/assets/glyphs/{fontstack}/{range}.pbf`,
-    sprite: `${config.spriteBaseUrl}/shared/assets/sprites/basemap`,
+    sprite: `${config.spriteBaseUrl}/${spritePath}`,
     sources: createGlobalSources(config),
     layers: [],
   };

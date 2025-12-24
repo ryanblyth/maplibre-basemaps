@@ -1,0 +1,143 @@
+{
+  "airport": {
+    "width": 36,
+    "height": 36,
+    "x": 0,
+    "y": 0,
+    "pixelRatio": 2,
+    "sdf": true
+  },
+  "bar": {
+    "width": 36,
+    "height": 36,
+    "x": 0,
+    "y": 36,
+    "pixelRatio": 2,
+    "sdf": true
+  },
+  "bus": {
+    "width": 36,
+    "height": 36,
+    "x": 0,
+    "y": 72,
+    "pixelRatio": 2,
+    "sdf": true
+  },
+  "cafe": {
+    "width": 36,
+    "height": 36,
+    "x": 36,
+    "y": 0,
+    "pixelRatio": 2,
+    "sdf": true
+  },
+  "charging-station": {
+    "width": 36,
+    "height": 36,
+    "x": 36,
+    "y": 36,
+    "pixelRatio": 2,
+    "sdf": true
+  },
+  "fuel": {
+    "width": 36,
+    "height": 36,
+    "x": 36,
+    "y": 72,
+    "pixelRatio": 2,
+    "sdf": true
+  },
+  "hospital": {
+    "width": 36,
+    "height": 36,
+    "x": 72,
+    "y": 0,
+    "pixelRatio": 2,
+    "sdf": true
+  },
+  "lodging": {
+    "width": 36,
+    "height": 36,
+    "x": 72,
+    "y": 36,
+    "pixelRatio": 2,
+    "sdf": true
+  },
+  "museum": {
+    "width": 36,
+    "height": 36,
+    "x": 72,
+    "y": 72,
+    "pixelRatio": 2,
+    "sdf": true
+  },
+  "park": {
+    "width": 36,
+    "height": 36,
+    "x": 108,
+    "y": 0,
+    "pixelRatio": 2,
+    "sdf": true
+  },
+  "parking": {
+    "width": 36,
+    "height": 36,
+    "x": 108,
+    "y": 36,
+    "pixelRatio": 2,
+    "sdf": true
+  },
+  "police": {
+    "width": 36,
+    "height": 36,
+    "x": 108,
+    "y": 72,
+    "pixelRatio": 2,
+    "sdf": true
+  },
+  "rail": {
+    "width": 36,
+    "height": 36,
+    "x": 144,
+    "y": 0,
+    "pixelRatio": 2,
+    "sdf": true
+  },
+  "restaurant": {
+    "width": 36,
+    "height": 36,
+    "x": 180,
+    "y": 0,
+    "pixelRatio": 2,
+    "sdf": true
+  },
+  "school": {
+    "width": 36,
+    "height": 36,
+    "x": 216,
+    "y": 0,
+    "pixelRatio": 2,
+    "sdf": true
+  },
+  "shield-interstate-custom": {
+    "width": 56,
+    "height": 56,
+    "x": 0,
+    "y": 284,
+    "pixelRatio": 2
+  },
+  "shield-ushighway-custom": {
+    "width": 52,
+    "height": 52,
+    "x": 0,
+    "y": 340,
+    "pixelRatio": 2
+  },
+  "shield-state-custom": {
+    "width": 64,
+    "height": 68,
+    "x": 0,
+    "y": 392,
+    "pixelRatio": 2
+  }
+}
