@@ -151,6 +151,13 @@ export const darkBlueColors: ThemeColors = {
       color: "#5b8db8",
       halo: "#0a2846",
     },
+    poi: {
+      iconColor: "#7a8ba3",           // Light blue-gray for icons
+      iconSize: 0.8,                   // Slightly smaller icons
+      textColor: "#a8b8d0",            // Light blue-gray for labels
+      textHalo: "#0b0f14",             // Dark halo for contrast
+      textHaloWidth: 1.5,
+    },
   },
 };
 
@@ -279,8 +286,8 @@ export const darkBlueShields = {
     sprite: "shield-interstate-custom",
     textColor: "#687383",                 // Light blue-gray text
     minZoom: 6,
-    textPadding: [5, 5, 5, 5],            // [top, right, bottom, left]
-    textSize: [6, 9, 14, 13],             // [minZoom, minSize, maxZoom, maxSize]
+    textPadding: [5, 5, 5, 5] as [number, number, number, number],  // [top, right, bottom, left]
+    textSize: [6, 9, 14, 13] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
     textFont: ["Noto Sans SemiBold"],     // Font family
     // Custom shield appearance - subtle two-tone for dark theme
     upperBackground: "#1a2433",           // Slightly lighter dark blue
@@ -295,8 +302,8 @@ export const darkBlueShields = {
     sprite: "shield-ushighway-custom",
     textColor: "#687383",                 // Light blue-gray text
     minZoom: 7,
-    textPadding: [5, 5, 5, 5],            // [top, right, bottom, left]
-    textSize: [6, 9, 14, 13],             // [minZoom, minSize, maxZoom, maxSize]
+    textPadding: [5, 5, 5, 5] as [number, number, number, number],  // [top, right, bottom, left]
+    textSize: [6, 9, 14, 13] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
     textFont: ["Noto Sans SemiBold"],     // Font family
     // Custom shield appearance - subtle for dark theme
     background: "#182030",                // Dark blue background
@@ -310,8 +317,8 @@ export const darkBlueShields = {
     sprite: "shield-state-custom",
     textColor: "#687383",                 // Light blue-gray text
     minZoom: 8,
-    textPadding: [4, 4, 4, 4],            // [top, right, bottom, left]
-    textSize: [8, 8, 14, 12],             // [minZoom, minSize, maxZoom, maxSize]
+    textPadding: [4, 4, 4, 4] as [number, number, number, number],  // [top, right, bottom, left]
+    textSize: [8, 8, 14, 12] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
     textFont: ["Noto Sans SemiBold"],     // Font family
     // Custom shield appearance - subtle oval for dark theme
     background: "#1a2433",                // Dark blue background

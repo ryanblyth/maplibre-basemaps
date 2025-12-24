@@ -7,43 +7,11 @@
     "pixelRatio": 1,
     "sdf": true
   },
-  "bar": {
-    "width": 21,
-    "height": 21,
-    "x": 0,
-    "y": 21,
-    "pixelRatio": 1,
-    "sdf": true
-  },
-  "bus": {
-    "width": 21,
-    "height": 21,
-    "x": 0,
-    "y": 42,
-    "pixelRatio": 1,
-    "sdf": true
-  },
-  "cafe": {
+  "airfield": {
     "width": 21,
     "height": 21,
     "x": 21,
     "y": 0,
-    "pixelRatio": 1,
-    "sdf": true
-  },
-  "charging-station": {
-    "width": 21,
-    "height": 21,
-    "x": 21,
-    "y": 21,
-    "pixelRatio": 1,
-    "sdf": true
-  },
-  "fuel": {
-    "width": 21,
-    "height": 21,
-    "x": 21,
-    "y": 42,
     "pixelRatio": 1,
     "sdf": true
   },
@@ -55,66 +23,50 @@
     "pixelRatio": 1,
     "sdf": true
   },
-  "lodging": {
-    "width": 21,
-    "height": 21,
-    "x": 42,
-    "y": 21,
-    "pixelRatio": 1,
-    "sdf": true
-  },
   "museum": {
     "width": 21,
     "height": 21,
-    "x": 42,
-    "y": 42,
+    "x": 63,
+    "y": 0,
     "pixelRatio": 1,
     "sdf": true
   },
   "park": {
     "width": 21,
     "height": 21,
-    "x": 63,
+    "x": 84,
     "y": 0,
-    "pixelRatio": 1,
-    "sdf": true
-  },
-  "parking": {
-    "width": 21,
-    "height": 21,
-    "x": 63,
-    "y": 21,
-    "pixelRatio": 1,
-    "sdf": true
-  },
-  "police": {
-    "width": 21,
-    "height": 21,
-    "x": 63,
-    "y": 42,
     "pixelRatio": 1,
     "sdf": true
   },
   "rail": {
     "width": 21,
     "height": 21,
-    "x": 84,
-    "y": 0,
-    "pixelRatio": 1,
-    "sdf": true
-  },
-  "restaurant": {
-    "width": 21,
-    "height": 21,
-    "x": 105,
-    "y": 0,
+    "x": 0,
+    "y": 21,
     "pixelRatio": 1,
     "sdf": true
   },
   "school": {
     "width": 21,
     "height": 21,
-    "x": 84,
+    "x": 21,
+    "y": 21,
+    "pixelRatio": 1,
+    "sdf": true
+  },
+  "stadium": {
+    "width": 21,
+    "height": 21,
+    "x": 42,
+    "y": 21,
+    "pixelRatio": 1,
+    "sdf": true
+  },
+  "zoo": {
+    "width": 21,
+    "height": 21,
+    "x": 63,
     "y": 21,
     "pixelRatio": 1,
     "sdf": true
@@ -123,21 +75,21 @@
     "width": 28,
     "height": 28,
     "x": 0,
-    "y": 151,
+    "y": 42,
     "pixelRatio": 1
   },
   "shield-ushighway-custom": {
     "width": 26,
     "height": 26,
     "x": 0,
-    "y": 179,
+    "y": 70,
     "pixelRatio": 1
   },
   "shield-state-custom": {
     "width": 32,
     "height": 34,
     "x": 0,
-    "y": 205,
+    "y": 96,
     "pixelRatio": 1
   }
 }

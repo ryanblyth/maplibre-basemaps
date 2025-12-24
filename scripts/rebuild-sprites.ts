@@ -21,6 +21,7 @@ const BASEMAP_DIR = join('basemaps', basemapName);
 const BASEMAP_SPRITES_DIR = join(BASEMAP_DIR, 'sprites');
 const SHARED_SPRITES_DIR = 'shared/assets/sprites';
 const SHIELDS_DIR = join(SHARED_SPRITES_DIR, 'shields');
+const ICONS_DIR = join(SHARED_SPRITES_DIR, 'icons');
 
 // Dynamically import theme based on basemap name
 async function getBasemapShields() {
@@ -55,11 +56,18 @@ interface SpriteSheet {
   [name: string]: SpriteDefinition;
 }
 
-// POI icons to keep (all of them - same across all basemaps)
-const poiIcons = [
-  'airport', 'bar', 'bus', 'cafe', 'charging-station', 'fuel',
-  'hospital', 'lodging', 'museum', 'park', 'parking', 'police',
-  'rail', 'restaurant', 'school'
+// POI icons to use - only icons from shared/assets/sprites/icons/ folder
+// Map: sprite name -> SVG filename
+const poiIcons: Array<{ spriteName: string; svgFile: string }> = [
+  { spriteName: 'airport', svgFile: 'airport.svg' },
+  { spriteName: 'airfield', svgFile: 'airfield.svg' },  // Added airfield icon
+  { spriteName: 'hospital', svgFile: 'hospital.svg' },
+  { spriteName: 'museum', svgFile: 'museum.svg' },
+  { spriteName: 'park', svgFile: 'park-alt1.svg' },  // park-alt1.svg -> park sprite
+  { spriteName: 'rail', svgFile: 'rail.svg' },
+  { spriteName: 'school', svgFile: 'college.svg' },  // college.svg -> school sprite
+  { spriteName: 'stadium', svgFile: 'stadium.svg' },
+  { spriteName: 'zoo', svgFile: 'zoo.svg' },
 ];
 
 // Custom shields to keep (only the ones actually used)
@@ -128,31 +136,23 @@ async function rebuildSprites() {
   // Load basemap-specific theme
   const basemapShields = await getBasemapShields();
   
-  // POI icons come from shared location (they're the same across basemaps)
-  const sharedJsonPath = join(SHARED_SPRITES_DIR, 'basemap.json');
-  const sharedPngPath = join(SHARED_SPRITES_DIR, 'basemap.png');
-  
-  if (!existsSync(sharedJsonPath) || !existsSync(sharedPngPath)) {
-    console.error(`Error: Shared POI icons not found at ${sharedJsonPath}`);
-    console.error('Please run the POI icon build process first.');
+  // Verify icons directory exists
+  if (!existsSync(ICONS_DIR)) {
+    console.error(`Error: Icons directory not found at ${ICONS_DIR}`);
     process.exit(1);
   }
   
-  await rebuildSpriteSheet(1, basemapShields, sharedJsonPath, sharedPngPath);
-  await rebuildSpriteSheet(2, basemapShields, 
-    join(SHARED_SPRITES_DIR, 'basemap@2x.json'),
-    join(SHARED_SPRITES_DIR, 'basemap@2x.png'));
+  await rebuildSpriteSheet(1, basemapShields);
+  await rebuildSpriteSheet(2, basemapShields);
   
   console.log(`\n✓ Clean sprite sheets rebuilt for ${basemapName}!`);
-  console.log('  - POI icons: ' + poiIcons.length + ' icons (from shared)');
+  console.log('  - POI icons: ' + poiIcons.length + ' icons (from shared/assets/sprites/icons/)');
   console.log('  - Shields: ' + shields.length + ' custom shields (basemap-specific)');
 }
 
 async function rebuildSpriteSheet(
   pixelRatio: number, 
-  basemapShields: any,
-  sharedJsonPath: string,
-  sharedPngPath: string
+  basemapShields: any
 ) {
   const suffix = pixelRatio === 1 ? '' : `@${pixelRatio}x`;
   const jsonPath = join(BASEMAP_SPRITES_DIR, `basemap${suffix}.json`);
@@ -160,69 +160,78 @@ async function rebuildSpriteSheet(
   
   console.log(`\nBuilding ${pixelRatio}x sprite sheet...`);
   
-  // Load shared sprite sheet to extract POI icons
-  const sharedJson: SpriteSheet = JSON.parse(readFileSync(sharedJsonPath, 'utf8'));
-  const sharedPng = sharp(sharedPngPath);
-  
-  // Extract POI icons from shared sprite, preserving their layout
+  // Build POI icons directly from SVG files
   const poiDefinitions: { name: string; def: SpriteDefinition; buffer: Buffer }[] = [];
+  const poiComposites: any[] = [];
+  const newJson: SpriteSheet = {};
+  
+  // Standard POI icon size (21x21 at 1x, 42x42 at 2x)
+  const iconSize = 21 * pixelRatio;
+  let currentX = 0;
+  let currentY = 0;
   let maxPoiY = 0;
   let maxPoiX = 0;
   
-  console.log('  Extracting POI icons from shared sprite...');
-  for (const iconName of poiIcons) {
-    const def = sharedJson[iconName];
-    if (!def) {
-      console.warn(`    Warning: ${iconName} not found in shared sprite`);
+  console.log('  Building POI icons from SVG files...');
+  for (const icon of poiIcons) {
+    const svgPath = join(ICONS_DIR, icon.svgFile);
+    
+    if (!existsSync(svgPath)) {
+      console.warn(`    Warning: ${icon.svgFile} not found, skipping ${icon.spriteName}`);
       continue;
     }
     
-    // POI icons are already at the correct pixel ratio in the shared sprite
-    const physicalWidth = def.width;
-    const physicalHeight = def.height;
-    const physicalX = def.x;
-    const physicalY = def.y;
-    
-    // Extract icon from shared sprite
-    const iconBuffer = await sharedPng
-      .clone()
-      .extract({
-        left: physicalX,
-        top: physicalY,
-        width: physicalWidth,
-        height: physicalHeight
+    // Read SVG and convert to PNG
+    const svgBuffer = readFileSync(svgPath);
+    const pngBuffer = await sharp(svgBuffer)
+      .resize(iconSize, iconSize, {
+        fit: 'contain',
+        background: { r: 0, g: 0, b: 0, alpha: 0 }
       })
       .png()
       .toBuffer();
     
     poiDefinitions.push({
-      name: iconName,
+      name: icon.spriteName,
       def: {
-        width: physicalWidth,
-        height: physicalHeight,
-        x: physicalX,
-        y: physicalY, // Keep original positions
+        width: iconSize,
+        height: iconSize,
+        x: currentX,
+        y: currentY,
         pixelRatio: pixelRatio,
-        sdf: def.sdf
+        sdf: true  // POI icons are SDF for color flexibility
       },
-      buffer: iconBuffer
+      buffer: pngBuffer
     });
     
-    maxPoiX = Math.max(maxPoiX, physicalX + physicalWidth);
-    maxPoiY = Math.max(maxPoiY, physicalY + physicalHeight);
-  }
-  
-  // Use original POI layout (they're already arranged nicely)
-  const poiComposites: any[] = [];
-  const newJson: SpriteSheet = {};
-  
-  for (const { name, def, buffer } of poiDefinitions) {
-    newJson[name] = def;
+    newJson[icon.spriteName] = {
+      width: iconSize,
+      height: iconSize,
+      x: currentX,
+      y: currentY,
+      pixelRatio: pixelRatio,
+      sdf: true
+    };
+    
     poiComposites.push({
-      input: buffer,
-      left: def.x,
-      top: def.y
+      input: pngBuffer,
+      left: currentX,
+      top: currentY
     });
+    
+    // Arrange icons in a grid (5 icons per row)
+    // Update max width BEFORE moving to next position
+    maxPoiX = Math.max(maxPoiX, currentX + iconSize);
+    maxPoiY = Math.max(maxPoiY, currentY + iconSize);
+    
+    // Move to next position
+    currentX += iconSize;
+    if (currentX >= iconSize * 5) {
+      currentX = 0;
+      currentY += iconSize;
+    }
+    
+    console.log(`    Added ${icon.spriteName} (from ${icon.svgFile}): ${iconSize}x${iconSize} at (${newJson[icon.spriteName].x}, ${newJson[icon.spriteName].y})`);
   }
   
   const poiSheetHeight = maxPoiY;
