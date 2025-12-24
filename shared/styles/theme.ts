@@ -125,6 +125,63 @@ export interface ThemeColors {
 }
 
 // ============================================================================
+// POI TYPES - Point of Interest configuration
+// ============================================================================
+
+/** POI visibility and styling configuration */
+export interface ThemePOIs {
+  /** Whether to show POIs at all */
+  enabled: boolean;
+  /** Global minimum zoom for all POIs */
+  minZoom?: number;
+  /** Airport POI settings */
+  airport?: {
+    enabled: boolean;
+    minZoom?: number;
+  };
+  /** Airfield POI settings */
+  airfield?: {
+    enabled: boolean;
+    minZoom?: number;
+  };
+  /** Hospital POI settings */
+  hospital?: {
+    enabled: boolean;
+    minZoom?: number;
+  };
+  /** Museum POI settings */
+  museum?: {
+    enabled: boolean;
+    minZoom?: number;
+  };
+  /** Zoo POI settings */
+  zoo?: {
+    enabled: boolean;
+    minZoom?: number;
+  };
+  /** Stadium POI settings */
+  stadium?: {
+    enabled: boolean;
+    minZoom?: number;
+  };
+  /** Park POI settings */
+  park?: {
+    enabled: boolean;
+    minZoom?: number;
+  };
+  /** Railway station POI settings */
+  rail?: {
+    enabled: boolean;
+    minZoom?: number;
+  };
+  /** School/College/University POI settings */
+  school?: {
+    enabled: boolean;
+    minZoom?: number;
+  };
+}
+
+// ============================================================================
 // SHIELD TYPES - Highway shield configuration
 // ============================================================================
 
@@ -296,4 +353,6 @@ export interface Theme {
   settings?: ThemeSettings;
   /** Highway shield configuration - optional, defaults to enabled with standard sprites */
   shields?: ThemeShields;
+  /** POI configuration - optional, defaults to all enabled */
+  pois?: ThemePOIs;
 }

@@ -14,7 +14,8 @@ import {
   type Theme, 
   type ThemeColors, 
   type ThemeWidths, 
-  type ThemeOpacities 
+  type ThemeOpacities,
+  type ThemePOIs
 } from "../../../shared/styles/theme.js";
 
 // ============================================================================
@@ -328,6 +329,72 @@ export const darkBlueShields = {
 };
 
 // ============================================================================
+// POI CONFIGURATION
+// ============================================================================
+
+export const darkBluePOIs: ThemePOIs = {
+  /** Whether to show POIs at all */
+  enabled: true,
+  
+  /** Global minimum zoom for all POIs */
+  minZoom: 12,
+  
+  /** Airport POI settings */
+  airport: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** Airfield POI settings */
+  airfield: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** Hospital POI settings */
+  hospital: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** Museum POI settings */
+  museum: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** Zoo POI settings */
+  zoo: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** Stadium POI settings */
+  stadium: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** Park POI settings */
+  park: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** Railway station POI settings */
+  rail: {
+    enabled: true,
+    minZoom: 12,
+  },
+  
+  /** School/College/University POI settings */
+  school: {
+    enabled: true,
+    minZoom: 12,
+  },
+};
+
+// ============================================================================
 // COMPLETE THEME
 // ============================================================================
 
@@ -339,4 +406,5 @@ export const darkBlueTheme: Theme = {
   opacities: darkBlueOpacities,
   settings: darkBlueSettings,
   shields: darkBlueShields,
+  pois: darkBluePOIs,
 };

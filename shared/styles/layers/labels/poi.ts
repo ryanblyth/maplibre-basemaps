@@ -5,7 +5,7 @@
  */
 
 import type { LayerSpecification } from "maplibre-gl";
-import type { Theme } from "../../theme.js";
+import type { Theme, ThemePOIs } from "../../theme.js";
 import { createTextField } from "../../baseStyle.js";
 import { filters } from "../expressions.js";
 
@@ -24,6 +24,12 @@ import { filters } from "../expressions.js";
  * Icons are sourced from shared/assets/sprites/icons/
  */
 export function createPOILayers(theme: Theme): LayerSpecification[] {
+  // Check if POIs are enabled at all
+  const poiThemeConfig = theme.pois;
+  if (!poiThemeConfig || !poiThemeConfig.enabled) {
+    return [];
+  }
+  
   const c = theme.colors;
   const poiConfig = c.label.poi || {
     iconColor: "#7a8ba3",
@@ -60,28 +66,37 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
   const layers: LayerSpecification[] = [];
   
   // Primary POI source (dedicated POI PMTiles) and fallback sources
+  const globalMinZoom = poiThemeConfig.minZoom || 12;
   const sources = [
-    { name: "poi_us", minZoom: 12 },      // Dedicated POI source (z12-15)
-    { name: "us_high", minZoom: 12 },     // Fallback: US high detail tiles
-    { name: "world_mid", minZoom: 12 },   // Fallback: World mid detail tiles
-    { name: "world_low", minZoom: 12 },   // Fallback: World low detail tiles
+    { name: "poi_us", minZoom: globalMinZoom },      // Dedicated POI source (z12-15)
+    { name: "us_high", minZoom: globalMinZoom },     // Fallback: US high detail tiles
+    { name: "world_mid", minZoom: globalMinZoom },   // Fallback: World mid detail tiles
+    { name: "world_low", minZoom: globalMinZoom },   // Fallback: World low detail tiles
   ];
   
   // Park sources - only use us_high which has the park layer with national/state parks
   // Using only one source prevents duplicate labels
   const parkSources = [
-    { name: "us_high", minZoom: 12 },     // US high detail tiles have park layer
+    { name: "us_high", minZoom: poiThemeConfig.park?.minZoom || poiThemeConfig.minZoom || 12 },
   ];
   
+  // Helper function to check if a POI type is enabled
+  const isPOIEnabled = (poiType: keyof ThemePOIs): boolean => {
+    if (!poiThemeConfig) return false;
+    const typeConfig = poiThemeConfig[poiType];
+    return typeConfig !== undefined && typeof typeConfig === 'object' && typeConfig.enabled !== false;
+  };
   
   for (const source of sources) {
     // Airport POIs from POI layer
-    layers.push({
-      id: `poi-airport-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "poi",
-      minzoom: source.minZoom,
+    if (isPOIEnabled('airport')) {
+      const airportMinZoom = poiThemeConfig.airport?.minZoom || source.minZoom;
+      layers.push({
+        id: `poi-airport-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "poi",
+        minzoom: airportMinZoom,
       filter: [
         "all",
         ["has", "name"],
@@ -99,16 +114,19 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         ...baseLayout,
         "icon-image": "airport",
       },
-      paint: poiPaint,
-    });
+        paint: poiPaint,
+      });
+    }
     
     // Airfield POIs from POI layer
-    layers.push({
-      id: `poi-airfield-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "poi",
-      minzoom: source.minZoom,
+    if (isPOIEnabled('airfield')) {
+      const airfieldMinZoom = poiThemeConfig.airfield?.minZoom || source.minZoom;
+      layers.push({
+        id: `poi-airfield-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "poi",
+        minzoom: airfieldMinZoom,
       filter: [
         "all",
         ["has", "name"],
@@ -122,16 +140,19 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         ...baseLayout,
         "icon-image": "airfield",
       },
-      paint: poiPaint,
-    });
+        paint: poiPaint,
+      });
+    }
     
     // Airport POIs from PLACE layer
-    layers.push({
-      id: `place-airport-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "place",
-      minzoom: source.minZoom,
+    if (isPOIEnabled('airport')) {
+      const airportMinZoom = poiThemeConfig.airport?.minZoom || source.minZoom;
+      layers.push({
+        id: `place-airport-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "place",
+        minzoom: airportMinZoom,
       filter: [
         "all",
         ["has", "name"],
@@ -147,16 +168,19 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         ...baseLayout,
         "icon-image": "airport",
       },
-      paint: poiPaint,
-    });
+        paint: poiPaint,
+      });
+    }
     
     // Airport POIs from AERODROME_LABEL layer
-    layers.push({
-      id: `aerodrome-label-airport-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "aerodrome_label",
-      minzoom: source.minZoom,
+    if (isPOIEnabled('airport')) {
+      const airportMinZoom = poiThemeConfig.airport?.minZoom || source.minZoom;
+      layers.push({
+        id: `aerodrome-label-airport-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "aerodrome_label",
+        minzoom: airportMinZoom,
       filter: [
         "all",
         ["has", "name"],
@@ -165,17 +189,20 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         ...baseLayout,
         "icon-image": "airport",
       },
-      paint: poiPaint,
-    });
+        paint: poiPaint,
+      });
+    }
     
     // Hospital POIs - Rank 1 (major hospitals only) at zoom 12+
-    // Only show actual hospitals, not clinics or doctors
-    layers.push({
-      id: `poi-hospital-rank1-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "poi",
-      minzoom: source.minZoom,
+    if (isPOIEnabled('hospital')) {
+      const hospitalMinZoom = poiThemeConfig.hospital?.minZoom || source.minZoom;
+      // Only show actual hospitals, not clinics or doctors
+      layers.push({
+        id: `poi-hospital-rank1-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "poi",
+        minzoom: hospitalMinZoom,
       filter: [
         "all",
         ["has", "name"],
@@ -229,16 +256,16 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         "icon-image": "hospital",
         "icon-size": 0.9,
       },
-      paint: poiPaint,
-    });
-    
-    // Hospital POIs - Rank 2 hospitals at zoom 14.5+
-    layers.push({
-      id: `poi-hospital-rank2-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "poi",
-      minzoom: 14.5,
+        paint: poiPaint,
+      });
+      
+      // Hospital POIs - Rank 2 hospitals at zoom 14.5+
+      layers.push({
+        id: `poi-hospital-rank2-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "poi",
+        minzoom: 14.5,
       filter: [
         "all",
         ["has", "name"],
@@ -280,16 +307,16 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         "icon-image": "hospital",
         "icon-size": 0.85,
       },
-      paint: poiPaint,
-    });
-    
-    // Hospital POIs - Rank > 2 hospitals at zoom 15+
-    layers.push({
-      id: `poi-hospital-rank3plus-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "poi",
-      minzoom: 15,
+        paint: poiPaint,
+      });
+      
+      // Hospital POIs - Rank > 2 hospitals at zoom 15+
+      layers.push({
+        id: `poi-hospital-rank3plus-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "poi",
+        minzoom: 15,
       filter: [
         "all",
         ["has", "name"],
@@ -343,11 +370,14 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         "icon-image": "hospital",
         "icon-size": 0.75,
       },
-      paint: poiPaint,
-    });
+        paint: poiPaint,
+      });
+    }
     
     // Museum POIs - Rank 1 museums at zoom 14+
-    layers.push({
+    if (isPOIEnabled('museum')) {
+      const museumMinZoom = poiThemeConfig.museum?.minZoom || source.minZoom;
+      layers.push({
       id: `poi-museum-rank1-${source.name}`,
       type: "symbol",
       source: source.name,
@@ -388,11 +418,11 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         "icon-image": "museum",
         "icon-size": 0.9,
       },
-      paint: poiPaint,
-    });
-    
-    // Museum POIs - Rank 2 museums at zoom 14.5+
-    layers.push({
+        paint: poiPaint,
+      });
+      
+      // Museum POIs - Rank 2 museums at zoom 14.5+
+      layers.push({
       id: `poi-museum-rank2-${source.name}`,
       type: "symbol",
       source: source.name,
@@ -425,11 +455,11 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         "icon-image": "museum",
         "icon-size": 0.85,
       },
-      paint: poiPaint,
-    });
-    
-    // Museum POIs - Rank > 2 museums at zoom 15+
-    layers.push({
+        paint: poiPaint,
+      });
+      
+      // Museum POIs - Rank > 2 museums at zoom 15+
+      layers.push({
       id: `poi-museum-rank3plus-${source.name}`,
       type: "symbol",
       source: source.name,
@@ -474,34 +504,39 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
     });
     
     // Zoo POIs
-    // Zoos have class='zoo' with subclass='zoo'
-    layers.push({
-      id: `poi-zoo-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "poi",
-      minzoom: source.minZoom,
-      filter: [
-        "all",
-        ["has", "name"],
-        ["==", ["get", "class"], "zoo"],
-        ["==", ["get", "subclass"], "zoo"],
-      ],
-      layout: {
-        ...baseLayout,
-        "icon-image": "zoo",
-      },
-      paint: poiPaint,
-    });
+    if (isPOIEnabled('zoo')) {
+      const zooMinZoom = poiThemeConfig.zoo?.minZoom || source.minZoom;
+      // Zoos have class='zoo' with subclass='zoo'
+      layers.push({
+        id: `poi-zoo-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "poi",
+        minzoom: zooMinZoom,
+        filter: [
+          "all",
+          ["has", "name"],
+          ["==", ["get", "class"], "zoo"],
+          ["==", ["get", "subclass"], "zoo"],
+        ],
+        layout: {
+          ...baseLayout,
+          "icon-image": "zoo",
+        },
+        paint: poiPaint,
+      });
+    }
     
     // Stadium POIs
-    // Stadiums typically have class='stadium' or class='entertainment' with subclass='stadium'
-    layers.push({
-      id: `poi-stadium-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "poi",
-      minzoom: source.minZoom,
+    if (isPOIEnabled('stadium')) {
+      const stadiumMinZoom = poiThemeConfig.stadium?.minZoom || source.minZoom;
+      // Stadiums typically have class='stadium' or class='entertainment' with subclass='stadium'
+      layers.push({
+        id: `poi-stadium-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "poi",
+        minzoom: stadiumMinZoom,
       filter: [
         "all",
         ["has", "name"],
@@ -521,16 +556,19 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         ...baseLayout,
         "icon-image": "stadium",
       },
-      paint: poiPaint,
-    });
+        paint: poiPaint,
+      });
+    }
     
     // Park POIs from POI layer (if parks are stored as points in POI layer)
-    layers.push({
-      id: `poi-park-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "poi",
-      minzoom: source.minZoom,
+    if (isPOIEnabled('park')) {
+      const parkMinZoom = poiThemeConfig.park?.minZoom || source.minZoom;
+      layers.push({
+        id: `poi-park-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "poi",
+        minzoom: parkMinZoom,
       filter: [
         "all",
         ["has", "name"],
@@ -550,22 +588,24 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         ...baseLayout,
         "icon-image": "park",
       },
-      paint: poiPaint,
-    });
-    
+        paint: poiPaint,
+      });
+    }
     
     // Railway station POIs - Rank 1 stations at zoom 14+
-    layers.push({
-      id: `poi-rail-rank1-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "poi",
-      minzoom: 14, // Rank 1 stations appear at zoom 14
-      filter: [
-        "all",
-        ["has", "name"],
-        [
-          "any",
+    if (isPOIEnabled('rail')) {
+      const railMinZoom = poiThemeConfig.rail?.minZoom || 14;
+      layers.push({
+        id: `poi-rail-rank1-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "poi",
+        minzoom: railMinZoom, // Rank 1 stations appear at zoom 14
+        filter: [
+          "all",
+          ["has", "name"],
+          [
+            "any",
           // Match class='railway' with subclass='station' (most common)
           [
             "all",
@@ -589,46 +629,46 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
               ["!", ["has", "rank"]], // No rank = rank 1
               ["==", ["get", "rank"], 1], // Rank 1
             ],
+            ],
           ],
         ],
-      ],
-      layout: {
-        "icon-image": "rail",
-        "icon-size": 0.9,
-        "icon-allow-overlap": true,
-        "icon-ignore-placement": false,
-        "icon-optional": false,
-        "text-field": createTextField(),
-        "text-font": theme.fonts.regular,
-        "text-size": ["interpolate", ["linear"], ["zoom"], 14, 10, 15, 12, 16, 14],
-        "text-offset": [0, 1.2],
-        "text-anchor": "top",
-        "text-optional": true,
-        "text-allow-overlap": false,
-        "symbol-placement": "point" as const,
-      },
-      paint: {
-        "icon-color": poiConfig.iconColor || "#7a8ba3",
-        "icon-opacity": 0.9,
-        "text-color": poiConfig.textColor,
-        "text-halo-color": poiConfig.textHalo,
-        "text-halo-width": poiConfig.textHaloWidth || 1.5,
-        "text-halo-blur": 1,
-      },
-    });
-    
-    // Railway station POIs - Rank 2 stations at zoom 14.5+
-    layers.push({
-      id: `poi-rail-rank2-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "poi",
-      minzoom: 14.5, // Rank 2 stations appear at zoom 14.5
-      filter: [
-        "all",
-        ["has", "name"],
-        [
-          "any",
+        layout: {
+          "icon-image": "rail",
+          "icon-size": 0.9,
+          "icon-allow-overlap": true,
+          "icon-ignore-placement": false,
+          "icon-optional": false,
+          "text-field": createTextField(),
+          "text-font": theme.fonts.regular,
+          "text-size": ["interpolate", ["linear"], ["zoom"], 14, 10, 15, 12, 16, 14],
+          "text-offset": [0, 1.2],
+          "text-anchor": "top",
+          "text-optional": true,
+          "text-allow-overlap": false,
+          "symbol-placement": "point" as const,
+        },
+        paint: {
+          "icon-color": poiConfig.iconColor || "#7a8ba3",
+          "icon-opacity": 0.9,
+          "text-color": poiConfig.textColor,
+          "text-halo-color": poiConfig.textHalo,
+          "text-halo-width": poiConfig.textHaloWidth || 1.5,
+          "text-halo-blur": 1,
+        },
+      });
+      
+      // Railway station POIs - Rank 2 stations at zoom 14.5+
+      layers.push({
+        id: `poi-rail-rank2-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "poi",
+        minzoom: 14.5, // Rank 2 stations appear at zoom 14.5
+        filter: [
+          "all",
+          ["has", "name"],
+          [
+            "any",
           // Match class='railway' with subclass='station' (most common)
           [
             "all",
@@ -644,46 +684,46 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
             ["match", ["get", "subclass"], ["railway_station", "station", "subway", "train_station"], true, false],
             // Only rank 2 stations
             ["==", ["get", "rank"], 2],
+            ],
           ],
         ],
-      ],
-      layout: {
-        "icon-image": "rail",
-        "icon-size": 0.85,
-        "icon-allow-overlap": true,
-        "icon-ignore-placement": false,
-        "icon-optional": false,
-        "text-field": createTextField(),
-        "text-font": theme.fonts.regular,
-        "text-size": ["interpolate", ["linear"], ["zoom"], 14.5, 10, 15, 12, 16, 14],
-        "text-offset": [0, 1.2],
-        "text-anchor": "top",
-        "text-optional": true,
-        "text-allow-overlap": false,
-        "symbol-placement": "point" as const,
-      },
-      paint: {
-        "icon-color": poiConfig.iconColor || "#7a8ba3",
-        "icon-opacity": 0.85,
-        "text-color": poiConfig.textColor,
-        "text-halo-color": poiConfig.textHalo,
-        "text-halo-width": poiConfig.textHaloWidth || 1.5,
-        "text-halo-blur": 1,
-      },
-    });
-    
-    // Railway station POIs - Rank > 2 stations at zoom 15+
-    layers.push({
-      id: `poi-rail-rank3plus-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "poi",
-      minzoom: 15, // Rank > 2 stations appear at zoom 15
-      filter: [
-        "all",
-        ["has", "name"],
-        [
-          "any",
+        layout: {
+          "icon-image": "rail",
+          "icon-size": 0.85,
+          "icon-allow-overlap": true,
+          "icon-ignore-placement": false,
+          "icon-optional": false,
+          "text-field": createTextField(),
+          "text-font": theme.fonts.regular,
+          "text-size": ["interpolate", ["linear"], ["zoom"], 14.5, 10, 15, 12, 16, 14],
+          "text-offset": [0, 1.2],
+          "text-anchor": "top",
+          "text-optional": true,
+          "text-allow-overlap": false,
+          "symbol-placement": "point" as const,
+        },
+        paint: {
+          "icon-color": poiConfig.iconColor || "#7a8ba3",
+          "icon-opacity": 0.85,
+          "text-color": poiConfig.textColor,
+          "text-halo-color": poiConfig.textHalo,
+          "text-halo-width": poiConfig.textHaloWidth || 1.5,
+          "text-halo-blur": 1,
+        },
+      });
+      
+      // Railway station POIs - Rank > 2 stations at zoom 15+
+      layers.push({
+        id: `poi-rail-rank3plus-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "poi",
+        minzoom: 15, // Rank > 2 stations appear at zoom 15
+        filter: [
+          "all",
+          ["has", "name"],
+          [
+            "any",
           // Match class='railway' with subclass='station' (most common)
           [
             "all",
@@ -707,142 +747,149 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
               ["has", "rank"], // Must have rank property
               [">", ["get", "rank"], 2], // Rank > 2
             ],
+            ],
           ],
         ],
-      ],
-      layout: {
-        "icon-image": "rail",
-        "icon-size": 0.75, // Smaller for lower rank stations
-        "icon-allow-overlap": true,
-        "icon-ignore-placement": false,
-        "icon-optional": false,
-        "text-field": createTextField(),
-        "text-font": theme.fonts.regular,
-        "text-size": ["interpolate", ["linear"], ["zoom"], 15, 9, 16, 12],
-        "text-offset": [0, 1.2],
-        "text-anchor": "top",
-        "text-optional": true,
-        "text-allow-overlap": false,
-        "symbol-placement": "point" as const,
-      },
-      paint: {
-        "icon-color": poiConfig.iconColor || "#7a8ba3",
-        "icon-opacity": 0.8, // More transparent for lower rank stations
-        "text-color": poiConfig.textColor,
-        "text-halo-color": poiConfig.textHalo,
-        "text-halo-width": poiConfig.textHaloWidth || 1.5,
-        "text-halo-blur": 1,
-      },
-    });
+        layout: {
+          "icon-image": "rail",
+          "icon-size": 0.75, // Smaller for lower rank stations
+          "icon-allow-overlap": true,
+          "icon-ignore-placement": false,
+          "icon-optional": false,
+          "text-field": createTextField(),
+          "text-font": theme.fonts.regular,
+          "text-size": ["interpolate", ["linear"], ["zoom"], 15, 9, 16, 12],
+          "text-offset": [0, 1.2],
+          "text-anchor": "top",
+          "text-optional": true,
+          "text-allow-overlap": false,
+          "symbol-placement": "point" as const,
+        },
+        paint: {
+          "icon-color": poiConfig.iconColor || "#7a8ba3",
+          "icon-opacity": 0.8, // More transparent for lower rank stations
+          "text-color": poiConfig.textColor,
+          "text-halo-color": poiConfig.textHalo,
+          "text-halo-width": poiConfig.textHaloWidth || 1.5,
+          "text-halo-blur": 1,
+        },
+      });
+    } // End of if (isPOIEnabled('rail'))
     
     // School/Educational institution POIs - Rank 1 colleges/universities at zoom 14+
-    // Colleges/universities have class='college' with subclass='university' or 'college'
-    layers.push({
-      id: `poi-school-rank1-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "poi",
-      minzoom: 14, // Rank 1 colleges/universities appear at zoom 14
-      filter: [
-        "all",
-        ["has", "name"],
-        ["==", ["get", "class"], "college"],
-        ["match", ["get", "subclass"], ["university", "college"], true, false],
-        // Only rank 1 colleges/universities (or no rank which defaults to rank 1)
-        [
-          "any",
-          ["!", ["has", "rank"]], // No rank = rank 1
-          ["==", ["get", "rank"], 1], // Rank 1
-        ],
-      ],
-      layout: {
-        ...baseLayout,
-        "icon-image": "school",
-        "icon-size": 0.9,
-      },
-      paint: poiPaint,
-    });
-    
-    // School/Educational institution POIs - Rank 2 colleges/universities at zoom 14.5+
-    layers.push({
-      id: `poi-school-rank2-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "poi",
-      minzoom: 14.5, // Rank 2 colleges/universities appear at zoom 14.5
-      filter: [
-        "all",
-        ["has", "name"],
-        ["==", ["get", "class"], "college"],
-        ["match", ["get", "subclass"], ["university", "college"], true, false],
-        // Only rank 2 colleges/universities
-        ["==", ["get", "rank"], 2],
-      ],
-      layout: {
-        ...baseLayout,
-        "icon-image": "school",
-        "icon-size": 0.85,
-      },
-      paint: poiPaint,
-    });
-    
-    // School/Educational institution POIs - Rank > 2 colleges/universities at zoom 15+
-    layers.push({
-      id: `poi-school-rank3plus-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "poi",
-      minzoom: 15, // Rank > 2 colleges/universities appear at zoom 15
-      filter: [
-        "all",
-        ["has", "name"],
-        ["==", ["get", "class"], "college"],
-        ["match", ["get", "subclass"], ["university", "college"], true, false],
-        // Only rank > 2 colleges/universities
-        [
+    if (isPOIEnabled('school')) {
+      const schoolMinZoom = poiThemeConfig.school?.minZoom || 14;
+      // Colleges/universities have class='college' with subclass='university' or 'college'
+      layers.push({
+        id: `poi-school-rank1-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "poi",
+        minzoom: schoolMinZoom, // Rank 1 colleges/universities appear at zoom 14
+        filter: [
           "all",
-          ["has", "rank"], // Must have rank property
-          [">", ["get", "rank"], 2], // Rank > 2
+          ["has", "name"],
+          ["==", ["get", "class"], "college"],
+          ["match", ["get", "subclass"], ["university", "college"], true, false],
+          // Only rank 1 colleges/universities (or no rank which defaults to rank 1)
+          [
+            "any",
+            ["!", ["has", "rank"]], // No rank = rank 1
+            ["==", ["get", "rank"], 1], // Rank 1
+          ],
         ],
-      ],
-      layout: {
-        ...baseLayout,
-        "icon-image": "school",
-        "icon-size": 0.75, // Smaller for lower rank colleges/universities
-      },
-      paint: poiPaint,
-    });
-  }
+        layout: {
+          ...baseLayout,
+          "icon-image": "school",
+          "icon-size": 0.9,
+        },
+        paint: poiPaint,
+      });
+      
+      // School/Educational institution POIs - Rank 2 colleges/universities at zoom 14.5+
+      layers.push({
+        id: `poi-school-rank2-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "poi",
+        minzoom: 14.5, // Rank 2 colleges/universities appear at zoom 14.5
+        filter: [
+          "all",
+          ["has", "name"],
+          ["==", ["get", "class"], "college"],
+          ["match", ["get", "subclass"], ["university", "college"], true, false],
+          // Only rank 2 colleges/universities
+          ["==", ["get", "rank"], 2],
+        ],
+        layout: {
+          ...baseLayout,
+          "icon-image": "school",
+          "icon-size": 0.85,
+        },
+        paint: poiPaint,
+      });
+      
+      // School/Educational institution POIs - Rank > 2 colleges/universities at zoom 15+
+      layers.push({
+        id: `poi-school-rank3plus-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "poi",
+        minzoom: 15, // Rank > 2 colleges/universities appear at zoom 15
+        filter: [
+          "all",
+          ["has", "name"],
+          ["==", ["get", "class"], "college"],
+          ["match", ["get", "subclass"], ["university", "college"], true, false],
+          // Only rank > 2 colleges/universities
+          [
+            "all",
+            ["has", "rank"], // Must have rank property
+            [">", ["get", "rank"], 2], // Rank > 2
+          ],
+        ],
+        layout: {
+          ...baseLayout,
+          "icon-image": "school",
+          "icon-size": 0.75, // Smaller for lower rank colleges/universities
+        },
+        paint: poiPaint,
+      });
+    } // End of if (isPOIEnabled('school'))
+  } // End of for (const source of sources) loop
   
   // Park labels from PARK layer (separate from POI sources)
   // Only use sources that have park data to avoid duplicates
-  for (const source of parkSources) {
-    layers.push({
-      id: `park-label-${source.name}`,
-      type: "symbol",
-      source: source.name,
-      "source-layer": "park",
-      minzoom: source.minZoom,
-      filter: [
-        "all",
-        ["has", "name"],
-        ["match", ["get", "class"], ["national_park", "national_monument", "state_park"], true, false],
-        // Only show Point geometries (not Polygons) to avoid duplicate labels
-        // Point features typically have rank=1 and are the main label location
-        ["==", ["geometry-type"], "Point"],
-      ],
-      layout: {
-        ...baseLayout,
-        "icon-image": "park",
-        "symbol-placement": "point",
-        // Prevent duplicate labels by requiring minimum distance
-        "symbol-spacing": 250, // Minimum distance between symbols in pixels
-        "text-optional": true,
-      },
-      paint: poiPaint,
-    });
+  if (isPOIEnabled('park')) {
+    for (const source of parkSources) {
+      layers.push({
+        id: `park-label-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "park",
+        minzoom: source.minZoom,
+        filter: [
+          "all",
+          ["has", "name"],
+          ["match", ["get", "class"], ["national_park", "national_monument", "state_park"], true, false],
+          // Only show Point geometries (not Polygons) to avoid duplicate labels
+          // Point features typically have rank=1 and are the main label location
+          ["==", ["geometry-type"], "Point"],
+        ],
+        layout: {
+          ...baseLayout,
+          "icon-image": "park",
+          "symbol-placement": "point",
+          // Prevent duplicate labels by requiring minimum distance
+          "symbol-spacing": 250, // Minimum distance between symbols in pixels
+          "text-optional": true,
+        },
+        paint: poiPaint,
+      });
+    }
   }
   
   return layers;
 }
 
+}
