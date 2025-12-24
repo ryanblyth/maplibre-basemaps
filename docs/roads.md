@@ -212,8 +212,10 @@ Custom shields (`shield-*-custom`) support additional properties:
 After modifying shield colors in `theme.ts`, rebuild:
 
 ```bash
-npx tsx scripts/build-shields.ts && npm run build:styles
+npx tsx scripts/build-shields.ts dark-blue && npm run build:styles
 ```
+
+**Note:** For detailed information on sprite architecture, building sprites, and how shields are generated, see [Sprites Documentation](./sprites.md).
 
 ---
 
