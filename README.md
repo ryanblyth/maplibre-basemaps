@@ -86,6 +86,25 @@ See `docs/DOCKER.md` for Docker-based sprite building instructions.
 
 ## Development
 
+### Building Styles
+
+Styles are generated from TypeScript source files using a custom JSON formatter:
+
+```bash
+npm run build:styles
+```
+
+This command:
+- Generates `style.generated.json` from TypeScript style definitions
+- Applies custom formatting rules (see `docs/style-json-formatting.md`)
+- Copies the formatted output to `style.json` for compatibility
+
+**Important:** Always run `npm run build:styles` after modifying style source files. The custom formatter ensures consistent indentation and compact formatting for:
+- Simple arrays and objects (one line)
+- Complex expressions (let, case, interpolate) with proper nesting
+- Nested expressions in arrays (all, any, case, etc.)
+- Match expressions (always compacted to one line)
+
 ### Server
 The `serve.js` server handles:
 - Serving basemap files from `/basemaps/*`
@@ -94,10 +113,12 @@ The `serve.js` server handles:
 - HTTP Range requests for PMTiles
 
 ### Style Development
-- Edit `style.json` files directly
+- Edit TypeScript style source files in `/basemaps/*/styles/`
+- Run `npm run build:styles` to regenerate `style.json`
 - Refresh the preview page to see changes
 - Check browser console for errors
 - See `docs/MAP_ELEMENTS.md` for MapLibre style reference
+- See `docs/style-json-formatting.md` for formatting rules
 
 ### State Label Handling
 

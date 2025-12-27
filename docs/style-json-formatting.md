@@ -100,6 +100,14 @@ The goal is to make `style.json` files compact, usable, and readable while maint
 
 **Rule:** Keep structure for readability. Each `let` variable binding on its own line. Each `case` condition on its own line. Compact simple arrays within these expressions. **All values in `let` expressions (including single-line expressions) must be indented to match the variable name indentation.**
 
+**Indentation for Nested Case Expressions:** When `case` expressions are nested within other `case` expressions (or within `let` expressions), they should maintain proper indentation:
+- Nested case opening bracket: same indent as the parent case's items
+- Nested case operator: 2 spaces more than the opening bracket
+- Nested case items: 2 spaces more than the opening bracket
+- Nested case closing bracket: same indent as the opening bracket
+
+For deeply nested case expressions (case within case within case), each level adds 2 more spaces for the operator and items.
+
 **Examples:**
 ```json
 // ✅ Correct - structured but compact arrays, proper indentation
@@ -119,6 +127,26 @@ The goal is to make `style.json` files compact, usable, and readable while maint
       ["var", "name"]
     ],
     ["var", "dirReplaced"]
+  ]
+]
+
+// ✅ Correct - nested case expressions with proper indentation
+[
+  "case",
+  ["has", "rank"],
+  [
+    "case",
+    ["<=", ["get", "rank"], 1],
+    13,
+    ["<=", ["get", "rank"], 2],
+    11,
+    ["var", "name"]
+  ],
+  [
+    "case",
+    ["in", "Reservoir", ["var", "name"]],
+    11,
+    ["var", "name"]
   ]
 ]
 
@@ -289,19 +317,58 @@ The goal is to make `style.json` files compact, usable, and readable while maint
 }
 ```
 
-### 8. Filter Arrays
+### 8. Filter Arrays and Expression Arrays
 
 **Rule:** Keep filter structure readable. Compact simple arrays within filters. Each filter condition can be on its own line for readability, but compact arrays within.
 
+**Indentation for Case Expressions in Arrays:** When `case` expressions are used as values in arrays (e.g., in filter properties), they should be properly indented:
+- Opening bracket: 10 spaces (2 more than the array's opening bracket at 8 spaces)
+- Case operator: 12 spaces (2 more than the opening bracket)
+- Case items: 12 spaces (same as operator)
+- Closing bracket: 10 spaces (same as opening bracket)
+
+**Indentation for Nested Expressions in Arrays:** When expressions like `all`, `any`, or nested `case` expressions are used as array values, they should maintain proper nesting:
+- Opening bracket: same indent as other array items
+- Expression operator: 2 spaces more than opening bracket
+- Expression items: 2 spaces more than opening bracket
+- Closing bracket: same indent as opening bracket
+
 **Examples:**
 ```json
-// ✅ Correct
-[
+// ✅ Correct - case expression in filter array
+"filter": [
   "all",
-  ["!=", ["get", "brunnel"], "tunnel"],
-  ["!=", ["get", "brunnel"], "bridge"],
-  ["match", ["get", "class"], ["motorway", "trunk", "primary"], true, false]
+  ["has", "name"],
+  [
+    "case",
+    ["has", "rank"],
+    [">", ["get", "rank"], 3],
+    false
+  ]
 ]
+
+// ✅ Correct - nested expressions in filter array
+"filter": [
+  "all",
+  ["has", "name"],
+  [
+    "any",
+    [
+      "all",
+      ["match", ["get", "class"], ["leisure", "park"], true, false],
+      ["match", ["get", "subclass"], ["national_park"], true, false]
+    ],
+    ["match", ["get", "tourism"], ["national_park"], true, false]
+  ]
+]
+
+// ❌ Incorrect - case expression items at wrong indent (6 spaces instead of 10)
+"filter": ["all", ["has", "name"], [
+  "case",
+  ["has", "rank"],
+  [">", ["get", "rank"], 3],
+  false
+]]
 
 // ❌ Incorrect - too expanded
 [
