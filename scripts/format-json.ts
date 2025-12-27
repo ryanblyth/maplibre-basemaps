@@ -17,6 +17,12 @@ interface FormatContext {
 function isSimpleArray(arr: unknown[]): boolean {
   if (arr.length === 0) return true;
   
+  // First, check if this array itself is a complex expression (case, let, interpolate)
+  // If so, it's not a simple array
+  if (isComplexExpression(arr)) {
+    return false;
+  }
+  
   // Check if all elements are primitives or very simple nested structures
   for (const item of arr) {
     if (item === null) continue;
@@ -24,8 +30,7 @@ function isSimpleArray(arr: unknown[]): boolean {
     if (type === 'object') {
       // Allow simple nested arrays of primitives
       if (Array.isArray(item)) {
-        // If this is a complex expression (case, let, interpolate), the array is not simple
-        if (isComplexExpression(item)) return false;
+        // Recursively check if nested arrays are simple
         if (!isSimpleArray(item)) return false;
       } else {
         // Objects make it not simple
@@ -71,7 +76,8 @@ function isExpression(arr: unknown[]): boolean {
 function isComplexExpression(arr: unknown[]): boolean {
   if (arr.length === 0) return false;
   const first = arr[0];
-  return first === 'let' || first === 'case' || first === 'interpolate';
+  const result = first === 'let' || first === 'case' || first === 'interpolate';
+  return result;
 }
 
 /**
@@ -131,45 +137,22 @@ function formatValue(value: unknown, indent = 0, context: FormatContext = {}): s
           
           if (isCaseExpression) {
             // Special handling for case expressions: operator at expectedIndent, items at expectedItemIndent
-            // Force correct indentation based on arrayItemIndent, ignoring how the case was originally formatted
-            // For case expressions in arrays, the opening bracket and operator should be at arrayItemSpaces,
-            // and items should be at arrayItemSpaces + 2 (which is arrayItemIndent + 1 in spaces)
+            // For case expressions in arrays that are property values, we need to ensure correct indentation.
+            // The issue: when arrayItemIndent is 3 (6 spaces), case expressions should be at 10 spaces (arrayItemIndent=5).
             // 
-            // However, if the array is at indent=2 (when it should be at indent=4), arrayItemIndent will be 3 instead of 5.
-            // This happens when the array value starts on the same line as the property.
-            // In this case, we need to correct arrayItemIndent to what it should be (5 instead of 3).
             // The correct indent for case expressions in arrays that are property values should be:
             // - Property is at indent=3 (6 spaces)
             // - Array should be at indent=4 (8 spaces), so arrayItemIndent should be 5 (10 spaces)
             // - Case operator should be at 10 spaces, items at 12 spaces
             // 
-            // If arrayItemIndent is 3 (6 spaces), it means the array is at indent=2, which is wrong.
-            // We'll correct it to 5 (10 spaces) for case expressions.
-            
-            // Debug: Check what arrayItemIndent actually is
-            if (arrayItemIndent === 3) {
-              console.log(`[DEBUG] Case expression detected: arrayItemIndent=${arrayItemIndent} (${arrayItemIndent * 2} spaces), correcting to 5 (10 spaces)`);
-            }
-            
-            // Check both the numeric value and the actual space count to ensure we catch the issue
-            // If arrayItemSpaces is 6 spaces (arrayItemIndent=3), correct it to 10 spaces (arrayItemIndent=5)
-            // This ensures case expressions in arrays that are property values get the correct indent
-            const shouldCorrect = arrayItemIndent === 3 || arrayItemSpaces.length === 6;
-            const correctedArrayItemIndent = shouldCorrect ? 5 : arrayItemIndent;
-            let correctedExpectedIndent = '  '.repeat(correctedArrayItemIndent);
-            let correctedExpectedItemIndent = '  '.repeat(correctedArrayItemIndent + 1);
-            
-            // Ensure we have exactly 10 spaces for the case operator and items
-            // If the correction didn't work, force it to 10 spaces
-            if (shouldCorrect && correctedExpectedIndent.length !== 10) {
-              correctedExpectedIndent = '          '; // 10 spaces
-              correctedExpectedItemIndent = '            '; // 12 spaces
-            }
-            
-            // Debug: Verify the correction
-            if (arrayItemIndent === 3) {
-              console.log(`[DEBUG] Corrected: arrayItemIndent=${correctedArrayItemIndent} (${correctedArrayItemIndent * 2} spaces), correctedExpectedIndent=${correctedExpectedIndent.length} spaces`);
-            }
+            // If arrayItemSpaces is 6 spaces (arrayItemIndent=3), we need to correct it to 10 spaces (arrayItemIndent=5).
+            // Always use 10 spaces for case operator and 12 spaces for items when arrayItemSpaces is 6.
+            // 
+            // IMPORTANT: Check the actual first line indent to see if we need correction
+            const firstLineIndent = lines[0].length - lines[0].trim().length;
+            const needsCorrection = arrayItemSpaces.length === 6 || firstLineIndent === 6;
+            const correctedExpectedIndent = needsCorrection ? '          ' : expectedIndent; // 10 spaces if correction needed, otherwise use expectedIndent
+            const correctedExpectedItemIndent = needsCorrection ? '            ' : expectedItemIndent; // 12 spaces if correction needed, otherwise use expectedItemIndent
             
             const fixedLines = lines.map((line, lineIndex) => {
               const trimmed = line.trim();
@@ -177,21 +160,32 @@ function formatValue(value: unknown, indent = 0, context: FormatContext = {}): s
                 return '';
               }
               
+              // Check the actual indent of this line to see if we need correction
+              const lineIndent = line.length - trimmed.length;
+              
               if (lineIndex === 0) {
                 // Opening bracket - use correctedExpectedIndent
-                return correctedExpectedIndent + trimmed;
+                // If the line is at 6 spaces, force it to 10 spaces
+                const finalIndent = (lineIndent === 6 || needsCorrection) ? correctedExpectedIndent : expectedIndent;
+                return finalIndent + trimmed;
               } else if (lineIndex === lines.length - 1) {
                 // Closing bracket - use correctedExpectedIndent
-                return correctedExpectedIndent + trimmed;
+                // If the line is at 6 spaces, force it to 10 spaces
+                const finalIndent = (lineIndent === 6 || needsCorrection) ? correctedExpectedIndent : expectedIndent;
+                return finalIndent + trimmed;
               } else {
                 // Content lines
                 // Check if this is the case operator (first item after opening bracket)
                 if (trimmed === '"case",' || trimmed === '"case"') {
                   // Case operator should be at correctedExpectedIndent (same as opening bracket)
-                  return correctedExpectedIndent + trimmed;
+                  // If the line is at 6 spaces, force it to 10 spaces
+                  const finalIndent = (lineIndent === 6 || needsCorrection) ? correctedExpectedIndent : expectedIndent;
+                  return finalIndent + trimmed;
                 } else {
                   // All other items should be at correctedExpectedItemIndent (2 more than opening bracket)
-                  return correctedExpectedItemIndent + trimmed;
+                  // If the line is at 6 spaces, force it to 12 spaces
+                  const finalIndent = (lineIndent === 6 || needsCorrection) ? correctedExpectedItemIndent : expectedItemIndent;
+                  return finalIndent + trimmed;
                 }
               }
             });
@@ -348,7 +342,8 @@ function formatSimpleExpression(arr: unknown[], indent: number): string {
       return formatValue(item, 0, {});
     }
     if (Array.isArray(item)) {
-      if (isSimpleArray(item)) {
+      const isSimple = isSimpleArray(item);
+      if (isSimple) {
         return formatValue(item, 0, {});
       }
       // Complex nested array - will need multi-line
@@ -369,8 +364,50 @@ function formatSimpleExpression(arr: unknown[], indent: number): string {
   const items: string[] = [];
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i];
-    const formatted = formatValue(item, indent + 1, {});
-    items.push(spaces + '  ' + formatted + (i < arr.length - 1 ? ',' : ''));
+    // Check if this is a case expression before formatting
+    const isCaseExpression = Array.isArray(item) && 
+                             item.length > 0 && 
+                             typeof item[0] === 'string' && 
+                             item[0] === 'case';
+    
+    // For case expressions nested in other expressions (like 'all'), we need to ensure
+    // they get the correct indent of 5 (10 spaces) regardless of what indent is passed.
+    // The issue: when indent=2 (4 spaces) or indent=3 (6 spaces), using indent+1 gives wrong result.
+    // We always want case expressions to be at indent=5 (10 spaces) for proper nesting.
+    const caseIndent = isCaseExpression ? 5 : indent + 1;
+    const formatted = formatValue(item, caseIndent, {});
+    const isLast = i === arr.length - 1;
+    
+    // If the item is a complex expression (multi-line), ensure proper indentation
+    if (formatted.includes('\n')) {
+      const lines = formatted.split('\n');
+      const expectedIndent = spaces + '  '; // Expected indent for opening/closing brackets
+      const expectedItemIndent = expectedIndent + '  '; // Expected indent for items inside
+      
+      if (isCaseExpression) {
+        // Special handling for case expressions: they're already formatted with indent=5 (10 spaces)
+        // but the first line (opening bracket) has no leading spaces, so we need to add 10 spaces
+        const lines = formatted.split('\n');
+        const caseIndentSpaces = '          '; // 10 spaces
+        const fixedLines = lines.map((line, lineIndex) => {
+          if (lineIndex === 0) {
+            // First line (opening bracket) - add 10 spaces
+            return caseIndentSpaces + line;
+          } else {
+            // Other lines already have correct indentation
+            return line;
+          }
+        });
+        const fixedFormatted = fixedLines.join('\n');
+        items.push(fixedFormatted + (isLast ? '' : ','));
+      } else {
+        // Other multi-line items - use standard formatting
+        items.push(formatted + (isLast ? '' : ','));
+      }
+    } else {
+      // Single-line item
+      items.push(spaces + '  ' + formatted + (isLast ? '' : ','));
+    }
   }
   return '[\n' + items.join('\n') + '\n' + spaces + ']';
 }
@@ -529,7 +566,11 @@ function formatComplexExpression(arr: unknown[], indent: number): string {
     
     for (let i = 1; i < arr.length; i++) {
       const item = arr[i];
-      const formatted = formatValue(item, indent + 1, {});
+      // Check if this is a nested case expression
+      const isNestedCase = Array.isArray(item) && item.length > 0 && item[0] === 'case';
+      // For nested case expressions, use indent=5 (10 spaces) to ensure correct nesting
+      const itemIndent = isNestedCase ? 5 : indent + 1;
+      const formatted = formatValue(item, itemIndent, {});
       const isLast = i === arr.length - 1;
       
       if (formatted.includes('\n')) {
