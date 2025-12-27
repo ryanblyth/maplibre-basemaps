@@ -64,6 +64,11 @@ function buildStyle(build: StyleBuild, config: BaseStyleConfig): void {
     const style = build.generator(config);
     ensureDir(outputPath);
     // Use custom formatter to generate compact, readable JSON
+    // The formatter follows rules defined in docs/style-json-formatting.md:
+    // - Compact simple arrays/objects on one line
+    // - Proper indentation for complex expressions (let, case, interpolate)
+    // - Correct nesting for nested expressions in arrays
+    // - Normalized indentation for nested case expressions
     const formatted = formatJSON(style);
     writeFileSync(outputPath, formatted + "\n", "utf8");
     console.log(`  ✓ Written to ${build.outputPath}`);

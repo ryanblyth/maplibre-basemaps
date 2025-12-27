@@ -689,7 +689,7 @@
         "all",
         ["!=", ["get", "brunnel"], "tunnel"],
         ["!=", ["get", "brunnel"], "bridge"],
-      [
+        [
           "!",
           ["match", ["get", "class"], ["motorway", "trunk", "primary", "secondary", "tertiary", "residential", "service", "minor", "unclassified"], true, false]
         ]
@@ -2139,24 +2139,24 @@
                 "case",
                 ["has", "rank"],
                 [
-                "case",
-                ["<=", ["get", "rank"], 1],
-                16,
-                ["<=", ["get", "rank"], 2],
-                14,
-                ["<=", ["get", "rank"], 3],
-                12,
-                ["<=", ["get", "rank"], 4],
-                10,
-                8
+                  "case",
+                  ["<=", ["get", "rank"], 1],
+                  16,
+                  ["<=", ["get", "rank"], 2],
+                  14,
+                  ["<=", ["get", "rank"], 3],
+                  12,
+                  ["<=", ["get", "rank"], 4],
+                  10,
+                  8
                 ],
                 [
-                "case",
-                ["in", "Reservoir", ["var", "name"]],
-                11,
-                ["in", "reservoir", ["var", "name"]],
-                11,
-                10
+                  "case",
+                  ["in", "Reservoir", ["var", "name"]],
+                  11,
+                  ["in", "reservoir", ["var", "name"]],
+                  11,
+                  10
                 ]
               ]
             ]
@@ -2184,24 +2184,24 @@
                 "case",
                 ["has", "rank"],
                 [
-                "case",
-                ["<=", ["get", "rank"], 1],
-                22,
-                ["<=", ["get", "rank"], 2],
-                19,
-                ["<=", ["get", "rank"], 3],
-                16,
-                ["<=", ["get", "rank"], 4],
-                13,
-                10
+                  "case",
+                  ["<=", ["get", "rank"], 1],
+                  22,
+                  ["<=", ["get", "rank"], 2],
+                  19,
+                  ["<=", ["get", "rank"], 3],
+                  16,
+                  ["<=", ["get", "rank"], 4],
+                  13,
+                  10
                 ],
                 [
-                "case",
-                ["in", "Reservoir", ["var", "name"]],
-                14,
-                ["in", "reservoir", ["var", "name"]],
-                14,
-                13
+                  "case",
+                  ["in", "Reservoir", ["var", "name"]],
+                  14,
+                  ["in", "reservoir", ["var", "name"]],
+                  14,
+                  13
                 ]
               ]
             ]
@@ -2229,24 +2229,24 @@
                 "case",
                 ["has", "rank"],
                 [
-                "case",
-                ["<=", ["get", "rank"], 1],
-                26,
-                ["<=", ["get", "rank"], 2],
-                23,
-                ["<=", ["get", "rank"], 3],
-                20,
-                ["<=", ["get", "rank"], 4],
-                17,
-                13
+                  "case",
+                  ["<=", ["get", "rank"], 1],
+                  26,
+                  ["<=", ["get", "rank"], 2],
+                  23,
+                  ["<=", ["get", "rank"], 3],
+                  20,
+                  ["<=", ["get", "rank"], 4],
+                  17,
+                  13
                 ],
                 [
-                "case",
-                ["in", "Reservoir", ["var", "name"]],
-                18,
-                ["in", "reservoir", ["var", "name"]],
-                18,
-                17
+                  "case",
+                  ["in", "Reservoir", ["var", "name"]],
+                  18,
+                  ["in", "reservoir", ["var", "name"]],
+                  18,
+                  17
                 ]
               ]
             ]
@@ -2274,24 +2274,24 @@
                 "case",
                 ["has", "rank"],
                 [
-                "case",
-                ["<=", ["get", "rank"], 1],
-                30,
-                ["<=", ["get", "rank"], 2],
-                26,
-                ["<=", ["get", "rank"], 3],
-                22,
-                ["<=", ["get", "rank"], 4],
-                18,
-                14
+                  "case",
+                  ["<=", ["get", "rank"], 1],
+                  30,
+                  ["<=", ["get", "rank"], 2],
+                  26,
+                  ["<=", ["get", "rank"], 3],
+                  22,
+                  ["<=", ["get", "rank"], 4],
+                  18,
+                  14
                 ],
                 [
-                "case",
-                ["in", "Reservoir", ["var", "name"]],
-                19,
-                ["in", "reservoir", ["var", "name"]],
-                19,
-                18
+                  "case",
+                  ["in", "Reservoir", ["var", "name"]],
+                  19,
+                  ["in", "reservoir", ["var", "name"]],
+                  19,
+                  18
                 ]
               ]
             ]
@@ -3397,7 +3397,7 @@
       "filter": [
         "all",
         ["has", "name"],
-      [
+        [
           "any",
           ["all", ["match", ["get", "class"], ["transport"], true, false], ["==", ["get", "subclass"], "airport"]],
           ["==", ["get", "class"], "airport"]
@@ -3553,21 +3553,21 @@
       "filter": [
         "all",
         ["has", "name"],
-      [
+        [
           "any",
-      [
+          [
             "all",
             ["match", ["get", "class"], ["healthcare"], true, false],
             ["==", ["get", "subclass"], "hospital"],
             ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
           ],
-      [
+          [
             "all",
             ["==", ["get", "class"], "hospital"],
             ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "hospital"]],
             ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
           ],
-      [
+          [
             "all",
             ["match", ["get", "class"], ["amenity"], true, false],
             ["==", ["get", "subclass"], "hospital"],
@@ -3614,10 +3614,10 @@
       "filter": [
         "all",
         ["has", "name"],
-      [
+        [
           "any",
           ["all", ["match", ["get", "class"], ["healthcare"], true, false], ["==", ["get", "subclass"], "hospital"], ["==", ["get", "rank"], 2]],
-      [
+          [
             "all",
             ["==", ["get", "class"], "hospital"],
             ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "hospital"]],
@@ -3665,21 +3665,21 @@
       "filter": [
         "all",
         ["has", "name"],
-      [
+        [
           "any",
-      [
+          [
             "all",
             ["match", ["get", "class"], ["healthcare"], true, false],
             ["==", ["get", "subclass"], "hospital"],
             ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
           ],
-      [
+          [
             "all",
             ["==", ["get", "class"], "hospital"],
             ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "hospital"]],
             ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
           ],
-      [
+          [
             "all",
             ["match", ["get", "class"], ["amenity"], true, false],
             ["==", ["get", "subclass"], "hospital"],
@@ -3726,9 +3726,9 @@
       "filter": [
         "all",
         ["has", "name"],
-      [
+        [
           "any",
-      [
+          [
             "all",
             ["match", ["get", "class"], ["entertainment", "tourism"], true, false],
             ["match", ["get", "subclass"], ["museum", "gallery"], true, false],
@@ -3776,9 +3776,9 @@
       "filter": [
         "all",
         ["has", "name"],
-      [
+        [
           "any",
-      [
+          [
             "all",
             ["match", ["get", "class"], ["entertainment", "tourism"], true, false],
             ["match", ["get", "subclass"], ["museum", "gallery"], true, false],
@@ -3826,9 +3826,9 @@
       "filter": [
         "all",
         ["has", "name"],
-      [
+        [
           "any",
-      [
+          [
             "all",
             ["match", ["get", "class"], ["entertainment", "tourism"], true, false],
             ["match", ["get", "subclass"], ["museum", "gallery"], true, false],
@@ -3913,7 +3913,7 @@
       "filter": [
         "all",
         ["has", "name"],
-      [
+        [
           "any",
           ["==", ["get", "class"], "stadium"],
           ["all", ["match", ["get", "class"], ["entertainment", "sport"], true, false], ["==", ["get", "subclass"], "stadium"]]
@@ -3958,9 +3958,9 @@
       "filter": [
         "all",
         ["has", "name"],
-      [
+        [
           "any",
-      [
+          [
             "all",
             ["match", ["get", "class"], ["leisure", "park"], true, false],
             ["match", ["get", "subclass"], ["national_park", "national_monument", "state_park"], true, false]
@@ -4007,10 +4007,10 @@
       "filter": [
         "all",
         ["has", "name"],
-      [
+        [
           "any",
           ["all", ["==", ["get", "class"], "railway"], ["==", ["get", "subclass"], "station"], ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]],
-      [
+          [
             "all",
             ["match", ["get", "class"], ["transport"], true, false],
             ["match", ["get", "subclass"], ["railway_station", "station", "subway", "train_station"], true, false],
@@ -4058,10 +4058,10 @@
       "filter": [
         "all",
         ["has", "name"],
-      [
+        [
           "any",
           ["all", ["==", ["get", "class"], "railway"], ["==", ["get", "subclass"], "station"], ["==", ["get", "rank"], 2]],
-      [
+          [
             "all",
             ["match", ["get", "class"], ["transport"], true, false],
             ["match", ["get", "subclass"], ["railway_station", "station", "subway", "train_station"], true, false],
@@ -4109,10 +4109,10 @@
       "filter": [
         "all",
         ["has", "name"],
-      [
+        [
           "any",
           ["all", ["==", ["get", "class"], "railway"], ["==", ["get", "subclass"], "station"], ["all", ["has", "rank"], [">", ["get", "rank"], 2]]],
-      [
+          [
             "all",
             ["match", ["get", "class"], ["transport"], true, false],
             ["match", ["get", "subclass"], ["railway_station", "station", "subway", "train_station"], true, false],

@@ -4,6 +4,13 @@
  * 
  * This module provides a compact formatting function that can be used
  * in build scripts to generate properly formatted JSON files.
+ * 
+ * Key features:
+ * - Compact formatting for simple arrays and objects
+ * - Proper indentation for complex expressions (let, case, interpolate)
+ * - Correct nesting for nested expressions in arrays (all, any, case, etc.)
+ * - Normalized indentation for nested case expressions within case expressions
+ * - Special handling for match expressions (always compacted to one line)
  */
 
 interface FormatContext {
@@ -401,8 +408,26 @@ function formatSimpleExpression(arr: unknown[], indent: number): string {
         const fixedFormatted = fixedLines.join('\n');
         items.push(fixedFormatted + (isLast ? '' : ','));
       } else {
-        // Other multi-line items - use standard formatting
-        items.push(formatted + (isLast ? '' : ','));
+        // Other multi-line items - normalize indentation for nested expressions
+        // If the formatted expression starts with '[' (no leading spaces), add the expected indent
+        const lines = formatted.split('\n');
+        if (lines.length > 1 && lines[0].trim() === '[') {
+          // First line is opening bracket with no leading spaces - add expected indent
+          const fixedLines = lines.map((line, lineIndex) => {
+            if (lineIndex === 0) {
+              // First line (opening bracket) - add expected indent
+              return expectedIndent + line.trim();
+            } else {
+              // Other lines already have correct indentation
+              return line;
+            }
+          });
+          const fixedFormatted = fixedLines.join('\n');
+          items.push(fixedFormatted + (isLast ? '' : ','));
+        } else {
+          // Already has correct indentation or single-line
+          items.push(formatted + (isLast ? '' : ','));
+        }
       }
     } else {
       // Single-line item
@@ -581,26 +606,121 @@ function formatComplexExpression(arr: unknown[], indent: number): string {
           const expectedIndent = spaces + '  '; // Expected indent for nested case opening bracket (same as parent items)
           const expectedItemIndent = expectedIndent + '  '; // Expected indent for nested case items (2 more than opening)
           
+          // Fix nested case expressions within this case expression
+          // The formatted nested case has:
+          // - Opening bracket at 0 spaces
+          // - Case operator at expectedItemIndent.length spaces (from case formatter with indent + 1)
+          // - Items at expectedItemIndent.length spaces
+          // - Closing bracket at (expectedItemIndent.length - 2) spaces
+          //
+          // We need to normalize to:
+          // - Opening bracket at expectedIndent
+          // - Case operator at expectedItemIndent
+          // - Items at expectedItemIndent
+          // - Closing bracket at expectedIndent
+          //
+          // But if there's a nested case within this nested case, detect it by looking for:
+          // - Opening bracket at 0 spaces followed by case operator at expectedItemIndent.length
+          // Then normalize to:
+          // - Opening bracket at expectedItemIndent
+          // - Case operator at expectedItemIndent + 2
+          // - Items at expectedItemIndent + 2
+          // - Closing bracket at expectedItemIndent
+          
+          // First pass: detect nested cases within nested cases
+          // Nested case within nested case is formatted with indent + 2 (where indent is parent case's indent)
+          // So if parent case is at indent=6, nested case is at indent=7, nested nested case is at indent=8
+          // Nested nested case operator is at (indent + 2) * 2 + 2 = (8 * 2) + 2 = 18 spaces
+          const nestedNestedCaseOperatorIndent = (indent + 2) * 2 + 2; // 18 spaces for indent=6
+          
+          const nestedCaseRanges: Array<{start: number, end: number}> = [];
+          for (let j = 1; j < lines.length - 1; j++) {
+            const line = lines[j];
+            const trimmed = line.trim();
+            const lineIndent = line.length - trimmed.length;
+            
+            // Look for opening bracket at 0 spaces
+            if (trimmed === '[' && lineIndent === 0) {
+              // Check if next line is a case operator at nestedNestedCaseOperatorIndent
+              if (j + 1 < lines.length) {
+                const nextLine = lines[j + 1];
+                const nextTrimmed = nextLine.trim();
+                const nextIndent = nextLine.length - nextTrimmed.length;
+                if ((nextTrimmed === '"case",' || nextTrimmed === '"case"') && 
+                    nextIndent === nestedNestedCaseOperatorIndent) {
+                  // Found a nested case within nested case - find its closing bracket
+                  let depth = 1;
+                  let end = j + 1;
+                  for (let k = j + 2; k < lines.length - 1; k++) {
+                    const kLine = lines[k];
+                    const kTrimmed = kLine.trim();
+                    if (kTrimmed === '[') depth++;
+                    if (kTrimmed === ']' || kTrimmed === '],') {
+                      depth--;
+                      if (depth === 0) {
+                        end = k;
+                        break;
+                      }
+                    }
+                  }
+                  nestedCaseRanges.push({start: j, end});
+                }
+              }
+            }
+          }
+          
+          // Second pass: normalize indentation
           const fixedLines = lines.map((line, lineIndex) => {
             const trimmed = line.trim();
             if (trimmed.length === 0) {
               return '';
             }
             
+            // Check if this line is part of a nested case within nested case
+            const isInNestedNestedCase = nestedCaseRanges.some(range => 
+              lineIndex >= range.start && lineIndex <= range.end);
+            
             if (lineIndex === 0) {
               // First line (opening bracket) - use expectedIndent
               return expectedIndent + trimmed;
             } else if (lineIndex === lines.length - 1) {
               // Last line (closing bracket) - use expectedIndent
+              if (isInNestedNestedCase) {
+                return expectedItemIndent + trimmed;
+              }
               return expectedIndent + trimmed;
             } else {
               // Content lines
-              if (trimmed === '"case",' || trimmed === '"case"') {
-                // Case operator should be at expectedItemIndent (2 more than opening bracket)
-                return expectedItemIndent + trimmed;
+              const originalLineIndent = line.length - trimmed.length;
+              
+              // Check if this is part of a nested case within nested case
+              // Nested nested case has operator at (indent + 2) * 2 + 2 = 18 spaces for indent=6
+              const nestedNestedCaseOperatorIndent = (indent + 2) * 2 + 2;
+              const isNestedNestedCaseItem = originalLineIndent === nestedNestedCaseOperatorIndent ||
+                                           (originalLineIndent === nestedNestedCaseOperatorIndent - 2 && trimmed === '[') ||
+                                           (originalLineIndent === nestedNestedCaseOperatorIndent - 2 && (trimmed === ']' || trimmed === '],'));
+              
+              if (isInNestedNestedCase || isNestedNestedCaseItem) {
+                // This is part of a nested case within nested case
+                if (trimmed === '[' || trimmed === '],' || trimmed === ']') {
+                  // Opening/closing brackets - use expectedItemIndent
+                  return expectedItemIndent + trimmed;
+                } else if (trimmed === '"case",' || trimmed === '"case"') {
+                  // Case operator - use expectedItemIndent + 2
+                  return expectedItemIndent + '  ' + trimmed;
+                } else {
+                  // Items - use expectedItemIndent + 2
+                  return expectedItemIndent + '  ' + trimmed;
+                }
               } else {
-                // All other items should be at expectedItemIndent
-                return expectedItemIndent + trimmed;
+                // Regular nested case item
+                if (trimmed === '"case",' || trimmed === '"case"') {
+                  // Case operator - use expectedItemIndent
+                  return expectedItemIndent + trimmed;
+                } else {
+                  // Regular item - use expectedItemIndent
+                  return expectedItemIndent + trimmed;
+                }
               }
             }
           });
