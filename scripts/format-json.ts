@@ -568,13 +568,48 @@ function formatComplexExpression(arr: unknown[], indent: number): string {
       const item = arr[i];
       // Check if this is a nested case expression
       const isNestedCase = Array.isArray(item) && item.length > 0 && item[0] === 'case';
-      // For nested case expressions, use indent=5 (10 spaces) to ensure correct nesting
-      const itemIndent = isNestedCase ? 5 : indent + 1;
+      // For nested case expressions, use the same indent as other items (indent + 1)
+      // Then normalize the indentation to ensure correct nesting
+      const itemIndent = indent + 1;
       const formatted = formatValue(item, itemIndent, {});
       const isLast = i === arr.length - 1;
       
       if (formatted.includes('\n')) {
-        items.push(formatted + (isLast ? '' : ','));
+        // For nested case expressions, normalize indentation to match parent's item indent
+        if (isNestedCase) {
+          const lines = formatted.split('\n');
+          const expectedIndent = spaces + '  '; // Expected indent for nested case opening bracket (same as parent items)
+          const expectedItemIndent = expectedIndent + '  '; // Expected indent for nested case items (2 more than opening)
+          
+          const fixedLines = lines.map((line, lineIndex) => {
+            const trimmed = line.trim();
+            if (trimmed.length === 0) {
+              return '';
+            }
+            
+            if (lineIndex === 0) {
+              // First line (opening bracket) - use expectedIndent
+              return expectedIndent + trimmed;
+            } else if (lineIndex === lines.length - 1) {
+              // Last line (closing bracket) - use expectedIndent
+              return expectedIndent + trimmed;
+            } else {
+              // Content lines
+              if (trimmed === '"case",' || trimmed === '"case"') {
+                // Case operator should be at expectedItemIndent (2 more than opening bracket)
+                return expectedItemIndent + trimmed;
+              } else {
+                // All other items should be at expectedItemIndent
+                return expectedItemIndent + trimmed;
+              }
+            }
+          });
+          
+          const fixedFormatted = fixedLines.join('\n');
+          items.push(fixedFormatted + (isLast ? '' : ','));
+        } else {
+          items.push(formatted + (isLast ? '' : ','));
+        }
       } else {
         // Compact simple arrays/objects in case conditions
         if (Array.isArray(item) && isSimpleArray(item)) {

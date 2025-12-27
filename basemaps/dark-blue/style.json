@@ -1465,39 +1465,39 @@
               "case",
               ["has", "rank"],
               [
-            "case",
-            ["<=", ["get", "rank"], 1],
-            13,
-            ["<=", ["get", "rank"], 2],
-            11,
-            ["<=", ["get", "rank"], 3],
-            10,
-            ["<=", ["get", "rank"], 4],
-            9,
-            ["<=", ["get", "rank"], 6],
-            8,
-            7
-            ],
+                "case",
+                ["<=", ["get", "rank"], 1],
+                13,
+                ["<=", ["get", "rank"], 2],
+                11,
+                ["<=", ["get", "rank"], 3],
+                10,
+                ["<=", ["get", "rank"], 4],
+                9,
+                ["<=", ["get", "rank"], 6],
+                8,
+                7
+              ],
               [
-            "case",
-            ["in", "Sea", ["var", "name"]],
-            11,
-            ["in", "sea", ["var", "name"]],
-            11,
-            ["in", "Gulf", ["var", "name"]],
-            10,
-            ["in", "gulf", ["var", "name"]],
-            10,
-            ["in", "Bay", ["var", "name"]],
-            9,
-            ["in", "bay", ["var", "name"]],
-            9,
-            ["==", ["get", "class"], "bay"],
-            9,
-            ["==", ["get", "class"], "lake"],
-            10,
-            8
-            ]
+                "case",
+                ["in", "Sea", ["var", "name"]],
+                11,
+                ["in", "sea", ["var", "name"]],
+                11,
+                ["in", "Gulf", ["var", "name"]],
+                10,
+                ["in", "gulf", ["var", "name"]],
+                10,
+                ["in", "Bay", ["var", "name"]],
+                9,
+                ["in", "bay", ["var", "name"]],
+                9,
+                ["==", ["get", "class"], "bay"],
+                9,
+                ["==", ["get", "class"], "lake"],
+                10,
+                8
+              ]
             ]
           ],
           6,
@@ -1509,39 +1509,39 @@
               "case",
               ["has", "rank"],
               [
-            "case",
-            ["<=", ["get", "rank"], 1],
-            19,
-            ["<=", ["get", "rank"], 2],
-            17,
-            ["<=", ["get", "rank"], 3],
-            16,
-            ["<=", ["get", "rank"], 4],
-            15,
-            ["<=", ["get", "rank"], 6],
-            14,
-            13
-            ],
+                "case",
+                ["<=", ["get", "rank"], 1],
+                19,
+                ["<=", ["get", "rank"], 2],
+                17,
+                ["<=", ["get", "rank"], 3],
+                16,
+                ["<=", ["get", "rank"], 4],
+                15,
+                ["<=", ["get", "rank"], 6],
+                14,
+                13
+              ],
               [
-            "case",
-            ["in", "Sea", ["var", "name"]],
-            17,
-            ["in", "sea", ["var", "name"]],
-            17,
-            ["in", "Gulf", ["var", "name"]],
-            16,
-            ["in", "gulf", ["var", "name"]],
-            16,
-            ["in", "Bay", ["var", "name"]],
-            15,
-            ["in", "bay", ["var", "name"]],
-            15,
-            ["==", ["get", "class"], "bay"],
-            15,
-            ["==", ["get", "class"], "lake"],
-            16,
-            14
-            ]
+                "case",
+                ["in", "Sea", ["var", "name"]],
+                17,
+                ["in", "sea", ["var", "name"]],
+                17,
+                ["in", "Gulf", ["var", "name"]],
+                16,
+                ["in", "gulf", ["var", "name"]],
+                16,
+                ["in", "Bay", ["var", "name"]],
+                15,
+                ["in", "bay", ["var", "name"]],
+                15,
+                ["==", ["get", "class"], "bay"],
+                15,
+                ["==", ["get", "class"], "lake"],
+                16,
+                14
+              ]
             ]
           ],
           10,
@@ -1553,39 +1553,39 @@
               "case",
               ["has", "rank"],
               [
-            "case",
-            ["<=", ["get", "rank"], 1],
-            24,
-            ["<=", ["get", "rank"], 2],
-            22,
-            ["<=", ["get", "rank"], 3],
-            21,
-            ["<=", ["get", "rank"], 4],
-            20,
-            ["<=", ["get", "rank"], 6],
-            19,
-            18
-            ],
+                "case",
+                ["<=", ["get", "rank"], 1],
+                24,
+                ["<=", ["get", "rank"], 2],
+                22,
+                ["<=", ["get", "rank"], 3],
+                21,
+                ["<=", ["get", "rank"], 4],
+                20,
+                ["<=", ["get", "rank"], 6],
+                19,
+                18
+              ],
               [
-            "case",
-            ["in", "Sea", ["var", "name"]],
-            22,
-            ["in", "sea", ["var", "name"]],
-            22,
-            ["in", "Gulf", ["var", "name"]],
-            21,
-            ["in", "gulf", ["var", "name"]],
-            21,
-            ["in", "Bay", ["var", "name"]],
-            20,
-            ["in", "bay", ["var", "name"]],
-            20,
-            ["==", ["get", "class"], "bay"],
-            20,
-            ["==", ["get", "class"], "lake"],
-            21,
-            19
-            ]
+                "case",
+                ["in", "Sea", ["var", "name"]],
+                22,
+                ["in", "sea", ["var", "name"]],
+                22,
+                ["in", "Gulf", ["var", "name"]],
+                21,
+                ["in", "gulf", ["var", "name"]],
+                21,
+                ["in", "Bay", ["var", "name"]],
+                20,
+                ["in", "bay", ["var", "name"]],
+                20,
+                ["==", ["get", "class"], "bay"],
+                20,
+                ["==", ["get", "class"], "lake"],
+                21,
+                19
+              ]
             ]
           ]
         ],
@@ -2136,29 +2136,29 @@
               ["in", "puddle", ["var", "name"]],
               5,
               [
-            "case",
-            ["has", "rank"],
-              [
-            "case",
-            ["<=", ["get", "rank"], 1],
-            16,
-            ["<=", ["get", "rank"], 2],
-            14,
-            ["<=", ["get", "rank"], 3],
-            12,
-            ["<=", ["get", "rank"], 4],
-            10,
-            8
-            ],
-              [
-            "case",
-            ["in", "Reservoir", ["var", "name"]],
-            11,
-            ["in", "reservoir", ["var", "name"]],
-            11,
-            10
-            ]
-            ]
+                "case",
+                ["has", "rank"],
+                [
+                "case",
+                ["<=", ["get", "rank"], 1],
+                16,
+                ["<=", ["get", "rank"], 2],
+                14,
+                ["<=", ["get", "rank"], 3],
+                12,
+                ["<=", ["get", "rank"], 4],
+                10,
+                8
+                ],
+                [
+                "case",
+                ["in", "Reservoir", ["var", "name"]],
+                11,
+                ["in", "reservoir", ["var", "name"]],
+                11,
+                10
+                ]
+              ]
             ]
           ],
           10,
@@ -2181,29 +2181,29 @@
               ["in", "puddle", ["var", "name"]],
               5,
               [
-            "case",
-            ["has", "rank"],
-              [
-            "case",
-            ["<=", ["get", "rank"], 1],
-            22,
-            ["<=", ["get", "rank"], 2],
-            19,
-            ["<=", ["get", "rank"], 3],
-            16,
-            ["<=", ["get", "rank"], 4],
-            13,
-            10
-            ],
-              [
-            "case",
-            ["in", "Reservoir", ["var", "name"]],
-            14,
-            ["in", "reservoir", ["var", "name"]],
-            14,
-            13
-            ]
-            ]
+                "case",
+                ["has", "rank"],
+                [
+                "case",
+                ["<=", ["get", "rank"], 1],
+                22,
+                ["<=", ["get", "rank"], 2],
+                19,
+                ["<=", ["get", "rank"], 3],
+                16,
+                ["<=", ["get", "rank"], 4],
+                13,
+                10
+                ],
+                [
+                "case",
+                ["in", "Reservoir", ["var", "name"]],
+                14,
+                ["in", "reservoir", ["var", "name"]],
+                14,
+                13
+                ]
+              ]
             ]
           ],
           12,
@@ -2226,29 +2226,29 @@
               ["in", "puddle", ["var", "name"]],
               6,
               [
-            "case",
-            ["has", "rank"],
-              [
-            "case",
-            ["<=", ["get", "rank"], 1],
-            26,
-            ["<=", ["get", "rank"], 2],
-            23,
-            ["<=", ["get", "rank"], 3],
-            20,
-            ["<=", ["get", "rank"], 4],
-            17,
-            13
-            ],
-              [
-            "case",
-            ["in", "Reservoir", ["var", "name"]],
-            18,
-            ["in", "reservoir", ["var", "name"]],
-            18,
-            17
-            ]
-            ]
+                "case",
+                ["has", "rank"],
+                [
+                "case",
+                ["<=", ["get", "rank"], 1],
+                26,
+                ["<=", ["get", "rank"], 2],
+                23,
+                ["<=", ["get", "rank"], 3],
+                20,
+                ["<=", ["get", "rank"], 4],
+                17,
+                13
+                ],
+                [
+                "case",
+                ["in", "Reservoir", ["var", "name"]],
+                18,
+                ["in", "reservoir", ["var", "name"]],
+                18,
+                17
+                ]
+              ]
             ]
           ],
           15,
@@ -2271,29 +2271,29 @@
               ["in", "puddle", ["var", "name"]],
               7,
               [
-            "case",
-            ["has", "rank"],
-              [
-            "case",
-            ["<=", ["get", "rank"], 1],
-            30,
-            ["<=", ["get", "rank"], 2],
-            26,
-            ["<=", ["get", "rank"], 3],
-            22,
-            ["<=", ["get", "rank"], 4],
-            18,
-            14
-            ],
-              [
-            "case",
-            ["in", "Reservoir", ["var", "name"]],
-            19,
-            ["in", "reservoir", ["var", "name"]],
-            19,
-            18
-            ]
-            ]
+                "case",
+                ["has", "rank"],
+                [
+                "case",
+                ["<=", ["get", "rank"], 1],
+                30,
+                ["<=", ["get", "rank"], 2],
+                26,
+                ["<=", ["get", "rank"], 3],
+                22,
+                ["<=", ["get", "rank"], 4],
+                18,
+                14
+                ],
+                [
+                "case",
+                ["in", "Reservoir", ["var", "name"]],
+                19,
+                ["in", "reservoir", ["var", "name"]],
+                19,
+                18
+                ]
+              ]
             ]
           ]
         ],
@@ -3209,12 +3209,12 @@
           [
             "case",
             ["==", ["get", "class"], "village"],
-        [
-            "case",
-            ["has", "rank"],
-            ["<=", ["get", "rank"], 10],
-            true
-          ],
+            [
+              "case",
+              ["has", "rank"],
+              ["<=", ["get", "rank"], 10],
+              true
+            ],
             true
           ]
       ],
@@ -3314,21 +3314,21 @@
           [
             "case",
             ["has", "rank"],
-              [
-            "case",
-            ["<=", ["get", "rank"], 1],
-            10.4,
-            ["<=", ["get", "rank"], 2],
-            8.8,
-            ["<=", ["get", "rank"], 4],
-            7.6,
-            ["<=", ["get", "rank"], 6],
-            6.8,
-            ["<=", ["get", "rank"], 8],
-            7.2,
-            ["<=", ["get", "rank"], 10],
-            6,
-            5.6
+            [
+              "case",
+              ["<=", ["get", "rank"], 1],
+              10.4,
+              ["<=", ["get", "rank"], 2],
+              8.8,
+              ["<=", ["get", "rank"], 4],
+              7.6,
+              ["<=", ["get", "rank"], 6],
+              6.8,
+              ["<=", ["get", "rank"], 8],
+              7.2,
+              ["<=", ["get", "rank"], 10],
+              6,
+              5.6
             ],
             ["match", ["get", "class"], "city", 9.6, "town", 7.6, 6.8]
           ],
@@ -3336,21 +3336,21 @@
           [
             "case",
             ["has", "rank"],
-              [
-            "case",
-            ["<=", ["get", "rank"], 1],
-            19,
-            ["<=", ["get", "rank"], 2],
-            16,
-            ["<=", ["get", "rank"], 4],
-            14,
-            ["<=", ["get", "rank"], 6],
-            12,
-            ["<=", ["get", "rank"], 8],
-            13,
-            ["<=", ["get", "rank"], 10],
-            11,
-            10
+            [
+              "case",
+              ["<=", ["get", "rank"], 1],
+              19,
+              ["<=", ["get", "rank"], 2],
+              16,
+              ["<=", ["get", "rank"], 4],
+              14,
+              ["<=", ["get", "rank"], 6],
+              12,
+              ["<=", ["get", "rank"], 8],
+              13,
+              ["<=", ["get", "rank"], 10],
+              11,
+              10
             ],
             ["match", ["get", "class"], "city", 18.2, "town", 14, 12]
           ],
@@ -3358,21 +3358,21 @@
           [
             "case",
             ["has", "rank"],
-              [
-            "case",
-            ["<=", ["get", "rank"], 1],
-            22,
-            ["<=", ["get", "rank"], 2],
-            19,
-            ["<=", ["get", "rank"], 4],
-            16,
-            ["<=", ["get", "rank"], 6],
-            15,
-            ["<=", ["get", "rank"], 8],
-            16,
-            ["<=", ["get", "rank"], 10],
-            13,
-            12
+            [
+              "case",
+              ["<=", ["get", "rank"], 1],
+              22,
+              ["<=", ["get", "rank"], 2],
+              19,
+              ["<=", ["get", "rank"], 4],
+              16,
+              ["<=", ["get", "rank"], 6],
+              15,
+              ["<=", ["get", "rank"], 8],
+              16,
+              ["<=", ["get", "rank"], 10],
+              13,
+              12
             ],
             ["match", ["get", "class"], "city", 21.2, "town", 16, 15]
           ]
