@@ -15,6 +15,7 @@ import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import { createDarkBlueStyle } from "../basemaps/dark-blue/styles/darkBlueStyle.js";
 import type { BaseStyleConfig } from "../shared/styles/baseStyle.js";
+import { formatJSON } from "./format-json.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, "..");
@@ -62,7 +63,9 @@ function buildStyle(build: StyleBuild, config: BaseStyleConfig): void {
   try {
     const style = build.generator(config);
     ensureDir(outputPath);
-    writeFileSync(outputPath, JSON.stringify(style, null, 2), "utf8");
+    // Use custom formatter to generate compact, readable JSON
+    const formatted = formatJSON(style);
+    writeFileSync(outputPath, formatted + "\n", "utf8");
     console.log(`  ✓ Written to ${build.outputPath}`);
     
     // Copy to style.json for backward compatibility
