@@ -101,6 +101,68 @@ function setupZoomLogging() {
 map.on('load', setupZoomLogging);
 map.on('style.load', setupZoomLogging);
 
+// ============================================================================
+// Debug: Inspect bathymetry source data
+// ============================================================================
+function setupBathymetryDebug() {
+  map.on('click', function(e) {
+    // Query bathymetry features at click location
+    const bbox = [
+      [e.point.x - 10, e.point.y - 10],
+      [e.point.x + 10, e.point.y + 10]
+    ];
+    
+    try {
+      const bathymetryFeatures = map.queryRenderedFeatures(bbox, {
+        layers: map.getStyle().layers
+          .filter(l => l.id && l.id.startsWith('bathymetry-'))
+          .map(l => l.id)
+      });
+      
+      if (bathymetryFeatures.length > 0) {
+        console.group('🌊 Bathymetry Features Found');
+        console.log('Count:', bathymetryFeatures.length);
+        bathymetryFeatures.slice(0, 3).forEach((f, i) => {
+          console.log(`Feature ${i + 1}:`, {
+            layer: f.layer?.id,
+            source: f.source,
+            sourceLayer: f.sourceLayer,
+            properties: f.properties,
+            depth: f.properties?.depth,
+            featurecla: f.properties?.featurecla,
+            scalerank: f.properties?.scalerank
+          });
+        });
+        console.groupEnd();
+      } else {
+        // Try querying source features directly
+        try {
+          const sourceFeatures = map.querySourceFeatures('ne-bathy', {
+            sourceLayer: 'ne_10m_bathymetry_F_5000',
+            filter: undefined
+          });
+          console.group('🌊 Bathymetry Source Query');
+          console.log('Source features found:', sourceFeatures.length);
+          if (sourceFeatures.length > 0) {
+            console.log('Sample feature:', {
+              properties: sourceFeatures[0].properties,
+              geometry: sourceFeatures[0].geometry?.type
+            });
+          }
+          console.groupEnd();
+        } catch (err) {
+          console.log('❌ Could not query bathymetry source:', err.message);
+        }
+      }
+    } catch (err) {
+      console.log('❌ Error querying bathymetry:', err.message);
+    }
+  });
+}
+
+map.on('load', setupBathymetryDebug);
+map.on('style.load', setupBathymetryDebug);
+
 // Also try immediately if map is already loaded
 setTimeout(() => {
   if (map.loaded()) {

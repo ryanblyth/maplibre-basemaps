@@ -14,6 +14,7 @@ export { createBasemapSources } from "./sources.js";
 export { createBackgroundLayers } from "./background.js";
 export { createLandcoverLayers, createUSLandLayers } from "./land.js";
 export { createWaterLayers, createUSWaterLayers } from "./water.js";
+export { createBathymetryLayers } from "./bathymetry.js";
 export { createBoundaryLayers, createUSBoundaryLayers } from "./boundaries.js";
 export { createWorldRoadLayers, createUSRoadLayers, createUSOverlayRoadLayers } from "./roads.js";
 export { 
@@ -34,6 +35,7 @@ import { createBasemapSources } from "./sources.js";
 import { createBackgroundLayers } from "./background.js";
 import { createLandcoverLayers, createUSLandLayers } from "./land.js";
 import { createWaterLayers, createUSWaterLayers } from "./water.js";
+import { createBathymetryLayers } from "./bathymetry.js";
 import { createBoundaryLayers, createUSBoundaryLayers } from "./boundaries.js";
 import { createWorldRoadLayers, createUSRoadLayers, createUSOverlayRoadLayers } from "./roads.js";
 import { 
@@ -58,11 +60,12 @@ export function createAllLayers(theme: Theme): LayerSpecification[] {
     ...createBackgroundLayers(theme),
     ...createLandcoverLayers(theme),
     ...createWaterLayers(theme),
+    ...createUSWaterLayers(theme),
+    ...createBathymetryLayers(theme),
     ...createBoundaryLayers(theme),
     ...createWorldRoadLayers(theme),
     ...createUSRoadLayers(theme),
     ...createUSLandLayers(theme),
-    ...createUSWaterLayers(theme),
     ...createUSBoundaryLayers(theme),
     ...createUSOverlayRoadLayers(theme),
     ...createRoadLabelLayers(theme),
@@ -84,7 +87,7 @@ export function createAllLayers(theme: Theme): LayerSpecification[] {
  */
 export function createBasemapStyle(theme: Theme, config: BaseStyleConfig): StyleSpecification {
   const base = createBaseStyle(config);
-  const sources = createBasemapSources(config);
+  const sources = createBasemapSources(config, theme);  // Pass theme to conditionally include bathymetry source
   const layers = createAllLayers(theme);
   
   return {

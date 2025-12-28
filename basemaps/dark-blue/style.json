@@ -86,9 +86,7 @@
       "source-layer": "water",
       "minzoom": 0,
       "maxzoom": 6.5,
-      "paint": {
-        "fill-color": "#0a2846"
-      }
+      "paint": {"fill-color": "#0a2846", "fill-opacity": 0.85}
     },
     {
       "id": "water-world-mid",
@@ -96,9 +94,7 @@
       "source": "world_mid",
       "source-layer": "water",
       "minzoom": 6,
-      "paint": {
-        "fill-color": "#0a2846"
-      }
+      "paint": {"fill-color": "#0a2846", "fill-opacity": 0.85}
     },
     {
       "id": "waterway-world",
@@ -132,6 +128,32 @@
           ["zoom"],
           6, 0.4,
           10, 0.8
+        ]
+      }
+    },
+    {
+      "id": "water-us",
+      "type": "fill",
+      "source": "us_high",
+      "source-layer": "water",
+      "minzoom": 6,
+      "paint": {"fill-color": "#0a2846", "fill-opacity": 0.85}
+    },
+    {
+      "id": "waterway-us",
+      "type": "line",
+      "source": "us_high",
+      "source-layer": "waterway",
+      "minzoom": 6,
+      "paint": {
+        "line-color": "#103457",
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          6, 0.4,
+          12, 0.6,
+          15, 1
         ]
       }
     },
@@ -473,34 +495,6 @@
       "paint": {
         "fill-color": ["match", ["get", "class"], "park", "#11161d", "cemetery", "#11161d", "pitch", "#121923", "stadium", "#121923", "residential", "#0e131a", "#0e131a"],
         "fill-opacity": 0.6
-      }
-    },
-    {
-      "id": "water-us",
-      "type": "fill",
-      "source": "us_high",
-      "source-layer": "water",
-      "minzoom": 6,
-      "paint": {
-        "fill-color": "#0a2846"
-      }
-    },
-    {
-      "id": "waterway-us",
-      "type": "line",
-      "source": "us_high",
-      "source-layer": "waterway",
-      "minzoom": 6,
-      "paint": {
-        "line-color": "#103457",
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          6, 0.4,
-          12, 0.6,
-          15, 1
-        ]
       }
     },
     {
