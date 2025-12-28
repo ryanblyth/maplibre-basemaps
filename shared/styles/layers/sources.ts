@@ -4,13 +4,17 @@
 
 import type { SourceSpecification } from "maplibre-gl";
 import type { BaseStyleConfig } from "../baseStyle.js";
+import type { Theme } from "../theme.js";
 
 /**
  * Creates the standard basemap sources (world_low, world_mid, us_high)
  * These are used by all basemaps that follow the same tile structure.
+ * 
+ * @param config - Base style configuration
+ * @param theme - Theme object (optional, used to check if bathymetry is enabled)
  */
-export function createBasemapSources(config: BaseStyleConfig): Record<string, SourceSpecification> {
-  return {
+export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Record<string, SourceSpecification> {
+  const sources: Record<string, SourceSpecification> = {
     world_low: {
       type: "vector",
       url: `pmtiles://${config.dataBaseUrl}/pmtiles/world_z0-6.pmtiles`,
@@ -34,5 +38,17 @@ export function createBasemapSources(config: BaseStyleConfig): Record<string, So
       maxzoom: 15,
     },
   };
+  
+  // Only add bathymetry source if enabled in theme
+  if (theme?.bathymetry?.enabled) {
+    sources["ne-bathy"] = {
+      type: "vector",
+      url: `pmtiles://${config.dataBaseUrl}/pmtiles/ne_bathy_z0-6.pmtiles`,
+      minzoom: 0,
+      maxzoom: 6,
+    };
+  }
+  
+  return sources;
 }
 

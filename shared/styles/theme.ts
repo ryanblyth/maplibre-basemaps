@@ -340,6 +340,45 @@ export interface ThemeSettings {
 }
 
 // ============================================================================
+// BATHYMETRY TYPES - Ocean depth visualization
+// ============================================================================
+
+/** Bathymetry color configuration - colors for each depth level */
+export interface ThemeBathymetryColors {
+  /** Color for 0m depth (shallowest) */
+  shallow?: string;
+  /** Color for 200m depth (shelf) */
+  shelf?: string;
+  /** Color for 1000m depth (slope) */
+  slope?: string;
+  /** Color for 2000m depth (deep1) */
+  deep1?: string;
+  /** Color for 4000m depth (deep2) */
+  deep2?: string;
+  /** Color for 6000m depth (abyss) */
+  abyss?: string;
+  /** Color for 10000m depth (trench/deepest) */
+  trench?: string;
+}
+
+/** Bathymetry visibility and styling configuration */
+export interface ThemeBathymetry {
+  /** Whether to show bathymetry at all */
+  enabled: boolean;
+  /** Minimum zoom level to show bathymetry */
+  minZoom?: number;
+  /** Maximum zoom level to show bathymetry (fades out after this) */
+  maxZoom?: number;
+  /** Opacity range: [minZoom opacity, maxZoom opacity] */
+  opacity?: {
+    min: number;
+    max: number;
+  };
+  /** Custom colors for each depth level. If not provided, colors are auto-generated from water color */
+  colors?: ThemeBathymetryColors;
+}
+
+// ============================================================================
 // COMPLETE THEME TYPE
 // ============================================================================
 
@@ -355,4 +394,6 @@ export interface Theme {
   shields?: ThemeShields;
   /** POI configuration - optional, defaults to all enabled */
   pois?: ThemePOIs;
+  /** Bathymetry configuration - optional, defaults to disabled */
+  bathymetry?: ThemeBathymetry;
 }

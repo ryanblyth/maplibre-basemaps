@@ -395,6 +395,39 @@ export const darkBluePOIs: ThemePOIs = {
 };
 
 // ============================================================================
+// BATHYMETRY CONFIGURATION
+// ============================================================================
+
+export const darkBlueBathymetry = {
+  /** Whether to show bathymetry at all */
+  enabled: true,
+  
+  /** Minimum zoom level to show bathymetry */
+  minZoom: 0,
+  
+  /** Maximum zoom level to show bathymetry (fades out after this) */
+  maxZoom: 7,
+  
+  /** Opacity range */
+  opacity: {
+    min: 0.7,  // Opacity at minZoom
+    max: 0.9,  // Opacity at maxZoom
+  },
+  
+  /** Custom colors for each depth level (optional - auto-generated from water color if not provided) */
+  colors: {
+    // Uncomment and customize these to override auto-generated colors:
+    shallow: "#ff8800",  // 0m - shallowest (lighter than water)
+    // shelf: "#0a2f4f",    // 200m - shelf
+    // slope: "#082544",    // 1000m - slope
+    deep1: "#ff0000",    // 2000m - deep1
+    // deep2: "#04152a",    // 4000m - deep2
+    // abyss: "#020d1a",    // 6000m - abyss
+    // trench: "#000a14",   // 10000m - trench (deepest)
+  },
+};
+
+// ============================================================================
 // COMPLETE THEME
 // ============================================================================
 
@@ -407,4 +440,5 @@ export const darkBlueTheme: Theme = {
   settings: darkBlueSettings,
   shields: darkBlueShields,
   pois: darkBluePOIs,
+  bathymetry: darkBlueBathymetry,
 };
