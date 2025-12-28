@@ -4,15 +4,19 @@ The theme file (`basemaps/<name>/styles/theme.ts`) controls all visual propertie
 
 ## Theme Structure
 
-A complete theme has three sections:
+A complete theme has multiple sections:
 
 ```typescript
 export const myTheme: Theme = {
   name: "My Basemap",
   fonts,
   colors: myColors,      // Fill/stroke colors
-  widths: myWidths,      // Line widths at each zoom
-  opacities: myOpacities // Layer transparencies
+  widths: myWidths,       // Line widths at each zoom
+  opacities: myOpacities, // Layer transparencies
+  settings: mySettings,   // Behavior settings (optional)
+  shields: myShields,     // Highway shields (optional)
+  pois: myPOIs,          // Point of Interest config (optional)
+  bathymetry: myBathymetry, // Ocean depth visualization (optional)
 };
 ```
 
@@ -63,6 +67,40 @@ colors: {
     labelHalo: "#0a2846", // Water label halo
   },
   // ...
+}
+```
+
+### Bathymetry
+
+Bathymetry (ocean depth visualization) is configured separately in the `bathymetry` section of the theme. See [Bathymetry Documentation](./bathymetry.md) for complete details.
+
+```typescript
+bathymetry: {
+  enabled: true,
+  minZoom: 0,
+  maxZoom: 7,
+  opacity: {
+    min: 0.7,
+    max: 0.9,
+  },
+  colors: {
+    shallow: "#0d3a5f",  // 0m depth
+    shelf: "#0a2f4f",     // 200m depth
+    slope: "#082544",     // 1000m depth
+    deep1: "#061d3a",     // 2000m depth
+    deep2: "#04152a",     // 4000m depth
+    abyss: "#020d1a",     // 6000m depth
+    trench: "#000a14",    // 10000m depth
+  },
+  depthOpacities: {
+    shallow: 0.9,    // 0m - most opaque
+    shelf: 0.86,     // 200m
+    slope: 0.77,     // 1000m
+    deep1: 0.63,     // 2000m
+    deep2: 0.50,     // 4000m
+    abyss: 0.36,     // 6000m
+    trench: 0.23,    // 10000m - most transparent
+  },
 }
 ```
 
