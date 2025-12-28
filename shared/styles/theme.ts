@@ -361,6 +361,24 @@ export interface ThemeBathymetryColors {
   trench?: string;
 }
 
+/** Bathymetry opacity configuration - opacity for each depth level */
+export interface ThemeBathymetryOpacities {
+  /** Opacity for 0m depth (shallowest) - typically highest */
+  shallow?: number;
+  /** Opacity for 200m depth (shelf) */
+  shelf?: number;
+  /** Opacity for 1000m depth (slope) */
+  slope?: number;
+  /** Opacity for 2000m depth (deep1) */
+  deep1?: number;
+  /** Opacity for 4000m depth (deep2) */
+  deep2?: number;
+  /** Opacity for 6000m depth (abyss) */
+  abyss?: number;
+  /** Opacity for 10000m depth (trench/deepest) - typically lowest */
+  trench?: number;
+}
+
 /** Bathymetry visibility and styling configuration */
 export interface ThemeBathymetry {
   /** Whether to show bathymetry at all */
@@ -369,13 +387,15 @@ export interface ThemeBathymetry {
   minZoom?: number;
   /** Maximum zoom level to show bathymetry (fades out after this) */
   maxZoom?: number;
-  /** Opacity range: [minZoom opacity, maxZoom opacity] */
+  /** Base opacity range: [minZoom opacity, maxZoom opacity] - used if depth opacities not specified */
   opacity?: {
     min: number;
     max: number;
   };
   /** Custom colors for each depth level. If not provided, colors are auto-generated from water color */
   colors?: ThemeBathymetryColors;
+  /** Custom opacity for each depth level. If not provided, opacities are auto-generated (shallow=high, deep=low) */
+  depthOpacities?: ThemeBathymetryOpacities;
 }
 
 // ============================================================================

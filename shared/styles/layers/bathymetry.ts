@@ -172,9 +172,71 @@ export function createBathymetryLayers(theme: Theme): LayerSpecification[] {
   
   // Render layers in reverse order (deepest first) so shallow layers render on top
   // This allows proper blending where shallow areas show on top of deep areas
+  // Each layer gets opacity based on its depth - shallow = high opacity, deep = low opacity
   const reversedSourceLayers = [...sourceLayers].reverse();
   
+  // Create opacity ramp: shallow (high opacity) to deep (low opacity)
+  // This creates a "looking through water" effect
+  const baseOpacityMin = bathy.opacity?.min ?? 0.7;
+  const baseOpacityMax = bathy.opacity?.max ?? 0.9;
+  
+  // Use custom depth opacities if provided, otherwise auto-generate
+  let depthOpacityRamp: number[];
+  if (bathy.depthOpacities) {
+    // Use custom opacities from theme
+    depthOpacityRamp = [
+      bathy.depthOpacities.shallow ?? baseOpacityMax,
+      bathy.depthOpacities.shelf ?? baseOpacityMax * 0.95,
+      bathy.depthOpacities.slope ?? baseOpacityMax * 0.85,
+      bathy.depthOpacities.deep1 ?? baseOpacityMax * 0.70,
+      bathy.depthOpacities.deep2 ?? baseOpacityMax * 0.55,
+      bathy.depthOpacities.abyss ?? baseOpacityMax * 0.40,
+      bathy.depthOpacities.trench ?? baseOpacityMax * 0.25,
+    ];
+  } else {
+    // Auto-generate: opacity decreases with depth
+    depthOpacityRamp = [
+      baseOpacityMax,      // 0m - shallowest (most opaque)
+      baseOpacityMax * 0.95,  // 200m
+      baseOpacityMax * 0.85,  // 1000m
+      baseOpacityMax * 0.70,  // 2000m
+      baseOpacityMax * 0.55,  // 4000m
+      baseOpacityMax * 0.40,  // 6000m
+      baseOpacityMax * 0.25,  // 10000m - deepest (most transparent)
+    ];
+  }
+  
+  // Map each source-layer to its depth and corresponding opacity
+  const sourceLayerDepths: Record<string, number> = {
+    "ne_10m_bathymetry_A_10000": 10000,
+    "ne_10m_bathymetry_B_9000": 9000,
+    "ne_10m_bathymetry_C_8000": 8000,
+    "ne_10m_bathymetry_D_7000": 7000,
+    "ne_10m_bathymetry_E_6000": 6000,
+    "ne_10m_bathymetry_F_5000": 5000,
+    "ne_10m_bathymetry_G_4000": 4000,
+    "ne_10m_bathymetry_H_3000": 3000,
+    "ne_10m_bathymetry_I_2000": 2000,
+    "ne_10m_bathymetry_J_1000": 1000,
+    "ne_10m_bathymetry_K_200": 200,
+    "ne_10m_bathymetry_L_0": 0,
+  };
+  
+  // Helper to get opacity for a given depth
+  const getOpacityForDepth = (depth: number): number => {
+    if (depth <= 0) return depthOpacityRamp[0];
+    if (depth <= 200) return depthOpacityRamp[1];
+    if (depth <= 1000) return depthOpacityRamp[2];
+    if (depth <= 2000) return depthOpacityRamp[3];
+    if (depth <= 4000) return depthOpacityRamp[4];
+    if (depth <= 6000) return depthOpacityRamp[5];
+    return depthOpacityRamp[6]; // 10000m+
+  };
+  
   for (const sourceLayer of reversedSourceLayers) {
+    const layerDepth = sourceLayerDepths[sourceLayer] ?? 0;
+    const layerOpacity = getOpacityForDepth(layerDepth);
+    
     layers.push({
       id: `bathymetry-fill-${sourceLayer}`,
       type: "fill",
@@ -203,8 +265,8 @@ export function createBathymetryLayers(theme: Theme): LayerSpecification[] {
           "interpolate",
           ["linear"],
           ["zoom"],
-          bathy.minZoom ?? 0, bathy.opacity?.min ?? 0.7,  // Opacity at minZoom
-          bathy.maxZoom ?? 6, bathy.opacity?.max ?? 0.9,  // Opacity at maxZoom
+          bathy.minZoom ?? 0, layerOpacity * (baseOpacityMin / baseOpacityMax),  // Scale opacity at minZoom
+          bathy.maxZoom ?? 6, layerOpacity,  // Full layer opacity at maxZoom
           (bathy.maxZoom ?? 6) + 1, 0.0   // Fade out after maxZoom
         ]
       }

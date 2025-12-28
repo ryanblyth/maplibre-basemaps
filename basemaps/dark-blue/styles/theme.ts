@@ -400,7 +400,7 @@ export const darkBluePOIs: ThemePOIs = {
 
 export const darkBlueBathymetry = {
   /** Whether to show bathymetry at all */
-  enabled: true,
+  enabled: false,
   
   /** Minimum zoom level to show bathymetry */
   minZoom: 0,
@@ -414,16 +414,27 @@ export const darkBlueBathymetry = {
     max: 0.9,  // Opacity at maxZoom
   },
   
-  /** Custom colors for each depth level (optional - auto-generated from water color if not provided) */
+  /** Custom colors for each depth level */
   colors: {
-    // Uncomment and customize these to override auto-generated colors:
-    shallow: "#ff8800",  // 0m - shallowest (lighter than water)
-    // shelf: "#0a2f4f",    // 200m - shelf
-    // slope: "#082544",    // 1000m - slope
-    deep1: "#ff0000",    // 2000m - deep1
-    // deep2: "#04152a",    // 4000m - deep2
-    // abyss: "#020d1a",    // 6000m - abyss
-    // trench: "#000a14",   // 10000m - trench (deepest)
+    shallow: "#0d3a5f",  // 0m - shallowest (lighter than water)
+    shelf: "#0a2f4f",    // 200m - shelf
+    slope: "#082544",    // 1000m - slope
+    deep1: "#061d3a",    // 2000m - deep1
+    deep2: "#04152a",    // 4000m - deep2
+    abyss: "#020d1a",    // 6000m - abyss
+    trench: "#000a14",   // 10000m - trench (deepest)
+  },
+  
+  /** Custom opacity for each depth level */
+  depthOpacities: {
+
+    shallow: 0.9,    // 0m - shallowest (most opaque)
+    shelf: 0.86,     // 200m
+    slope: 0.77,     // 1000m
+    deep1: 0.63,     // 2000m
+    deep2: 0.50,     // 4000m
+    abyss: 0.36,     // 6000m
+    trench: 0.23,    // 10000m - deepest (most transparent)
   },
 };
 
