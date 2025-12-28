@@ -8,6 +8,7 @@ A modular, TypeScript-based style system for creating MapLibre GL basemaps.
 - [Customizing Themes](./customizing-themes.md) - Modify colors, widths, opacities
 - [Road Features](./roads.md) - Roads, bridges, tunnels, and highway shields
 - [POI Features](./pois.md) - Point of Interest icons and labels (hospitals, airports, museums, etc.)
+- [Bathymetry](./bathymetry.md) - Ocean depth visualization
 - [Sprites](./sprites.md) - POI icons and highway shields (global and per-basemap)
 - [Creating a New Basemap](./creating-basemap.md) - Build your own basemap from scratch
 - [Map Elements Cheat Sheet](./MAP_ELEMENTS.md) - Quick reference for MapLibre concepts
