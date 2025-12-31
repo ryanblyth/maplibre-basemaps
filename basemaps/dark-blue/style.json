@@ -40,9 +40,11 @@
       "source-layer": "landcover",
       "minzoom": 0,
       "maxzoom": 6.5,
+      "filter": true,
       "paint": {
         "fill-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"],
-        "fill-opacity": 0.6
+        "fill-opacity": 0.6,
+        "fill-outline-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"]
       }
     },
     {
@@ -51,9 +53,11 @@
       "source": "world_mid",
       "source-layer": "landcover",
       "minzoom": 6,
+      "filter": true,
       "paint": {
         "fill-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"],
-        "fill-opacity": 0.6
+        "fill-opacity": 0.6,
+        "fill-outline-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"]
       }
     },
     {
@@ -481,9 +485,11 @@
       "source": "us_high",
       "source-layer": "landcover",
       "minzoom": 6,
+      "filter": true,
       "paint": {
         "fill-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"],
-        "fill-opacity": 0.6
+        "fill-opacity": 0.6,
+        "fill-outline-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"]
       }
     },
     {

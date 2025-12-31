@@ -20,18 +20,35 @@
  *   style: "./style.json"  // or "./style.generated.json"
  */
 
+// Get projection and minZoom from theme configuration
+// These are set in basemaps/dark-blue/styles/theme.ts in darkBlueSettings
+// For static HTML, you can override by setting window.mapProjection/window.mapMinZoom before this script runs
+const projectionType = (typeof window !== 'undefined' && window.mapProjection) 
+  ? window.mapProjection 
+  : 'globe'; // Default from theme.ts darkBlueSettings.projection
+
+// Get minZoom based on projection type
+const minZoomConfig = (typeof window !== 'undefined' && window.mapMinZoom)
+  ? window.mapMinZoom
+  : { mercator: 0, globe: 2 }; // Defaults from theme.ts darkBlueSettings.minZoom
+
+const minZoom = projectionType === 'mercator' 
+  ? minZoomConfig.mercator 
+  : minZoomConfig.globe;
+
 // Register PMTiles protocol
 const protocol = new pmtiles.Protocol();
 maplibregl.addProtocol("pmtiles", protocol.tile);
 
 // Initialize map (disable default attribution control)
 // maxZoom set high to allow overzooming beyond source limits (6 for world, 15 for US)
+// minZoom comes from theme configuration (different for mercator vs globe)
 const map = new maplibregl.Map({
   container: "map-container",
   style: "./style.json?v=" + Date.now(),  // Cache-bust to ensure latest style
   center: [-105.7821, 39.5501],
   zoom: 8,
-  minZoom: 2,
+  minZoom: minZoom,  // From theme.ts darkBlueSettings.minZoom
   maxZoom: 22,
   hash: false,
   attributionControl: false,
@@ -53,13 +70,17 @@ map.addControl(attributionControl);
 // You can override defaults by passing options here if needed
 const starryBg = new MapLibreStarryBackground();
 
-// Set globe projection and attach starfield when style loads
+// Set projection from theme configuration and attach starfield when style loads
 map.on('style.load', () => {
+  // Use projection from theme settings (or fallback)
   map.setProjection({
-    type: 'globe'
+    type: projectionType
   });
-  starryBg.attachToMap(map, "starfield-container", "globe-glow");
   
+  // Only attach starfield for globe projection
+  if (projectionType === 'globe') {
+    starryBg.attachToMap(map, "starfield-container", "globe-glow");
+  }
 });
 
 // Error handling
@@ -162,6 +183,7 @@ function setupBathymetryDebug() {
 
 map.on('load', setupBathymetryDebug);
 map.on('style.load', setupBathymetryDebug);
+
 
 // Also try immediately if map is already loaded
 setTimeout(() => {

@@ -15,14 +15,23 @@ import {
   type ThemeColors, 
   type ThemeWidths, 
   type ThemeOpacities,
-  type ThemePOIs
+  type ThemePOIs,
+  type ThemeSettings
 } from "../../../shared/styles/theme.js";
 
 // ============================================================================
 // SETTINGS
 // ============================================================================
 
-export const darkBlueSettings = {
+export const darkBlueSettings: ThemeSettings = {
+  /** Map projection type - "mercator" for flat map, "globe" for 3D globe */
+  projection: "globe",
+  
+  /** Minimum zoom level - different for globe vs mercator */
+  minZoom: {
+    mercator: 0,  // Flat map can go to z0
+    globe: 2,     // Globe needs higher min zoom for better appearance
+  },
   /**
    * When true, road widths scale proportionally to real-world sizes at zoom 15+.
    * Roads will double in pixel width with each zoom level to match map scale.
@@ -439,6 +448,141 @@ export const darkBlueBathymetry = {
 };
 
 // ============================================================================
+// CONTOURS CONFIGURATION
+// ============================================================================
+
+export const darkBlueContours = {
+  /** Whether to show contours at all */
+  enabled: false,
+  
+  /** Minimum zoom level to show contours */
+  minZoom: 4,
+  
+  /** Maximum zoom level to show contours (fades out after this) */
+  maxZoom: 10,
+  
+  /** Major contour line styling (800m intervals) */
+  major: {
+    color: "#4a5568",  // Medium gray
+    width: {
+      min: 0.5,  // Width at minZoom
+      max: 1.5,  // Width at maxZoom
+    },
+    opacity: 0.6,
+    minZoom: 4,  // Major contours start at z4
+  },
+  
+  /** Minor contour line styling (350m intervals) */
+  minor: {
+    color: "#3a4455",  // Darker gray
+    width: {
+      min: 0.25,  // Width at minZoom
+      max: 0.75,  // Width at maxZoom
+    },
+    opacity: 0.4,
+    minZoom: 6,  // Minor contours start at z6
+  },
+};
+
+// ============================================================================
+// ICE CONFIGURATION
+// ============================================================================
+
+export const darkBlueIce = {
+  /** Whether to show ice at all */
+  enabled: false,
+  
+  /** Minimum zoom level to show ice */
+  minZoom: 0,
+  
+  /** Maximum zoom level to show ice (fades out after this) */
+  maxZoom: 6,
+  
+  /** Base opacity range */
+  opacity: {
+    min: 0.7,  // Opacity at minZoom
+    max: 0.9,  // Opacity at maxZoom
+  },
+  
+  /** Glaciated areas (glaciers, ice caps) */
+  glaciated: {
+    color: "#e8f4f8",  // Light blue-white
+    opacity: 0.9,
+  },
+  
+  /** Ice shelves */
+  iceShelves: {
+    color: "#d0e8f0",  // Slightly darker blue-white
+    opacity: 0.9,
+  },
+  
+  /** Ice edge (outline) - set to null or enabled: false to disable */
+  iceEdge: {
+    enabled: false,  // Outline of ice shelves (Antarctica only)
+    color: "#a0c8d8",  // Medium blue-gray (matches original design)
+    width: 1.0,  // Increased from 0.5 for better visibility
+    opacity: 0.8,  // Increased from 0.6 for better visibility
+  },
+};
+
+// ============================================================================
+// GRID CONFIGURATION
+// ============================================================================
+
+export const darkBlueGrid = {
+  /** Whether to show grid lines at all */
+  enabled: false,
+  
+  /** Minimum zoom level to show grid lines */
+  minZoom: 0,
+  
+  /** Maximum zoom level to show grid lines (fades out after this) */
+  maxZoom: 10,
+  
+  /** Latitude lines (horizontal) styling */
+  latitude: {
+    color: "#6b7280",  // Lighter gray for better visibility
+    width: {
+      min: 1.0,  // Width at minZoom (increased for visibility)
+      max: 1.5,  // Width at maxZoom
+    },
+    opacity: 0.6,  // Increased opacity for better visibility
+    interval: 10,  // Lines every 10 degrees
+    label: {
+      enabled: false,  // Enable labels for latitude lines
+      color: "#9ca3af",  // Light gray for labels
+      size: {
+        min: 10,  // Size at minZoom
+        max: 12,  // Size at maxZoom
+      },
+      opacity: 0.8,
+      minZoom: 2,  // Show labels starting at zoom 2
+    },
+  },
+  
+  /** Longitude lines (vertical) styling */
+  longitude: {
+    color: "#6b7280",  // Lighter gray for better visibility
+    width: {
+      min: 1.0,  // Width at minZoom (increased for visibility)
+      max: 1.5,  // Width at maxZoom
+    },
+    opacity: 0.6,  // Increased opacity for better visibility
+    interval: 10,  // Lines every 10 degrees
+    label: {
+      enabled: false,  // Enable labels for longitude lines
+      color: "#9ca3af",  // Light gray for labels
+      size: {
+        min: 10,  // Size at minZoom
+        max: 12,  // Size at maxZoom
+      },
+      opacity: 0.8,
+      minZoom: 2,  // Show labels starting at zoom 2
+    },
+  },
+};
+
+// ============================================================================
 // COMPLETE THEME
 // ============================================================================
 
@@ -452,4 +596,7 @@ export const darkBlueTheme: Theme = {
   shields: darkBlueShields,
   pois: darkBluePOIs,
   bathymetry: darkBlueBathymetry,
+  contours: darkBlueContours,
+  ice: darkBlueIce,
+  grid: darkBlueGrid,
 };

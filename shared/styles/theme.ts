@@ -337,6 +337,24 @@ export interface ThemeSettings {
    * Default: 15
    */
   realWorldScaleMinZoom?: number;
+  
+  /**
+   * Map projection type.
+   * - "mercator" - Standard Web Mercator projection (flat map)
+   * - "globe" - 3D globe projection
+   * Default: "globe"
+   */
+  projection?: "mercator" | "globe";
+  
+  /**
+   * Minimum zoom level for the map.
+   * Can be different for globe vs mercator projections.
+   * Default: { mercator: 0, globe: 2 }
+   */
+  minZoom?: {
+    mercator?: number;
+    globe?: number;
+  } | number; // Also supports a single number for both projections
 }
 
 // ============================================================================
@@ -399,6 +417,166 @@ export interface ThemeBathymetry {
 }
 
 // ============================================================================
+// CONTOURS TYPES - Topographic contour lines
+// ============================================================================
+
+/** Contours visibility and styling configuration */
+export interface ThemeContours {
+  /** Whether to show contours at all */
+  enabled: boolean;
+  /** Minimum zoom level to show contours */
+  minZoom?: number;
+  /** Maximum zoom level to show contours (fades out after this) */
+  maxZoom?: number;
+  /** Major contour line styling */
+  major?: {
+    /** Line color for major contours */
+    color?: string;
+    /** Line width for major contours */
+    width?: {
+      min: number;
+      max: number;
+    };
+    /** Line opacity for major contours */
+    opacity?: number;
+    /** Minimum zoom for major contours */
+    minZoom?: number;
+  };
+  /** Minor contour line styling */
+  minor?: {
+    /** Line color for minor contours */
+    color?: string;
+    /** Line width for minor contours */
+    width?: {
+      min: number;
+      max: number;
+    };
+    /** Line opacity for minor contours */
+    opacity?: number;
+    /** Minimum zoom for minor contours */
+    minZoom?: number;
+  };
+}
+
+// ============================================================================
+// ICE TYPES - Ice sheets, glaciers, and ice shelves
+// ============================================================================
+
+/** Ice visibility and styling configuration */
+export interface ThemeIce {
+  /** Whether to show ice at all */
+  enabled: boolean;
+  /** Minimum zoom level to show ice */
+  minZoom?: number;
+  /** Maximum zoom level to show ice (fades out after this) */
+  maxZoom?: number;
+  /** Base opacity range: [minZoom opacity, maxZoom opacity] */
+  opacity?: {
+    min: number;
+    max: number;
+  };
+  /** Glaciated areas (glaciers, ice caps) styling */
+  glaciated?: {
+    /** Fill color for glaciated areas */
+    color?: string;
+    /** Fill opacity for glaciated areas */
+    opacity?: number;
+  };
+  /** Ice shelves styling */
+  iceShelves?: {
+    /** Fill color for ice shelves */
+    color?: string;
+    /** Fill opacity for ice shelves */
+    opacity?: number;
+  };
+  /** Ice edge (outline) styling */
+  iceEdge?: {
+    /** Line color for ice edges */
+    color?: string;
+    /** Line width for ice edges */
+    width?: number;
+    /** Line opacity for ice edges */
+    opacity?: number;
+    /** Whether to show ice edge lines. Set to false to disable. */
+    enabled?: boolean;
+  } | null; // Set to null to disable ice edge layer completely
+}
+
+// ============================================================================
+// GRID TYPES - Latitude and longitude lines
+// ============================================================================
+
+/** Grid line styling configuration */
+export interface ThemeGrid {
+  /** Whether to show grid lines at all */
+  enabled: boolean;
+  /** Minimum zoom level to show grid lines */
+  minZoom?: number;
+  /** Maximum zoom level to show grid lines (fades out after this) */
+  maxZoom?: number;
+  /** Latitude lines (horizontal) styling */
+  latitude?: {
+    /** Line color for latitude lines */
+    color?: string;
+    /** Line width for latitude lines */
+    width?: number | {
+      min: number;  // Width at minZoom
+      max: number;  // Width at maxZoom
+    };
+    /** Line opacity for latitude lines */
+    opacity?: number;
+    /** Interval in degrees (e.g., 10 = lines every 10 degrees) */
+    interval?: number;
+    /** Label configuration for latitude lines */
+    label?: {
+      /** Whether to show labels */
+      enabled?: boolean;
+      /** Label color */
+      color?: string;
+      /** Label font size */
+      size?: number | {
+        min: number;  // Size at minZoom
+        max: number;  // Size at maxZoom
+      };
+      /** Label opacity */
+      opacity?: number;
+      /** Minimum zoom to show labels */
+      minZoom?: number;
+    };
+  };
+  /** Longitude lines (vertical) styling */
+  longitude?: {
+    /** Line color for longitude lines */
+    color?: string;
+    /** Line width for longitude lines */
+    width?: number | {
+      min: number;  // Width at minZoom
+      max: number;  // Width at maxZoom
+    };
+    /** Line opacity for longitude lines */
+    opacity?: number;
+    /** Interval in degrees (e.g., 10 = lines every 10 degrees) */
+    interval?: number;
+    /** Label configuration for longitude lines */
+    label?: {
+      /** Whether to show labels */
+      enabled?: boolean;
+      /** Label color */
+      color?: string;
+      /** Label font size */
+      size?: number | {
+        min: number;  // Size at minZoom
+        max: number;  // Size at maxZoom
+      };
+      /** Label opacity */
+      opacity?: number;
+      /** Minimum zoom to show labels */
+      minZoom?: number;
+    };
+  };
+}
+
+// ============================================================================
 // COMPLETE THEME TYPE
 // ============================================================================
 
@@ -416,4 +594,10 @@ export interface Theme {
   pois?: ThemePOIs;
   /** Bathymetry configuration - optional, defaults to disabled */
   bathymetry?: ThemeBathymetry;
+  /** Contours configuration - optional, defaults to disabled */
+  contours?: ThemeContours;
+  /** Ice configuration - optional, defaults to disabled */
+  ice?: ThemeIce;
+  /** Grid lines configuration - optional, defaults to disabled */
+  grid?: ThemeGrid;
 }

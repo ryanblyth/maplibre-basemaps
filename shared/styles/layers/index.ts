@@ -15,6 +15,9 @@ export { createBackgroundLayers } from "./background.js";
 export { createLandcoverLayers, createUSLandLayers } from "./land.js";
 export { createWaterLayers, createUSWaterLayers } from "./water.js";
 export { createBathymetryLayers } from "./bathymetry.js";
+export { createIceLayers } from "./ice.js";
+export { createContourLayers } from "./contours.js";
+export { createGridLayers } from "./grid.js";
 export { createBoundaryLayers, createUSBoundaryLayers } from "./boundaries.js";
 export { createWorldRoadLayers, createUSRoadLayers, createUSOverlayRoadLayers } from "./roads.js";
 export { 
@@ -36,6 +39,9 @@ import { createBackgroundLayers } from "./background.js";
 import { createLandcoverLayers, createUSLandLayers } from "./land.js";
 import { createWaterLayers, createUSWaterLayers } from "./water.js";
 import { createBathymetryLayers } from "./bathymetry.js";
+import { createIceLayers } from "./ice.js";
+import { createContourLayers } from "./contours.js";
+import { createGridLayers } from "./grid.js";
 import { createBoundaryLayers, createUSBoundaryLayers } from "./boundaries.js";
 import { createWorldRoadLayers, createUSRoadLayers, createUSOverlayRoadLayers } from "./roads.js";
 import { 
@@ -62,7 +68,10 @@ export function createAllLayers(theme: Theme): LayerSpecification[] {
     ...createWaterLayers(theme),
     ...createUSWaterLayers(theme),
     ...createBathymetryLayers(theme),
+    ...createContourLayers(theme),
     ...createBoundaryLayers(theme),
+    ...createIceLayers(theme),  // Render ice after boundaries so boundaries don't show through
+    ...createGridLayers(theme),  // Grid lines render on top of all features
     ...createWorldRoadLayers(theme),
     ...createUSRoadLayers(theme),
     ...createUSLandLayers(theme),

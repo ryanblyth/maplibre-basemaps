@@ -17,6 +17,9 @@ export const myTheme: Theme = {
   shields: myShields,     // Highway shields (optional)
   pois: myPOIs,          // Point of Interest config (optional)
   bathymetry: myBathymetry, // Ocean depth visualization (optional)
+  ice: myIce,              // Glaciers, ice sheets, and ice shelves (optional)
+  contours: myContours,   // Topographic contours (optional)
+  grid: myGrid,           // Latitude and longitude grid lines (optional)
 };
 ```
 
@@ -100,6 +103,115 @@ bathymetry: {
     deep2: 0.50,     // 4000m
     abyss: 0.36,     // 6000m
     trench: 0.23,    // 10000m - most transparent
+  },
+}
+```
+
+### Ice
+
+Ice (glaciers, ice sheets, and ice shelves) is configured separately in the `ice` section of the theme. See [Ice Documentation](./ice.md) for complete details.
+
+```typescript
+ice: {
+  enabled: true,
+  minZoom: 0,
+  maxZoom: 6,
+  opacity: {
+    min: 0.7,
+    max: 0.9,
+  },
+  glaciated: {
+    color: "#e8f4f8",  // Glaciers and ice caps
+    opacity: 0.9,
+  },
+  iceShelves: {
+    color: "#d0e8f0",  // Ice shelves
+    opacity: 0.9,
+  },
+  iceEdge: {
+    color: "#a0c8d8",  // Ice shelf edges
+    width: 0.5,
+    opacity: 0.6,
+  },
+}
+```
+
+### Contours
+
+Topographic contours (elevation lines) are configured separately in the `contours` section of the theme. See [Contours Documentation](./contours.md) for complete details.
+
+```typescript
+contours: {
+  enabled: true,
+  minZoom: 6,
+  maxZoom: 12,
+  major: {
+    color: "#4a5568",      // Major contour color (500m intervals)
+    width: {
+      min: 0.5,            // Width at minZoom
+      max: 1.5,            // Width at maxZoom
+    },
+    opacity: 0.6,
+    minZoom: 6,
+  },
+  minor: {
+    color: "#3a4455",      // Minor contour color (200m intervals)
+    width: {
+      min: 0.25,          // Width at minZoom
+      max: 0.75,          // Width at maxZoom
+    },
+    opacity: 0.4,
+    minZoom: 8,
+  },
+}
+```
+
+### Grid Lines
+
+Grid lines (latitude and longitude reference lines) are configured separately in the `grid` section of the theme. See [Grid Documentation](./grid.md) for complete details.
+
+```typescript
+grid: {
+  enabled: true,
+  minZoom: 0,
+  maxZoom: 10,
+  latitude: {
+    color: "#6b7280",      // Latitude line color
+    width: {
+      min: 1.0,            // Width at minZoom
+      max: 1.5,            // Width at maxZoom
+    },
+    opacity: 0.6,
+    interval: 10,          // Lines every 10 degrees
+    label: {
+      enabled: false,      // Enable coordinate labels
+      color: "#9ca3af",    // Label text color
+      size: {
+        min: 10,           // Font size at minZoom
+        max: 12,           // Font size at maxZoom
+      },
+      opacity: 0.8,
+      minZoom: 2,          // Show labels starting at zoom 2
+    },
+  },
+  longitude: {
+    color: "#6b7280",      // Longitude line color
+    width: {
+      min: 1.0,            // Width at minZoom
+      max: 1.5,            // Width at maxZoom
+    },
+    opacity: 0.6,
+    interval: 10,          // Lines every 10 degrees
+    label: {
+      enabled: false,      // Enable coordinate labels
+      color: "#9ca3af",    // Label text color
+      size: {
+        min: 10,           // Font size at minZoom
+        max: 12,           // Font size at maxZoom
+      },
+      opacity: 0.8,
+      minZoom: 2,          // Show labels starting at zoom 2
+    },
   },
 }
 ```
