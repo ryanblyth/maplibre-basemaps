@@ -66,9 +66,9 @@ export function createAllLayers(theme: Theme): LayerSpecification[] {
     ...createWaterLayers(theme),
     ...createUSWaterLayers(theme),
     ...createBathymetryLayers(theme),
-    ...createIceLayers(theme),
     ...createContourLayers(theme),
     ...createBoundaryLayers(theme),
+    ...createIceLayers(theme),  // Render ice after boundaries so boundaries don't show through
     ...createWorldRoadLayers(theme),
     ...createUSRoadLayers(theme),
     ...createUSLandLayers(theme),

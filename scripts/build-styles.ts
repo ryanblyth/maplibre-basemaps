@@ -14,6 +14,7 @@ import { writeFileSync, mkdirSync, copyFileSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import { createDarkBlueStyle } from "../basemaps/dark-blue/styles/darkBlueStyle.js";
+import { darkBlueSettings } from "../basemaps/dark-blue/styles/theme.js";
 import type { BaseStyleConfig } from "../shared/styles/baseStyle.js";
 import { formatJSON } from "./format-json.js";
 
@@ -76,6 +77,49 @@ function buildStyle(build: StyleBuild, config: BaseStyleConfig): void {
     // Copy to style.json for backward compatibility
     copyFileSync(outputPath, styleJsonPath);
     console.log(`  ✓ Copied to ${build.outputPath.replace(".generated.json", ".json")}`);
+    
+    // Generate map-config.js from theme settings (for dark-blue only)
+    if (build.name === "dark-blue") {
+      const mapConfigPath = join(projectRoot, "basemaps/dark-blue/map-config.js");
+      const projection = darkBlueSettings.projection || "globe";
+      
+      // Get minZoom - can be object with mercator/globe keys, or single number
+      let minZoomMercator = 0;
+      let minZoomGlobe = 2;
+      if (darkBlueSettings.minZoom !== undefined) {
+        if (typeof darkBlueSettings.minZoom === "number") {
+          minZoomMercator = darkBlueSettings.minZoom;
+          minZoomGlobe = darkBlueSettings.minZoom;
+        } else {
+          minZoomMercator = darkBlueSettings.minZoom.mercator ?? 0;
+          minZoomGlobe = darkBlueSettings.minZoom.globe ?? 2;
+        }
+      }
+      
+      const mapConfigContent = `/**
+ * Map Configuration
+ * 
+ * This file is auto-generated from theme.ts settings.
+ * Do not edit manually - changes will be overwritten.
+ * 
+ * To change the projection or minZoom, edit: basemaps/dark-blue/styles/theme.ts
+ * Look for: darkBlueSettings.projection and darkBlueSettings.minZoom
+ */
+
+// Projection setting from theme.ts -> darkBlueSettings.projection
+// Options: "mercator" (flat map) or "globe" (3D globe)
+window.mapProjection = "${projection}";
+
+// Minimum zoom levels from theme.ts -> darkBlueSettings.minZoom
+// Different values for mercator vs globe projections
+window.mapMinZoom = {
+  mercator: ${minZoomMercator},
+  globe: ${minZoomGlobe}
+};
+`;
+      writeFileSync(mapConfigPath, mapConfigContent, "utf8");
+      console.log(`  ✓ Generated map-config.js (projection: ${projection}, minZoom: mercator=${minZoomMercator}, globe=${minZoomGlobe})`);
+    }
   } catch (error) {
     console.error(`  ✗ Failed to build ${build.name}:`, error);
     process.exit(1);

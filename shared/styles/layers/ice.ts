@@ -35,6 +35,7 @@ export function createIceLayers(theme: Theme): LayerSpecification[] {
   const glaciatedColor = ice.glaciated?.color ?? defaultGlaciatedColor;
   const glaciatedOpacity = ice.glaciated?.opacity ?? baseOpacityMax;
   
+  // Glaciated fill layer (no outline - we'll use a separate line layer)
   layers.push({
     id: "ice-glaciated",
     type: "fill",
@@ -42,6 +43,7 @@ export function createIceLayers(theme: Theme): LayerSpecification[] {
     "source-layer": "glaciated",
     minzoom: iceMinZoom,
     maxzoom: iceMaxZoom + 1,  // Add 1 for fade-out
+    filter: ["all"],
     paint: {
       "fill-color": glaciatedColor,
       "fill-opacity": [
@@ -51,6 +53,30 @@ export function createIceLayers(theme: Theme): LayerSpecification[] {
         iceMinZoom, glaciatedOpacity * (baseOpacityMin / baseOpacityMax),
         iceMaxZoom, glaciatedOpacity,
         iceMaxZoom + 1, 0.0  // Fade out
+      ],
+      // Disable antialiasing to prevent rendering artifacts at polygon boundaries
+      "fill-antialias": false,
+    }
+  });
+  
+  // Glaciated outline layer (invisible - used to prevent default outline rendering)
+  layers.push({
+    id: "ice-glaciated-outline",
+    type: "line",
+    source: "ne-ice",
+    "source-layer": "glaciated",
+    minzoom: iceMinZoom,
+    maxzoom: iceMaxZoom + 1,
+    paint: {
+      "line-color": glaciatedColor,  // Match fill color for seamless look
+      "line-width": 0,  // Zero width = invisible (effectively disables outlines)
+      "line-opacity": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        iceMinZoom, glaciatedOpacity * (baseOpacityMin / baseOpacityMax),
+        iceMaxZoom, glaciatedOpacity,
+        iceMaxZoom + 1, 0.0
       ]
     }
   });
@@ -59,6 +85,7 @@ export function createIceLayers(theme: Theme): LayerSpecification[] {
   const iceShelvesColor = ice.iceShelves?.color ?? defaultIceShelvesColor;
   const iceShelvesOpacity = ice.iceShelves?.opacity ?? baseOpacityMax;
   
+  // Ice shelves fill layer (no outline - we'll use a separate line layer)
   layers.push({
     id: "ice-shelves",
     type: "fill",
@@ -66,6 +93,7 @@ export function createIceLayers(theme: Theme): LayerSpecification[] {
     "source-layer": "ice_shelves",
     minzoom: iceMinZoom,
     maxzoom: iceMaxZoom + 1,  // Add 1 for fade-out
+    filter: ["all"],
     paint: {
       "fill-color": iceShelvesColor,
       "fill-opacity": [
@@ -75,35 +103,79 @@ export function createIceLayers(theme: Theme): LayerSpecification[] {
         iceMinZoom, iceShelvesOpacity * (baseOpacityMin / baseOpacityMax),
         iceMaxZoom, iceShelvesOpacity,
         iceMaxZoom + 1, 0.0  // Fade out
+      ],
+      // Disable antialiasing to prevent rendering artifacts at polygon boundaries
+      "fill-antialias": false,
+    }
+  });
+  
+  // Ice shelves outline layer (invisible - used to prevent default outline rendering)
+  layers.push({
+    id: "ice-shelves-outline",
+    type: "line",
+    source: "ne-ice",
+    "source-layer": "ice_shelves",
+    minzoom: iceMinZoom,
+    maxzoom: iceMaxZoom + 1,
+    paint: {
+      "line-color": iceShelvesColor,  // Match fill color for seamless look
+      "line-width": 0,  // Zero width = invisible (effectively disables outlines)
+      "line-opacity": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        iceMinZoom, iceShelvesOpacity * (baseOpacityMin / baseOpacityMax),
+        iceMaxZoom, iceShelvesOpacity,
+        iceMaxZoom + 1, 0.0
       ]
     }
   });
   
   // Ice edge (outline) - line layer
-  const iceEdgeColor = ice.iceEdge?.color ?? defaultIceEdgeColor;
-  const iceEdgeWidth = ice.iceEdge?.width ?? 0.5;
-  const iceEdgeOpacity = ice.iceEdge?.opacity ?? 0.6;
-  
-  layers.push({
-    id: "ice-edge",
-    type: "line",
-    source: "ne-ice",
-    "source-layer": "ice_edge",
-    minzoom: iceMinZoom,
-    maxzoom: iceMaxZoom + 1,  // Add 1 for fade-out
-    paint: {
-      "line-color": iceEdgeColor,
-      "line-width": iceEdgeWidth,
-      "line-opacity": [
-        "interpolate",
-        ["linear"],
-        ["zoom"],
-        iceMinZoom, iceEdgeOpacity * (baseOpacityMin / baseOpacityMax),
-        iceMaxZoom, iceEdgeOpacity,
-        iceMaxZoom + 1, 0.0  // Fade out
-      ]
-    }
-  });
+  // Only create if iceEdge is not explicitly disabled
+  // Set iceEdge to null or iceEdge.enabled to false to disable
+  if (ice.iceEdge !== null && ice.iceEdge?.enabled !== false) {
+    const iceEdgeColor = ice.iceEdge?.color ?? defaultIceEdgeColor;
+    const iceEdgeWidth = ice.iceEdge?.width ?? 0.5;
+    const iceEdgeOpacity = ice.iceEdge?.opacity ?? 0.6;
+    
+    layers.push({
+      id: "ice-edge",
+      type: "line",
+      source: "ne-ice",
+      "source-layer": "ice_edge",
+      minzoom: iceMinZoom,
+      maxzoom: iceMaxZoom + 1,  // Add 1 for fade-out
+      filter: ["all"],
+      paint: {
+        "line-color": iceEdgeColor,
+        "line-width": iceEdgeWidth,
+        "line-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          iceMinZoom, iceEdgeOpacity * (baseOpacityMin / baseOpacityMax),
+          iceMaxZoom, iceEdgeOpacity,
+          iceMaxZoom + 1, 0.0  // Fade out
+        ]
+      }
+    });
+  } else {
+    // Even when disabled, create a hidden layer to prevent any default rendering
+    // This ensures ice_edge source layer features don't accidentally render
+    layers.push({
+      id: "ice-edge-hidden",
+      type: "line",
+      source: "ne-ice",
+      "source-layer": "ice_edge",
+      minzoom: iceMinZoom,
+      maxzoom: iceMaxZoom + 1,
+      paint: {
+        "line-opacity": 0,  // Completely invisible
+        "line-width": 0
+      }
+    });
+  }
   
   return layers;
 }

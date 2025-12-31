@@ -337,6 +337,24 @@ export interface ThemeSettings {
    * Default: 15
    */
   realWorldScaleMinZoom?: number;
+  
+  /**
+   * Map projection type.
+   * - "mercator" - Standard Web Mercator projection (flat map)
+   * - "globe" - 3D globe projection
+   * Default: "globe"
+   */
+  projection?: "mercator" | "globe";
+  
+  /**
+   * Minimum zoom level for the map.
+   * Can be different for globe vs mercator projections.
+   * Default: { mercator: 0, globe: 2 }
+   */
+  minZoom?: {
+    mercator?: number;
+    globe?: number;
+  } | number; // Also supports a single number for both projections
 }
 
 // ============================================================================
@@ -479,7 +497,9 @@ export interface ThemeIce {
     width?: number;
     /** Line opacity for ice edges */
     opacity?: number;
-  };
+    /** Whether to show ice edge lines. Set to false to disable. */
+    enabled?: boolean;
+  } | null; // Set to null to disable ice edge layer completely
 }
 
 // ============================================================================

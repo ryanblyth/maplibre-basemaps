@@ -23,12 +23,6 @@
       "url": "pmtiles://https://data.storypath.studio/pmtiles/poi_us_z12-15.pmtiles",
       "minzoom": 12,
       "maxzoom": 15
-    },
-    "ne-ice": {
-      "type": "vector",
-      "url": "pmtiles://https://data.storypath.studio/pmtiles/ne_ice_z0-6.pmtiles",
-      "minzoom": 0,
-      "maxzoom": 6
     }
   },
   "layers": [
@@ -46,9 +40,11 @@
       "source-layer": "landcover",
       "minzoom": 0,
       "maxzoom": 6.5,
+      "filter": true,
       "paint": {
         "fill-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"],
-        "fill-opacity": 0.6
+        "fill-opacity": 0.6,
+        "fill-outline-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"]
       }
     },
     {
@@ -57,9 +53,11 @@
       "source": "world_mid",
       "source-layer": "landcover",
       "minzoom": 6,
+      "filter": true,
       "paint": {
         "fill-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"],
-        "fill-opacity": 0.6
+        "fill-opacity": 0.6,
+        "fill-outline-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"]
       }
     },
     {
@@ -160,64 +158,6 @@
           6, 0.4,
           12, 0.6,
           15, 1
-        ]
-      }
-    },
-    {
-      "id": "ice-glaciated",
-      "type": "fill",
-      "source": "ne-ice",
-      "source-layer": "glaciated",
-      "minzoom": 0,
-      "maxzoom": 7,
-      "paint": {
-        "fill-color": "#e8f4f8",
-        "fill-opacity": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          0, 0.7,
-          6, 0.9,
-          7, 0
-        ]
-      }
-    },
-    {
-      "id": "ice-shelves",
-      "type": "fill",
-      "source": "ne-ice",
-      "source-layer": "ice_shelves",
-      "minzoom": 0,
-      "maxzoom": 7,
-      "paint": {
-        "fill-color": "#d0e8f0",
-        "fill-opacity": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          0, 0.7,
-          6, 0.9,
-          7, 0
-        ]
-      }
-    },
-    {
-      "id": "ice-edge",
-      "type": "line",
-      "source": "ne-ice",
-      "source-layer": "ice_edge",
-      "minzoom": 0,
-      "maxzoom": 7,
-      "paint": {
-        "line-color": "#a0c8d8",
-        "line-width": 0.5,
-        "line-opacity": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          0, 0.46666666666666656,
-          6, 0.6,
-          7, 0
         ]
       }
     },
@@ -545,9 +485,11 @@
       "source": "us_high",
       "source-layer": "landcover",
       "minzoom": 6,
+      "filter": true,
       "paint": {
         "fill-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"],
-        "fill-opacity": 0.6
+        "fill-opacity": 0.6,
+        "fill-outline-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"]
       }
     },
     {

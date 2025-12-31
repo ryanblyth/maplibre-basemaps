@@ -15,14 +15,23 @@ import {
   type ThemeColors, 
   type ThemeWidths, 
   type ThemeOpacities,
-  type ThemePOIs
+  type ThemePOIs,
+  type ThemeSettings
 } from "../../../shared/styles/theme.js";
 
 // ============================================================================
 // SETTINGS
 // ============================================================================
 
-export const darkBlueSettings = {
+export const darkBlueSettings: ThemeSettings = {
+  /** Map projection type - "mercator" for flat map, "globe" for 3D globe */
+  projection: "globe",
+  
+  /** Minimum zoom level - different for globe vs mercator */
+  minZoom: {
+    mercator: 0,  // Flat map can go to z0
+    globe: 2,     // Globe needs higher min zoom for better appearance
+  },
   /**
    * When true, road widths scale proportionally to real-world sizes at zoom 15+.
    * Roads will double in pixel width with each zoom level to match map scale.
@@ -481,7 +490,7 @@ export const darkBlueContours = {
 
 export const darkBlueIce = {
   /** Whether to show ice at all */
-  enabled: true,
+  enabled: false,
   
   /** Minimum zoom level to show ice */
   minZoom: 0,
@@ -507,11 +516,12 @@ export const darkBlueIce = {
     opacity: 0.9,
   },
   
-  /** Ice edge (outline) */
+  /** Ice edge (outline) - set to null or enabled: false to disable */
   iceEdge: {
-    color: "#a0c8d8",  // Medium blue-gray
-    width: 0.5,
-    opacity: 0.6,
+    enabled: false,  // Outline of ice shelves (Antarctica only)
+    color: "#a0c8d8",  // Medium blue-gray (matches original design)
+    width: 1.0,  // Increased from 0.5 for better visibility
+    opacity: 0.8,  // Increased from 0.6 for better visibility
   },
 };
 

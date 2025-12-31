@@ -12,9 +12,41 @@ export function createLandcoverLayers(theme: Theme): LayerSpecification[] {
   const lcFill = landcoverFillColor(c);
   const luFill = landuseFillColor(c);
   
+  // Filter out ice class from landcover if ice layers are enabled
+  // This prevents duplicate/conflicting ice rendering
+  const excludeIceFilter = theme.ice?.enabled 
+    ? ["!=", ["get", "class"], "ice"]
+    : true; // Show all if ice is disabled
+  
   return [
-    { id: "landcover-world", type: "fill", source: "world_low", "source-layer": "landcover", minzoom: 0, maxzoom: 6.5, paint: { "fill-color": lcFill, "fill-opacity": o.landcover } },
-    { id: "landcover-world-mid", type: "fill", source: "world_mid", "source-layer": "landcover", minzoom: 6, paint: { "fill-color": lcFill, "fill-opacity": o.landcover } },
+    { 
+      id: "landcover-world", 
+      type: "fill", 
+      source: "world_low", 
+      "source-layer": "landcover", 
+      minzoom: 0, 
+      maxzoom: 6.5,
+      filter: excludeIceFilter,
+      paint: { 
+        "fill-color": lcFill, 
+        "fill-opacity": o.landcover,
+        // Hide polygon outlines to avoid white line artifacts
+        "fill-outline-color": lcFill
+      } 
+    },
+    { 
+      id: "landcover-world-mid", 
+      type: "fill", 
+      source: "world_mid", 
+      "source-layer": "landcover", 
+      minzoom: 6,
+      filter: excludeIceFilter,
+      paint: { 
+        "fill-color": lcFill, 
+        "fill-opacity": o.landcover,
+        "fill-outline-color": lcFill
+      } 
+    },
     { id: "landuse-world", type: "fill", source: "world_low", "source-layer": "landuse", minzoom: 0, maxzoom: 6.5, paint: { "fill-color": luFill, "fill-opacity": o.landuse } },
     { id: "landuse-world-mid", type: "fill", source: "world_mid", "source-layer": "landuse", minzoom: 6, paint: { "fill-color": luFill, "fill-opacity": o.landuse } },
   ];
@@ -26,8 +58,25 @@ export function createUSLandLayers(theme: Theme): LayerSpecification[] {
   const lcFill = landcoverFillColor(c);
   const luFill = landuseFillColor(c);
   
+  // Filter out ice class from landcover if ice layers are enabled
+  const excludeIceFilter = theme.ice?.enabled 
+    ? ["!=", ["get", "class"], "ice"]
+    : true;
+  
   return [
-    { id: "landcover-us", type: "fill", source: "us_high", "source-layer": "landcover", minzoom: 6, paint: { "fill-color": lcFill, "fill-opacity": o.landcover } },
+    { 
+      id: "landcover-us", 
+      type: "fill", 
+      source: "us_high", 
+      "source-layer": "landcover", 
+      minzoom: 6,
+      filter: excludeIceFilter,
+      paint: { 
+        "fill-color": lcFill, 
+        "fill-opacity": o.landcover,
+        "fill-outline-color": lcFill
+      } 
+    },
     { id: "landuse-us", type: "fill", source: "us_high", "source-layer": "landuse", minzoom: 6, paint: { "fill-color": luFill, "fill-opacity": o.landuse } },
   ];
 }
