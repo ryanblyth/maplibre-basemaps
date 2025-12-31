@@ -69,6 +69,16 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
     };
   }
   
+  // Only add grid source if enabled in theme
+  if (theme?.grid?.enabled) {
+    sources["world-grid"] = {
+      type: "vector",
+      url: `pmtiles://${config.dataBaseUrl}/pmtiles/graticules.pmtiles`,
+      minzoom: theme.grid.minZoom ?? 0,
+      maxzoom: theme.grid.maxZoom ?? 10,
+    };
+  }
+  
   return sources;
 }
 

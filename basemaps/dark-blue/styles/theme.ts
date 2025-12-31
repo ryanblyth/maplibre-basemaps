@@ -526,6 +526,63 @@ export const darkBlueIce = {
 };
 
 // ============================================================================
+// GRID CONFIGURATION
+// ============================================================================
+
+export const darkBlueGrid = {
+  /** Whether to show grid lines at all */
+  enabled: false,
+  
+  /** Minimum zoom level to show grid lines */
+  minZoom: 0,
+  
+  /** Maximum zoom level to show grid lines (fades out after this) */
+  maxZoom: 10,
+  
+  /** Latitude lines (horizontal) styling */
+  latitude: {
+    color: "#6b7280",  // Lighter gray for better visibility
+    width: {
+      min: 1.0,  // Width at minZoom (increased for visibility)
+      max: 1.5,  // Width at maxZoom
+    },
+    opacity: 0.6,  // Increased opacity for better visibility
+    interval: 10,  // Lines every 10 degrees
+    label: {
+      enabled: false,  // Enable labels for latitude lines
+      color: "#9ca3af",  // Light gray for labels
+      size: {
+        min: 10,  // Size at minZoom
+        max: 12,  // Size at maxZoom
+      },
+      opacity: 0.8,
+      minZoom: 2,  // Show labels starting at zoom 2
+    },
+  },
+  
+  /** Longitude lines (vertical) styling */
+  longitude: {
+    color: "#6b7280",  // Lighter gray for better visibility
+    width: {
+      min: 1.0,  // Width at minZoom (increased for visibility)
+      max: 1.5,  // Width at maxZoom
+    },
+    opacity: 0.6,  // Increased opacity for better visibility
+    interval: 10,  // Lines every 10 degrees
+    label: {
+      enabled: false,  // Enable labels for longitude lines
+      color: "#9ca3af",  // Light gray for labels
+      size: {
+        min: 10,  // Size at minZoom
+        max: 12,  // Size at maxZoom
+      },
+      opacity: 0.8,
+      minZoom: 2,  // Show labels starting at zoom 2
+    },
+  },
+};
+
+// ============================================================================
 // COMPLETE THEME
 // ============================================================================
 
@@ -541,4 +598,5 @@ export const darkBlueTheme: Theme = {
   bathymetry: darkBlueBathymetry,
   contours: darkBlueContours,
   ice: darkBlueIce,
+  grid: darkBlueGrid,
 };

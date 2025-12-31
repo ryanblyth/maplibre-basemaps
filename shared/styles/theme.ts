@@ -503,6 +503,80 @@ export interface ThemeIce {
 }
 
 // ============================================================================
+// GRID TYPES - Latitude and longitude lines
+// ============================================================================
+
+/** Grid line styling configuration */
+export interface ThemeGrid {
+  /** Whether to show grid lines at all */
+  enabled: boolean;
+  /** Minimum zoom level to show grid lines */
+  minZoom?: number;
+  /** Maximum zoom level to show grid lines (fades out after this) */
+  maxZoom?: number;
+  /** Latitude lines (horizontal) styling */
+  latitude?: {
+    /** Line color for latitude lines */
+    color?: string;
+    /** Line width for latitude lines */
+    width?: number | {
+      min: number;  // Width at minZoom
+      max: number;  // Width at maxZoom
+    };
+    /** Line opacity for latitude lines */
+    opacity?: number;
+    /** Interval in degrees (e.g., 10 = lines every 10 degrees) */
+    interval?: number;
+    /** Label configuration for latitude lines */
+    label?: {
+      /** Whether to show labels */
+      enabled?: boolean;
+      /** Label color */
+      color?: string;
+      /** Label font size */
+      size?: number | {
+        min: number;  // Size at minZoom
+        max: number;  // Size at maxZoom
+      };
+      /** Label opacity */
+      opacity?: number;
+      /** Minimum zoom to show labels */
+      minZoom?: number;
+    };
+  };
+  /** Longitude lines (vertical) styling */
+  longitude?: {
+    /** Line color for longitude lines */
+    color?: string;
+    /** Line width for longitude lines */
+    width?: number | {
+      min: number;  // Width at minZoom
+      max: number;  // Width at maxZoom
+    };
+    /** Line opacity for longitude lines */
+    opacity?: number;
+    /** Interval in degrees (e.g., 10 = lines every 10 degrees) */
+    interval?: number;
+    /** Label configuration for longitude lines */
+    label?: {
+      /** Whether to show labels */
+      enabled?: boolean;
+      /** Label color */
+      color?: string;
+      /** Label font size */
+      size?: number | {
+        min: number;  // Size at minZoom
+        max: number;  // Size at maxZoom
+      };
+      /** Label opacity */
+      opacity?: number;
+      /** Minimum zoom to show labels */
+      minZoom?: number;
+    };
+  };
+}
+
+// ============================================================================
 // COMPLETE THEME TYPE
 // ============================================================================
 
@@ -524,4 +598,6 @@ export interface Theme {
   contours?: ThemeContours;
   /** Ice configuration - optional, defaults to disabled */
   ice?: ThemeIce;
+  /** Grid lines configuration - optional, defaults to disabled */
+  grid?: ThemeGrid;
 }
