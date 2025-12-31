@@ -37,11 +37,32 @@ export interface ThemeColors {
     default: string;
   };
   landuse: {
-    park: string;
+    park?: string;
     cemetery: string;
     pitch: string;
-    stadium: string;
+    stadium?: string;
     residential: string;
+    // Additional landuse classes found in source data
+    college?: string;
+    commercial?: string;
+    construction?: string;
+    dam?: string;
+    farmland?: string;
+    grass?: string;
+    hospital?: string;
+    industrial?: string;
+    military?: string;
+    neighbourhood?: string;
+    quarry?: string;
+    quarter?: string;
+    railway?: string;
+    retail?: string;
+    school?: string;
+    suburb?: string;
+    theme_park?: string;
+    track?: string;
+    university?: string;
+    zoo?: string;
     default: string;
   };
   water: {

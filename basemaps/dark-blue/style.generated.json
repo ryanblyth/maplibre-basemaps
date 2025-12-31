@@ -68,7 +68,7 @@
       "minzoom": 0,
       "maxzoom": 6.5,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "park", "#11161d", "cemetery", "#11161d", "pitch", "#121923", "stadium", "#121923", "residential", "#0e131a", "#0e131a"],
+        "fill-color": ["match", ["get", "class"], "park", "#11161d", "cemetery", "#11161d", "pitch", "#121923", "stadium", "#121923", "residential", "#0e131a", "college", "#11171e", "commercial", "#121820", "construction", "#131510", "dam", "#0f161a", "farmland", "#141612", "grass", "#0f1618", "hospital", "#12161b", "industrial", "#111418", "military", "#0f1318", "neighbourhood", "#0f151a", "quarry", "#111510", "quarter", "#10161a", "railway", "#111418", "retail", "#12171d", "school", "#11171e", "suburb", "#0f151a", "theme_park", "#12161a", "track", "#0f1618", "university", "#11171e", "zoo", "#0f1618", "#0e131a"],
         "fill-opacity": 0.6
       }
     },
@@ -79,7 +79,7 @@
       "source-layer": "landuse",
       "minzoom": 6,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "park", "#11161d", "cemetery", "#11161d", "pitch", "#121923", "stadium", "#121923", "residential", "#0e131a", "#0e131a"],
+        "fill-color": ["match", ["get", "class"], "park", "#11161d", "cemetery", "#11161d", "pitch", "#121923", "stadium", "#121923", "residential", "#0e131a", "college", "#11171e", "commercial", "#121820", "construction", "#131510", "dam", "#0f161a", "farmland", "#141612", "grass", "#0f1618", "hospital", "#12161b", "industrial", "#111418", "military", "#0f1318", "neighbourhood", "#0f151a", "quarry", "#111510", "quarter", "#10161a", "railway", "#111418", "retail", "#12171d", "school", "#11171e", "suburb", "#0f151a", "theme_park", "#12161a", "track", "#0f1618", "university", "#11171e", "zoo", "#0f1618", "#0e131a"],
         "fill-opacity": 0.6
       }
     },
@@ -499,7 +499,7 @@
       "source-layer": "landuse",
       "minzoom": 6,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "park", "#11161d", "cemetery", "#11161d", "pitch", "#121923", "stadium", "#121923", "residential", "#0e131a", "#0e131a"],
+        "fill-color": ["match", ["get", "class"], "park", "#11161d", "cemetery", "#11161d", "pitch", "#121923", "stadium", "#121923", "residential", "#0e131a", "college", "#11171e", "commercial", "#121820", "construction", "#131510", "dam", "#0f161a", "farmland", "#141612", "grass", "#0f1618", "hospital", "#12161b", "industrial", "#111418", "military", "#0f1318", "neighbourhood", "#0f151a", "quarry", "#111510", "quarter", "#10161a", "railway", "#111418", "retail", "#12171d", "school", "#11171e", "suburb", "#0f151a", "theme_park", "#12161a", "track", "#0f1618", "university", "#11171e", "zoo", "#0f1618", "#0e131a"],
         "fill-opacity": 0.6
       }
     },

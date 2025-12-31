@@ -71,12 +71,33 @@ export const darkBlueColors: ThemeColors = {
   
   // Landuse
   landuse: {
-    park: "#11161d",
-    cemetery: "#11161d",
-    pitch: "#121923",
-    stadium: "#121923",
-    residential: "#0e131a",
-    default: "#0e131a",
+    park: "#11161d",        // Dark blue-grey - park (matches existing)
+    cemetery: "#11161d",    // Dark blue-grey - cemetery (matches existing)
+    pitch: "#121923",       // Slightly lighter blue-grey - pitch (matches existing)
+    stadium: "#121923",     // Slightly lighter blue-grey - stadium (matches existing)
+    residential: "#0e131a", // Dark grey-blue - residential (matches existing)
+    // Additional landuse classes - subtle variations
+    college: "#11171e",     // Slightly green-tinted - college
+    commercial: "#121820",   // Cool grey-blue - commercial
+    construction: "#131510", // Warm dark grey - construction
+    dam: "#0f161a",         // Dark blue-grey - dam
+    farmland: "#141612",     // Warm dark beige - farmland (matches land.cropland)
+    grass: "#0f1618",       // Dark green-grey - grass (matches land.grass)
+    hospital: "#12161b",    // Slightly red-tinted grey - hospital
+    industrial: "#111418",  // Cool grey-blue - industrial
+    military: "#0f1318",    // Very dark grey-blue - military
+    neighbourhood: "#0f151a", // Neutral dark grey - neighbourhood
+    quarry: "#111510",     // Slightly green-tinted - quarry
+    quarter: "#10161a",     // Neutral dark grey - quarter
+    railway: "#111418",     // Cool grey-blue - railway
+    retail: "#12171d",      // Slightly warm grey - retail
+    school: "#11171e",      // Slightly green-tinted - school
+    suburb: "#0f151a",      // Neutral dark grey - suburb
+    theme_park: "#12161a",  // Muted grey - theme_park
+    track: "#0f1618",       // Dark green-grey - track
+    university: "#11171e",   // Slightly green-tinted - university
+    zoo: "#0f1618",         // Dark green-grey - zoo
+    default: "#0e131a",     // Neutral dark grey - default (matches existing)
   },
   
   // Water
