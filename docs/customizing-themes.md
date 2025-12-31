@@ -19,6 +19,7 @@ export const myTheme: Theme = {
   bathymetry: myBathymetry, // Ocean depth visualization (optional)
   ice: myIce,              // Glaciers, ice sheets, and ice shelves (optional)
   contours: myContours,   // Topographic contours (optional)
+  grid: myGrid,           // Latitude and longitude grid lines (optional)
 };
 ```
 
@@ -161,6 +162,56 @@ contours: {
     },
     opacity: 0.4,
     minZoom: 8,
+  },
+}
+```
+
+### Grid Lines
+
+Grid lines (latitude and longitude reference lines) are configured separately in the `grid` section of the theme. See [Grid Documentation](./grid.md) for complete details.
+
+```typescript
+grid: {
+  enabled: true,
+  minZoom: 0,
+  maxZoom: 10,
+  latitude: {
+    color: "#6b7280",      // Latitude line color
+    width: {
+      min: 1.0,            // Width at minZoom
+      max: 1.5,            // Width at maxZoom
+    },
+    opacity: 0.6,
+    interval: 10,          // Lines every 10 degrees
+    label: {
+      enabled: false,      // Enable coordinate labels
+      color: "#9ca3af",    // Label text color
+      size: {
+        min: 10,           // Font size at minZoom
+        max: 12,           // Font size at maxZoom
+      },
+      opacity: 0.8,
+      minZoom: 2,          // Show labels starting at zoom 2
+    },
+  },
+  longitude: {
+    color: "#6b7280",      // Longitude line color
+    width: {
+      min: 1.0,            // Width at minZoom
+      max: 1.5,            // Width at maxZoom
+    },
+    opacity: 0.6,
+    interval: 10,          // Lines every 10 degrees
+    label: {
+      enabled: false,      // Enable coordinate labels
+      color: "#9ca3af",    // Label text color
+      size: {
+        min: 10,           // Font size at minZoom
+        max: 12,           // Font size at maxZoom
+      },
+      opacity: 0.8,
+      minZoom: 2,          // Show labels starting at zoom 2
+    },
   },
 }
 ```
