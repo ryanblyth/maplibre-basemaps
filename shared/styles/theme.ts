@@ -30,6 +30,10 @@ export interface ThemeColors {
     grass: string;
     scrub: string;
     cropland: string;
+    farmland?: string;  // Optional - maps to cropland if not specified
+    rock?: string;      // Optional - rocky areas
+    sand?: string;      // Optional - sandy areas
+    wetland?: string;   // Optional - wetland areas
     default: string;
   };
   landuse: {

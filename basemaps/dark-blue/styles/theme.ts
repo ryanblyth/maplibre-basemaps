@@ -58,11 +58,15 @@ export const darkBlueColors: ThemeColors = {
   
   // Land/terrain
   land: {
-    wood: "#0f141b",
-    grass: "#10161e",
-    scrub: "#10161e",
-    cropland: "#0f141b",
-    default: "#0f141b",
+    wood: "#0f1a1b",      // Dark green-brown - wood/forest
+    grass: "#0f1618",     // Dark green-grey - grass
+    scrub: "#12161a",     // Muted purple-grey - scrub
+    cropland: "#141612",   // Warm dark beige - cropland
+    farmland: "#141612",   // Warm dark beige - farmland (same as cropland)
+    rock: "#111418",      // Cool grey-blue - rock
+    sand: "#161510",      // Warm muted beige - sand
+    wetland: "#0e1418",   // Dark blue-green - wetland
+    default: "#0f141b",   // Neutral dark grey - default/unknown
   },
   
   // Landuse

@@ -42,9 +42,9 @@
       "maxzoom": 6.5,
       "filter": true,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"],
+        "fill-color": ["match", ["get", "class"], "wood", "#0f1a1b", "grass", "#0f1618", "scrub", "#12161a", "scrubland", "#12161a", "cropland", "#141612", "farmland", "#141612", "rock", "#111418", "sand", "#161510", "wetland", "#0e1418", "#0f141b"],
         "fill-opacity": 0.6,
-        "fill-outline-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"]
+        "fill-outline-color": ["match", ["get", "class"], "wood", "#0f1a1b", "grass", "#0f1618", "scrub", "#12161a", "scrubland", "#12161a", "cropland", "#141612", "farmland", "#141612", "rock", "#111418", "sand", "#161510", "wetland", "#0e1418", "#0f141b"]
       }
     },
     {
@@ -55,9 +55,9 @@
       "minzoom": 6,
       "filter": true,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"],
+        "fill-color": ["match", ["get", "class"], "wood", "#0f1a1b", "grass", "#0f1618", "scrub", "#12161a", "scrubland", "#12161a", "cropland", "#141612", "farmland", "#141612", "rock", "#111418", "sand", "#161510", "wetland", "#0e1418", "#0f141b"],
         "fill-opacity": 0.6,
-        "fill-outline-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"]
+        "fill-outline-color": ["match", ["get", "class"], "wood", "#0f1a1b", "grass", "#0f1618", "scrub", "#12161a", "scrubland", "#12161a", "cropland", "#141612", "farmland", "#141612", "rock", "#111418", "sand", "#161510", "wetland", "#0e1418", "#0f141b"]
       }
     },
     {
@@ -487,9 +487,9 @@
       "minzoom": 6,
       "filter": true,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"],
+        "fill-color": ["match", ["get", "class"], "wood", "#0f1a1b", "grass", "#0f1618", "scrub", "#12161a", "scrubland", "#12161a", "cropland", "#141612", "farmland", "#141612", "rock", "#111418", "sand", "#161510", "wetland", "#0e1418", "#0f141b"],
         "fill-opacity": 0.6,
-        "fill-outline-color": ["match", ["get", "class"], "wood", "#0f141b", "grass", "#10161e", "scrub", "#10161e", "cropland", "#0f141b", "#0f141b"]
+        "fill-outline-color": ["match", ["get", "class"], "wood", "#0f1a1b", "grass", "#0f1618", "scrub", "#12161a", "scrubland", "#12161a", "cropland", "#141612", "farmland", "#141612", "rock", "#111418", "sand", "#161510", "wetland", "#0e1418", "#0f141b"]
       }
     },
     {

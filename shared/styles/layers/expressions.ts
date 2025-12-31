@@ -144,8 +144,13 @@ export function landcoverFillColor(c: ThemeColors): unknown {
   return ["match", ["get", "class"], 
     "wood", c.land.wood, 
     "grass", c.land.grass, 
-    "scrub", c.land.scrub, 
-    "cropland", c.land.cropland, 
+    "scrub", c.land.scrub,
+    "scrubland", c.land.scrub,  // Alternative name for scrub
+    "cropland", c.land.cropland,
+    "farmland", c.land.farmland ?? c.land.cropland,  // Use farmland color if specified, otherwise cropland
+    "rock", c.land.rock ?? c.land.scrub,  // Use rock color if specified, otherwise scrub
+    "sand", c.land.sand ?? c.land.default,  // Use sand color if specified, otherwise default
+    "wetland", c.land.wetland ?? c.land.default,  // Use wetland color if specified, otherwise default
     c.land.default
   ];
 }
