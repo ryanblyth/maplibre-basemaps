@@ -23,6 +23,12 @@
       "url": "pmtiles://https://data.storypath.studio/pmtiles/poi_us_z12-15.pmtiles",
       "minzoom": 12,
       "maxzoom": 15
+    },
+    "ne-ice": {
+      "type": "vector",
+      "url": "pmtiles://https://data.storypath.studio/pmtiles/ne_ice_z0-6.pmtiles",
+      "minzoom": 0,
+      "maxzoom": 6
     }
   },
   "layers": [
@@ -154,6 +160,64 @@
           6, 0.4,
           12, 0.6,
           15, 1
+        ]
+      }
+    },
+    {
+      "id": "ice-glaciated",
+      "type": "fill",
+      "source": "ne-ice",
+      "source-layer": "glaciated",
+      "minzoom": 0,
+      "maxzoom": 7,
+      "paint": {
+        "fill-color": "#e8f4f8",
+        "fill-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0, 0.7,
+          6, 0.9,
+          7, 0
+        ]
+      }
+    },
+    {
+      "id": "ice-shelves",
+      "type": "fill",
+      "source": "ne-ice",
+      "source-layer": "ice_shelves",
+      "minzoom": 0,
+      "maxzoom": 7,
+      "paint": {
+        "fill-color": "#d0e8f0",
+        "fill-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0, 0.7,
+          6, 0.9,
+          7, 0
+        ]
+      }
+    },
+    {
+      "id": "ice-edge",
+      "type": "line",
+      "source": "ne-ice",
+      "source-layer": "ice_edge",
+      "minzoom": 0,
+      "maxzoom": 7,
+      "paint": {
+        "line-color": "#a0c8d8",
+        "line-width": 0.5,
+        "line-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0, 0.46666666666666656,
+          6, 0.6,
+          7, 0
         ]
       }
     },

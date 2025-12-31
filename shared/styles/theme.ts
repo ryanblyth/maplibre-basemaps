@@ -399,6 +399,90 @@ export interface ThemeBathymetry {
 }
 
 // ============================================================================
+// CONTOURS TYPES - Topographic contour lines
+// ============================================================================
+
+/** Contours visibility and styling configuration */
+export interface ThemeContours {
+  /** Whether to show contours at all */
+  enabled: boolean;
+  /** Minimum zoom level to show contours */
+  minZoom?: number;
+  /** Maximum zoom level to show contours (fades out after this) */
+  maxZoom?: number;
+  /** Major contour line styling */
+  major?: {
+    /** Line color for major contours */
+    color?: string;
+    /** Line width for major contours */
+    width?: {
+      min: number;
+      max: number;
+    };
+    /** Line opacity for major contours */
+    opacity?: number;
+    /** Minimum zoom for major contours */
+    minZoom?: number;
+  };
+  /** Minor contour line styling */
+  minor?: {
+    /** Line color for minor contours */
+    color?: string;
+    /** Line width for minor contours */
+    width?: {
+      min: number;
+      max: number;
+    };
+    /** Line opacity for minor contours */
+    opacity?: number;
+    /** Minimum zoom for minor contours */
+    minZoom?: number;
+  };
+}
+
+// ============================================================================
+// ICE TYPES - Ice sheets, glaciers, and ice shelves
+// ============================================================================
+
+/** Ice visibility and styling configuration */
+export interface ThemeIce {
+  /** Whether to show ice at all */
+  enabled: boolean;
+  /** Minimum zoom level to show ice */
+  minZoom?: number;
+  /** Maximum zoom level to show ice (fades out after this) */
+  maxZoom?: number;
+  /** Base opacity range: [minZoom opacity, maxZoom opacity] */
+  opacity?: {
+    min: number;
+    max: number;
+  };
+  /** Glaciated areas (glaciers, ice caps) styling */
+  glaciated?: {
+    /** Fill color for glaciated areas */
+    color?: string;
+    /** Fill opacity for glaciated areas */
+    opacity?: number;
+  };
+  /** Ice shelves styling */
+  iceShelves?: {
+    /** Fill color for ice shelves */
+    color?: string;
+    /** Fill opacity for ice shelves */
+    opacity?: number;
+  };
+  /** Ice edge (outline) styling */
+  iceEdge?: {
+    /** Line color for ice edges */
+    color?: string;
+    /** Line width for ice edges */
+    width?: number;
+    /** Line opacity for ice edges */
+    opacity?: number;
+  };
+}
+
+// ============================================================================
 // COMPLETE THEME TYPE
 // ============================================================================
 
@@ -416,4 +500,8 @@ export interface Theme {
   pois?: ThemePOIs;
   /** Bathymetry configuration - optional, defaults to disabled */
   bathymetry?: ThemeBathymetry;
+  /** Contours configuration - optional, defaults to disabled */
+  contours?: ThemeContours;
+  /** Ice configuration - optional, defaults to disabled */
+  ice?: ThemeIce;
 }

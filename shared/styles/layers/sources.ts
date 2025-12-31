@@ -49,6 +49,26 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
     };
   }
   
+  // Only add contours source if enabled in theme
+  if (theme?.contours?.enabled) {
+    sources["world-contours"] = {
+      type: "vector",
+      url: `pmtiles://${config.dataBaseUrl}/pmtiles/world_contours_z4-10_mj800_mn350_minz6.pmtiles`,
+      minzoom: 4,
+      maxzoom: 10,
+    };
+  }
+  
+  // Only add ice source if enabled in theme
+  if (theme?.ice?.enabled) {
+    sources["ne-ice"] = {
+      type: "vector",
+      url: `pmtiles://${config.dataBaseUrl}/pmtiles/ne_ice_z0-6.pmtiles`,
+      minzoom: 0,
+      maxzoom: 6,
+    };
+  }
+  
   return sources;
 }
 

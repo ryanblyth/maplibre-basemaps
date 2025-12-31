@@ -439,6 +439,83 @@ export const darkBlueBathymetry = {
 };
 
 // ============================================================================
+// CONTOURS CONFIGURATION
+// ============================================================================
+
+export const darkBlueContours = {
+  /** Whether to show contours at all */
+  enabled: false,
+  
+  /** Minimum zoom level to show contours */
+  minZoom: 4,
+  
+  /** Maximum zoom level to show contours (fades out after this) */
+  maxZoom: 10,
+  
+  /** Major contour line styling (800m intervals) */
+  major: {
+    color: "#4a5568",  // Medium gray
+    width: {
+      min: 0.5,  // Width at minZoom
+      max: 1.5,  // Width at maxZoom
+    },
+    opacity: 0.6,
+    minZoom: 4,  // Major contours start at z4
+  },
+  
+  /** Minor contour line styling (350m intervals) */
+  minor: {
+    color: "#3a4455",  // Darker gray
+    width: {
+      min: 0.25,  // Width at minZoom
+      max: 0.75,  // Width at maxZoom
+    },
+    opacity: 0.4,
+    minZoom: 6,  // Minor contours start at z6
+  },
+};
+
+// ============================================================================
+// ICE CONFIGURATION
+// ============================================================================
+
+export const darkBlueIce = {
+  /** Whether to show ice at all */
+  enabled: true,
+  
+  /** Minimum zoom level to show ice */
+  minZoom: 0,
+  
+  /** Maximum zoom level to show ice (fades out after this) */
+  maxZoom: 6,
+  
+  /** Base opacity range */
+  opacity: {
+    min: 0.7,  // Opacity at minZoom
+    max: 0.9,  // Opacity at maxZoom
+  },
+  
+  /** Glaciated areas (glaciers, ice caps) */
+  glaciated: {
+    color: "#e8f4f8",  // Light blue-white
+    opacity: 0.9,
+  },
+  
+  /** Ice shelves */
+  iceShelves: {
+    color: "#d0e8f0",  // Slightly darker blue-white
+    opacity: 0.9,
+  },
+  
+  /** Ice edge (outline) */
+  iceEdge: {
+    color: "#a0c8d8",  // Medium blue-gray
+    width: 0.5,
+    opacity: 0.6,
+  },
+};
+
+// ============================================================================
 // COMPLETE THEME
 // ============================================================================
 
@@ -452,4 +529,6 @@ export const darkBlueTheme: Theme = {
   shields: darkBlueShields,
   pois: darkBluePOIs,
   bathymetry: darkBlueBathymetry,
+  contours: darkBlueContours,
+  ice: darkBlueIce,
 };
