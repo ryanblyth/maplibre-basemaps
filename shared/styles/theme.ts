@@ -652,26 +652,43 @@ export interface Theme {
   boundary?: ThemeBoundary;
   /** Building configuration - optional */
   buildings?: ThemeBuildings;
-  /** Land configuration - optional, for controlling landcover/landuse visibility and colors */
+  /** Landcover configuration - optional, for controlling landcover visibility and colors */
   land?: ThemeLand;
+  /** Landuse configuration - optional, for controlling landuse visibility and colors */
+  landuse?: ThemeLanduse;
 }
 
 // ============================================================================
 // LAND CONFIGURATION
 // ============================================================================
 
-/** Configuration for land layers (landcover and landuse) */
+/** Configuration for landcover layers (natural land types: wood, grass, scrub, etc.) */
 export interface ThemeLand {
   /** 
-   * Whether to make all land layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Whether to make all landcover layers transparent (sets opacity to 0, layers still exist but are invisible).
    * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
    * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
    * enables dynamic control without rebuilding the style.
    */
   transparent?: boolean;
-  /** Whether to use a single override color for all land types */
+  /** Whether to use a single override color for all landcover types */
   useOverrideColor?: boolean;
-  /** Override color to use for all land types when useOverrideColor is true */
+  /** Override color to use for all landcover types when useOverrideColor is true */
+  overrideColor?: string;
+}
+
+/** Configuration for landuse layers (human-made areas: parks, residential, commercial, etc.) */
+export interface ThemeLanduse {
+  /** 
+   * Whether to make all landuse layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparent?: boolean;
+  /** Whether to use a single override color for all landuse types */
+  useOverrideColor?: boolean;
+  /** Override color to use for all landuse types when useOverrideColor is true */
   overrideColor?: string;
 }
 

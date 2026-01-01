@@ -10,13 +10,14 @@ export function createLandcoverLayers(theme: Theme): LayerSpecification[] {
   const c = theme.colors;
   const o = theme.opacities;
   const landConfig = theme.land;
+  const landuseConfig = theme.landuse;
   
   // If transparent is enabled, set opacity to 0 (layers still exist but are invisible)
   const landcoverOpacity = landConfig?.transparent ? 0 : o.landcover;
-  const landuseOpacity = landConfig?.transparent ? 0 : o.landuse;
+  const landuseOpacity = landuseConfig?.transparent ? 0 : o.landuse;
   
   const lcFill = landcoverFillColor(c, landConfig);
-  const luFill = landuseFillColor(c, landConfig);
+  const luFill = landuseFillColor(c, landuseConfig);
   
   // Filter out ice class from landcover if ice layers are enabled
   // This prevents duplicate/conflicting ice rendering
@@ -62,13 +63,14 @@ export function createUSLandLayers(theme: Theme): LayerSpecification[] {
   const c = theme.colors;
   const o = theme.opacities;
   const landConfig = theme.land;
+  const landuseConfig = theme.landuse;
   
   // If transparent is enabled, set opacity to 0 (layers still exist but are invisible)
   const landcoverOpacity = landConfig?.transparent ? 0 : o.landcover;
-  const landuseOpacity = landConfig?.transparent ? 0 : o.landuse;
+  const landuseOpacity = landuseConfig?.transparent ? 0 : o.landuse;
   
   const lcFill = landcoverFillColor(c, landConfig);
-  const luFill = landuseFillColor(c, landConfig);
+  const luFill = landuseFillColor(c, landuseConfig);
   
   // Filter out ice class from landcover if ice layers are enabled
   const excludeIceFilter = theme.ice?.enabled 

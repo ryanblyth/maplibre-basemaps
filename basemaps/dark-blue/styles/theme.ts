@@ -666,16 +666,34 @@ export const darkBlueBuildings = {
 
 export const darkBlueLand = {
   /** 
-   * Whether to make all land layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Whether to make all landcover layers transparent (sets opacity to 0, layers still exist but are invisible).
    * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
    * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
    * enables dynamic control without rebuilding the style.
    */
-  transparent: false,  // Set to true to make all landcover/landuse transparent (opacity 0)
-  /** Whether to use a single override color for all land types */
-  useOverrideColor: false,  // Set to true to use overrideColor for all land types
-  /** Override color to use for all land types when useOverrideColor is true */
-  overrideColor: "#0f141b",  // Default land color - used when useOverrideColor is true (matches land.default)
+  transparent: false,  // Set to true to make all landcover transparent (opacity 0)
+  /** Whether to use a single override color for all landcover types */
+  useOverrideColor: false,  // Set to true to use overrideColor for all landcover types
+  /** Override color to use for all landcover types when useOverrideColor is true */
+  overrideColor: "#0f141b",  // Default landcover color - used when useOverrideColor is true (matches land.default)
+};
+
+// ============================================================================
+// LANDUSE CONFIGURATION
+// ============================================================================
+
+export const darkBlueLanduse = {
+  /** 
+   * Whether to make all landuse layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparent: false,  // Set to true to make all landuse transparent (opacity 0)
+  /** Whether to use a single override color for all landuse types */
+  useOverrideColor: false,  // Set to true to use overrideColor for all landuse types
+  /** Override color to use for all landuse types when useOverrideColor is true */
+  overrideColor: "#0e131a",  // Default landuse color - used when useOverrideColor is true (matches landuse.default)
 };
 
 // ============================================================================
@@ -698,4 +716,5 @@ export const darkBlueTheme: Theme = {
   boundary: darkBlueBoundary,
   buildings: darkBlueBuildings,
   land: darkBlueLand,
+  landuse: darkBlueLanduse,
 };
