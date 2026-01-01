@@ -11,7 +11,7 @@ export function createLandcoverLayers(theme: Theme): LayerSpecification[] {
   const o = theme.opacities;
   const landConfig = theme.land;
   
-  // If transparent is enabled, set opacity to 0 (effectively hides land)
+  // If transparent is enabled, set opacity to 0 (layers still exist but are invisible)
   const landcoverOpacity = landConfig?.transparent ? 0 : o.landcover;
   const landuseOpacity = landConfig?.transparent ? 0 : o.landuse;
   
@@ -63,7 +63,7 @@ export function createUSLandLayers(theme: Theme): LayerSpecification[] {
   const o = theme.opacities;
   const landConfig = theme.land;
   
-  // If transparent is enabled, set opacity to 0 (effectively hides land)
+  // If transparent is enabled, set opacity to 0 (layers still exist but are invisible)
   const landcoverOpacity = landConfig?.transparent ? 0 : o.landcover;
   const landuseOpacity = landConfig?.transparent ? 0 : o.landuse;
   

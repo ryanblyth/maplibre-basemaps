@@ -662,7 +662,12 @@ export interface Theme {
 
 /** Configuration for land layers (landcover and landuse) */
 export interface ThemeLand {
-  /** Whether to make all land layers transparent (effectively hides them) */
+  /** 
+   * Whether to make all land layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
   transparent?: boolean;
   /** Whether to use a single override color for all land types */
   useOverrideColor?: boolean;
