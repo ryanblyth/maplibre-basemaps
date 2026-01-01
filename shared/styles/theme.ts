@@ -129,6 +129,15 @@ export interface ThemeColors {
   building: {
     fill: string;
     outline: string;
+    // Height-based building colors (buildings don't have class property)
+    // Colors vary by building height (render_height)
+    short?: string;      // Short buildings (0-10m)
+    medium?: string;     // Medium buildings (10-50m)
+    tall?: string;       // Tall buildings (50-150m)
+    skyscraper?: string; // Skyscrapers (150-300m)
+    supertall?: string;  // Supertall buildings (300-600m)
+    megatall?: string;   // Megatall buildings (600m+)
+    default?: string;    // Default building color
   };
   label: {
     place: {
@@ -641,6 +650,24 @@ export interface Theme {
   grid?: ThemeGrid;
   /** Boundary configuration - optional, defaults to all enabled */
   boundary?: ThemeBoundary;
+  /** Building configuration - optional */
+  buildings?: ThemeBuildings;
+}
+
+// ============================================================================
+// BUILDING CONFIGURATION
+// ============================================================================
+
+/** Configuration for building layers */
+export interface ThemeBuildings {
+  /** Whether to show buildings at all */
+  enabled?: boolean;
+  /** Minimum zoom level to show buildings */
+  minZoom?: number;
+  /** Maximum zoom level to show buildings (fades out after this) */
+  maxZoom?: number;
+  /** Zoom level where height-based colors start (before this, uses default color) */
+  heightColorsMinZoom?: number;
 }
 
 // ============================================================================

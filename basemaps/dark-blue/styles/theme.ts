@@ -181,6 +181,15 @@ export const darkBlueColors: ThemeColors = {
   building: {
     fill: "#151a22",
     outline: "#0f141b",
+    // Height-based building colors (buildings don't have class property)
+    // Colors vary by building height (render_height) - subtle gradient from dark to slightly lighter
+    short: "#151a22",      // Dark grey - short buildings (0-10m)
+    medium: "#181d25",     // Slightly lighter grey - medium buildings (10-50m)
+    tall: "#1b2028",       // Medium grey - tall buildings (50-150m)
+    skyscraper: "#1e232b", // Lighter grey - skyscrapers (150-300m)
+    supertall: "#21262e",  // Even lighter grey - supertall buildings (300-600m)
+    megatall: "#242930",   // Lightest grey - megatall buildings (600m+)
+    default: "#151a22",    // Default building color (matches short)
   },
   
   // Labels
@@ -637,6 +646,21 @@ export const darkBlueBoundary = {
 };
 
 // ============================================================================
+// BUILDING CONFIGURATION
+// ============================================================================
+
+export const darkBlueBuildings = {
+  /** Whether to show buildings at all */
+  enabled: true,  // Set to false to hide all buildings
+  /** Minimum zoom level to show buildings */
+  minZoom: 13,  // Buildings start appearing at zoom 13 (PMTiles data availability)
+  /** Maximum zoom level to show buildings (fades out after this) */
+  maxZoom: undefined,  // No maximum zoom (buildings show at all zoom levels)
+  /** Zoom level where height-based colors start (before this, uses default color) */
+  heightColorsMinZoom: 14,  // Height-based colors start at zoom 14 (height data available from z14+), default color before that
+};
+
+// ============================================================================
 // COMPLETE THEME
 // ============================================================================
 
@@ -654,4 +678,5 @@ export const darkBlueTheme: Theme = {
   ice: darkBlueIce,
   grid: darkBlueGrid,
   boundary: darkBlueBoundary,
+  buildings: darkBlueBuildings,
 };

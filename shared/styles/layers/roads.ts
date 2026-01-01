@@ -6,7 +6,8 @@ import type { LayerSpecification } from "maplibre-gl";
 import type { Theme } from "../theme.js";
 import { 
   roadColorExpr, 
-  roadColorWithTertiaryExpr, 
+  roadColorWithTertiaryExpr,
+  buildingFillColor, 
   tunnelColorExpr, 
   bridgeColorExpr, 
   filters,
@@ -67,7 +68,59 @@ export function createUSRoadLayers(theme: Theme): LayerSpecification[] {
   const bridgeWidth = getRoadWidthExpr(bridgeWidths, theme);
   const casingWidth = getRoadCasingWidthExpr(w.roadCasing, theme);
   
-  return [
+  // Building configuration
+  const buildingConfig = theme.buildings;
+  const buildingMinZoom = buildingConfig?.minZoom ?? 6;
+  const buildingMaxZoom = buildingConfig?.maxZoom;
+  const buildingHeightColorsMinZoom = buildingConfig?.heightColorsMinZoom;
+  
+  /**
+   * Creates a building layer specification
+   * @param id - Layer ID
+   * @param minzoom - Minimum zoom level for the layer
+   * @returns Building layer specification or null if buildings are disabled
+   */
+  const createBuildingLayer = (id: string, minzoom: number): LayerSpecification | null => {
+    if (buildingConfig?.enabled === false) {
+      return null;
+    }
+    
+    const buildingPaint: any = {
+      "fill-color": buildingFillColor(c, buildingHeightColorsMinZoom),
+      "fill-outline-color": c.building.outline,
+      "fill-opacity": o.building
+    };
+    
+    // Add fade-out opacity if maxZoom is set
+    if (buildingMaxZoom !== undefined) {
+      buildingPaint["fill-opacity"] = [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        minzoom, o.building,
+        buildingMaxZoom, o.building,
+        buildingMaxZoom + 1, 0.0
+      ];
+    }
+    
+    const buildingLayer: any = {
+      id,
+      type: "fill",
+      source: "us_high",
+      "source-layer": "building",
+      minzoom,
+      paint: buildingPaint
+    };
+    
+    // Only add maxzoom if it's defined (JSON doesn't support undefined)
+    if (buildingMaxZoom !== undefined) {
+      buildingLayer.maxzoom = buildingMaxZoom + 1;
+    }
+    
+    return buildingLayer;
+  };
+  
+  const layers: LayerSpecification[] = [
     // Tunnel layers - inherit road widths and colors (can be overridden in theme)
     { id: "road-tunnel-casing", type: "line", source: "us_high", "source-layer": "transportation", minzoom: 6, filter: filters.tunnel, layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": tunnelCasingColor, "line-width": casingWidth, "line-opacity": o.tunnel } },
     { id: "road-tunnel", type: "line", source: "us_high", "source-layer": "transportation", minzoom: 6, filter: filters.tunnel, layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": tunnelColor, "line-width": tunnelWidth, "line-dasharray": [2, 2] } },
@@ -85,10 +138,15 @@ export function createUSRoadLayers(theme: Theme): LayerSpecification[] {
     
     // Railway
     { id: "railway", type: "line", source: "us_high", "source-layer": "transportation", minzoom: 6, filter: filters.railway, paint: { "line-color": c.railway, "line-width": zoomWidthExpr(w.railway) } },
-    
-    // Building
-    { id: "building", type: "fill", source: "us_high", "source-layer": "building", minzoom: 6, paint: { "fill-color": c.building.fill, "fill-outline-color": c.building.outline, "fill-opacity": o.building } },
   ];
+  
+  // Building layer (uses helper function to avoid duplication)
+  const buildingLayer = createBuildingLayer("building", buildingMinZoom);
+  if (buildingLayer) {
+    layers.push(buildingLayer);
+  }
+  
+  return layers;
 }
 
 export function createUSOverlayRoadLayers(theme: Theme): LayerSpecification[] {
@@ -109,10 +167,67 @@ export function createUSOverlayRoadLayers(theme: Theme): LayerSpecification[] {
   const casingWidth = getRoadCasingWidthExpr(w.roadCasing, theme);
   const bridgeCasingColor = c.road.bridge?.casing || c.road.casing;
   
-  return [
-    // US buildings (high zoom)
-    { id: "building-us", type: "fill", source: "us_high", "source-layer": "building", minzoom: 13, paint: { "fill-color": c.building.fill, "fill-outline-color": c.building.outline, "fill-opacity": o.building } },
+  // Building configuration
+  const buildingConfig = theme.buildings;
+  const buildingMaxZoom = buildingConfig?.maxZoom;
+  
+  /**
+   * Creates a building layer specification
+   * @param id - Layer ID
+   * @param minzoom - Minimum zoom level for the layer
+   * @returns Building layer specification or null if buildings are disabled
+   */
+  const createBuildingLayer = (id: string, minzoom: number): LayerSpecification | null => {
+    if (buildingConfig?.enabled === false) {
+      return null;
+    }
     
+    const buildingHeightColorsMinZoom = buildingConfig?.heightColorsMinZoom;
+    const buildingPaint: any = {
+      "fill-color": buildingFillColor(c, buildingHeightColorsMinZoom),
+      "fill-outline-color": c.building.outline,
+      "fill-opacity": o.building
+    };
+    
+    // Add fade-out opacity if maxZoom is set
+    if (buildingMaxZoom !== undefined) {
+      buildingPaint["fill-opacity"] = [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        minzoom, o.building,
+        buildingMaxZoom, o.building,
+        buildingMaxZoom + 1, 0.0
+      ];
+    }
+    
+    const buildingLayer: any = {
+      id,
+      type: "fill",
+      source: "us_high",
+      "source-layer": "building",
+      minzoom,
+      paint: buildingPaint
+    };
+    
+    // Only add maxzoom if it's defined (JSON doesn't support undefined)
+    if (buildingMaxZoom !== undefined) {
+      buildingLayer.maxzoom = buildingMaxZoom + 1;
+    }
+    
+    return buildingLayer;
+  };
+  
+  const layers: LayerSpecification[] = [];
+  
+  // US buildings (high zoom) - always starts at zoom 13 per PMTiles data availability
+  const buildingUsLayer = createBuildingLayer("building-us", 13);
+  if (buildingUsLayer) {
+    layers.push(buildingUsLayer);
+  }
+  
+  return [
+    ...layers,
     // US roads (excluding alleys, tunnels, bridges - they have their own layers)
     { id: "road-casing-us", type: "line", source: "us_high", "source-layer": "transportation", minzoom: 6, filter: filters.normalRoad, layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": c.road.casing, "line-width": casingWidth } },
     { id: "road-us", type: "line", source: "us_high", "source-layer": "transportation", minzoom: 6, filter: filters.normalRoad, layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": roadColor, "line-width": roadWidth } },

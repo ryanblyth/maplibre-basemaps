@@ -277,6 +277,47 @@ export function waterwayLineColor(c: ThemeColors): unknown {
 }
 
 // ============================================================================
+// BUILDING COLOR EXPRESSIONS
+// ============================================================================
+
+/** Creates building fill color expression */
+export function buildingFillColor(c: ThemeColors, heightColorsMinZoom?: number): unknown {
+  // Buildings don't have a "class" property in the source data
+  // They only have: colour, render_height, render_min_height, hide_3d
+  // Use height-based coloring (taller buildings = different colors)
+  // This creates a gradient based on render_height
+  
+  const heightBasedColor = [
+    "interpolate",
+    ["linear"],
+    ["coalesce", ["get", "render_height"], 0],  // Use render_height, default to 0 if missing
+    0, c.building.short ?? c.building.fill,           // Short buildings (0-10m)
+    10, c.building.medium ?? c.building.fill,         // Medium buildings (10-50m)
+    50, c.building.tall ?? c.building.fill,           // Tall buildings (50-150m)
+    150, c.building.skyscraper ?? c.building.fill,   // Skyscrapers (150-300m)
+    300, c.building.supertall ?? c.building.fill,     // Supertall buildings (300-600m)
+    600, c.building.megatall ?? c.building.fill       // Megatall buildings (600m+)
+  ];
+  
+  // If heightColorsMinZoom is set, use default color below that zoom, height-based above
+  // Must use "step" with zoom at top level (MapLibre requirement)
+  // Note: step uses "less than" for first output, "greater than or equal" for subsequent outputs
+  // Using heightColorsMinZoom - 0.001 ensures height-based colors start exactly at heightColorsMinZoom
+  if (heightColorsMinZoom !== undefined) {
+    const defaultColor = c.building.default ?? c.building.fill;
+    return [
+      "step",
+      ["zoom"],
+      defaultColor,  // Default color below heightColorsMinZoom
+      heightColorsMinZoom - 0.001, heightBasedColor  // Height-based colors at/above heightColorsMinZoom
+    ];
+  }
+  
+  // Otherwise always use height-based colors
+  return heightBasedColor;
+}
+
+// ============================================================================
 // COMMON FILTERS
 // ============================================================================
 

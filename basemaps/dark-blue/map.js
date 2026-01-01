@@ -519,3 +519,169 @@ function getRoadTypeName(roadClass) {
   };
   return roadTypes[roadClass] || roadClass || 'Unknown';
 }
+
+// Make map available globally for debugging
+if (typeof window !== 'undefined') {
+  window.map = map;
+  
+  // ============================================================================
+  // DEBUGGING UTILITIES
+  // ============================================================================
+  // These functions are available in the browser console for debugging:
+  // - checkBuildingProperties() - Check building properties at current zoom
+  // - checkBuildingZoomLevels() - Test building availability across zoom levels
+  
+  // Building height diagnostic function
+  window.checkBuildingProperties = function() {
+    console.group('🏢 Building Properties Diagnostic');
+    const currentZoom = map.getZoom();
+    console.log(`Current Zoom: ${currentZoom.toFixed(2)}`);
+    
+    // Get center of map
+    const center = map.getCenter();
+    const bbox = [
+      [map.getCanvas().width / 2 - 50, map.getCanvas().height / 2 - 50],
+      [map.getCanvas().width / 2 + 50, map.getCanvas().height / 2 + 50]
+    ];
+    
+    // Query rendered features
+    const renderedFeatures = map.queryRenderedFeatures(bbox, {
+      layers: ['building', 'building-us']
+    });
+    
+    console.log(`\n📊 Rendered Features: ${renderedFeatures.length}`);
+    if (renderedFeatures.length > 0) {
+      const sample = renderedFeatures[0];
+      console.log('Sample rendered feature:', {
+        layer: sample.layer?.id,
+        properties: sample.properties,
+        hasRenderHeight: 'render_height' in (sample.properties || {}),
+        renderHeight: sample.properties?.render_height,
+        allKeys: Object.keys(sample.properties || {})
+      });
+    }
+    
+    // Query source features
+    const sourceFeatures = map.querySourceFeatures('us_high', {
+      sourceLayer: 'building',
+      filter: undefined
+    });
+    
+    console.log(`\n📦 Source Features: ${sourceFeatures.length}`);
+    if (sourceFeatures.length > 0) {
+      const sample = sourceFeatures[0];
+      console.log('Sample source feature:', {
+        properties: sample.properties,
+        hasRenderHeight: 'render_height' in (sample.properties || {}),
+        renderHeight: sample.properties?.render_height,
+        allKeys: Object.keys(sample.properties || {})
+      });
+      
+      // Count how many have render_height
+      const withHeight = sourceFeatures.filter(f => 
+        f.properties && 'render_height' in f.properties && f.properties.render_height != null
+      );
+      const withoutHeight = sourceFeatures.length - withHeight.length;
+      
+      console.log(`\n📈 Height Data Availability:`);
+      console.log(`  With render_height: ${withHeight.length} (${(withHeight.length / sourceFeatures.length * 100).toFixed(1)}%)`);
+      console.log(`  Without render_height: ${withoutHeight} (${(withoutHeight / sourceFeatures.length * 100).toFixed(1)}%)`);
+      
+      if (withHeight.length > 0) {
+        const heights = withHeight.map(f => f.properties.render_height).filter(h => h != null);
+        console.log(`  Height range: ${Math.min(...heights)}m - ${Math.max(...heights)}m`);
+        console.log(`  Average height: ${(heights.reduce((a, b) => a + b, 0) / heights.length).toFixed(1)}m`);
+      }
+    }
+    
+    console.groupEnd();
+    console.log('\n💡 Tip: Zoom to different levels (10, 11, 12, 13, 14, 15) and run checkBuildingProperties() again to compare');
+  };
+  
+  // Check building availability across zoom levels
+  window.checkBuildingZoomLevels = async function() {
+    console.group('🏢 Building Availability Across Zoom Levels');
+    const center = map.getCenter();
+    const currentZoom = map.getZoom();
+    
+    // First, check if we're in an area with buildings - try a larger area
+    console.log('📍 Checking current location for buildings...');
+    const fullViewport = [
+      [0, 0],
+      [map.getCanvas().width, map.getCanvas().height]
+    ];
+    
+    const initialCheck = map.queryRenderedFeatures(fullViewport, {
+      layers: ['building', 'building-us']
+    });
+    console.log(`  Current viewport has ${initialCheck.length} rendered buildings`);
+    
+    if (initialCheck.length === 0) {
+      console.warn('⚠️ No buildings found in current view. Try navigating to a city area first.');
+      console.log('💡 Tip: Navigate to a city (e.g., New York, Los Angeles) and try again');
+      console.groupEnd();
+      return;
+    }
+    
+    // Test zoom levels from 6 to 15
+    const testZooms = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+    const results = [];
+    
+    console.log('\n🔍 Testing zoom levels...');
+    
+    for (const zoom of testZooms) {
+      map.setZoom(zoom);
+      map.setCenter(center);
+      
+      // Wait for map to update (longer wait for tile loading)
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Use full viewport for query
+      const viewport = [
+        [0, 0],
+        [map.getCanvas().width, map.getCanvas().height]
+      ];
+      
+      // Check rendered features
+      const renderedFeatures = map.queryRenderedFeatures(viewport, {
+        layers: ['building', 'building-us']
+      });
+      
+      // Check source features
+      const sourceFeatures = map.querySourceFeatures('us_high', {
+        sourceLayer: 'building',
+        filter: undefined
+      });
+      
+      const withHeight = sourceFeatures.filter(f => 
+        f.properties && 'render_height' in f.properties && f.properties.render_height != null
+      );
+      
+      results.push({
+        zoom,
+        rendered: renderedFeatures.length,
+        source: sourceFeatures.length,
+        withHeight: withHeight.length,
+        hasHeightData: withHeight.length > 0 && sourceFeatures.length > 0 ? (withHeight.length / sourceFeatures.length * 100).toFixed(1) + '%' : '0%'
+      });
+    }
+    
+    // Restore original zoom
+    map.setZoom(currentZoom);
+    map.setCenter(center);
+    
+    console.table(results);
+    console.log('\n📊 Summary:');
+    const firstRendered = results.find(r => r.rendered > 0);
+    const firstWithHeight = results.find(r => r.withHeight > 0);
+    console.log(`  First zoom with rendered buildings: ${firstRendered ? `z${firstRendered.zoom}` : 'none'}`);
+    console.log(`  First zoom with height data: ${firstWithHeight ? `z${firstWithHeight.zoom}` : 'none'}`);
+    
+    if (firstRendered && firstWithHeight && firstRendered.zoom !== firstWithHeight.zoom) {
+      console.log(`\n💡 Default color will show from z${firstRendered.zoom} to z${firstWithHeight.zoom - 1}`);
+      console.log(`   Height-based colors will show from z${firstWithHeight.zoom}+`);
+    }
+    
+    console.groupEnd();
+  };
+}
