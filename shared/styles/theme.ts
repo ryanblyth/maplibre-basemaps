@@ -652,6 +652,22 @@ export interface Theme {
   boundary?: ThemeBoundary;
   /** Building configuration - optional */
   buildings?: ThemeBuildings;
+  /** Land configuration - optional, for controlling landcover/landuse visibility and colors */
+  land?: ThemeLand;
+}
+
+// ============================================================================
+// LAND CONFIGURATION
+// ============================================================================
+
+/** Configuration for land layers (landcover and landuse) */
+export interface ThemeLand {
+  /** Whether to make all land layers transparent (effectively hides them) */
+  transparent?: boolean;
+  /** Whether to use a single override color for all land types */
+  useOverrideColor?: boolean;
+  /** Override color to use for all land types when useOverrideColor is true */
+  overrideColor?: string;
 }
 
 // ============================================================================

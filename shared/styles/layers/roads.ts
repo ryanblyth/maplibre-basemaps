@@ -6,7 +6,7 @@ import type { LayerSpecification } from "maplibre-gl";
 import type { Theme } from "../theme.js";
 import { 
   roadColorExpr, 
-  roadColorWithTertiaryExpr,
+  roadColorWithTertiaryExpr, 
   buildingFillColor, 
   tunnelColorExpr, 
   bridgeColorExpr, 

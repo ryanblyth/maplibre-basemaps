@@ -140,13 +140,18 @@ export function roadCasingWidthExprRealWorld(widths: RoadClassWidths, minZoom: n
 // ============================================================================
 
 /** Creates landcover fill color expression */
-export function landcoverFillColor(c: ThemeColors): unknown {
+export function landcoverFillColor(c: ThemeColors, landConfig?: { useOverrideColor?: boolean; overrideColor?: string }): unknown {
+  // If override color is enabled, use it for all land types
+  if (landConfig?.useOverrideColor && landConfig?.overrideColor) {
+    return landConfig.overrideColor;
+  }
+  
   return ["match", ["get", "class"], 
     "wood", c.land.wood, 
     "grass", c.land.grass, 
-    "scrub", c.land.scrub,
+    "scrub", c.land.scrub, 
     "scrubland", c.land.scrub,  // Alternative name for scrub
-    "cropland", c.land.cropland,
+    "cropland", c.land.cropland, 
     "farmland", c.land.farmland ?? c.land.cropland,  // Use farmland color if specified, otherwise cropland
     "rock", c.land.rock ?? c.land.scrub,  // Use rock color if specified, otherwise scrub
     "sand", c.land.sand ?? c.land.default,  // Use sand color if specified, otherwise default
@@ -156,13 +161,18 @@ export function landcoverFillColor(c: ThemeColors): unknown {
 }
 
 /** Creates landuse fill color expression */
-export function landuseFillColor(c: ThemeColors): unknown {
+export function landuseFillColor(c: ThemeColors, landConfig?: { useOverrideColor?: boolean; overrideColor?: string }): unknown {
+  // If override color is enabled, use it for all land types
+  if (landConfig?.useOverrideColor && landConfig?.overrideColor) {
+    return landConfig.overrideColor;
+  }
+  
   return ["match", ["get", "class"], 
     "park", c.landuse.park ?? c.landuse.default,
     "cemetery", c.landuse.cemetery, 
     "pitch", c.landuse.pitch, 
     "stadium", c.landuse.stadium ?? c.landuse.default,
-    "residential", c.landuse.residential,
+    "residential", c.landuse.residential, 
     "college", c.landuse.college ?? c.landuse.default,
     "commercial", c.landuse.commercial ?? c.landuse.default,
     "construction", c.landuse.construction ?? c.landuse.default,

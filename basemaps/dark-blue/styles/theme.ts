@@ -661,6 +661,19 @@ export const darkBlueBuildings = {
 };
 
 // ============================================================================
+// LAND CONFIGURATION
+// ============================================================================
+
+export const darkBlueLand = {
+  /** Whether to make all land layers transparent (effectively hides them) */
+  transparent: false,  // Set to true to hide all landcover/landuse
+  /** Whether to use a single override color for all land types */
+  useOverrideColor: false,  // Set to true to use overrideColor for all land types
+  /** Override color to use for all land types when useOverrideColor is true */
+  overrideColor: "#0f141b",  // Default land color - used when useOverrideColor is true (matches land.default)
+};
+
+// ============================================================================
 // COMPLETE THEME
 // ============================================================================
 
@@ -679,4 +692,5 @@ export const darkBlueTheme: Theme = {
   grid: darkBlueGrid,
   boundary: darkBlueBoundary,
   buildings: darkBlueBuildings,
+  land: darkBlueLand,
 };

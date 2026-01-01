@@ -22,7 +22,7 @@ export function createBoundaryLayers(theme: Theme): LayerSpecification[] {
   // Country boundaries (conditional)
   if (b?.country !== false) {
     layers.push(
-      { id: "boundary-country-world", type: "line", source: "world_low", "source-layer": "boundary", minzoom: 0, maxzoom: 6.5, filter: filters.countryBoundary, paint: { "line-color": c.boundary.country, "line-width": ["interpolate", ["linear"], ["zoom"], 0, w.country.z0 ?? 0.4, 6, w.country.z6 ?? 1.2], "line-opacity": opacityExpr(o.country) } },
+    { id: "boundary-country-world", type: "line", source: "world_low", "source-layer": "boundary", minzoom: 0, maxzoom: 6.5, filter: filters.countryBoundary, paint: { "line-color": c.boundary.country, "line-width": ["interpolate", ["linear"], ["zoom"], 0, w.country.z0 ?? 0.4, 6, w.country.z6 ?? 1.2], "line-opacity": opacityExpr(o.country) } },
       { id: "boundary-country-world-mid", type: "line", source: "world_mid", "source-layer": "boundary", minzoom: 6, filter: filters.countryBoundary, paint: { "line-color": c.boundary.country, "line-width": ["interpolate", ["linear"], ["zoom"], 6, w.country.z6 ?? 1.2, 10, w.country.z10 ?? 2.0], "line-opacity": opacityExpr(o.country) } }
     );
   }
@@ -30,7 +30,7 @@ export function createBoundaryLayers(theme: Theme): LayerSpecification[] {
   // Maritime boundaries (conditional)
   if (b?.maritime !== false) {
     layers.push(
-      { id: "boundary-maritime-world", type: "line", source: "world_low", "source-layer": "boundary", minzoom: 0, maxzoom: 6.5, filter: filters.maritimeBoundary, paint: { "line-color": c.boundary.country, "line-width": ["interpolate", ["linear"], ["zoom"], 0, w.country.z0 ?? 0.4, 6, w.country.z6 ?? 1.2], "line-opacity": o.maritime } },
+    { id: "boundary-maritime-world", type: "line", source: "world_low", "source-layer": "boundary", minzoom: 0, maxzoom: 6.5, filter: filters.maritimeBoundary, paint: { "line-color": c.boundary.country, "line-width": ["interpolate", ["linear"], ["zoom"], 0, w.country.z0 ?? 0.4, 6, w.country.z6 ?? 1.2], "line-opacity": o.maritime } },
       { id: "boundary-maritime-world-mid", type: "line", source: "world_mid", "source-layer": "boundary", minzoom: 6, filter: filters.maritimeBoundary, paint: { "line-color": c.boundary.country, "line-width": ["interpolate", ["linear"], ["zoom"], 6, w.country.z6 ?? 1.2, 10, w.country.z10 ?? 2.0], "line-opacity": o.maritime } }
     );
   }
@@ -38,7 +38,7 @@ export function createBoundaryLayers(theme: Theme): LayerSpecification[] {
   // State boundaries (conditional)
   if (b?.state !== false) {
     layers.push(
-      { id: "boundary-state-world", type: "line", source: "world_low", "source-layer": "boundary", minzoom: 3, maxzoom: 6.5, filter: filters.stateBoundary, paint: { "line-color": c.boundary.state, "line-width": ["interpolate", ["linear"], ["zoom"], 0, w.state.z0 ?? 0.2, 6, w.state.z6 ?? 0.8], "line-opacity": o.state } },
+    { id: "boundary-state-world", type: "line", source: "world_low", "source-layer": "boundary", minzoom: 3, maxzoom: 6.5, filter: filters.stateBoundary, paint: { "line-color": c.boundary.state, "line-width": ["interpolate", ["linear"], ["zoom"], 0, w.state.z0 ?? 0.2, 6, w.state.z6 ?? 0.8], "line-opacity": o.state } },
       { id: "boundary-state-world-mid", type: "line", source: "world_mid", "source-layer": "boundary", minzoom: 6, filter: filters.stateBoundary, paint: { "line-color": c.boundary.state, "line-width": ["interpolate", ["linear"], ["zoom"], 6, w.state.z6 ?? 0.8, 10, w.state.z10 ?? 1.2], "line-opacity": o.state } }
     );
   }
