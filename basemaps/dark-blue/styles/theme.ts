@@ -381,7 +381,7 @@ export const darkBlueShields = {
     // Custom shield appearance - subtle oval for dark theme
     background: "#1a2433",                // Dark blue background
     strokeColor: "#3a4a5c",               // Subtle blue-gray border
-    strokeWidth: 2,                       // Border thickness (adjustable - reduce if cutoff occurs)
+    strokeWidth: 1,                       // Border thickness (adjustable - reduce if cutoff occurs)
   },
 };
 

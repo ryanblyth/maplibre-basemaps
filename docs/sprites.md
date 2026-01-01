@@ -144,10 +144,12 @@ npx tsx scripts/rebuild-sprites.ts dark-blue
 ```
 
 This script:
-1. Extracts POI icons from `shared/assets/sprites/basemap.png`
+1. Reads POI icons from `shared/assets/sprites/icons/` (SVG files)
 2. Generates shields with colors from basemap's `theme.ts`
 3. Combines them into a new sprite sheet
 4. Outputs to `basemaps/{basemap-name}/sprites/`
+
+**Note:** This script does NOT modify `shared/assets/sprites/basemap.png` - it only reads from the icons directory.
 
 ### Build Shields Only
 
