@@ -84,84 +84,6 @@
       }
     },
     {
-      "id": "water-world",
-      "type": "fill",
-      "source": "world_low",
-      "source-layer": "water",
-      "minzoom": 0,
-      "maxzoom": 6.5,
-      "paint": {"fill-color": "#0a2846", "fill-opacity": 0.85}
-    },
-    {
-      "id": "water-world-mid",
-      "type": "fill",
-      "source": "world_mid",
-      "source-layer": "water",
-      "minzoom": 6,
-      "paint": {"fill-color": "#0a2846", "fill-opacity": 0.85}
-    },
-    {
-      "id": "waterway-world",
-      "type": "line",
-      "source": "world_low",
-      "source-layer": "waterway",
-      "minzoom": 0,
-      "maxzoom": 6.5,
-      "paint": {
-        "line-color": "#103457",
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          0, 0.1,
-          6, 0.4
-        ]
-      }
-    },
-    {
-      "id": "waterway-world-mid",
-      "type": "line",
-      "source": "world_mid",
-      "source-layer": "waterway",
-      "minzoom": 6,
-      "paint": {
-        "line-color": "#103457",
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          6, 0.4,
-          10, 0.8
-        ]
-      }
-    },
-    {
-      "id": "water-us",
-      "type": "fill",
-      "source": "us_high",
-      "source-layer": "water",
-      "minzoom": 6,
-      "paint": {"fill-color": "#0a2846", "fill-opacity": 0.85}
-    },
-    {
-      "id": "waterway-us",
-      "type": "line",
-      "source": "us_high",
-      "source-layer": "waterway",
-      "minzoom": 6,
-      "paint": {
-        "line-color": "#103457",
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          6, 0.4,
-          12, 0.6,
-          15, 1
-        ]
-      }
-    },
-    {
       "id": "boundary-country-world",
       "type": "line",
       "source": "world_low",
@@ -217,45 +139,6 @@
       }
     },
     {
-      "id": "boundary-maritime-world",
-      "type": "line",
-      "source": "world_low",
-      "source-layer": "boundary",
-      "minzoom": 0,
-      "maxzoom": 6.5,
-      "filter": ["all", ["==", ["get", "admin_level"], 2], ["==", ["get", "maritime"], 1]],
-      "paint": {
-        "line-color": "#3b82f6",
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          0, 0.4,
-          6, 1.2
-        ],
-        "line-opacity": 0
-      }
-    },
-    {
-      "id": "boundary-maritime-world-mid",
-      "type": "line",
-      "source": "world_mid",
-      "source-layer": "boundary",
-      "minzoom": 6,
-      "filter": ["all", ["==", ["get", "admin_level"], 2], ["==", ["get", "maritime"], 1]],
-      "paint": {
-        "line-color": "#3b82f6",
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          6, 1.2,
-          10, 2
-        ],
-        "line-opacity": 0
-      }
-    },
-    {
       "id": "boundary-state-world",
       "type": "line",
       "source": "world_low",
@@ -292,6 +175,134 @@
           10, 1.2
         ],
         "line-opacity": 0.6
+      }
+    },
+    {
+      "id": "boundary-country-us",
+      "type": "line",
+      "source": "us_high",
+      "source-layer": "boundary",
+      "minzoom": 6,
+      "filter": ["all", ["==", ["get", "admin_level"], 2], ["!=", ["get", "maritime"], 1]],
+      "paint": {
+        "line-color": "#3b82f6",
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          6, 1.2,
+          10, 2,
+          15, 2.5
+        ],
+        "line-opacity": 0.8
+      }
+    },
+    {
+      "id": "boundary-state-us",
+      "type": "line",
+      "source": "us_high",
+      "source-layer": "boundary",
+      "minzoom": 6,
+      "filter": ["==", ["get", "admin_level"], 4],
+      "paint": {
+        "line-color": "#284a7c",
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          6, 0.8,
+          8, 0.8,
+          12, 1.2,
+          15, 1.5
+        ],
+        "line-opacity": 0.6
+      }
+    },
+    {
+      "id": "water-world",
+      "type": "fill",
+      "source": "world_low",
+      "source-layer": "water",
+      "minzoom": 0,
+      "maxzoom": 6.5,
+      "paint": {
+        "fill-color": ["match", ["get", "class"], "ocean", "#0a2846", "sea", "#0b2a48", "lake", "#0c2c4a", "pond", "#0d2e4c", "river", "#103457", "reservoir", "#0c2c4a", "bay", "#0b2a48", "gulf", "#0b2a48", "#0a2846"],
+        "fill-opacity": 0.85
+      }
+    },
+    {
+      "id": "water-world-mid",
+      "type": "fill",
+      "source": "world_mid",
+      "source-layer": "water",
+      "minzoom": 6,
+      "paint": {
+        "fill-color": ["match", ["get", "class"], "ocean", "#0a2846", "sea", "#0b2a48", "lake", "#0c2c4a", "pond", "#0d2e4c", "river", "#103457", "reservoir", "#0c2c4a", "bay", "#0b2a48", "gulf", "#0b2a48", "#0a2846"],
+        "fill-opacity": 0.85
+      }
+    },
+    {
+      "id": "waterway-world",
+      "type": "line",
+      "source": "world_low",
+      "source-layer": "waterway",
+      "minzoom": 0,
+      "maxzoom": 6.5,
+      "paint": {
+        "line-color": ["match", ["get", "class"], "river", "#103457", "canal", "#0f3254", "stream", "#0e3052", "ditch", "#0d2e50", "drain", "#0d2e50", "#0a2846"],
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0, 0.1,
+          6, 0.4
+        ]
+      }
+    },
+    {
+      "id": "waterway-world-mid",
+      "type": "line",
+      "source": "world_mid",
+      "source-layer": "waterway",
+      "minzoom": 6,
+      "paint": {
+        "line-color": ["match", ["get", "class"], "river", "#103457", "canal", "#0f3254", "stream", "#0e3052", "ditch", "#0d2e50", "drain", "#0d2e50", "#0a2846"],
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          6, 0.4,
+          10, 0.8
+        ]
+      }
+    },
+    {
+      "id": "water-us",
+      "type": "fill",
+      "source": "us_high",
+      "source-layer": "water",
+      "minzoom": 6,
+      "paint": {
+        "fill-color": ["match", ["get", "class"], "ocean", "#0a2846", "sea", "#0b2a48", "lake", "#0c2c4a", "pond", "#0d2e4c", "river", "#103457", "reservoir", "#0c2c4a", "bay", "#0b2a48", "gulf", "#0b2a48", "#0a2846"],
+        "fill-opacity": 0.85
+      }
+    },
+    {
+      "id": "waterway-us",
+      "type": "line",
+      "source": "us_high",
+      "source-layer": "waterway",
+      "minzoom": 6,
+      "paint": {
+        "line-color": ["match", ["get", "class"], "river", "#103457", "canal", "#0f3254", "stream", "#0e3052", "ditch", "#0d2e50", "drain", "#0d2e50", "#0a2846"],
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          6, 0.4,
+          12, 0.6,
+          15, 1
+        ]
       }
     },
     {
@@ -501,67 +512,6 @@
       "paint": {
         "fill-color": ["match", ["get", "class"], "park", "#11161d", "cemetery", "#11161d", "pitch", "#121923", "stadium", "#121923", "residential", "#0e131a", "college", "#11171e", "commercial", "#121820", "construction", "#131510", "dam", "#0f161a", "farmland", "#141612", "grass", "#0f1618", "hospital", "#12161b", "industrial", "#111418", "military", "#0f1318", "neighbourhood", "#0f151a", "quarry", "#111510", "quarter", "#10161a", "railway", "#111418", "retail", "#12171d", "school", "#11171e", "suburb", "#0f151a", "theme_park", "#12161a", "track", "#0f1618", "university", "#11171e", "zoo", "#0f1618", "#0e131a"],
         "fill-opacity": 0.6
-      }
-    },
-    {
-      "id": "boundary-country-us",
-      "type": "line",
-      "source": "us_high",
-      "source-layer": "boundary",
-      "minzoom": 6,
-      "filter": ["all", ["==", ["get", "admin_level"], 2], ["!=", ["get", "maritime"], 1]],
-      "paint": {
-        "line-color": "#3b82f6",
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          6, 1.2,
-          10, 2,
-          15, 2.5
-        ],
-        "line-opacity": 0.8
-      }
-    },
-    {
-      "id": "boundary-maritime-us",
-      "type": "line",
-      "source": "us_high",
-      "source-layer": "boundary",
-      "minzoom": 6,
-      "filter": ["all", ["==", ["get", "admin_level"], 2], ["==", ["get", "maritime"], 1]],
-      "paint": {
-        "line-color": "#3b82f6",
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          6, 1.2,
-          10, 2,
-          15, 2.5
-        ],
-        "line-opacity": 0
-      }
-    },
-    {
-      "id": "boundary-state-us",
-      "type": "line",
-      "source": "us_high",
-      "source-layer": "boundary",
-      "minzoom": 6,
-      "filter": ["==", ["get", "admin_level"], 4],
-      "paint": {
-        "line-color": "#284a7c",
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          6, 0.8,
-          8, 0.8,
-          12, 1.2,
-          15, 1.5
-        ],
-        "line-opacity": 0.6
       }
     },
     {

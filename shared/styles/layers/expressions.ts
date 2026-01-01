@@ -246,6 +246,37 @@ export function bridgeColorExpr(c: ThemeColors): unknown {
 }
 
 // ============================================================================
+// WATER COLOR EXPRESSIONS
+// ============================================================================
+
+/** Creates water fill color expression */
+export function waterFillColor(c: ThemeColors): unknown {
+  return ["match", ["get", "class"], 
+    "ocean", c.water.ocean ?? c.water.fill,
+    "sea", c.water.sea ?? c.water.fill,
+    "lake", c.water.lake ?? c.water.fill,
+    "pond", c.water.pond ?? c.water.fill,
+    "river", c.water.river ?? c.water.fill,
+    "reservoir", c.water.reservoir ?? c.water.fill,
+    "bay", c.water.bay ?? c.water.fill,
+    "gulf", c.water.gulf ?? c.water.fill,
+    c.water.default ?? c.water.fill
+  ];
+}
+
+/** Creates waterway line color expression */
+export function waterwayLineColor(c: ThemeColors): unknown {
+  return ["match", ["get", "class"], 
+    "river", c.water.river ?? c.water.line,
+    "canal", c.water.canal ?? c.water.line,
+    "stream", c.water.stream ?? c.water.line,
+    "ditch", c.water.ditch ?? c.water.line,
+    "drain", c.water.drain ?? c.water.line,
+    c.water.default ?? c.water.line
+  ];
+}
+
+// ============================================================================
 // COMMON FILTERS
 // ============================================================================
 

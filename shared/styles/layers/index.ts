@@ -62,20 +62,28 @@ import { createBaseStyle } from "../baseStyle.js";
  * @returns Array of LayerSpecification objects
  */
 export function createAllLayers(theme: Theme): LayerSpecification[] {
+  // If hideOverWater is enabled, render boundaries before water so water covers them
+  // Otherwise, render boundaries after water so they're visible on top
+  const hideOverWater = theme.boundary?.hideOverWater === true;
+  
   return [
     ...createBackgroundLayers(theme),
     ...createLandcoverLayers(theme),
+    // Render boundaries before water if hideOverWater is enabled
+    ...(hideOverWater ? createBoundaryLayers(theme) : []),
+    ...(hideOverWater ? createUSBoundaryLayers(theme) : []),
     ...createWaterLayers(theme),
     ...createUSWaterLayers(theme),
     ...createBathymetryLayers(theme),
     ...createContourLayers(theme),
-    ...createBoundaryLayers(theme),
+    // Render boundaries after water if hideOverWater is disabled
+    ...(hideOverWater ? [] : createBoundaryLayers(theme)),
     ...createIceLayers(theme),  // Render ice after boundaries so boundaries don't show through
     ...createGridLayers(theme),  // Grid lines render on top of all features
     ...createWorldRoadLayers(theme),
     ...createUSRoadLayers(theme),
     ...createUSLandLayers(theme),
-    ...createUSBoundaryLayers(theme),
+    ...(hideOverWater ? [] : createUSBoundaryLayers(theme)),
     ...createUSOverlayRoadLayers(theme),
     ...createRoadLabelLayers(theme),
     ...createHighwayShieldLayers(theme),

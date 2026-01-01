@@ -70,6 +70,20 @@ export interface ThemeColors {
     line: string;
     labelColor: string;
     labelHalo: string;
+    // Optional water class colors (if source data includes class property)
+    ocean?: string;
+    sea?: string;
+    lake?: string;
+    river?: string;
+    canal?: string;
+    stream?: string;
+    ditch?: string;
+    drain?: string;
+    bay?: string;
+    gulf?: string;
+    reservoir?: string;
+    pond?: string;
+    default?: string;
   };
   boundary: {
     country: string;
@@ -625,4 +639,22 @@ export interface Theme {
   ice?: ThemeIce;
   /** Grid lines configuration - optional, defaults to disabled */
   grid?: ThemeGrid;
+  /** Boundary configuration - optional, defaults to all enabled */
+  boundary?: ThemeBoundary;
+}
+
+// ============================================================================
+// BOUNDARY CONFIGURATION
+// ============================================================================
+
+/** Configuration for boundary layers */
+export interface ThemeBoundary {
+  /** Whether to show country boundaries */
+  country?: boolean;
+  /** Whether to show state boundaries */
+  state?: boolean;
+  /** Whether to show maritime boundaries */
+  maritime?: boolean;
+  /** Whether to hide boundaries over water areas (only show on land) */
+  hideOverWater?: boolean;
 }

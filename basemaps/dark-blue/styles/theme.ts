@@ -106,6 +106,20 @@ export const darkBlueColors: ThemeColors = {
     line: "#103457",
     labelColor: "#5b8db8",
     labelHalo: "#0a2846",
+    // Water class colors - subtle variations of the base water color
+    ocean: "#0a2846",      // Base dark blue - ocean (matches fill)
+    sea: "#0b2a48",       // Slightly lighter blue - sea
+    lake: "#0c2c4a",      // Slightly lighter blue - lake
+    pond: "#0d2e4c",      // Slightly lighter blue - pond
+    river: "#103457",     // Matches line color - river
+    canal: "#0f3254",     // Slightly lighter than river - canal
+    stream: "#0e3052",    // Slightly lighter than river - stream
+    ditch: "#0d2e50",     // Slightly lighter than river - ditch
+    drain: "#0d2e50",     // Same as ditch - drain
+    bay: "#0b2a48",       // Same as sea - bay
+    gulf: "#0b2a48",      // Same as sea - gulf
+    reservoir: "#0c2c4a", // Same as lake - reservoir
+    default: "#0a2846",   // Default water color (matches fill)
   },
   
   // Boundaries
@@ -608,6 +622,21 @@ export const darkBlueGrid = {
 };
 
 // ============================================================================
+// BOUNDARY CONFIGURATION
+// ============================================================================
+
+export const darkBlueBoundary = {
+  /** Whether to show country boundaries */
+  country: true,  // Set to false to hide country boundaries
+  /** Whether to show state boundaries */
+  state: true,  // Set to false to hide state boundaries
+  /** Whether to show maritime boundaries */
+  maritime: false,  // Set to false to hide maritime boundaries
+  /** Whether to hide boundaries over water areas (only show on land) */
+  hideOverWater: true,  // Set to true to hide boundaries over water
+};
+
+// ============================================================================
 // COMPLETE THEME
 // ============================================================================
 
@@ -624,4 +653,5 @@ export const darkBlueTheme: Theme = {
   contours: darkBlueContours,
   ice: darkBlueIce,
   grid: darkBlueGrid,
+  boundary: darkBlueBoundary,
 };
