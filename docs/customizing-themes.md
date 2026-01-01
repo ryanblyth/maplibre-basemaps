@@ -20,6 +20,7 @@ export const myTheme: Theme = {
   ice: myIce,              // Glaciers, ice sheets, and ice shelves (optional)
   contours: myContours,   // Topographic contours (optional)
   grid: myGrid,           // Latitude and longitude grid lines (optional)
+  land: myLand,           // Land layer configuration (optional)
 };
 ```
 
@@ -57,6 +58,45 @@ colors: {
   },
   // ...
 }
+```
+
+#### Land Configuration
+
+Land layers (landcover and landuse) can be configured separately in the `land` section of the theme:
+
+```typescript
+land: {
+  /** 
+   * Whether to make all land layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparent: false,  // Set to true to make all landcover/landuse transparent (opacity 0)
+  
+  /** Whether to use a single override color for all land types */
+  useOverrideColor: false,  // Set to true to use overrideColor for all land types
+  
+  /** Override color to use for all land types when useOverrideColor is true */
+  overrideColor: "#0f141b",  // Default land color - used when useOverrideColor is true (matches land.default)
+}
+```
+
+**Options:**
+- `transparent: true` - Makes all land layers invisible (opacity 0) while keeping them in the style for runtime toggling
+- `useOverrideColor: true` - Uses a single color for all land types instead of class-based colors
+- `overrideColor` - The color to use when `useOverrideColor` is enabled
+
+**Runtime Control:**
+Since layers remain in the style when transparent, you can toggle them at runtime:
+```javascript
+// Hide land
+map.setPaintProperty('landcover-world', 'fill-opacity', 0);
+map.setPaintProperty('landuse-world', 'fill-opacity', 0);
+
+// Show land
+map.setPaintProperty('landcover-world', 'fill-opacity', 0.6);
+map.setPaintProperty('landuse-world', 'fill-opacity', 0.6);
 ```
 
 ### Water
