@@ -656,6 +656,8 @@ export interface Theme {
   land?: ThemeLand;
   /** Landuse configuration - optional, for controlling landuse visibility and colors */
   landuse?: ThemeLanduse;
+  /** Water configuration - optional, for controlling water visibility and colors */
+  water?: ThemeWater;
 }
 
 // ============================================================================
@@ -690,6 +692,32 @@ export interface ThemeLanduse {
   useOverrideColor?: boolean;
   /** Override color to use for all landuse types when useOverrideColor is true */
   overrideColor?: string;
+}
+
+/** Configuration for water layers (oceans, lakes, rivers, waterways, etc.) */
+export interface ThemeWater {
+  /** 
+   * Whether to make all water fill layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparent?: boolean;
+  /** 
+   * Whether to make all waterway (line) layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparentWaterway?: boolean;
+  /** Whether to use a single override color for all water types */
+  useOverrideColor?: boolean;
+  /** Override color to use for all water types when useOverrideColor is true */
+  overrideColor?: string;
+  /** Whether to use a single override color for all waterway (line) types */
+  useOverrideColorWaterway?: boolean;
+  /** Override color to use for all waterway types when useOverrideColorWaterway is true */
+  overrideColorWaterway?: string;
 }
 
 // ============================================================================

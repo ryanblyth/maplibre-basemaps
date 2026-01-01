@@ -697,6 +697,35 @@ export const darkBlueLanduse = {
 };
 
 // ============================================================================
+// WATER CONFIGURATION
+// ============================================================================
+
+export const darkBlueWater = {
+  /** 
+   * Whether to make all water fill layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparent: false,  // Set to true to make all water fills transparent (opacity 0)
+  /** 
+   * Whether to make all waterway (line) layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparentWaterway: false,  // Set to true to make all waterways transparent (opacity 0)
+  /** Whether to use a single override color for all water fill types */
+  useOverrideColor: false,  // Set to true to use overrideColor for all water fill types
+  /** Override color to use for all water fill types when useOverrideColor is true */
+  overrideColor: "#0a2846",  // Default water fill color - used when useOverrideColor is true (matches water.fill)
+  /** Whether to use a single override color for all waterway (line) types */
+  useOverrideColorWaterway: false,  // Set to true to use overrideColorWaterway for all waterway types
+  /** Override color to use for all waterway types when useOverrideColorWaterway is true */
+  overrideColorWaterway: "#103457",  // Default waterway line color - used when useOverrideColorWaterway is true (matches water.line)
+};
+
+// ============================================================================
 // COMPLETE THEME
 // ============================================================================
 
@@ -717,4 +746,5 @@ export const darkBlueTheme: Theme = {
   buildings: darkBlueBuildings,
   land: darkBlueLand,
   landuse: darkBlueLanduse,
+  water: darkBlueWater,
 };

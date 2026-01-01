@@ -250,6 +250,7 @@
       "maxzoom": 6.5,
       "paint": {
         "line-color": ["match", ["get", "class"], "river", "#103457", "canal", "#0f3254", "stream", "#0e3052", "ditch", "#0d2e50", "drain", "#0d2e50", "#0a2846"],
+        "line-opacity": 1,
         "line-width": [
           "interpolate",
           ["linear"],
@@ -267,6 +268,7 @@
       "minzoom": 6,
       "paint": {
         "line-color": ["match", ["get", "class"], "river", "#103457", "canal", "#0f3254", "stream", "#0e3052", "ditch", "#0d2e50", "drain", "#0d2e50", "#0a2846"],
+        "line-opacity": 1,
         "line-width": [
           "interpolate",
           ["linear"],
@@ -295,6 +297,7 @@
       "minzoom": 6,
       "paint": {
         "line-color": ["match", ["get", "class"], "river", "#103457", "canal", "#0f3254", "stream", "#0e3052", "ditch", "#0d2e50", "drain", "#0d2e50", "#0a2846"],
+        "line-opacity": 1,
         "line-width": [
           "interpolate",
           ["linear"],

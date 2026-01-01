@@ -260,7 +260,12 @@ export function bridgeColorExpr(c: ThemeColors): unknown {
 // ============================================================================
 
 /** Creates water fill color expression */
-export function waterFillColor(c: ThemeColors): unknown {
+export function waterFillColor(c: ThemeColors, waterConfig?: { useOverrideColor?: boolean; overrideColor?: string }): unknown {
+  // If override color is enabled, use it for all water types
+  if (waterConfig?.useOverrideColor && waterConfig?.overrideColor) {
+    return waterConfig.overrideColor;
+  }
+  
   return ["match", ["get", "class"], 
     "ocean", c.water.ocean ?? c.water.fill,
     "sea", c.water.sea ?? c.water.fill,
@@ -275,7 +280,12 @@ export function waterFillColor(c: ThemeColors): unknown {
 }
 
 /** Creates waterway line color expression */
-export function waterwayLineColor(c: ThemeColors): unknown {
+export function waterwayLineColor(c: ThemeColors, waterConfig?: { useOverrideColorWaterway?: boolean; overrideColorWaterway?: string }): unknown {
+  // If override color is enabled, use it for all waterway types
+  if (waterConfig?.useOverrideColorWaterway && waterConfig?.overrideColorWaterway) {
+    return waterConfig.overrideColorWaterway;
+  }
+  
   return ["match", ["get", "class"], 
     "river", c.water.river ?? c.water.line,
     "canal", c.water.canal ?? c.water.line,
