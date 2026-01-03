@@ -174,6 +174,23 @@ async function buildSpriteSheet(pixelRatio: number, basemapShields: any) {
     maxY = Math.max(maxY, logicalY + logicalHeight);
   }
   
+  // Remove any existing shield entries from JSON to prevent duplicates
+  for (const shield of shields) {
+    if (spriteJson[shield.name]) {
+      console.log(`  Removing existing ${shield.name} entry to prevent duplicates`);
+      delete spriteJson[shield.name];
+    }
+  }
+  
+  // Recalculate maxY after removing shields (in case shields were at the end)
+  maxY = 0;
+  for (const sprite of Object.values(spriteJson)) {
+    const spriteRatio = sprite.pixelRatio || 1;
+    const logicalY = sprite.y / spriteRatio;
+    const logicalHeight = sprite.height / spriteRatio;
+    maxY = Math.max(maxY, logicalY + logicalHeight);
+  }
+  
   // Add shield definitions (in physical pixels for this ratio)
   let currentY = Math.ceil(maxY * pixelRatio);
   for (const shield of shields) {
@@ -257,7 +274,24 @@ async function buildSpriteSheet(pixelRatio: number, basemapShields: any) {
   const existingHeight = metadata?.height || 0;
   
   if (existsSync(pngPath)) {
-    // Extend existing sprite
+    // Check if shields already exist in the PNG by checking if height matches expected shield area
+    // If shields are already at the end, we need to crop them out first
+    const expectedShieldArea = Math.ceil(maxY * pixelRatio);
+    
+    // If the existing height is greater than expected (meaning shields might already be there),
+    // crop the image to remove the shield area before adding new ones
+    let baseImage = sharp(pngPath);
+    if (existingHeight > expectedShieldArea) {
+      console.log(`  Cropping existing sprite to remove old shields (${existingHeight}px → ${expectedShieldArea}px)`);
+      baseImage = baseImage.extract({
+        left: 0,
+        top: 0,
+        width: spriteWidth,
+        height: expectedShieldArea,
+      });
+    }
+    
+    // Extend existing sprite with new shields
     await sharp({
       create: {
         width: spriteWidth,
@@ -267,7 +301,7 @@ async function buildSpriteSheet(pixelRatio: number, basemapShields: any) {
       },
     })
       .composite([
-        { input: pngPath, left: 0, top: 0 },
+        { input: await baseImage.toBuffer(), left: 0, top: 0 },
         ...composites,
       ])
       .png()
