@@ -16,8 +16,8 @@ Sprites are image atlases that contain icons used on the map. The system uses a 
     ├── shield-interstate-custom.svg
     ├── shield-ushighway-custom.svg
     └── shield-state-custom.svg
-  basemap.json                 # Shared POI icons (reference)
-  basemap.png                  # Shared POI icons (reference)
+  basemap.json                 # Shared POI icons ONLY (no shields)
+  basemap.png                  # Shared POI icons ONLY (no shields)
 
 /basemaps/{basemap-name}/sprites/   # Generated sprites (basemap-specific)
   ├── basemap.json             # Contains POI icons + shields
