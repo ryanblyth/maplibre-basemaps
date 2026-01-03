@@ -17,9 +17,13 @@ export const myTheme: Theme = {
   shields: myShields,     // Highway shields (optional)
   pois: myPOIs,          // Point of Interest config (optional)
   bathymetry: myBathymetry, // Ocean depth visualization (optional)
+  hillshade: myHillshade,   // Terrain shading from elevation data (optional)
   ice: myIce,              // Glaciers, ice sheets, and ice shelves (optional)
   contours: myContours,   // Topographic contours (optional)
   grid: myGrid,           // Latitude and longitude grid lines (optional)
+  land: myLand,           // Landcover layer configuration (optional)
+  landuse: myLanduse,     // Landuse layer configuration (optional)
+  water: myWater,         // Water layer configuration (optional)
 };
 ```
 
@@ -59,6 +63,84 @@ colors: {
 }
 ```
 
+#### Landcover Configuration
+
+Landcover layers (natural land types: wood, grass, scrub, cropland, etc.) can be configured in the `land` section of the theme:
+
+```typescript
+land: {
+  /** 
+   * Whether to make all landcover layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparent: false,  // Set to true to make all landcover transparent (opacity 0)
+  
+  /** Whether to use a single override color for all landcover types */
+  useOverrideColor: false,  // Set to true to use overrideColor for all landcover types
+  
+  /** Override color to use for all landcover types when useOverrideColor is true */
+  overrideColor: "#0f141b",  // Default landcover color - used when useOverrideColor is true (matches land.default)
+}
+```
+
+**Options:**
+- `transparent: true` - Makes all landcover layers invisible (opacity 0) while keeping them in the style for runtime toggling
+- `useOverrideColor: true` - Uses a single color for all landcover types instead of class-based colors
+- `overrideColor` - The color to use when `useOverrideColor` is enabled
+
+#### Landuse Configuration
+
+Landuse layers (parks, residential, commercial, etc.) can be configured separately in the `landuse` section of the theme:
+
+```typescript
+landuse: {
+  /** 
+   * Whether to make all landuse layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparent: false,  // Set to true to make all landuse transparent (opacity 0)
+  
+  /** Whether to use a single override color for all landuse types */
+  useOverrideColor: false,  // Set to true to use overrideColor for all landuse types
+  
+  /** Override color to use for all landuse types when useOverrideColor is true */
+  overrideColor: "#0e131a",  // Default landuse color - used when useOverrideColor is true (matches landuse.default)
+}
+```
+
+**Options:**
+- `transparent: true` - Makes all landuse layers invisible (opacity 0) while keeping them in the style for runtime toggling
+- `useOverrideColor: true` - Uses a single color for all landuse types instead of class-based colors
+- `overrideColor` - The color to use when `useOverrideColor` is enabled
+
+**Runtime Control:**
+Since layers remain in the style when transparent, you can toggle them at runtime:
+```javascript
+// Hide landcover
+map.setPaintProperty('landcover-world', 'fill-opacity', 0);
+map.setPaintProperty('landcover-world-mid', 'fill-opacity', 0);
+map.setPaintProperty('landcover-us', 'fill-opacity', 0);
+
+// Hide landuse
+map.setPaintProperty('landuse-world', 'fill-opacity', 0);
+map.setPaintProperty('landuse-world-mid', 'fill-opacity', 0);
+map.setPaintProperty('landuse-us', 'fill-opacity', 0);
+
+// Show landcover
+map.setPaintProperty('landcover-world', 'fill-opacity', 0.6);
+map.setPaintProperty('landcover-world-mid', 'fill-opacity', 0.6);
+map.setPaintProperty('landcover-us', 'fill-opacity', 0.6);
+
+// Show landuse
+map.setPaintProperty('landuse-world', 'fill-opacity', 0.6);
+map.setPaintProperty('landuse-world-mid', 'fill-opacity', 0.6);
+map.setPaintProperty('landuse-us', 'fill-opacity', 0.6);
+```
+
 ### Water
 
 ```typescript
@@ -68,9 +150,83 @@ colors: {
     line: "#103457",      // Waterway stroke
     labelColor: "#5b8db8", // Water label text
     labelHalo: "#0a2846", // Water label halo
+    // Optional water class colors (if source data includes class property)
+    ocean: "#0a2846",      // Ocean
+    sea: "#0b2a48",        // Sea
+    lake: "#0c2c4a",       // Lake
+    river: "#103457",      // River
+    // ... more water types
   },
   // ...
 }
+```
+
+#### Water Configuration
+
+Water layers (oceans, lakes, rivers, waterways, etc.) can be configured in the `water` section of the theme:
+
+```typescript
+water: {
+  /** 
+   * Whether to make all water fill layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparent: false,  // Set to true to make all water fills transparent (opacity 0)
+  
+  /** 
+   * Whether to make all waterway (line) layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparentWaterway: false,  // Set to true to make all waterways transparent (opacity 0)
+  
+  /** Whether to use a single override color for all water fill types */
+  useOverrideColor: false,  // Set to true to use overrideColor for all water fill types
+  
+  /** Override color to use for all water fill types when useOverrideColor is true */
+  overrideColor: "#0a2846",  // Default water fill color - used when useOverrideColor is true (matches water.fill)
+  
+  /** Whether to use a single override color for all waterway (line) types */
+  useOverrideColorWaterway: false,  // Set to true to use overrideColorWaterway for all waterway types
+  
+  /** Override color to use for all waterway types when useOverrideColorWaterway is true */
+  overrideColorWaterway: "#103457",  // Default waterway line color - used when useOverrideColorWaterway is true (matches water.line)
+}
+```
+
+**Options:**
+- `transparent: true` - Makes all water fill layers invisible (opacity 0) while keeping them in the style for runtime toggling
+- `transparentWaterway: true` - Makes all waterway (line) layers invisible (opacity 0) while keeping them in the style for runtime toggling
+- `useOverrideColor: true` - Uses a single color for all water fill types instead of class-based colors
+- `overrideColor` - The color to use for water fills when `useOverrideColor` is enabled
+- `useOverrideColorWaterway: true` - Uses a single color for all waterway (line) types instead of class-based colors
+- `overrideColorWaterway` - The color to use for waterways when `useOverrideColorWaterway` is enabled
+
+**Runtime Control:**
+Since layers remain in the style when transparent, you can toggle them at runtime:
+```javascript
+// Hide water fills
+map.setPaintProperty('water-world', 'fill-opacity', 0);
+map.setPaintProperty('water-world-mid', 'fill-opacity', 0);
+map.setPaintProperty('water-us', 'fill-opacity', 0);
+
+// Hide waterways
+map.setPaintProperty('waterway-world', 'line-opacity', 0);
+map.setPaintProperty('waterway-world-mid', 'line-opacity', 0);
+map.setPaintProperty('waterway-us', 'line-opacity', 0);
+
+// Show water fills
+map.setPaintProperty('water-world', 'fill-opacity', 0.85);
+map.setPaintProperty('water-world-mid', 'fill-opacity', 0.85);
+map.setPaintProperty('water-us', 'fill-opacity', 0.85);
+
+// Show waterways
+map.setPaintProperty('waterway-world', 'line-opacity', 1.0);
+map.setPaintProperty('waterway-world-mid', 'line-opacity', 1.0);
+map.setPaintProperty('waterway-us', 'line-opacity', 1.0);
 ```
 
 ### Bathymetry
@@ -106,6 +262,27 @@ bathymetry: {
   },
 }
 ```
+
+### Hillshade
+
+Hillshade (terrain shading from elevation data) is configured separately in the `hillshade` section of the theme. See [Hillshade Documentation](./hillshade.md) for complete details.
+
+```typescript
+hillshade: {
+  enabled: true,
+  minZoom: 0,
+  maxZoom: 12,
+  opacity: 0.5,                    // Controls intensity via exaggeration
+  illuminationDirection: 335,      // Light direction (0-360 degrees)
+  illuminationAnchor: "viewport",  // "map" or "viewport"
+  exaggeration: 0.5,               // Terrain relief intensity (0.0-1.0)
+  shadowColor: "#000000",          // Shadow areas
+  highlightColor: "#ffffff",       // Highlight areas
+  accentColor: "#000000",          // Mid-tones
+}
+```
+
+**Note:** Hillshade doesn't support direct opacity. Instead, opacity is simulated by scaling the exaggeration value (`effectiveExaggeration = exaggeration × opacity`).
 
 ### Ice
 

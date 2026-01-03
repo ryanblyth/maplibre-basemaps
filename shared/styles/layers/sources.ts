@@ -79,6 +79,26 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
     };
   }
   
+  // Only add hillshade source if enabled in theme
+  if (theme?.hillshade?.enabled) {
+    sources["world-hillshade"] = {
+      type: "raster-dem",
+      url: `pmtiles://${config.dataBaseUrl}/pmtiles/world_mtn_hillshade.pmtiles`,
+      minzoom: theme.hillshade.minZoom ?? 0,
+      maxzoom: theme.hillshade.maxZoom,
+    };
+  }
+  
+  // Only add aeroway source if enabled in theme
+  if (theme?.aeroway?.enabled) {
+    sources["aeroway-world"] = {
+      type: "vector",
+      url: `pmtiles://${config.dataBaseUrl}/pmtiles/aeroway-world.pmtiles`,
+      minzoom: 6,
+      maxzoom: 15,
+    };
+  }
+  
   return sources;
 }
 

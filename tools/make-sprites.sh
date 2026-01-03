@@ -2,6 +2,17 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+echo "⚠️  WARNING: This will rebuild shared sprite files in shared/assets/sprites/"
+echo "   These files are only needed if you've added/modified POI icons."
+echo "   Shield color changes do NOT require rebuilding shared sprites."
+echo ""
+read -p "Continue? (y/N) " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+  echo "Aborted."
+  exit 1
+fi
+
 mkdir -p shared/assets/sprites
 
 # Build SDF sprite (normal)

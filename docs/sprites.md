@@ -16,8 +16,8 @@ Sprites are image atlases that contain icons used on the map. The system uses a 
     ├── shield-interstate-custom.svg
     ├── shield-ushighway-custom.svg
     └── shield-state-custom.svg
-  basemap.json                 # Shared POI icons (reference)
-  basemap.png                  # Shared POI icons (reference)
+  basemap.json                 # Shared POI icons ONLY (no shields)
+  basemap.png                  # Shared POI icons ONLY (no shields)
 
 /basemaps/{basemap-name}/sprites/   # Generated sprites (basemap-specific)
   ├── basemap.json             # Contains POI icons + shields
@@ -144,10 +144,12 @@ npx tsx scripts/rebuild-sprites.ts dark-blue
 ```
 
 This script:
-1. Extracts POI icons from `shared/assets/sprites/basemap.png`
+1. Reads POI icons from `shared/assets/sprites/icons/` (SVG files)
 2. Generates shields with colors from basemap's `theme.ts`
 3. Combines them into a new sprite sheet
 4. Outputs to `basemaps/{basemap-name}/sprites/`
+
+**Note:** This script does NOT modify `shared/assets/sprites/basemap.png` - it only reads from the icons directory.
 
 ### Build Shields Only
 

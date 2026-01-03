@@ -58,21 +58,46 @@ export const darkBlueColors: ThemeColors = {
   
   // Land/terrain
   land: {
-    wood: "#0f141b",
-    grass: "#10161e",
-    scrub: "#10161e",
-    cropland: "#0f141b",
-    default: "#0f141b",
+    wood: "#0f1a1b",      // Dark green-brown - wood/forest
+    grass: "#0f1618",     // Dark green-grey - grass
+    scrub: "#12161a",     // Muted purple-grey - scrub
+    cropland: "#141612",   // Warm dark beige - cropland
+    farmland: "#141612",   // Warm dark beige - farmland (same as cropland)
+    rock: "#111418",      // Cool grey-blue - rock
+    sand: "#161510",      // Warm muted beige - sand
+    wetland: "#0e1418",   // Dark blue-green - wetland
+    default: "#0f141b",   // Neutral dark grey - default/unknown
   },
   
   // Landuse
   landuse: {
-    park: "#11161d",
-    cemetery: "#11161d",
-    pitch: "#121923",
-    stadium: "#121923",
-    residential: "#0e131a",
-    default: "#0e131a",
+    park: "#11161d",        // Dark blue-grey - park (matches existing)
+    cemetery: "#11161d",    // Dark blue-grey - cemetery (matches existing)
+    pitch: "#121923",       // Slightly lighter blue-grey - pitch (matches existing)
+    stadium: "#121923",     // Slightly lighter blue-grey - stadium (matches existing)
+    residential: "#0e131a", // Dark grey-blue - residential (matches existing)
+    // Additional landuse classes - subtle variations
+    college: "#11171e",     // Slightly green-tinted - college
+    commercial: "#121820",   // Cool grey-blue - commercial
+    construction: "#131510", // Warm dark grey - construction
+    dam: "#0f161a",         // Dark blue-grey - dam
+    farmland: "#141612",     // Warm dark beige - farmland (matches land.cropland)
+    grass: "#0f1618",       // Dark green-grey - grass (matches land.grass)
+    hospital: "#12161b",    // Slightly red-tinted grey - hospital
+    industrial: "#111418",  // Cool grey-blue - industrial
+    military: "#0f1318",    // Very dark grey-blue - military
+    neighbourhood: "#0f151a", // Neutral dark grey - neighbourhood
+    quarry: "#111510",     // Slightly green-tinted - quarry
+    quarter: "#10161a",     // Neutral dark grey - quarter
+    railway: "#111418",     // Cool grey-blue - railway
+    retail: "#12171d",      // Slightly warm grey - retail
+    school: "#11171e",      // Slightly green-tinted - school
+    suburb: "#0f151a",      // Neutral dark grey - suburb
+    theme_park: "#12161a",  // Muted grey - theme_park
+    track: "#0f1618",       // Dark green-grey - track
+    university: "#11171e",   // Slightly green-tinted - university
+    zoo: "#0f1618",         // Dark green-grey - zoo
+    default: "#0e131a",     // Neutral dark grey - default (matches existing)
   },
   
   // Water
@@ -81,6 +106,20 @@ export const darkBlueColors: ThemeColors = {
     line: "#103457",
     labelColor: "#5b8db8",
     labelHalo: "#0a2846",
+    // Water class colors - subtle variations of the base water color
+    ocean: "#0a2846",      // Base dark blue - ocean (matches fill)
+    sea: "#0b2a48",       // Slightly lighter blue - sea
+    lake: "#0c2c4a",      // Slightly lighter blue - lake
+    pond: "#0d2e4c",      // Slightly lighter blue - pond
+    river: "#103457",     // Matches line color - river
+    canal: "#0f3254",     // Slightly lighter than river - canal
+    stream: "#0e3052",    // Slightly lighter than river - stream
+    ditch: "#0d2e50",     // Slightly lighter than river - ditch
+    drain: "#0d2e50",     // Same as ditch - drain
+    bay: "#0b2a48",       // Same as sea - bay
+    gulf: "#0b2a48",      // Same as sea - gulf
+    reservoir: "#0c2c4a", // Same as lake - reservoir
+    default: "#0a2846",   // Default water color (matches fill)
   },
   
   // Boundaries
@@ -142,6 +181,15 @@ export const darkBlueColors: ThemeColors = {
   building: {
     fill: "#151a22",
     outline: "#0f141b",
+    // Height-based building colors (buildings don't have class property)
+    // Colors vary by building height (render_height) - subtle gradient from dark to slightly lighter
+    short: "#151a22",      // Dark grey - short buildings (0-10m)
+    medium: "#181d25",     // Slightly lighter grey - medium buildings (10-50m)
+    tall: "#1b2028",       // Medium grey - tall buildings (50-150m)
+    skyscraper: "#1e232b", // Lighter grey - skyscrapers (150-300m)
+    supertall: "#21262e",  // Even lighter grey - supertall buildings (300-600m)
+    megatall: "#242930",   // Lightest grey - megatall buildings (600m+)
+    default: "#151a22",    // Default building color (matches short)
   },
   
   // Labels
@@ -333,7 +381,7 @@ export const darkBlueShields = {
     // Custom shield appearance - subtle oval for dark theme
     background: "#1a2433",                // Dark blue background
     strokeColor: "#3a4a5c",               // Subtle blue-gray border
-    strokeWidth: 2,                       // Border thickness (adjustable - reduce if cutoff occurs)
+    strokeWidth: 1,                       // Border thickness (adjustable - reduce if cutoff occurs)
   },
 };
 
@@ -526,6 +574,42 @@ export const darkBlueIce = {
 };
 
 // ============================================================================
+// HILLSHADE CONFIGURATION
+// ============================================================================
+
+export const darkBlueHillshade = {
+  /** Whether to show hillshade at all */
+  enabled: false,
+  
+  /** Minimum zoom level to show hillshade */
+  minZoom: 0,
+  
+  /** Maximum zoom level to show hillshade (fades out after this) */
+  maxZoom: 12,
+  
+  /** Base opacity for hillshade (0.0 to 1.0) */
+  opacity: 0.5,
+  
+  /** Illumination direction (0-360 degrees, where 0 is north, 90 is east) */
+  illuminationDirection: 335,  // Northwest (typical for natural lighting)
+  
+  /** Illumination anchor - "map" (fixed to map) or "viewport" (fixed to viewport) */
+  illuminationAnchor: "viewport" as const,
+  
+  /** Exaggeration factor for terrain relief (0.0 to 1.0, higher = more dramatic) */
+  exaggeration: 0.5,
+  
+  /** Shadow color (darker areas) */
+  shadowColor: "#000000",
+  
+  /** Highlight color (lighter areas) */
+  highlightColor: "#ffffff",
+  
+  /** Accent color (mid-tones) */
+  accentColor: "#000000",
+};
+
+// ============================================================================
 // GRID CONFIGURATION
 // ============================================================================
 
@@ -583,6 +667,152 @@ export const darkBlueGrid = {
 };
 
 // ============================================================================
+// BOUNDARY CONFIGURATION
+// ============================================================================
+
+export const darkBlueBoundary = {
+  /** Whether to show country boundaries */
+  country: true,  // Set to false to hide country boundaries
+  /** Whether to show state boundaries */
+  state: true,  // Set to false to hide state boundaries
+  /** Whether to show maritime boundaries */
+  maritime: false,  // Set to false to hide maritime boundaries
+  /** Whether to hide boundaries over water areas (only show on land) */
+  hideOverWater: true,  // Set to true to hide boundaries over water
+};
+
+// ============================================================================
+// BUILDING CONFIGURATION
+// ============================================================================
+
+export const darkBlueBuildings = {
+  /** Whether to show buildings at all */
+  enabled: true,  // Set to false to hide all buildings
+  /** Minimum zoom level to show buildings */
+  minZoom: 13,  // Buildings start appearing at zoom 13 (PMTiles data availability)
+  /** Maximum zoom level to show buildings (fades out after this) */
+  maxZoom: undefined,  // No maximum zoom (buildings show at all zoom levels)
+  /** Zoom level where height-based colors start (before this, uses default color) */
+  heightColorsMinZoom: 14,  // Height-based colors start at zoom 14 (height data available from z14+), default color before that
+};
+
+// ============================================================================
+// LAND CONFIGURATION
+// ============================================================================
+
+export const darkBlueLand = {
+  /** 
+   * Whether to make all landcover layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparent: false,  // Set to true to make all landcover transparent (opacity 0)
+  /** Whether to use a single override color for all landcover types */
+  useOverrideColor: false,  // Set to true to use overrideColor for all landcover types
+  /** Override color to use for all landcover types when useOverrideColor is true */
+  overrideColor: "#0f141b",  // Default landcover color - used when useOverrideColor is true (matches land.default)
+};
+
+// ============================================================================
+// LANDUSE CONFIGURATION
+// ============================================================================
+
+export const darkBlueLanduse = {
+  /** 
+   * Whether to make all landuse layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparent: false,  // Set to true to make all landuse transparent (opacity 0)
+  /** Whether to use a single override color for all landuse types */
+  useOverrideColor: false,  // Set to true to use overrideColor for all landuse types
+  /** Override color to use for all landuse types when useOverrideColor is true */
+  overrideColor: "#0e131a",  // Default landuse color - used when useOverrideColor is true (matches landuse.default)
+};
+
+// ============================================================================
+// WATER CONFIGURATION
+// ============================================================================
+
+export const darkBlueWater = {
+  /** 
+   * Whether to make all water fill layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparent: false,  // Set to true to make all water fills transparent (opacity 0)
+  /** 
+   * Whether to make all waterway (line) layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparentWaterway: false,  // Set to true to make all waterways transparent (opacity 0)
+  /** Whether to use a single override color for all water fill types */
+  useOverrideColor: false,  // Set to true to use overrideColor for all water fill types
+  /** Override color to use for all water fill types when useOverrideColor is true */
+  overrideColor: "#0a2846",  // Default water fill color - used when useOverrideColor is true (matches water.fill)
+  /** Whether to use a single override color for all waterway (line) types */
+  useOverrideColorWaterway: false,  // Set to true to use overrideColorWaterway for all waterway types
+  /** Override color to use for all waterway types when useOverrideColorWaterway is true */
+  overrideColorWaterway: "#103457",  // Default waterway line color - used when useOverrideColorWaterway is true (matches water.line)
+};
+
+// ============================================================================
+// AEROWAY CONFIGURATION
+// ============================================================================
+
+export const darkBlueAeroway = {
+  /** Whether to show aeroway features at all */
+  enabled: false,
+  
+  /** Runway line styling */
+  runway: {
+    color: "#4a5568",        // Medium gray for runways
+    width: 0.5,              // Thin lines
+    opacity: 0.8,
+    majorLength: 2500,       // Minimum length (meters) for major runways shown at z6-7
+  },
+  
+  /** Apron polygon styling */
+  apron: {
+    fillColor: "#3a4455",    // Dark gray fill
+    fillOpacity: 0.3,         // Thin fill (semi-transparent)
+    outlineColor: "#4a5568",  // Medium gray outline
+    outlineWidth: 0.3,        // Thin outline
+  },
+  
+  /** Taxiway line styling */
+  taxiway: {
+    color: "#5a6578",        // Slightly lighter gray than runways
+    width: 0.4,              // Slightly thinner than runways
+    opacity: 0.7,
+  },
+  
+  /** Helipad point styling */
+  helipad: {
+    fillColor: "#5a6578",    // Medium gray fill
+    fillOpacity: 0.6,
+    outlineColor: "#6a7588", // Lighter gray outline
+    outlineWidth: 0.3,
+    size: 4,                 // Circle radius in pixels
+  },
+  
+  /** Airport label styling */
+  label: {
+    color: "#a8b8d0",        // Light blue-gray text (matches place labels)
+    haloColor: "#0b0f14",    // Dark halo for contrast
+    haloWidth: 0,
+    opacity: 0.9,
+    majorSize: { min: 10, max: 12 },      // Font size for major airports (z8-9)
+    detailedSize: { min: 10, max: 12 },   // Font size for detailed labels (z13+)
+  },
+};
+
+// ============================================================================
 // COMPLETE THEME
 // ============================================================================
 
@@ -598,5 +828,12 @@ export const darkBlueTheme: Theme = {
   bathymetry: darkBlueBathymetry,
   contours: darkBlueContours,
   ice: darkBlueIce,
+  hillshade: darkBlueHillshade,
   grid: darkBlueGrid,
+  boundary: darkBlueBoundary,
+  buildings: darkBlueBuildings,
+  land: darkBlueLand,
+  landuse: darkBlueLanduse,
+  water: darkBlueWater,
+  aeroway: darkBlueAeroway,
 };

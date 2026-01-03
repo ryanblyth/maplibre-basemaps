@@ -30,14 +30,39 @@ export interface ThemeColors {
     grass: string;
     scrub: string;
     cropland: string;
+    farmland?: string;  // Optional - maps to cropland if not specified
+    rock?: string;      // Optional - rocky areas
+    sand?: string;      // Optional - sandy areas
+    wetland?: string;   // Optional - wetland areas
     default: string;
   };
   landuse: {
-    park: string;
+    park?: string;
     cemetery: string;
     pitch: string;
-    stadium: string;
+    stadium?: string;
     residential: string;
+    // Additional landuse classes found in source data
+    college?: string;
+    commercial?: string;
+    construction?: string;
+    dam?: string;
+    farmland?: string;
+    grass?: string;
+    hospital?: string;
+    industrial?: string;
+    military?: string;
+    neighbourhood?: string;
+    quarry?: string;
+    quarter?: string;
+    railway?: string;
+    retail?: string;
+    school?: string;
+    suburb?: string;
+    theme_park?: string;
+    track?: string;
+    university?: string;
+    zoo?: string;
     default: string;
   };
   water: {
@@ -45,6 +70,20 @@ export interface ThemeColors {
     line: string;
     labelColor: string;
     labelHalo: string;
+    // Optional water class colors (if source data includes class property)
+    ocean?: string;
+    sea?: string;
+    lake?: string;
+    river?: string;
+    canal?: string;
+    stream?: string;
+    ditch?: string;
+    drain?: string;
+    bay?: string;
+    gulf?: string;
+    reservoir?: string;
+    pond?: string;
+    default?: string;
   };
   boundary: {
     country: string;
@@ -90,6 +129,15 @@ export interface ThemeColors {
   building: {
     fill: string;
     outline: string;
+    // Height-based building colors (buildings don't have class property)
+    // Colors vary by building height (render_height)
+    short?: string;      // Short buildings (0-10m)
+    medium?: string;     // Medium buildings (10-50m)
+    tall?: string;       // Tall buildings (50-150m)
+    skyscraper?: string; // Skyscrapers (150-300m)
+    supertall?: string;  // Supertall buildings (300-600m)
+    megatall?: string;   // Megatall buildings (600m+)
+    default?: string;    // Default building color
   };
   label: {
     place: {
@@ -600,4 +648,183 @@ export interface Theme {
   ice?: ThemeIce;
   /** Grid lines configuration - optional, defaults to disabled */
   grid?: ThemeGrid;
+  /** Boundary configuration - optional, defaults to all enabled */
+  boundary?: ThemeBoundary;
+  /** Building configuration - optional */
+  buildings?: ThemeBuildings;
+  /** Landcover configuration - optional, for controlling landcover visibility and colors */
+  land?: ThemeLand;
+  /** Landuse configuration - optional, for controlling landuse visibility and colors */
+  landuse?: ThemeLanduse;
+  /** Water configuration - optional, for controlling water visibility and colors */
+  water?: ThemeWater;
+  hillshade?: ThemeHillshade;
+  /** Aeroway configuration - optional, for airport/aerodrome features */
+  aeroway?: ThemeAeroway;
+}
+
+// ============================================================================
+// LAND CONFIGURATION
+// ============================================================================
+
+/** Configuration for landcover layers (natural land types: wood, grass, scrub, etc.) */
+export interface ThemeLand {
+  /** 
+   * Whether to make all landcover layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparent?: boolean;
+  /** Whether to use a single override color for all landcover types */
+  useOverrideColor?: boolean;
+  /** Override color to use for all landcover types when useOverrideColor is true */
+  overrideColor?: string;
+}
+
+/** Configuration for landuse layers (human-made areas: parks, residential, commercial, etc.) */
+export interface ThemeLanduse {
+  /** 
+   * Whether to make all landuse layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparent?: boolean;
+  /** Whether to use a single override color for all landuse types */
+  useOverrideColor?: boolean;
+  /** Override color to use for all landuse types when useOverrideColor is true */
+  overrideColor?: string;
+}
+
+/** Configuration for water layers (oceans, lakes, rivers, waterways, etc.) */
+export interface ThemeWater {
+  /** 
+   * Whether to make all water fill layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparent?: boolean;
+  /** 
+   * Whether to make all waterway (line) layers transparent (sets opacity to 0, layers still exist but are invisible).
+   * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
+   * Note: Removing layers would be more efficient (no tiles loaded, no processing), but transparency
+   * enables dynamic control without rebuilding the style.
+   */
+  transparentWaterway?: boolean;
+  /** Whether to use a single override color for all water types */
+  useOverrideColor?: boolean;
+  /** Override color to use for all water types when useOverrideColor is true */
+  overrideColor?: string;
+  /** Whether to use a single override color for all waterway (line) types */
+  useOverrideColorWaterway?: boolean;
+  /** Override color to use for all waterway types when useOverrideColorWaterway is true */
+  overrideColorWaterway?: string;
+}
+
+// ============================================================================
+// BUILDING CONFIGURATION
+// ============================================================================
+
+/** Configuration for building layers */
+export interface ThemeBuildings {
+  /** Whether to show buildings at all */
+  enabled?: boolean;
+  /** Minimum zoom level to show buildings */
+  minZoom?: number;
+  /** Maximum zoom level to show buildings (fades out after this) */
+  maxZoom?: number;
+  /** Zoom level where height-based colors start (before this, uses default color) */
+  heightColorsMinZoom?: number;
+}
+
+// ============================================================================
+// BOUNDARY CONFIGURATION
+// ============================================================================
+
+/** Configuration for boundary layers */
+export interface ThemeBoundary {
+  /** Whether to show country boundaries */
+  country?: boolean;
+  /** Whether to show state boundaries */
+  state?: boolean;
+  /** Whether to show maritime boundaries */
+  maritime?: boolean;
+  /** Whether to hide boundaries over water areas (only show on land) */
+  hideOverWater?: boolean;
+}
+
+// ============================================================================
+// AEROWAY CONFIGURATION - Airport and aerodrome features
+// ============================================================================
+
+/** Configuration for aeroway layers (runways, aprons, taxiways, helipads, labels) */
+export interface ThemeAeroway {
+  /** Whether to show aeroway features at all */
+  enabled?: boolean;
+  
+  /** Runway line styling */
+  runway?: {
+    /** Line color for runways */
+    color?: string;
+    /** Line width for runways (thin lines) */
+    width?: number;
+    /** Line opacity for runways */
+    opacity?: number;
+    /** Minimum length (in meters) for major runways shown at z6-7 */
+    majorLength?: number;
+  };
+  
+  /** Apron polygon styling */
+  apron?: {
+    /** Fill color for aprons */
+    fillColor?: string;
+    /** Fill opacity for aprons */
+    fillOpacity?: number;
+    /** Outline color for aprons */
+    outlineColor?: string;
+    /** Outline width for aprons */
+    outlineWidth?: number;
+  };
+  
+  /** Taxiway line styling */
+  taxiway?: {
+    /** Line color for taxiways */
+    color?: string;
+    /** Line width for taxiways */
+    width?: number;
+    /** Line opacity for taxiways */
+    opacity?: number;
+  };
+  
+  /** Helipad point styling */
+  helipad?: {
+    /** Fill color for helipads */
+    fillColor?: string;
+    /** Fill opacity for helipads */
+    fillOpacity?: number;
+    /** Outline color for helipads */
+    outlineColor?: string;
+    /** Outline width for helipads */
+    outlineWidth?: number;
+    /** Size/radius of helipad points */
+    size?: number;
+  };
+  
+  /** Airport label styling */
+  label?: {
+    /** Text color for airport labels */
+    color?: string;
+    /** Text halo color for airport labels */
+    haloColor?: string;
+    /** Text halo width for airport labels */
+    haloWidth?: number;
+    /** Text opacity for airport labels */
+    opacity?: number;
+    /** Font size for major airport labels (z8-9) */
+    majorSize?: number | { min: number; max: number };
+    /** Font size for detailed airport labels (z13+) */
+    detailedSize?: number | { min: number; max: number };
+  };
 }

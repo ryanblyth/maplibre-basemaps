@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprite Viewer</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+        .info {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .sprite-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        img {
+            display: block;
+            image-rendering: pixelated;
+            max-width: 100%;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        input[type="range"] {
+            width: 300px;
+        }
+        .grid-overlay {
+            position: relative;
+            display: inline-block;
+        }
+        .grid-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(to right, rgba(255,0,0,0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,0,0,0.1) 1px, transparent 1px);
+            background-size: 21px 21px;
+            pointer-events: none;
+        }
+        .legend {
+            margin-top: 20px;
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .legend-item {
+            margin: 5px 0;
+            padding: 5px;
+            background: #333;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sprite Viewer</h1>
+        <div class="info">
+            <p><strong>File:</strong> <span id="file-path"></span></p>
+            <p><strong>Dimensions:</strong> <span id="dimensions"></span></p>
+            <p><strong>Zoom:</strong> <input type="range" id="zoom" min="1" max="10" value="5" step="0.5">
+                <span id="zoom-value">5x</span></p>
+        </div>
+        
+        <div class="sprite-container">
+            <div class="grid-overlay">
+                <img id="sprite-img" src="" alt="Sprite Atlas">
+            </div>
+        </div>
+        
+        <div class="legend" id="legend"></div>
+    </div>
+
+    <script>
+        // Get sprite path from URL parameter or use default
+        const params = new URLSearchParams(window.location.search);
+        const spritePath = params.get('path') || 'basemaps/dark-blue/sprites/basemap';
+        const jsonPath = spritePath + '.json';
+        const pngPath = spritePath + '.png';
+
+        document.getElementById('file-path').textContent = pngPath;
+
+        // Load JSON to get sprite layout
+        fetch(jsonPath)
+            .then(r => r.json())
+            .then(json => {
+                const img = document.getElementById('sprite-img');
+                img.src = pngPath;
+                
+                img.onload = () => {
+                    const width = img.naturalWidth;
+                    const height = img.naturalHeight;
+                    document.getElementById('dimensions').textContent = `${width} x ${height} pixels`;
+                    
+                    // Build legend
+                    const legend = document.getElementById('legend');
+                    legend.innerHTML = '<h3>Sprite Layout:</h3>';
+                    
+                    // Sort by y position
+                    const entries = Object.entries(json).sort((a, b) => a[1].y - b[1].y);
+                    
+                    entries.forEach(([name, def]) => {
+                        const item = document.createElement('div');
+                        item.className = 'legend-item';
+                        item.innerHTML = `
+                            <strong>${name}</strong>: 
+                            Position (${def.x}, ${def.y}), 
+                            Size ${def.width}x${def.height}
+                            ${def.sdf ? ' (SDF)' : ''}
+                        `;
+                        legend.appendChild(item);
+                    });
+                };
+            })
+            .catch(err => {
+                console.error('Error loading sprite:', err);
+                document.getElementById('sprite-img').src = pngPath;
+            });
+
+        // Zoom control
+        const zoomInput = document.getElementById('zoom');
+        const zoomValue = document.getElementById('zoom-value');
+        const spriteImg = document.getElementById('sprite-img');
+        
+        zoomInput.addEventListener('input', (e) => {
+            const zoom = parseFloat(e.target.value);
+            zoomValue.textContent = zoom + 'x';
+            spriteImg.style.width = (spriteImg.naturalWidth * zoom) + 'px';
+            spriteImg.style.height = (spriteImg.naturalHeight * zoom) + 'px';
+        });
+    </script>
+</body>
+</html>
+

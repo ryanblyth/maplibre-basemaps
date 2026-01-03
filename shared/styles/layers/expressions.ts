@@ -140,24 +140,59 @@ export function roadCasingWidthExprRealWorld(widths: RoadClassWidths, minZoom: n
 // ============================================================================
 
 /** Creates landcover fill color expression */
-export function landcoverFillColor(c: ThemeColors): unknown {
+export function landcoverFillColor(c: ThemeColors, landConfig?: { useOverrideColor?: boolean; overrideColor?: string }): unknown {
+  // If override color is enabled, use it for all land types
+  if (landConfig?.useOverrideColor && landConfig?.overrideColor) {
+    return landConfig.overrideColor;
+  }
+  
   return ["match", ["get", "class"], 
     "wood", c.land.wood, 
     "grass", c.land.grass, 
     "scrub", c.land.scrub, 
+    "scrubland", c.land.scrub,  // Alternative name for scrub
     "cropland", c.land.cropland, 
+    "farmland", c.land.farmland ?? c.land.cropland,  // Use farmland color if specified, otherwise cropland
+    "rock", c.land.rock ?? c.land.scrub,  // Use rock color if specified, otherwise scrub
+    "sand", c.land.sand ?? c.land.default,  // Use sand color if specified, otherwise default
+    "wetland", c.land.wetland ?? c.land.default,  // Use wetland color if specified, otherwise default
     c.land.default
   ];
 }
 
 /** Creates landuse fill color expression */
-export function landuseFillColor(c: ThemeColors): unknown {
+export function landuseFillColor(c: ThemeColors, landConfig?: { useOverrideColor?: boolean; overrideColor?: string }): unknown {
+  // If override color is enabled, use it for all land types
+  if (landConfig?.useOverrideColor && landConfig?.overrideColor) {
+    return landConfig.overrideColor;
+  }
+  
   return ["match", ["get", "class"], 
-    "park", c.landuse.park, 
+    "park", c.landuse.park ?? c.landuse.default,
     "cemetery", c.landuse.cemetery, 
     "pitch", c.landuse.pitch, 
-    "stadium", c.landuse.stadium, 
+    "stadium", c.landuse.stadium ?? c.landuse.default,
     "residential", c.landuse.residential, 
+    "college", c.landuse.college ?? c.landuse.default,
+    "commercial", c.landuse.commercial ?? c.landuse.default,
+    "construction", c.landuse.construction ?? c.landuse.default,
+    "dam", c.landuse.dam ?? c.landuse.default,
+    "farmland", c.landuse.farmland ?? c.landuse.default,
+    "grass", c.landuse.grass ?? c.landuse.default,
+    "hospital", c.landuse.hospital ?? c.landuse.default,
+    "industrial", c.landuse.industrial ?? c.landuse.default,
+    "military", c.landuse.military ?? c.landuse.default,
+    "neighbourhood", c.landuse.neighbourhood ?? c.landuse.default,
+    "quarry", c.landuse.quarry ?? c.landuse.default,
+    "quarter", c.landuse.quarter ?? c.landuse.default,
+    "railway", c.landuse.railway ?? c.landuse.default,
+    "retail", c.landuse.retail ?? c.landuse.default,
+    "school", c.landuse.school ?? c.landuse.default,
+    "suburb", c.landuse.suburb ?? c.landuse.default,
+    "theme_park", c.landuse.theme_park ?? c.landuse.default,
+    "track", c.landuse.track ?? c.landuse.default,
+    "university", c.landuse.university ?? c.landuse.default,
+    "zoo", c.landuse.zoo ?? c.landuse.default,
     c.landuse.default
   ];
 }
@@ -218,6 +253,88 @@ export function bridgeColorExpr(c: ThemeColors): unknown {
     "unclassified", c.road.bridge.residential,
     c.road.bridge.default
   ];
+}
+
+// ============================================================================
+// WATER COLOR EXPRESSIONS
+// ============================================================================
+
+/** Creates water fill color expression */
+export function waterFillColor(c: ThemeColors, waterConfig?: { useOverrideColor?: boolean; overrideColor?: string }): unknown {
+  // If override color is enabled, use it for all water types
+  if (waterConfig?.useOverrideColor && waterConfig?.overrideColor) {
+    return waterConfig.overrideColor;
+  }
+  
+  return ["match", ["get", "class"], 
+    "ocean", c.water.ocean ?? c.water.fill,
+    "sea", c.water.sea ?? c.water.fill,
+    "lake", c.water.lake ?? c.water.fill,
+    "pond", c.water.pond ?? c.water.fill,
+    "river", c.water.river ?? c.water.fill,
+    "reservoir", c.water.reservoir ?? c.water.fill,
+    "bay", c.water.bay ?? c.water.fill,
+    "gulf", c.water.gulf ?? c.water.fill,
+    c.water.default ?? c.water.fill
+  ];
+}
+
+/** Creates waterway line color expression */
+export function waterwayLineColor(c: ThemeColors, waterConfig?: { useOverrideColorWaterway?: boolean; overrideColorWaterway?: string }): unknown {
+  // If override color is enabled, use it for all waterway types
+  if (waterConfig?.useOverrideColorWaterway && waterConfig?.overrideColorWaterway) {
+    return waterConfig.overrideColorWaterway;
+  }
+  
+  return ["match", ["get", "class"], 
+    "river", c.water.river ?? c.water.line,
+    "canal", c.water.canal ?? c.water.line,
+    "stream", c.water.stream ?? c.water.line,
+    "ditch", c.water.ditch ?? c.water.line,
+    "drain", c.water.drain ?? c.water.line,
+    c.water.default ?? c.water.line
+  ];
+}
+
+// ============================================================================
+// BUILDING COLOR EXPRESSIONS
+// ============================================================================
+
+/** Creates building fill color expression */
+export function buildingFillColor(c: ThemeColors, heightColorsMinZoom?: number): unknown {
+  // Buildings don't have a "class" property in the source data
+  // They only have: colour, render_height, render_min_height, hide_3d
+  // Use height-based coloring (taller buildings = different colors)
+  // This creates a gradient based on render_height
+  
+  const heightBasedColor = [
+    "interpolate",
+    ["linear"],
+    ["coalesce", ["get", "render_height"], 0],  // Use render_height, default to 0 if missing
+    0, c.building.short ?? c.building.fill,           // Short buildings (0-10m)
+    10, c.building.medium ?? c.building.fill,         // Medium buildings (10-50m)
+    50, c.building.tall ?? c.building.fill,           // Tall buildings (50-150m)
+    150, c.building.skyscraper ?? c.building.fill,   // Skyscrapers (150-300m)
+    300, c.building.supertall ?? c.building.fill,     // Supertall buildings (300-600m)
+    600, c.building.megatall ?? c.building.fill       // Megatall buildings (600m+)
+  ];
+  
+  // If heightColorsMinZoom is set, use default color below that zoom, height-based above
+  // Must use "step" with zoom at top level (MapLibre requirement)
+  // Note: step uses "less than" for first output, "greater than or equal" for subsequent outputs
+  // Using heightColorsMinZoom - 0.001 ensures height-based colors start exactly at heightColorsMinZoom
+  if (heightColorsMinZoom !== undefined) {
+    const defaultColor = c.building.default ?? c.building.fill;
+    return [
+      "step",
+      ["zoom"],
+      defaultColor,  // Default color below heightColorsMinZoom
+      heightColorsMinZoom - 0.001, heightBasedColor  // Height-based colors at/above heightColorsMinZoom
+    ];
+  }
+  
+  // Otherwise always use height-based colors
+  return heightBasedColor;
 }
 
 // ============================================================================

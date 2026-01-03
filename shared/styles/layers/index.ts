@@ -18,6 +18,8 @@ export { createBathymetryLayers } from "./bathymetry.js";
 export { createIceLayers } from "./ice.js";
 export { createContourLayers } from "./contours.js";
 export { createGridLayers } from "./grid.js";
+export { createHillshadeLayers } from "./hillshade.js";
+export { createAerowayLayers } from "./aeroway.js";
 export { createBoundaryLayers, createUSBoundaryLayers } from "./boundaries.js";
 export { createWorldRoadLayers, createUSRoadLayers, createUSOverlayRoadLayers } from "./roads.js";
 export { 
@@ -42,6 +44,8 @@ import { createBathymetryLayers } from "./bathymetry.js";
 import { createIceLayers } from "./ice.js";
 import { createContourLayers } from "./contours.js";
 import { createGridLayers } from "./grid.js";
+import { createHillshadeLayers } from "./hillshade.js";
+import { createAerowayLayers } from "./aeroway.js";
 import { createBoundaryLayers, createUSBoundaryLayers } from "./boundaries.js";
 import { createWorldRoadLayers, createUSRoadLayers, createUSOverlayRoadLayers } from "./roads.js";
 import { 
@@ -62,21 +66,31 @@ import { createBaseStyle } from "../baseStyle.js";
  * @returns Array of LayerSpecification objects
  */
 export function createAllLayers(theme: Theme): LayerSpecification[] {
+  // If hideOverWater is enabled, render boundaries before water so water covers them
+  // Otherwise, render boundaries after water so they're visible on top
+  const hideOverWater = theme.boundary?.hideOverWater === true;
+  
   return [
     ...createBackgroundLayers(theme),
+    ...createHillshadeLayers(theme),  // Hillshade renders first (under everything)
     ...createLandcoverLayers(theme),
+    // Render boundaries before water if hideOverWater is enabled
+    ...(hideOverWater ? createBoundaryLayers(theme) : []),
+    ...(hideOverWater ? createUSBoundaryLayers(theme) : []),
     ...createWaterLayers(theme),
     ...createUSWaterLayers(theme),
     ...createBathymetryLayers(theme),
     ...createContourLayers(theme),
-    ...createBoundaryLayers(theme),
+    // Render boundaries after water if hideOverWater is disabled
+    ...(hideOverWater ? [] : createBoundaryLayers(theme)),
     ...createIceLayers(theme),  // Render ice after boundaries so boundaries don't show through
     ...createGridLayers(theme),  // Grid lines render on top of all features
     ...createWorldRoadLayers(theme),
     ...createUSRoadLayers(theme),
     ...createUSLandLayers(theme),
-    ...createUSBoundaryLayers(theme),
+    ...(hideOverWater ? [] : createUSBoundaryLayers(theme)),
     ...createUSOverlayRoadLayers(theme),
+    ...createAerowayLayers(theme),  // Aeroway features (runways, aprons, taxiways, helipads)
     ...createRoadLabelLayers(theme),
     ...createHighwayShieldLayers(theme),
     ...createWaterLabelLayersFromWorldLabels(theme),

@@ -133,11 +133,18 @@ function main(): void {
   const config = process.env.NODE_ENV === "production" ? productionConfig : localConfig;
   console.log(`Using ${process.env.NODE_ENV === "production" ? "production" : "development"} configuration\n`);
   
+  // Note: This script does NOT rebuild sprite files.
+  // - Shared sprites: Only rebuild if POI icons changed (use: make sprite)
+  // - Basemap sprites: Rebuild shields separately (use: npx tsx scripts/build-shields.ts <basemap>)
+  
   for (const build of stylesToBuild) {
     buildStyle(build, config);
   }
   
   console.log("\n✓ All styles built successfully!");
+  console.log("\n💡 Note: This script does not rebuild sprite files.");
+  console.log("   - Shield changes: npx tsx scripts/build-shields.ts <basemap-name>");
+  console.log("   - POI icon changes: make sprite (rebuilds shared sprites)");
 }
 
 main();
