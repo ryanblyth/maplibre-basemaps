@@ -658,6 +658,7 @@ export interface Theme {
   landuse?: ThemeLanduse;
   /** Water configuration - optional, for controlling water visibility and colors */
   water?: ThemeWater;
+  hillshade?: ThemeHillshade;
 }
 
 // ============================================================================

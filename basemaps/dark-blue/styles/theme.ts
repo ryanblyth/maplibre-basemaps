@@ -574,6 +574,42 @@ export const darkBlueIce = {
 };
 
 // ============================================================================
+// HILLSHADE CONFIGURATION
+// ============================================================================
+
+export const darkBlueHillshade = {
+  /** Whether to show hillshade at all */
+  enabled: false,
+  
+  /** Minimum zoom level to show hillshade */
+  minZoom: 0,
+  
+  /** Maximum zoom level to show hillshade (fades out after this) */
+  maxZoom: 12,
+  
+  /** Base opacity for hillshade (0.0 to 1.0) */
+  opacity: 0.5,
+  
+  /** Illumination direction (0-360 degrees, where 0 is north, 90 is east) */
+  illuminationDirection: 335,  // Northwest (typical for natural lighting)
+  
+  /** Illumination anchor - "map" (fixed to map) or "viewport" (fixed to viewport) */
+  illuminationAnchor: "viewport" as const,
+  
+  /** Exaggeration factor for terrain relief (0.0 to 1.0, higher = more dramatic) */
+  exaggeration: 0.5,
+  
+  /** Shadow color (darker areas) */
+  shadowColor: "#000000",
+  
+  /** Highlight color (lighter areas) */
+  highlightColor: "#ffffff",
+  
+  /** Accent color (mid-tones) */
+  accentColor: "#000000",
+};
+
+// ============================================================================
 // GRID CONFIGURATION
 // ============================================================================
 
@@ -741,6 +777,7 @@ export const darkBlueTheme: Theme = {
   bathymetry: darkBlueBathymetry,
   contours: darkBlueContours,
   ice: darkBlueIce,
+  hillshade: darkBlueHillshade,
   grid: darkBlueGrid,
   boundary: darkBlueBoundary,
   buildings: darkBlueBuildings,

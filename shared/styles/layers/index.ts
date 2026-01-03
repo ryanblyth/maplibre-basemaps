@@ -18,6 +18,7 @@ export { createBathymetryLayers } from "./bathymetry.js";
 export { createIceLayers } from "./ice.js";
 export { createContourLayers } from "./contours.js";
 export { createGridLayers } from "./grid.js";
+export { createHillshadeLayers } from "./hillshade.js";
 export { createBoundaryLayers, createUSBoundaryLayers } from "./boundaries.js";
 export { createWorldRoadLayers, createUSRoadLayers, createUSOverlayRoadLayers } from "./roads.js";
 export { 
@@ -42,6 +43,7 @@ import { createBathymetryLayers } from "./bathymetry.js";
 import { createIceLayers } from "./ice.js";
 import { createContourLayers } from "./contours.js";
 import { createGridLayers } from "./grid.js";
+import { createHillshadeLayers } from "./hillshade.js";
 import { createBoundaryLayers, createUSBoundaryLayers } from "./boundaries.js";
 import { createWorldRoadLayers, createUSRoadLayers, createUSOverlayRoadLayers } from "./roads.js";
 import { 
@@ -68,6 +70,7 @@ export function createAllLayers(theme: Theme): LayerSpecification[] {
   
   return [
     ...createBackgroundLayers(theme),
+    ...createHillshadeLayers(theme),  // Hillshade renders first (under everything)
     ...createLandcoverLayers(theme),
     // Render boundaries before water if hideOverWater is enabled
     ...(hideOverWater ? createBoundaryLayers(theme) : []),
