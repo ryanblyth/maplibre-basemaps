@@ -135,8 +135,13 @@ POIs are queried from multiple PMTiles sources in order of priority:
 POIs are queried from different source layers depending on the POI type:
 
 - **`poi` layer** - Most POI types (airport, airfield, hospital, museum, zoo, stadium, rail, school)
-- **`aerodrome_label` layer** - Airports (from `us_z0-15.pmtiles`)
-- **`place` layer** - Airports stored as places
+- **`aerodrome_label` layer** - **Main airport labels** (from `us_high` source / `us_z0-15.pmtiles`)
+  - **This is the primary source for airport icons and labels**
+  - Only exists in `us_high` PMTiles, not in other sources
+  - Layer ID: `aerodrome-label-airport-us_high`
+  - Created separately in `shared/styles/layers/labels/poi.ts` (outside the main source loop)
+  - Shows airport icons with names at zoom 12+
+- **`place` layer** - Airports stored as places (fallback)
 - **`park` layer** - Park labels (national/state parks only)
 
 ## POI Styling
@@ -293,11 +298,20 @@ This excludes K-12 schools, which are not shown.
 
 ### Airports
 
-Airports are queried from multiple sources:
+Airports are queried from multiple sources (in priority order):
 
-- **POI layer**: `class == 'transport'` AND `subclass == 'airport'` OR `class == 'airport'`
-- **PLACE layer**: `place IN ['airport', 'aerodrome']`
-- **AERODROME_LABEL layer**: All features with names
+1. **`aerodrome_label` layer** (PRIMARY - Main airport labels)
+   - Source: `us_high` only (this source-layer doesn't exist in other sources)
+   - Filter: `["has", "name"]` (all features with names)
+   - Layer ID: `aerodrome-label-airport-us_high`
+   - **This is the main source for airport icons and labels**
+   - Created in: `shared/styles/layers/labels/poi.ts` (after the main source loop)
+   - If this stops working, check:
+     - Layer exists in `style.json`: `grep "aerodrome-label-airport-us_high" basemaps/dark-blue/style.json`
+     - POI airport is enabled: `theme.pois.airport.enabled === true`
+     - Source `us_high` exists and has `aerodrome_label` source-layer
+2. **POI layer**: `class == 'transport'` AND `subclass == 'airport'` OR `class == 'airport'` (fallback)
+3. **PLACE layer**: `place IN ['airport', 'aerodrome']` (fallback)
 
 ### Airfields
 
@@ -345,6 +359,43 @@ Airfields are queried from the POI layer:
    - `us_high` source should have `poi` and `aerodrome_label` source-layers
 
 4. **Use click handler** - Click on the map and check console for POI inspector output
+
+### Airport Labels Not Showing (Main Airport Name Labels)
+
+The main airport name labels come from the `aerodrome_label` source-layer in `us_high`. If these stop working:
+
+1. **Verify the layer exists in style.json**:
+   ```bash
+   grep "aerodrome-label-airport-us_high" basemaps/dark-blue/style.json
+   ```
+   If not found, the layer wasn't created during build.
+
+2. **Check the layer is created in code**:
+   - File: `shared/styles/layers/labels/poi.ts`
+   - Look for: Layer created after the main source loop (around line 865)
+   - Layer ID must be: `aerodrome-label-airport-us_high`
+   - Source must be: `us_high`
+   - Source-layer must be: `aerodrome_label`
+
+3. **Verify source-layer exists**:
+   - Use the Airport Inspector in the map (click handler)
+   - Check console for: `✅ Found X aerodrome_label features in us_high`
+   - If features are found but not rendering, check:
+     - Layer is in `style.json` (step 1)
+     - POI airport is enabled (step 1 above)
+     - Zoom level is >= 12 (or configured `minZoom`)
+
+4. **Rebuild styles**:
+   ```bash
+   npm run build:styles
+   ```
+   Then hard refresh browser (Cmd+Shift+R)
+
+5. **Common issues**:
+   - Layer was removed from code or moved inside source loop (should be outside)
+   - Source name changed (must be exactly `"us_high"`)
+   - Source-layer name changed (must be exactly `"aerodrome_label"`)
+   - Filter issue (should be `["has", "name"]`)
 
 ### POI Icons Missing
 
