@@ -762,6 +762,57 @@ export const darkBlueWater = {
 };
 
 // ============================================================================
+// AEROWAY CONFIGURATION
+// ============================================================================
+
+export const darkBlueAeroway = {
+  /** Whether to show aeroway features at all */
+  enabled: true,
+  
+  /** Runway line styling */
+  runway: {
+    color: "#4a5568",        // Medium gray for runways
+    width: 0.5,              // Thin lines
+    opacity: 0.8,
+    majorLength: 2500,       // Minimum length (meters) for major runways shown at z6-7
+  },
+  
+  /** Apron polygon styling */
+  apron: {
+    fillColor: "#3a4455",    // Dark gray fill
+    fillOpacity: 0.3,         // Thin fill (semi-transparent)
+    outlineColor: "#4a5568",  // Medium gray outline
+    outlineWidth: 0.3,        // Thin outline
+  },
+  
+  /** Taxiway line styling */
+  taxiway: {
+    color: "#5a6578",        // Slightly lighter gray than runways
+    width: 0.4,              // Slightly thinner than runways
+    opacity: 0.7,
+  },
+  
+  /** Helipad point styling */
+  helipad: {
+    fillColor: "#5a6578",    // Medium gray fill
+    fillOpacity: 0.6,
+    outlineColor: "#6a7588", // Lighter gray outline
+    outlineWidth: 0.3,
+    size: 4,                 // Circle radius in pixels
+  },
+  
+  /** Airport label styling */
+  label: {
+    color: "#a8b8d0",        // Light blue-gray text (matches place labels)
+    haloColor: "#0b0f14",    // Dark halo for contrast
+    haloWidth: 0,
+    opacity: 0.9,
+    majorSize: { min: 10, max: 12 },      // Font size for major airports (z8-9)
+    detailedSize: { min: 10, max: 12 },   // Font size for detailed labels (z13+)
+  },
+};
+
+// ============================================================================
 // COMPLETE THEME
 // ============================================================================
 
@@ -784,4 +835,5 @@ export const darkBlueTheme: Theme = {
   land: darkBlueLand,
   landuse: darkBlueLanduse,
   water: darkBlueWater,
+  aeroway: darkBlueAeroway,
 };

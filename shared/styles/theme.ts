@@ -659,6 +659,8 @@ export interface Theme {
   /** Water configuration - optional, for controlling water visibility and colors */
   water?: ThemeWater;
   hillshade?: ThemeHillshade;
+  /** Aeroway configuration - optional, for airport/aerodrome features */
+  aeroway?: ThemeAeroway;
 }
 
 // ============================================================================
@@ -751,4 +753,78 @@ export interface ThemeBoundary {
   maritime?: boolean;
   /** Whether to hide boundaries over water areas (only show on land) */
   hideOverWater?: boolean;
+}
+
+// ============================================================================
+// AEROWAY CONFIGURATION - Airport and aerodrome features
+// ============================================================================
+
+/** Configuration for aeroway layers (runways, aprons, taxiways, helipads, labels) */
+export interface ThemeAeroway {
+  /** Whether to show aeroway features at all */
+  enabled?: boolean;
+  
+  /** Runway line styling */
+  runway?: {
+    /** Line color for runways */
+    color?: string;
+    /** Line width for runways (thin lines) */
+    width?: number;
+    /** Line opacity for runways */
+    opacity?: number;
+    /** Minimum length (in meters) for major runways shown at z6-7 */
+    majorLength?: number;
+  };
+  
+  /** Apron polygon styling */
+  apron?: {
+    /** Fill color for aprons */
+    fillColor?: string;
+    /** Fill opacity for aprons */
+    fillOpacity?: number;
+    /** Outline color for aprons */
+    outlineColor?: string;
+    /** Outline width for aprons */
+    outlineWidth?: number;
+  };
+  
+  /** Taxiway line styling */
+  taxiway?: {
+    /** Line color for taxiways */
+    color?: string;
+    /** Line width for taxiways */
+    width?: number;
+    /** Line opacity for taxiways */
+    opacity?: number;
+  };
+  
+  /** Helipad point styling */
+  helipad?: {
+    /** Fill color for helipads */
+    fillColor?: string;
+    /** Fill opacity for helipads */
+    fillOpacity?: number;
+    /** Outline color for helipads */
+    outlineColor?: string;
+    /** Outline width for helipads */
+    outlineWidth?: number;
+    /** Size/radius of helipad points */
+    size?: number;
+  };
+  
+  /** Airport label styling */
+  label?: {
+    /** Text color for airport labels */
+    color?: string;
+    /** Text halo color for airport labels */
+    haloColor?: string;
+    /** Text halo width for airport labels */
+    haloWidth?: number;
+    /** Text opacity for airport labels */
+    opacity?: number;
+    /** Font size for major airport labels (z8-9) */
+    majorSize?: number | { min: number; max: number };
+    /** Font size for detailed airport labels (z13+) */
+    detailedSize?: number | { min: number; max: number };
+  };
 }

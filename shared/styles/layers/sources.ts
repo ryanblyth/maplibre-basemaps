@@ -89,6 +89,16 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
     };
   }
   
+  // Only add aeroway source if enabled in theme
+  if (theme?.aeroway?.enabled) {
+    sources["aeroway-world"] = {
+      type: "vector",
+      url: `pmtiles://${config.dataBaseUrl}/pmtiles/aeroway-world.pmtiles`,
+      minzoom: 6,
+      maxzoom: 15,
+    };
+  }
+  
   return sources;
 }
 

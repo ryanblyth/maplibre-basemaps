@@ -19,6 +19,7 @@ export { createIceLayers } from "./ice.js";
 export { createContourLayers } from "./contours.js";
 export { createGridLayers } from "./grid.js";
 export { createHillshadeLayers } from "./hillshade.js";
+export { createAerowayLayers } from "./aeroway.js";
 export { createBoundaryLayers, createUSBoundaryLayers } from "./boundaries.js";
 export { createWorldRoadLayers, createUSRoadLayers, createUSOverlayRoadLayers } from "./roads.js";
 export { 
@@ -44,6 +45,7 @@ import { createIceLayers } from "./ice.js";
 import { createContourLayers } from "./contours.js";
 import { createGridLayers } from "./grid.js";
 import { createHillshadeLayers } from "./hillshade.js";
+import { createAerowayLayers } from "./aeroway.js";
 import { createBoundaryLayers, createUSBoundaryLayers } from "./boundaries.js";
 import { createWorldRoadLayers, createUSRoadLayers, createUSOverlayRoadLayers } from "./roads.js";
 import { 
@@ -88,6 +90,7 @@ export function createAllLayers(theme: Theme): LayerSpecification[] {
     ...createUSLandLayers(theme),
     ...(hideOverWater ? [] : createUSBoundaryLayers(theme)),
     ...createUSOverlayRoadLayers(theme),
+    ...createAerowayLayers(theme),  // Aeroway features (runways, aprons, taxiways, helipads)
     ...createRoadLabelLayers(theme),
     ...createHighwayShieldLayers(theme),
     ...createWaterLabelLayersFromWorldLabels(theme),

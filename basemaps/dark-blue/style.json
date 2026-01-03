@@ -23,6 +23,12 @@
       "url": "pmtiles://https://data.storypath.studio/pmtiles/poi_us_z12-15.pmtiles",
       "minzoom": 12,
       "maxzoom": 15
+    },
+    "aeroway-world": {
+      "type": "vector",
+      "url": "pmtiles://https://data.storypath.studio/pmtiles/aeroway-world.pmtiles",
+      "minzoom": 6,
+      "maxzoom": 15
     }
   },
   "layers": [
@@ -718,6 +724,132 @@
           16, ["match", ["get", "class"], "motorway", 10, "trunk", 10, "primary", 10, "secondary", 7.5, "tertiary", 6, "residential", 4, "service", 4, "minor", 4, "unclassified", 4, 4],
           20, ["match", ["get", "class"], "motorway", 160, "trunk", 160, "primary", 160, "secondary", 120, "tertiary", 96, "residential", 64, "service", 64, "minor", 64, "unclassified", 64, 64]
         ]
+      }
+    },
+    {
+      "id": "aeroway-runway-major",
+      "type": "line",
+      "source": "aeroway-world",
+      "source-layer": "runway_lines",
+      "minzoom": 6,
+      "maxzoom": 8,
+      "filter": ["all", [">=", ["get", "length"], 2500]],
+      "layout": {"line-cap": "round", "line-join": "round"},
+      "paint": {"line-color": "#4a5568", "line-width": 0.5, "line-opacity": 0.8}
+    },
+    {
+      "id": "aeroway-runway-all",
+      "type": "line",
+      "source": "aeroway-world",
+      "source-layer": "runway_lines",
+      "minzoom": 8,
+      "layout": {"line-cap": "round", "line-join": "round"},
+      "paint": {"line-color": "#4a5568", "line-width": 0.5, "line-opacity": 0.8}
+    },
+    {
+      "id": "aeroway-apron-fill",
+      "type": "fill",
+      "source": "aeroway-world",
+      "source-layer": "apron_polys",
+      "minzoom": 8,
+      "paint": {"fill-color": "#3a4455", "fill-opacity": 0.3}
+    },
+    {
+      "id": "aeroway-apron-outline",
+      "type": "line",
+      "source": "aeroway-world",
+      "source-layer": "apron_polys",
+      "minzoom": 8,
+      "layout": {"line-cap": "round", "line-join": "round"},
+      "paint": {"line-color": "#4a5568", "line-width": 0.3, "line-opacity": 0.3}
+    },
+    {
+      "id": "aeroway-taxiway",
+      "type": "line",
+      "source": "aeroway-world",
+      "source-layer": "taxiway_lines",
+      "minzoom": 10,
+      "layout": {"line-cap": "round", "line-join": "round"},
+      "paint": {"line-color": "#5a6578", "line-width": 0.4, "line-opacity": 0.7}
+    },
+    {
+      "id": "aeroway-helipad-fill",
+      "type": "circle",
+      "source": "aeroway-world",
+      "source-layer": "helipad_points",
+      "minzoom": 13,
+      "paint": {
+        "circle-color": "#5a6578",
+        "circle-opacity": 0.6,
+        "circle-radius": 4,
+        "circle-stroke-color": "#6a7588",
+        "circle-stroke-width": 0.3,
+        "circle-stroke-opacity": 0.6
+      }
+    },
+    {
+      "id": "aeroway-label-major",
+      "type": "symbol",
+      "source": "aeroway-world",
+      "source-layer": "apron_polys",
+      "minzoom": 8,
+      "maxzoom": 10,
+      "filter": ["has", "name"],
+      "layout": {
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          8, 10,
+          13, 12
+        ],
+        "text-anchor": "center",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "text-ignore-placement": false,
+        "text-padding": 50,
+        "symbol-placement": "point"
+      },
+      "paint": {
+        "text-color": "#a8b8d0",
+        "text-halo-color": "#0b0f14",
+        "text-halo-width": 0,
+        "text-halo-blur": 1,
+        "text-opacity": 0.9
+      }
+    },
+    {
+      "id": "aeroway-label-detailed",
+      "type": "symbol",
+      "source": "aeroway-world",
+      "source-layer": "apron_polys",
+      "minzoom": 13,
+      "filter": ["has", "name"],
+      "layout": {
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          8, 10,
+          13, 12
+        ],
+        "text-anchor": "center",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "text-ignore-placement": false,
+        "text-padding": 30,
+        "symbol-placement": "point"
+      },
+      "paint": {
+        "text-color": "#a8b8d0",
+        "text-halo-color": "#0b0f14",
+        "text-halo-width": 0,
+        "text-halo-blur": 1,
+        "text-opacity": 0.9
       }
     },
     {
