@@ -767,7 +767,7 @@ export const darkBlueWater = {
 
 export const darkBlueAeroway = {
   /** Whether to show aeroway features at all */
-  enabled: true,
+  enabled: false,
   
   /** Runway line styling */
   runway: {

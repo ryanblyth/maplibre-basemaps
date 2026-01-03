@@ -173,25 +173,9 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
     }
     
     // Airport POIs from AERODROME_LABEL layer
-    if (isPOIEnabled('airport')) {
-      const airportMinZoom = poiThemeConfig.airport?.minZoom || source.minZoom;
-      layers.push({
-        id: `aerodrome-label-airport-${source.name}`,
-        type: "symbol",
-        source: source.name,
-        "source-layer": "aerodrome_label",
-        minzoom: airportMinZoom,
-      filter: [
-        "all",
-        ["has", "name"],
-      ],
-      layout: {
-        ...baseLayout,
-        "icon-image": "airport",
-      },
-        paint: poiPaint,
-      });
-    }
+    // Note: aerodrome_label source-layer only exists in us_high (us_z0-15.pmtiles)
+    // This is the main airport label source with icons and names
+    // This layer is created separately after the loop (see below)
     
     // Hospital POIs - Rank 1 (major hospitals only) at zoom 12+
     if (isPOIEnabled('hospital')) {
@@ -857,6 +841,32 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
       });
     } // End of if (isPOIEnabled('school'))
   } // End of for (const source of sources) loop
+  
+  // Airport POIs from AERODROME_LABEL layer (us_high only)
+  // Note: aerodrome_label source-layer only exists in us_high (us_z0-15.pmtiles)
+  // This is the main airport label source with icons and names
+  // Create this layer separately since it only exists in one source
+  if (isPOIEnabled('airport')) {
+    const airportMinZoom = poiThemeConfig.airport?.minZoom || globalMinZoom;
+    layers.push({
+      id: "aerodrome-label-airport-us_high",
+      type: "symbol",
+      source: "us_high",
+      "source-layer": "aerodrome_label",
+      minzoom: airportMinZoom,
+      filter: [
+        "all",
+        ["has", "name"],
+      ],
+      layout: {
+        ...baseLayout,
+        "icon-image": "airport",
+        "icon-ignore-placement": false, // Allow collision detection for icons
+        "text-ignore-placement": false, // Allow collision detection for labels
+      },
+      paint: poiPaint,
+    });
+  }
   
   // Park labels from PARK layer (separate from POI sources)
   // Only use sources that have park data to avoid duplicates

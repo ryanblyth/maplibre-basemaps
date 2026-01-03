@@ -93,6 +93,7 @@ export function createAerowayLayers(theme: Theme): LayerSpecification[] {
     maxzoom: 8,
     filter: [
       "all",
+      ["has", "length"], // Ensure length property exists
       [">=", ["get", "length"], majorRunwayLength],
     ],
     layout: {
@@ -207,11 +208,11 @@ export function createAerowayLayers(theme: Theme): LayerSpecification[] {
   // ============================================================================
   
   // Major airport labels (z8-9)
-  // Note: We'll use a filter to show only major airports (those with runways ≥ 2500m)
-  // This requires checking if the airport has a major runway nearby
-  // For simplicity, we'll show all airports with names at z8-9, and filter by zoom
+  // Note: These are text-only labels from apron polygons
+  // POI airport icons (with icons + labels) show at z12+ from POI sources
   // Prevent duplicate labels by using text-ignore-placement: false (default) which enables
   // collision detection, and text-padding to increase the collision box size
+  // Use text-ignore-placement: true to allow POI icons to show through
   layers.push({
     id: "aeroway-label-major",
     type: "symbol",
@@ -227,7 +228,7 @@ export function createAerowayLayers(theme: Theme): LayerSpecification[] {
       "text-anchor": "center",
       "text-optional": true,
       "text-allow-overlap": false,
-      "text-ignore-placement": false, // Enable collision detection to prevent duplicates
+      "text-ignore-placement": true, // Don't block POI icons - allow them to show through
       "text-padding": 50, // Increase padding to prevent nearby duplicate labels
       "symbol-placement": "point",
     },
@@ -241,7 +242,8 @@ export function createAerowayLayers(theme: Theme): LayerSpecification[] {
   });
   
   // Detailed airport labels (z13+)
-  // Prevent duplicate labels by using collision detection with increased padding
+  // These complement POI airport icons which also show at z12+
+  // Use text-ignore-placement: true to allow POI icons to show through
   layers.push({
     id: "aeroway-label-detailed",
     type: "symbol",
@@ -256,7 +258,7 @@ export function createAerowayLayers(theme: Theme): LayerSpecification[] {
       "text-anchor": "center",
       "text-optional": true,
       "text-allow-overlap": false,
-      "text-ignore-placement": false, // Enable collision detection to prevent duplicates
+      "text-ignore-placement": true, // Don't block POI icons - allow them to show through
       "text-padding": 30, // Increase padding to prevent nearby duplicate labels
       "symbol-placement": "point",
     },
