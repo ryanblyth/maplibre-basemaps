@@ -17,6 +17,7 @@ export const myTheme: Theme = {
   shields: myShields,     // Highway shields (optional)
   pois: myPOIs,          // Point of Interest config (optional)
   bathymetry: myBathymetry, // Ocean depth visualization (optional)
+  hillshade: myHillshade,   // Terrain shading from elevation data (optional)
   ice: myIce,              // Glaciers, ice sheets, and ice shelves (optional)
   contours: myContours,   // Topographic contours (optional)
   grid: myGrid,           // Latitude and longitude grid lines (optional)
@@ -261,6 +262,27 @@ bathymetry: {
   },
 }
 ```
+
+### Hillshade
+
+Hillshade (terrain shading from elevation data) is configured separately in the `hillshade` section of the theme. See [Hillshade Documentation](./hillshade.md) for complete details.
+
+```typescript
+hillshade: {
+  enabled: true,
+  minZoom: 0,
+  maxZoom: 12,
+  opacity: 0.5,                    // Controls intensity via exaggeration
+  illuminationDirection: 335,      // Light direction (0-360 degrees)
+  illuminationAnchor: "viewport",  // "map" or "viewport"
+  exaggeration: 0.5,               // Terrain relief intensity (0.0-1.0)
+  shadowColor: "#000000",          // Shadow areas
+  highlightColor: "#ffffff",       // Highlight areas
+  accentColor: "#000000",          // Mid-tones
+}
+```
+
+**Note:** Hillshade doesn't support direct opacity. Instead, opacity is simulated by scaling the exaggeration value (`effectiveExaggeration = exaggeration × opacity`).
 
 ### Ice
 

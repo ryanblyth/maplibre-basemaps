@@ -9,6 +9,7 @@ A modular, TypeScript-based style system for creating MapLibre GL basemaps.
 - [Road Features](./roads.md) - Roads, bridges, tunnels, and highway shields
 - [POI Features](./pois.md) - Point of Interest icons and labels (hospitals, airports, museums, etc.)
 - [Bathymetry](./bathymetry.md) - Ocean depth visualization
+- [Hillshade](./hillshade.md) - Terrain shading from elevation data
 - [Ice](./ice.md) - Glaciers, ice sheets, and ice shelves
 - [Contours](./contours.md) - Topographic elevation lines
 - [Grid Lines](./grid.md) - Latitude and longitude reference lines
