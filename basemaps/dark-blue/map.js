@@ -46,8 +46,8 @@ maplibregl.addProtocol("pmtiles", protocol.tile);
 const map = new maplibregl.Map({
   container: "map-container",
   style: "./style.json?v=" + Date.now(),  // Cache-bust to ensure latest style
-  center: [-105.7821, 39.5501],
-  zoom: 8,
+  center: [-98.0, 39.0],
+  zoom: 3.5,
   minZoom: minZoom,  // From theme.ts darkBlueSettings.minZoom
   maxZoom: 22,
   hash: false,
@@ -98,7 +98,7 @@ function setupZoomLogging() {
   // Log initial zoom
   try {
     const z = map.getZoom();
-    console.log(`[Zoom] Initial: ${z.toFixed(2)}`);
+    // console.log(`[Zoom] Initial: ${z.toFixed(2)}`);
     lastZoom = z;
   } catch (e) {
     // Map not ready yet
@@ -109,7 +109,7 @@ function setupZoomLogging() {
     try {
       const currentZoom = map.getZoom();
       if (lastZoom === null || Math.abs(currentZoom - lastZoom) >= 0.05) {
-        console.log(`[Zoom] ${currentZoom.toFixed(2)}`);
+        // console.log(`[Zoom] ${currentZoom.toFixed(2)}`);
         lastZoom = currentZoom;
       }
     } catch (e) {
