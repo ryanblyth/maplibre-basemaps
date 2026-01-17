@@ -38,9 +38,14 @@ python3 -m http.server 8080
 
 # Or using Node
 npx serve -p 8080
+
+# Or use the project's development server
+node serve.js
 ```
 
 2. Open in browser: `http://localhost:8080/basemaps/dark-blue/`
+
+**Note:** The development server (`serve.js`) serves shared assets (glyphs, sprites, starfield script) from local `shared/` directories. For production deployments, these assets are hosted on CDN at `https://data.storypath.studio/`. The generated `style.json` files use CDN URLs for production, while local development uses files from `shared/` directories.
 
 ## Development Workflow
 

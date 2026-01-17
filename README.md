@@ -68,8 +68,16 @@ This project uses PMTiles hosted on Cloudflare CDN. PMTiles sources are configur
 ### Glyphs
 Font glyphs are stored in `/shared/assets/glyphs/` and shared across all basemaps. Each font family has its own directory with PBF files for character ranges.
 
+- **Local development**: Files are served from `shared/assets/glyphs/` via the development server
+- **Production**: Glyphs are hosted on CDN at `https://data.storypath.studio/glyphs/`
+- Local files are the source of truth and required for build scripts
+
 ### Sprites
 Icon sprites are stored in `/shared/assets/sprites/` and shared across all basemaps. The sprite atlas includes icons for POIs (airports, restaurants, hospitals, etc.).
+
+- **Local development**: Files are served from `shared/assets/sprites/` via the development server
+- **Production**: Sprites can be uploaded to CDN for production deployments
+- Local files are used during development and as source files for builds
 
 To rebuild sprites from SVG icons:
 ```bash
@@ -83,6 +91,31 @@ Or manually:
 ```
 
 See `docs/DOCKER.md` for Docker-based sprite building instructions.
+
+### Starfield Script
+The starfield background script for globe projection is located in `/shared/js/maplibre-gl-starfield.js`.
+
+- **Local development**: File is served from `shared/js/` via the development server
+- **Production**: Script is hosted on CDN at `https://data.storypath.studio/js/maplibre-gl-starfield.js`
+- Local file is the source of truth and required for development
+
+## Asset Hosting
+
+This project uses a **dual-hosting approach** for shared assets:
+
+- **Local files** (`shared/assets/` and `shared/js/`) are used for:
+  - Local development and testing
+  - Build scripts and sprite generation
+  - Source of truth for version control
+  - Fallback if CDN is unavailable
+
+- **CDN URLs** are used for:
+  - Production deployments
+  - Better performance and caching
+  - Reduced bundle size
+  - Shared caching across sites
+
+The generated `style.json` files use CDN URLs for production, while the development server (`serve.js`) serves local files from `shared/` directories. Both serve the same purpose but in different contexts - local files are essential for development and build processes, while CDN URLs optimize production deployments.
 
 ## Development
 
@@ -139,6 +172,28 @@ State labels are handled differently for US states vs. world states due to PMTil
 
 This dual-layer approach ensures US states appear earlier (zoom 3.33) while world states appear later (zoom 4), and US states transition to higher detail data at zoom 6.
 
+## Exporting Basemaps
+
+To use a basemap in another codebase (e.g., Astro, static sites, or other frameworks), you can export a bundle with all necessary files:
+
+```bash
+npm run export:bundle
+# or
+npx tsx scripts/export-basemap-bundle.ts dark-blue
+```
+
+This creates a `map-bundle/` directory in the basemap folder containing:
+- `style.json` - MapLibre style definition (sprite path updated to relative)
+- `map.js` - Map initialization script (for frameworks that load scripts dynamically)
+- `style.css` - Map container and starfield styles (adaptable for different layouts)
+- `sprites/` - Sprite files (PNG + JSON, regular + @2x)
+- `index.html` - Standalone HTML example
+- `README.md` - Usage instructions
+
+The bundle is self-contained and ready to copy to another project. External dependencies (glyphs, starfield script, PMTiles data) are loaded from CDN, so only the bundle files need to be included.
+
+See `docs/exporting-basemaps.md` for detailed documentation on using the bundle in different frameworks.
+
 ## Troubleshooting
 
 - **White screen**: Check browser console for errors. Common issues:
@@ -146,9 +201,10 @@ This dual-layer approach ensures US states appear earlier (zoom 3.33) while worl
   - PMTiles protocol must be registered before map initialization
   - Ensure `#map` container has height (100vh)
 
-- **Assets not loading**: Verify paths in `style.json` use full URLs:
-  - `http://localhost:8080/shared/assets/glyphs/...`
-  - `http://localhost:8080/shared/assets/sprites/...`
+- **Assets not loading**: Verify paths in `style.json` match your environment:
+  - **Local development**: Use `http://localhost:8080/shared/assets/glyphs/...` and `http://localhost:8080/shared/assets/sprites/...`
+  - **Production**: Use CDN URLs like `https://data.storypath.studio/glyphs/...` and `https://data.storypath.studio/...`
+  - Verify which environment you're targeting and that the appropriate server/CDN is accessible
 
 - **PMTiles errors**: Ensure the server supports HTTP Range requests (serve.js handles this)
 

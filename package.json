@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build:styles": "tsx scripts/build-styles.ts",
-    "serve": "node serve.js"
+    "serve": "node serve.js",
+    "export:bundle": "tsx scripts/export-basemap-bundle.ts dark-blue"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",

@@ -20,17 +20,23 @@
  *   style: "./style.json"  // or "./style.generated.json"
  */
 
-// Get projection and minZoom from theme configuration
-// These are set in basemaps/dark-blue/styles/theme.ts in darkBlueSettings
-// For static HTML, you can override by setting window.mapProjection/window.mapMinZoom before this script runs
+// ============================================================================
+// Configuration Constants
+// These values match basemaps/dark-blue/styles/theme.ts darkBlueSettings
+// Can be overridden by setting window.mapProjection/window.mapMinZoom before this script runs
+// ============================================================================
+const DEFAULT_PROJECTION = "globe";
+const DEFAULT_MIN_ZOOM = { mercator: 0, globe: 2 };
+
+// Get projection and minZoom from window overrides or use defaults
 const projectionType = (typeof window !== 'undefined' && window.mapProjection) 
   ? window.mapProjection 
-  : 'globe'; // Default from theme.ts darkBlueSettings.projection
+  : DEFAULT_PROJECTION;
 
 // Get minZoom based on projection type
 const minZoomConfig = (typeof window !== 'undefined' && window.mapMinZoom)
   ? window.mapMinZoom
-  : { mercator: 0, globe: 2 }; // Defaults from theme.ts darkBlueSettings.minZoom
+  : DEFAULT_MIN_ZOOM;
 
 const minZoom = projectionType === 'mercator' 
   ? minZoomConfig.mercator 
