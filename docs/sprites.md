@@ -2,6 +2,8 @@
 
 This document explains how sprites (icons and highway shields) are organized and built in the MapLibre basemaps system.
 
+**Note:** Sprite files are built locally and stored in `shared/assets/sprites/` and `basemaps/{basemap-name}/sprites/`. These local files are used during development and serve as the source of truth. For production deployments, sprite files can be uploaded to a CDN and referenced via CDN URLs in `style.json` files.
+
 ## Overview
 
 Sprites are image atlases that contain icons used on the map. The system uses a **hybrid approach**:
