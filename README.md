@@ -172,6 +172,28 @@ State labels are handled differently for US states vs. world states due to PMTil
 
 This dual-layer approach ensures US states appear earlier (zoom 3.33) while world states appear later (zoom 4), and US states transition to higher detail data at zoom 6.
 
+## Exporting Basemaps
+
+To use a basemap in another codebase (e.g., Astro, static sites, or other frameworks), you can export a bundle with all necessary files:
+
+```bash
+npm run export:bundle
+# or
+npx tsx scripts/export-basemap-bundle.ts dark-blue
+```
+
+This creates a `map-bundle/` directory in the basemap folder containing:
+- `style.json` - MapLibre style definition (sprite path updated to relative)
+- `map.js` - Map initialization script (for frameworks that load scripts dynamically)
+- `style.css` - Map container and starfield styles (adaptable for different layouts)
+- `sprites/` - Sprite files (PNG + JSON, regular + @2x)
+- `index.html` - Standalone HTML example
+- `README.md` - Usage instructions
+
+The bundle is self-contained and ready to copy to another project. External dependencies (glyphs, starfield script, PMTiles data) are loaded from CDN, so only the bundle files need to be included.
+
+See `docs/exporting-basemaps.md` for detailed documentation on using the bundle in different frameworks.
+
 ## Troubleshooting
 
 - **White screen**: Check browser console for errors. Common issues:
