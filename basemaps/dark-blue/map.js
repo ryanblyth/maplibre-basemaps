@@ -53,7 +53,7 @@ const map = new maplibregl.Map({
   container: "map-container",
   style: "./style.json?v=" + Date.now(),  // Cache-bust to ensure latest style
   center: [-98.0, 39.0],
-  zoom: 3.5,
+  zoom: 4.25,
   minZoom: minZoom,  // From theme.ts darkBlueSettings.minZoom
   maxZoom: 22,
   hash: false,
@@ -101,21 +101,25 @@ let zoomInterval = null;
 function setupZoomLogging() {
   if (zoomInterval) return; // Already set up
   
-  // Log initial zoom
+  // Log initial zoom and center
   try {
     const z = map.getZoom();
-    // console.log(`[Zoom] Initial: ${z.toFixed(2)}`);
+    const center = map.getCenter();
+    console.log(`[Zoom] Initial: ${z.toFixed(2)}`);
+    console.log(`[Center] [${center.lng.toFixed(4)}, ${center.lat.toFixed(4)}]`);
     lastZoom = z;
   } catch (e) {
     // Map not ready yet
   }
   
-  // Poll zoom level (more reliable than events in some cases)
+  // Poll zoom level and center (more reliable than events in some cases)
   zoomInterval = setInterval(() => {
     try {
       const currentZoom = map.getZoom();
+      const currentCenter = map.getCenter();
       if (lastZoom === null || Math.abs(currentZoom - lastZoom) >= 0.05) {
-        // console.log(`[Zoom] ${currentZoom.toFixed(2)}`);
+        console.log(`[Zoom] ${currentZoom.toFixed(2)}`);
+        console.log(`[Center] [${currentCenter.lng.toFixed(4)}, ${currentCenter.lat.toFixed(4)}]`);
         lastZoom = currentZoom;
       }
     } catch (e) {
