@@ -15,8 +15,6 @@ import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import { createDarkBlueStyle } from "../basemaps/dark-blue/styles/darkBlueStyle.js";
 import { createDarkGrayStyle } from "../basemaps/dark-gray/styles/darkGrayStyle.js";
-import { darkBlueSettings, darkBlueStarfield } from "../basemaps/dark-blue/styles/theme.js";
-import { darkGraySettings, darkGrayStarfield } from "../basemaps/dark-gray/styles/theme.js";
 import type { BaseStyleConfig } from "../shared/styles/baseStyle.js";
 import { formatJSON } from "./format-json.js";
 
@@ -61,7 +59,99 @@ function ensureDir(filePath: string): void {
   mkdirSync(dir, { recursive: true });
 }
 
-function buildStyle(build: StyleBuild, config: BaseStyleConfig): void {
+/**
+ * Convert kebab-case to camelCase
+ * e.g., "dark-gray" -> "darkGray"
+ */
+function toCamelCase(kebab: string): string {
+  return kebab.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+}
+
+/**
+ * Generate map-config.js from theme settings for any basemap
+ */
+async function generateMapConfig(basemapName: string): Promise<void> {
+  try {
+    // Dynamically import theme module
+    const themeModule = await import(`../basemaps/${basemapName}/styles/theme.js`);
+    const camelCase = toCamelCase(basemapName);
+    const settings = themeModule[`${camelCase}Settings`];
+    const starfield = themeModule[`${camelCase}Starfield`];
+    
+    // If no settings found, skip map-config generation
+    if (!settings) {
+      console.log(`  ⚠ No settings found for ${basemapName}, skipping map-config.js`);
+      return;
+    }
+    
+    const mapConfigPath = join(projectRoot, "basemaps", basemapName, "map-config.js");
+    const projection = settings.projection || "globe";
+    
+    // Get minZoom - can be object with mercator/globe keys, or single number
+    let minZoomMercator = 0;
+    let minZoomGlobe = 2;
+    if (settings.minZoom !== undefined) {
+      if (typeof settings.minZoom === "number") {
+        minZoomMercator = settings.minZoom;
+        minZoomGlobe = settings.minZoom;
+      } else {
+        minZoomMercator = settings.minZoom.mercator ?? 0;
+        minZoomGlobe = settings.minZoom.globe ?? 2;
+      }
+    }
+    
+    // Generate starfield config section if available
+    let starfieldConfigSection = "";
+    if (starfield) {
+      const glowColors = starfield.glowColors;
+      starfieldConfigSection = `
+// Starfield configuration from theme.ts -> ${camelCase}Starfield
+window.starfieldConfig = {
+  glowColors: {
+    inner: "${glowColors.inner}",
+    middle: "${glowColors.middle}",
+    outer: "${glowColors.outer}",
+    fade: "${glowColors.fade}"
+  },
+  starCount: ${starfield.starCount},
+  glowIntensity: ${starfield.glowIntensity},
+  glowSizeMultiplier: ${starfield.glowSizeMultiplier},
+  glowBlurMultiplier: ${starfield.glowBlurMultiplier}
+};`;
+    }
+    
+    const mapConfigContent = `/**
+ * Map Configuration
+ * 
+ * This file is auto-generated from theme.ts settings.
+ * Do not edit manually - changes will be overwritten.
+ * 
+ * To change the projection, minZoom, or starfield, edit: basemaps/${basemapName}/styles/theme.ts
+ * Look for: ${camelCase}Settings.projection, ${camelCase}Settings.minZoom${starfield ? `, and ${camelCase}Starfield` : ""}
+ */
+
+// Projection setting from theme.ts -> ${camelCase}Settings.projection
+// Options: "mercator" (flat map) or "globe" (3D globe)
+window.mapProjection = "${projection}";
+
+// Minimum zoom levels from theme.ts -> ${camelCase}Settings.minZoom
+// Different values for mercator vs globe projections
+window.mapMinZoom = {
+  mercator: ${minZoomMercator},
+  globe: ${minZoomGlobe}
+};${starfieldConfigSection}
+`;
+    
+    writeFileSync(mapConfigPath, mapConfigContent, "utf8");
+    const starfieldNote = starfield ? ", starfield: enabled" : "";
+    console.log(`  ✓ Generated map-config.js (projection: ${projection}, minZoom: mercator=${minZoomMercator}, globe=${minZoomGlobe}${starfieldNote})`);
+  } catch (error) {
+    // Handle gracefully - maybe theme doesn't exist or doesn't have required exports
+    console.warn(`  ⚠ Could not generate map-config.js for ${basemapName}:`, error instanceof Error ? error.message : error);
+  }
+}
+
+async function buildStyle(build: StyleBuild, config: BaseStyleConfig): Promise<void> {
   const outputPath = join(projectRoot, build.outputPath);
   // Also create style.json for compatibility (map.js loads this)
   const styleJsonPath = outputPath.replace(".generated.json", ".json");
@@ -85,131 +175,15 @@ function buildStyle(build: StyleBuild, config: BaseStyleConfig): void {
     copyFileSync(outputPath, styleJsonPath);
     console.log(`  ✓ Copied to ${build.outputPath.replace(".generated.json", ".json")}`);
     
-    // Generate map-config.js from theme settings
-    if (build.name === "dark-blue") {
-      const mapConfigPath = join(projectRoot, "basemaps/dark-blue/map-config.js");
-      const projection = darkBlueSettings.projection || "globe";
-      
-      // Get minZoom - can be object with mercator/globe keys, or single number
-      let minZoomMercator = 0;
-      let minZoomGlobe = 2;
-      if (darkBlueSettings.minZoom !== undefined) {
-        if (typeof darkBlueSettings.minZoom === "number") {
-          minZoomMercator = darkBlueSettings.minZoom;
-          minZoomGlobe = darkBlueSettings.minZoom;
-        } else {
-          minZoomMercator = darkBlueSettings.minZoom.mercator ?? 0;
-          minZoomGlobe = darkBlueSettings.minZoom.globe ?? 2;
-        }
-      }
-      
-      // Get starfield config
-      const starfieldConfig = darkBlueStarfield;
-      const glowColors = starfieldConfig.glowColors;
-      
-      const mapConfigContent = `/**
- * Map Configuration
- * 
- * This file is auto-generated from theme.ts settings.
- * Do not edit manually - changes will be overwritten.
- * 
- * To change the projection, minZoom, or starfield, edit: basemaps/dark-blue/styles/theme.ts
- * Look for: darkBlueSettings.projection, darkBlueSettings.minZoom, and darkBlueStarfield
- */
-
-// Projection setting from theme.ts -> darkBlueSettings.projection
-// Options: "mercator" (flat map) or "globe" (3D globe)
-window.mapProjection = "${projection}";
-
-// Minimum zoom levels from theme.ts -> darkBlueSettings.minZoom
-// Different values for mercator vs globe projections
-window.mapMinZoom = {
-  mercator: ${minZoomMercator},
-  globe: ${minZoomGlobe}
-};
-
-// Starfield configuration from theme.ts -> darkBlueStarfield
-window.starfieldConfig = {
-  glowColors: {
-    inner: "${glowColors.inner}",
-    middle: "${glowColors.middle}",
-    outer: "${glowColors.outer}",
-    fade: "${glowColors.fade}"
-  },
-  starCount: ${starfieldConfig.starCount},
-  glowIntensity: ${starfieldConfig.glowIntensity},
-  glowSizeMultiplier: ${starfieldConfig.glowSizeMultiplier},
-  glowBlurMultiplier: ${starfieldConfig.glowBlurMultiplier}
-};
-`;
-      writeFileSync(mapConfigPath, mapConfigContent, "utf8");
-      console.log(`  ✓ Generated map-config.js (projection: ${projection}, minZoom: mercator=${minZoomMercator}, globe=${minZoomGlobe}, starfield: enabled)`);
-    } else if (build.name === "dark-gray") {
-      const mapConfigPath = join(projectRoot, "basemaps/dark-gray/map-config.js");
-      const projection = darkGraySettings.projection || "globe";
-      
-      // Get minZoom - can be object with mercator/globe keys, or single number
-      let minZoomMercator = 0;
-      let minZoomGlobe = 2;
-      if (darkGraySettings.minZoom !== undefined) {
-        if (typeof darkGraySettings.minZoom === "number") {
-          minZoomMercator = darkGraySettings.minZoom;
-          minZoomGlobe = darkGraySettings.minZoom;
-        } else {
-          minZoomMercator = darkGraySettings.minZoom.mercator ?? 0;
-          minZoomGlobe = darkGraySettings.minZoom.globe ?? 2;
-        }
-      }
-      
-      // Get starfield config
-      const starfieldConfig = darkGrayStarfield;
-      const glowColors = starfieldConfig.glowColors;
-      
-      const mapConfigContent = `/**
- * Map Configuration
- * 
- * This file is auto-generated from theme.ts settings.
- * Do not edit manually - changes will be overwritten.
- * 
- * To change the projection, minZoom, or starfield, edit: basemaps/dark-gray/styles/theme.ts
- * Look for: darkGraySettings.projection, darkGraySettings.minZoom, and darkGrayStarfield
- */
-
-// Projection setting from theme.ts -> darkGraySettings.projection
-// Options: "mercator" (flat map) or "globe" (3D globe)
-window.mapProjection = "${projection}";
-
-// Minimum zoom levels from theme.ts -> darkGraySettings.minZoom
-// Different values for mercator vs globe projections
-window.mapMinZoom = {
-  mercator: ${minZoomMercator},
-  globe: ${minZoomGlobe}
-};
-
-// Starfield configuration from theme.ts -> darkGrayStarfield
-window.starfieldConfig = {
-  glowColors: {
-    inner: "${glowColors.inner}",
-    middle: "${glowColors.middle}",
-    outer: "${glowColors.outer}",
-    fade: "${glowColors.fade}"
-  },
-  starCount: ${starfieldConfig.starCount},
-  glowIntensity: ${starfieldConfig.glowIntensity},
-  glowSizeMultiplier: ${starfieldConfig.glowSizeMultiplier},
-  glowBlurMultiplier: ${starfieldConfig.glowBlurMultiplier}
-};
-`;
-      writeFileSync(mapConfigPath, mapConfigContent, "utf8");
-      console.log(`  ✓ Generated map-config.js (projection: ${projection}, minZoom: mercator=${minZoomMercator}, globe=${minZoomGlobe}, starfield: enabled)`);
-    }
+    // Generate map-config.js from theme settings (if theme supports it)
+    await generateMapConfig(build.name);
   } catch (error) {
     console.error(`  ✗ Failed to build ${build.name}:`, error);
     process.exit(1);
   }
 }
 
-function main(): void {
+async function main(): Promise<void> {
   console.log("Building MapLibre basemap styles...\n");
   
   // Determine which config to use based on environment
@@ -221,7 +195,7 @@ function main(): void {
   // - Basemap sprites: Rebuild shields separately (use: npx tsx scripts/build-shields.ts <basemap>)
   
   for (const build of stylesToBuild) {
-    buildStyle(build, config);
+    await buildStyle(build, config);
   }
   
   console.log("\n✓ All styles built successfully!");
@@ -230,5 +204,8 @@ function main(): void {
   console.log("   - POI icon changes: make sprite (rebuilds shared sprites)");
 }
 
-main();
+main().catch((error) => {
+  console.error("Fatal error:", error);
+  process.exit(1);
+});
 

@@ -18,7 +18,6 @@ window.mapMinZoom = {
   mercator: 0,
   globe: 2
 };
-
 // Starfield configuration from theme.ts -> darkBlueStarfield
 window.starfieldConfig = {
   glowColors: {
