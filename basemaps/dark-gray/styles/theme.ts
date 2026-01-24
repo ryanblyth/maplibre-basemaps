@@ -386,6 +386,28 @@ export const darkGrayShields = {
 };
 
 // ============================================================================
+// STARFIELD CONFIGURATION
+// ============================================================================
+
+export const darkGrayStarfield = {
+  /** Starfield glow colors - monochrome grays for dark-gray theme */
+  glowColors: {
+    inner: "rgba(200, 200, 200, 0.9)",   // Light gray
+    middle: "rgba(150, 150, 150, 0.7)",  // Medium gray
+    outer: "rgba(100, 100, 100, 0.4)",   // Dark gray
+    fade: "rgba(50, 50, 50, 0)"          // Very dark gray
+  },
+  /** Number of stars in the starfield */
+  starCount: 200,
+  /** Glow intensity (0.0 to 1.0) */
+  glowIntensity: 0.5,
+  /** Glow size multiplier relative to globe */
+  glowSizeMultiplier: 1.25,
+  /** Glow blur multiplier */
+  glowBlurMultiplier: 0.1,
+};
+
+// ============================================================================
 // POI CONFIGURATION
 // ============================================================================
 
@@ -835,4 +857,5 @@ export const darkGrayTheme: Theme = {
   landuse: darkGrayLanduse,
   water: darkGrayWater,
   aeroway: darkGrayAeroway,
+  starfield: darkGrayStarfield,
 };
