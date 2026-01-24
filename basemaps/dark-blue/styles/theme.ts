@@ -386,6 +386,28 @@ export const darkBlueShields = {
 };
 
 // ============================================================================
+// STARFIELD CONFIGURATION
+// ============================================================================
+
+export const darkBlueStarfield = {
+  /** Starfield glow colors - blue scheme for dark-blue theme */
+  glowColors: {
+    inner: "rgba(120, 180, 255, 0.9)",   // Light blue
+    middle: "rgba(100, 150, 255, 0.7)",  // Medium blue
+    outer: "rgba(70, 120, 255, 0.4)",    // Dark blue
+    fade: "rgba(40, 80, 220, 0)"         // Very dark blue
+  },
+  /** Number of stars in the starfield */
+  starCount: 200,
+  /** Glow intensity (0.0 to 1.0) */
+  glowIntensity: 0.5,
+  /** Glow size multiplier relative to globe */
+  glowSizeMultiplier: 1.25,
+  /** Glow blur multiplier */
+  glowBlurMultiplier: 0.1,
+};
+
+// ============================================================================
 // POI CONFIGURATION
 // ============================================================================
 
@@ -836,4 +858,5 @@ export const darkBlueTheme: Theme = {
   landuse: darkBlueLanduse,
   water: darkBlueWater,
   aeroway: darkBlueAeroway,
+  starfield: darkBlueStarfield,
 };

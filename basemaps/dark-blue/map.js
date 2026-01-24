@@ -72,9 +72,25 @@ const attributionControl = new maplibregl.AttributionControl({
 map.addControl(attributionControl);
 
 // Create and attach the starry background
-// Configuration is now contained in shared/js/maplibre-gl-starfield.js
-// You can override defaults by passing options here if needed
-const starryBg = new MapLibreStarryBackground();
+// Configuration is read from window.starfieldConfig (generated from theme.ts) or uses defaults
+const starfieldConfig = (typeof window !== 'undefined' && window.starfieldConfig)
+  ? window.starfieldConfig
+  : {
+      glowColors: {
+        inner: "rgba(120, 180, 255, 0.9)",
+        middle: "rgba(100, 150, 255, 0.7)",
+        outer: "rgba(70, 120, 255, 0.4)",
+        fade: "rgba(40, 80, 220, 0)"
+      }
+    };
+
+const starryBg = new MapLibreStarryBackground(starfieldConfig);
+
+// Override glowColors if provided in config (works with CDN version)
+// This allows theme-specific colors to be applied even when using the CDN script
+if (starfieldConfig && starfieldConfig.glowColors) {
+  starryBg.config.glowColors = { ...starryBg.config.glowColors, ...starfieldConfig.glowColors };
+}
 
 // Set projection from theme configuration and attach starfield when style loads
 map.on('style.load', () => {
