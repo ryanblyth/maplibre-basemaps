@@ -14,7 +14,7 @@ A modular, TypeScript-based style system for creating MapLibre GL basemaps.
 - [Contours](./contours.md) - Topographic elevation lines
 - [Grid Lines](./grid.md) - Latitude and longitude reference lines
 - [Sprites](./sprites.md) - POI icons and highway shields (global and per-basemap)
-- [Creating a New Basemap](./creating-basemap.md) - Build your own basemap from scratch
+- [Creating a New Basemap](./creating-basemap.md) - Scaffold a new basemap with `npm run create:basemap`
 - [Exporting Basemaps](./exporting-basemaps.md) - Export basemap bundles for use in other codebases
 - [Map Elements Cheat Sheet](./MAP_ELEMENTS.md) - Quick reference for MapLibre concepts
 
@@ -44,11 +44,15 @@ The build system then generates static JSON style files that can be used with:
 # Install dependencies
 npm install
 
-# Build styles (generates style.json)
+# Build styles (generates style.json for all basemaps)
 npm run build:styles
 
-# Serve locally (requires a local server)
-# Then open basemaps/dark-blue/index.html
+# Create a new basemap from template
+npm run create:basemap -- my-basemap
+
+# Serve locally
+node serve.js
+# Open: http://localhost:8080/basemaps/dark-blue/preview.html
 ```
 
 ## File Structure
@@ -71,16 +75,23 @@ maplibre-basemaps/
 │               └── place.ts
 │
 ├── basemaps/
-│   └── dark-blue/
+│   ├── dark-blue/             # Dark blue theme (template)
+│   │   ├── styles/
+│   │   │   ├── theme.ts       # ← EDIT THIS to customize
+│   │   │   └── darkBlueStyle.ts
+│   │   ├── style.json         # Generated output
+│   │   ├── preview.html       # Preview page
+│   │   └── map.js             # Map initialization
+│   │
+│   └── dark-gray/             # Dark gray theme
 │       ├── styles/
-│       │   ├── theme.ts       # ← EDIT THIS to customize
-│       │   └── darkBlueStyle.ts
-│       ├── style.json         # Generated output
-│       ├── index.html         # Demo page
-│       └── map.js             # Map initialization
+│       │   ├── theme.ts
+│       │   └── darkGrayStyle.ts
+│       └── ...
 │
 ├── scripts/
-│   └── build-styles.ts        # Build script
+│   ├── build-styles.ts        # Build all basemap styles
+│   └── create-basemap.ts      # Scaffold new basemaps
 │
 └── docs/                      # This documentation
 ```

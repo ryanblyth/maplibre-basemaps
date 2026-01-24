@@ -1,135 +1,190 @@
 # Creating a New Basemap
 
-This guide walks through creating a new basemap from scratch.
+This guide walks through creating a new basemap from an existing template.
 
-## Step 1: Copy the Dark Blue Basemap
+## Quick Start (Recommended)
+
+Use the automated scaffolding script to create a new basemap:
 
 ```bash
-# Create new basemap directory
+npm run create:basemap -- <basemap-name>
+```
+
+For example, to create a basemap called "ocean-light":
+
+```bash
+npm run create:basemap -- ocean-light
+```
+
+This will:
+
+1. Copy the `dark-blue` template to `basemaps/ocean-light/`
+2. Rename all files appropriately (e.g., `darkBlueStyle.ts` → `oceanLightStyle.ts`)
+3. Transform all variable names and references
+4. Register the new basemap in the build system
+
+After running the script, you'll have a fully functional basemap ready to customize.
+
+### Next Steps After Scaffolding
+
+1. **Customize your theme** - Edit `basemaps/<name>/styles/theme.ts` to change colors, widths, opacities, and feature settings
+
+2. **Build the styles**:
+   ```bash
+   npm run build:styles
+   ```
+
+3. **Preview your basemap**:
+   ```bash
+   node serve.js
+   # Open: http://localhost:8080/basemaps/<name>/preview.html
+   ```
+
+4. **(Optional) Customize shield sprites**:
+   ```bash
+   npx tsx scripts/build-shields.ts <name>
+   ```
+
+---
+
+## What Gets Created
+
+The scaffolding script creates the following structure:
+
+```
+basemaps/<name>/
+├── styles/
+│   ├── theme.ts           # Theme configuration (colors, widths, features)
+│   ├── <name>Style.ts     # Style generator function
+│   └── index.ts           # Module exports
+├── sprites/               # Shield sprites (copied from template)
+│   ├── basemap.json
+│   ├── basemap.png
+│   ├── basemap@2x.json
+│   └── basemap@2x.png
+├── preview.html           # Preview page
+├── map.js                 # Map initialization script
+├── style.json             # Generated style (after build)
+└── style.generated.json   # Generated style (after build)
+```
+
+---
+
+## Naming Conventions
+
+The script expects a **kebab-case** name (lowercase with hyphens):
+
+| Input | Variable Prefix | Function Name | Display Name |
+|-------|-----------------|---------------|--------------|
+| `dark-gray` | `darkGray` | `createDarkGrayStyle` | "Dark Gray" |
+| `ocean-light` | `oceanLight` | `createOceanLightStyle` | "Ocean Light" |
+| `midnight` | `midnight` | `createMidnightStyle` | "Midnight" |
+
+---
+
+## Customizing the Theme
+
+The main file to edit is `basemaps/<name>/styles/theme.ts`. This file contains all configurable values organized into sections:
+
+### Core Sections
+
+- **Settings** - Projection, zoom limits, scaling behavior
+- **Colors** - All fills, strokes, and label colors
+- **Widths** - Line widths at different zoom levels
+- **Opacities** - Layer transparency values
+
+### Feature Sections
+
+- **Shields** - Highway shield appearance
+- **POIs** - Point of interest icons and labels
+- **Bathymetry** - Ocean depth visualization
+- **Hillshade** - Terrain shading
+- **Ice** - Glaciers and ice sheets
+- **Contours** - Elevation lines
+- **Grid** - Lat/lon reference lines
+- **Buildings** - Building fill and height colors
+- **Aeroway** - Airport features
+- **Starfield** - Globe projection background glow (optional)
+
+See [Customizing Themes](./customizing-themes.md) for detailed documentation on each section.
+
+---
+
+## Manual Setup (Reference)
+
+If you prefer to create a basemap manually, follow these steps:
+
+### Step 1: Copy the Template
+
+```bash
 cp -r basemaps/dark-blue basemaps/my-basemap
 ```
 
-## Step 2: Rename Files
+### Step 2: Rename Files
 
 ```bash
 cd basemaps/my-basemap/styles
-
-# Rename the style file
 mv darkBlueStyle.ts myBasemapStyle.ts
 ```
 
-## Step 3: Update theme.ts
+### Step 3: Update theme.ts
 
-Edit `basemaps/my-basemap/styles/theme.ts`:
+Edit `basemaps/my-basemap/styles/theme.ts` and rename all exports:
 
 ```typescript
-/**
- * My Basemap Theme
- */
+// Change these:
+export const darkBlueSettings → export const myBasemapSettings
+export const darkBlueColors → export const myBasemapColors
+export const darkBlueWidths → export const myBasemapWidths
+// ... etc for all exports
 
-import { 
-  fonts, 
-  type Theme, 
-  type ThemeColors, 
-  type ThemeWidths, 
-  type ThemeOpacities 
-} from "../../../shared/styles/theme.js";
+export const darkBlueTheme → export const myBasemapTheme
+```
 
-// ============================================================================
-// COLORS - Customize these!
-// ============================================================================
+Update the theme name:
 
-export const myColors: ThemeColors = {
-  background: "#f5f5f5",  // Light gray background
-  
-  land: {
-    wood: "#c8e6c9",      // Light green
-    grass: "#e8f5e9",
-    scrub: "#e8f5e9",
-    cropland: "#fff9c4",  // Light yellow
-    default: "#f5f5f5",
-  },
-  
-  // ... continue customizing all colors
-};
-
-// ============================================================================
-// WIDTHS
-// ============================================================================
-
-export const myWidths: ThemeWidths = {
-  // ... customize widths
-};
-
-// ============================================================================
-// OPACITIES
-// ============================================================================
-
-export const myOpacities: ThemeOpacities = {
-  // ... customize opacities
-};
-
-// ============================================================================
-// COMPLETE THEME
-// ============================================================================
-
-export const myTheme: Theme = {
-  name: "My Custom Basemap",
-  fonts,
-  colors: myColors,
-  widths: myWidths,
-  opacities: myOpacities,
+```typescript
+export const myBasemapTheme: Theme = {
+  name: "My Basemap",  // Update display name
+  // ...
 };
 ```
 
-## Step 4: Update the Style Function
+### Step 4: Update the Style Function
 
 Edit `basemaps/my-basemap/styles/myBasemapStyle.ts`:
 
 ```typescript
-/**
- * My Basemap Style
- */
-
-import type { StyleSpecification } from "maplibre-gl";
-import { createBasemapStyle } from "../../../shared/styles/layers/index.js";
-import { type BaseStyleConfig, defaultConfig } from "../../../shared/styles/baseStyle.js";
-import { myTheme } from "./theme.js";
+import { myBasemapTheme } from "./theme.js";
 
 export function createMyBasemapStyle(config: BaseStyleConfig = defaultConfig): StyleSpecification {
-  return createBasemapStyle(myTheme, config);
+  const basemapConfig: BaseStyleConfig = {
+    ...config,
+    spritePath: 'basemaps/my-basemap/sprites/basemap',
+  };
+  return createBasemapStyle(myBasemapTheme, basemapConfig);
 }
 ```
 
-## Step 5: Update index.ts
+### Step 5: Update index.ts
 
 Edit `basemaps/my-basemap/styles/index.ts`:
 
 ```typescript
-/**
- * My Basemap exports
- */
-
 export { createMyBasemapStyle } from "./myBasemapStyle.js";
-export { myTheme, myColors } from "./theme.js";
+export { myBasemapTheme, myBasemapColors } from "./theme.js";
 export type { Theme, ThemeColors } from "../../../shared/styles/theme.js";
 ```
 
-## Step 6: Add to Build Script
+### Step 6: Register in Build Script
 
 Edit `scripts/build-styles.ts`:
 
 ```typescript
-import { createDarkBlueStyle } from "../basemaps/dark-blue/styles/darkBlueStyle.js";
-import { createMyBasemapStyle } from "../basemaps/my-basemap/styles/myBasemapStyle.js";  // Add this
+import { createMyBasemapStyle } from "../basemaps/my-basemap/styles/myBasemapStyle.js";
 
 const stylesToBuild: StyleBuild[] = [
-  {
-    name: "dark-blue",
-    outputPath: "basemaps/dark-blue/style.generated.json",
-    generator: createDarkBlueStyle,
-  },
-  // Add your basemap
+  // ... existing entries
   {
     name: "my-basemap",
     outputPath: "basemaps/my-basemap/style.generated.json",
@@ -138,28 +193,31 @@ const stylesToBuild: StyleBuild[] = [
 ];
 ```
 
-## Step 7: Build and Test
+### Step 7: Clean Up Generated Files
+
+Remove old generated files:
 
 ```bash
-# Build all styles
+rm basemaps/my-basemap/style.json
+rm basemaps/my-basemap/style.generated.json
+rm basemaps/my-basemap/map-config.js  # if present
+```
+
+### Step 8: Build and Test
+
+```bash
 npm run build:styles
-
-# Start server
-python3 -m http.server 8080
-
-# Open browser
-open http://localhost:8080/basemaps/my-basemap/
+node serve.js
+# Open: http://localhost:8080/basemaps/my-basemap/preview.html
 ```
 
 ---
 
-## Complete Example: Light Theme
+## Example: Light Theme Colors
 
-Here's a complete light theme configuration:
+Here's an example of light theme colors to get you started:
 
 ```typescript
-// basemaps/light/styles/theme.ts
-
 export const lightColors: ThemeColors = {
   background: "#f8f9fa",
   
@@ -171,25 +229,11 @@ export const lightColors: ThemeColors = {
     default: "#f5f5f5",
   },
   
-  landuse: {
-    park: "#c8e6c9",
-    cemetery: "#e0e0e0",
-    pitch: "#aed581",
-    stadium: "#aed581",
-    residential: "#fafafa",
-    default: "#fafafa",
-  },
-  
   water: {
     fill: "#bbdefb",
     line: "#64b5f6",
     labelColor: "#1976d2",
     labelHalo: "#ffffff",
-  },
-  
-  boundary: {
-    country: "#9e9e9e",
-    state: "#bdbdbd",
   },
   
   road: {
@@ -202,35 +246,6 @@ export const lightColors: ThemeColors = {
     service: "#f5f5f5",
     other: "#eeeeee",
     casing: "#bdbdbd",
-    tunnel: {
-      motorway: "#ffe0b2",
-      trunk: "#fff3e0",
-      primary: "#fafafa",
-      secondary: "#fafafa",
-      tertiary: "#f5f5f5",
-      residential: "#f5f5f5",
-      service: "#eeeeee",
-      default: "#e0e0e0",
-    },
-    bridge: {
-      motorway: "#ffb74d",
-      trunk: "#ffcc80",
-      primary: "#ffffff",
-      secondary: "#ffffff",
-      tertiary: "#ffffff",
-      residential: "#ffffff",
-      default: "#fafafa",
-      casing: "#9e9e9e",
-    },
-    tunnelCasing: "#e0e0e0",
-  },
-  
-  path: "#e0e0e0",
-  railway: "#bdbdbd",
-  
-  building: {
-    fill: "#e0e0e0",
-    outline: "#bdbdbd",
   },
   
   label: {
@@ -238,80 +253,9 @@ export const lightColors: ThemeColors = {
       color: "#424242",
       halo: "#ffffff",
     },
-    road: {
-      major: { color: "#616161", opacity: 0.9 },
-      secondary: { color: "#757575", opacity: 0.8 },
-      tertiary: { color: "#9e9e9e", opacity: 0.7 },
-      other: { color: "#9e9e9e", opacity: 0.6 },
-      halo: "#ffffff",
-    },
-    water: {
-      color: "#1976d2",
-      halo: "#ffffff",
-    },
+    // ...
   },
-};
-
-export const lightWidths: ThemeWidths = {
-  boundary: {
-    country: { z0: 0.5, z6: 1.5, z10: 2.5, z15: 3.0 },
-    state: { z0: 0.3, z6: 1.0, z10: 1.5, z15: 2.0 },
-  },
-  water: {
-    line: { z0: 0.2, z6: 0.5, z10: 1.0, z15: 1.5 },
-  },
-  road: {
-    motorway: { z6: 1.2, z12: 2.5, z15: 4.0 },
-    trunk: { z6: 1.0, z12: 2.0, z15: 3.0 },
-    primary: { z6: 0.8, z12: 1.5, z15: 2.5 },
-    secondary: { z6: 0.6, z12: 1.2, z15: 2.0 },
-    tertiary: { z6: 0.5, z12: 1.0, z15: 1.5 },
-    residential: { z6: 0.4, z12: 0.8, z15: 1.2 },
-    service: { z6: 0.3, z12: 0.6, z15: 1.0 },
-    default: { z6: 0.4, z12: 0.8, z15: 1.2 },
-  },
-  roadCasing: {
-    motorway: { z8: 1.4, z12: 2.8, z14: 4.5 },
-    trunk: { z8: 1.2, z12: 2.3, z14: 3.5 },
-    primary: { z8: 1.0, z12: 1.8, z14: 3.0 },
-    secondary: { z8: 0.8, z12: 1.5, z14: 2.5 },
-    tertiary: { z8: 0.7, z12: 1.3, z14: 2.0 },
-    residential: { z8: 0.6, z12: 1.1, z14: 1.7 },
-    service: { z8: 0.5, z12: 0.9, z14: 1.5 },
-    default: { z8: 0.6, z12: 1.1, z14: 1.7 },
-  },
-  tunnel: { z10: 0.5, z12: 1.2, z14: 2.0 },
-  tunnelCasing: { z10: 0.7, z12: 1.5, z14: 2.5 },
-  bridge: { z10: 0.6, z12: 1.3, z14: 2.2 },
-  bridgeCasing: { z10: 0.8, z12: 1.6, z14: 2.8 },
-  path: { z12: 0.3, z14: 0.8 },
-  railway: { z10: 0.4, z14: 1.0 },
-};
-
-export const lightOpacities: ThemeOpacities = {
-  landcover: 0.7,
-  landuse: 0.7,
-  building: 1.0,
-  boundary: {
-    country: { z0: 0.3, z3: 0.4, z6: 0.6, z10: 0.8 },
-    state: 0.5,
-    maritime: 0,
-  },
-  tunnel: 0.6,
-  label: {
-    place: 0.9,
-    water: 1.0,
-    waterway: 0.9,
-  },
-};
-
-export const lightTheme: Theme = {
-  name: "Light Basemap",
-  fonts,
-  colors: lightColors,
-  widths: lightWidths,
-  opacities: lightOpacities,
 };
 ```
 
-
+See [Customizing Themes](./customizing-themes.md) for complete configuration options.

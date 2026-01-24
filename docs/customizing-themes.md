@@ -24,6 +24,7 @@ export const myTheme: Theme = {
   land: myLand,           // Landcover layer configuration (optional)
   landuse: myLanduse,     // Landuse layer configuration (optional)
   water: myWater,         // Water layer configuration (optional)
+  starfield: myStarfield, // Starfield background for globe projection (optional)
 };
 ```
 
@@ -392,6 +393,32 @@ grid: {
   },
 }
 ```
+
+### Starfield
+
+Starfield (background glow for globe projection) is configured separately in the `starfield` section of the theme.
+
+```typescript
+starfield: {
+  /** Starfield glow colors */
+  glowColors: {
+    inner: "rgba(120, 180, 255, 0.9)",   // Inner glow (closest to globe)
+    middle: "rgba(100, 150, 255, 0.7)",  // Middle glow
+    outer: "rgba(70, 120, 255, 0.4)",    // Outer glow
+    fade: "rgba(40, 80, 220, 0)"         // Fade color (outermost, typically transparent)
+  },
+  /** Number of stars in the starfield */
+  starCount: 200,
+  /** Glow intensity (0.0 to 1.0) */
+  glowIntensity: 0.5,
+  /** Glow size multiplier relative to globe */
+  glowSizeMultiplier: 1.25,
+  /** Glow blur multiplier */
+  glowBlurMultiplier: 0.1,
+}
+```
+
+**Note:** Starfield only appears when using globe projection. The glow colors create a radial gradient around the globe. For monochrome themes, use grayscale colors (e.g., `rgba(200, 200, 200, 0.9)`). The configuration is automatically included in `map-config.js` when you run `npm run build:styles`.
 
 ### Boundaries
 

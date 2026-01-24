@@ -1,18 +1,18 @@
 /* global maplibregl, pmtiles */
 
 /**
- * Dark Blue Basemap - Map Initialization
+ * Dark Gray Basemap - Map Initialization
  * 
  * This map uses the generated style.json which is built from TypeScript:
  *   npm run build:styles
  * 
  * For programmatic usage (e.g., in a bundled application), you can import directly:
  * 
- *   import { createDarkBlueStyle } from './styles/darkBlueStyle.js';
+ *   import { createDarkGrayStyle } from './styles/darkGrayStyle.js';
  *   
  *   const map = new maplibregl.Map({
  *     container: "map-container",
- *     style: createDarkBlueStyle(),
+ *     style: createDarkGrayStyle(),
  *     // ... other options
  *   });
  * 
@@ -22,7 +22,7 @@
 
 // ============================================================================
 // Configuration Constants
-// These values match basemaps/dark-blue/styles/theme.ts darkBlueSettings
+// These values match basemaps/dark-gray/styles/theme.ts darkGraySettings
 // Can be overridden by setting window.mapProjection/window.mapMinZoom before this script runs
 // ============================================================================
 const DEFAULT_PROJECTION = "globe";
@@ -54,7 +54,7 @@ const map = new maplibregl.Map({
   style: "./style.json?v=" + Date.now(),  // Cache-bust to ensure latest style
   center: [-98.0, 39.0],
   zoom: 4.25,
-  minZoom: minZoom,  // From theme.ts darkBlueSettings.minZoom
+  minZoom: minZoom,  // From theme.ts darkGraySettings.minZoom
   maxZoom: 22,
   hash: false,
   attributionControl: false,

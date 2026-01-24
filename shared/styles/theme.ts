@@ -465,6 +465,36 @@ export interface ThemeBathymetry {
 }
 
 // ============================================================================
+// STARFIELD TYPES - Starfield background for globe projection
+// ============================================================================
+
+/** Starfield glow colors configuration */
+export interface ThemeStarfieldGlowColors {
+  /** Inner glow color (closest to globe) */
+  inner: string;
+  /** Middle glow color */
+  middle: string;
+  /** Outer glow color */
+  outer: string;
+  /** Fade color (outermost, typically transparent) */
+  fade: string;
+}
+
+/** Starfield configuration for globe projection */
+export interface ThemeStarfield {
+  /** Starfield glow colors - monochrome or colored */
+  glowColors: ThemeStarfieldGlowColors;
+  /** Number of stars in the starfield */
+  starCount?: number;
+  /** Glow intensity (0.0 to 1.0) */
+  glowIntensity?: number;
+  /** Glow size multiplier relative to globe */
+  glowSizeMultiplier?: number;
+  /** Glow blur multiplier */
+  glowBlurMultiplier?: number;
+}
+
+// ============================================================================
 // CONTOURS TYPES - Topographic contour lines
 // ============================================================================
 
@@ -661,6 +691,8 @@ export interface Theme {
   hillshade?: ThemeHillshade;
   /** Aeroway configuration - optional, for airport/aerodrome features */
   aeroway?: ThemeAeroway;
+  /** Starfield configuration - optional, for globe projection background */
+  starfield?: ThemeStarfield;
 }
 
 // ============================================================================

@@ -16,12 +16,13 @@ class MapLibreStarryBackground {
       coronaIntensity: options.coronaIntensity !== undefined ? options.coronaIntensity : 0.0, // Corona opacity multiplier (0.0 to 1.0)
       coronaSizeMultiplier: options.coronaSizeMultiplier !== undefined ? options.coronaSizeMultiplier : 0.0, // Corona size relative to globe (1.01 = slightly larger)
       coronaBlurMultiplier: options.coronaBlurMultiplier !== undefined ? options.coronaBlurMultiplier : 0.0, // Corona blur multiplier
-      // Simplified color scheme with only blue
+      // Glow colors - merge from options if provided, otherwise use default blue scheme
       glowColors: {
         inner: "rgba(120, 180, 255, 0.9)",
         middle: "rgba(100, 150, 255, 0.7)",
         outer: "rgba(70, 120, 255, 0.4)",
-        fade: "rgba(40, 80, 220, 0)"
+        fade: "rgba(40, 80, 220, 0)",
+        ...(options.glowColors || {})
       },
     };
 
