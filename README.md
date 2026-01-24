@@ -37,16 +37,34 @@ A collection of MapLibre GL basemap styles using PMTiles and shared assets. Each
 
 2. **View a basemap:**
    - Dark Blue: http://localhost:8080/basemaps/dark-blue/preview.html
+   - Dark Gray: http://localhost:8080/basemaps/dark-gray/preview.html
 
 ## Adding a New Basemap
 
-1. Create a new directory under `/basemaps` (e.g., `/basemaps/light/`)
-2. Add `style.json` with your style definition
-3. Reference shared assets:
-   - Glyphs: `"glyphs": "http://localhost:8080/shared/assets/glyphs/{fontstack}/{range}.pbf"`
-   - Sprites: `"sprite": "http://localhost:8080/shared/assets/sprites/basemap"`
-4. Create `preview.html` to preview your basemap
-5. See `/specs/001-dark-blue-basemap.md` for a detailed build specification
+Use the scaffolding script to create a new basemap from an existing template:
+
+```bash
+npm run create:basemap -- <basemap-name>
+```
+
+For example:
+
+```bash
+npm run create:basemap -- ocean-light
+```
+
+This will:
+1. Copy the `dark-blue` template to `basemaps/ocean-light/`
+2. Rename all files and transform variable names
+3. Register the new basemap in the build system
+
+After scaffolding, customize the theme in `basemaps/<name>/styles/theme.ts` and rebuild:
+
+```bash
+npm run build:styles
+```
+
+See `docs/creating-basemap.md` for detailed documentation.
 
 ## PMTiles Sources
 
