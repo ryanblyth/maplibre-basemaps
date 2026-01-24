@@ -56,14 +56,29 @@ export const darkGraySettings: ThemeSettings = {
 /**
  * Per-label-type font configuration.
  * 
- * Available font stacks (from CDN):
- * - Noto Sans Regular, SemiBold, Italic (default)
- * - Cormorant Garamond Regular, SemiBold, Italic
+ * Available fonts (from CDN at https://data.storypath.studio/glyphs/):
  * 
- * CDN paths for Cormorant Garamond:
- * - storypath-data/glyphs/Cormorant Garamond Regular/
- * - storypath-data/glyphs/Cormorant Garamond SemiBold/
- * - storypath-data/glyphs/Cormorant Garamond Italic/
+ * Noto Sans (default):
+ *   - "Noto Sans Regular"
+ *   - "Noto Sans SemiBold"
+ *   - "Noto Sans Italic"
+ * 
+ * Cormorant Garamond:
+ *   - "Cormorant Garamond Regular"
+ *   - "Cormorant Garamond SemiBold"
+ *   - "Cormorant Garamond Italic"
+ *   - "Cormorant Garamond Bold"
+ *   - "Cormorant Garamond Bold Italic"
+ * 
+ * IM FELL English:
+ *   - "IM FELL English Regular"
+ *   - "IM FELL English Italic"
+ *   - "IM FELL English SC Regular" (small caps)
+ * 
+ * Junicode:
+ *   - "Junicode Regular"
+ *   - "Junicode Bold"
+ *   - "Junicode Italic"
  */
 export const darkGrayLabelFonts: ThemeLabelFonts = {
   /** Default font for all labels (fallback when specific label fonts not set) */
