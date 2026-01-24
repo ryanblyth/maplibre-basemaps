@@ -14,6 +14,7 @@ import { writeFileSync, mkdirSync, copyFileSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import { createDarkBlueStyle } from "../basemaps/dark-blue/styles/darkBlueStyle.js";
+import { createDarkGrayStyle } from "../basemaps/dark-gray/styles/darkGrayStyle.js";
 import { darkBlueSettings } from "../basemaps/dark-blue/styles/theme.js";
 import type { BaseStyleConfig } from "../shared/styles/baseStyle.js";
 import { formatJSON } from "./format-json.js";
@@ -46,6 +47,11 @@ const stylesToBuild: StyleBuild[] = [
     name: "dark-blue",
     outputPath: "basemaps/dark-blue/style.generated.json",
     generator: createDarkBlueStyle,
+  },
+  {
+    name: "dark-gray",
+    outputPath: "basemaps/dark-gray/style.generated.json",
+    generator: createDarkGrayStyle,
   },
 ];
 
