@@ -14,6 +14,7 @@ export const myTheme: Theme = {
   widths: myWidths,       // Line widths at each zoom
   opacities: myOpacities, // Layer transparencies
   settings: mySettings,   // Behavior settings (optional)
+  labelFonts: myLabelFonts, // Per-label-type font configuration (optional)
   shields: myShields,     // Highway shields (optional)
   pois: myPOIs,          // Point of Interest config (optional)
   bathymetry: myBathymetry, // Ocean depth visualization (optional)
@@ -25,6 +26,79 @@ export const myTheme: Theme = {
   landuse: myLanduse,     // Landuse layer configuration (optional)
   water: myWater,         // Water layer configuration (optional)
   starfield: myStarfield, // Starfield background for globe projection (optional)
+};
+```
+
+---
+
+## Label Fonts
+
+Configure which fonts to use for different label types. If not specified, labels fall back to the default Noto Sans family.
+
+### Available Fonts
+
+All fonts are served from the CDN at `https://data.storypath.studio/glyphs/`:
+
+| Font Family | Variants |
+|-------------|----------|
+| **Noto Sans** (default) | Regular, SemiBold, Italic |
+| **Cormorant Garamond** | Regular, SemiBold, Italic, Bold, Bold Italic |
+| **IM FELL English** | Regular, Italic, SC Regular (small caps) |
+| **Junicode** | Regular, Bold, Italic |
+
+### Per-Label-Type Configuration
+
+```typescript
+import { ThemeLabelFonts } from "../../../shared/styles/theme.js";
+
+export const myLabelFonts: ThemeLabelFonts = {
+  // Default font for all labels (fallback when specific fonts not set)
+  default: ["Noto Sans Regular"],
+  
+  // Font for place labels (continents, countries, cities, etc.)
+  place: ["Cormorant Garamond Regular"],
+  
+  // Font for road labels
+  road: ["Noto Sans Regular"],
+  
+  // Font for water labels (oceans, lakes, rivers)
+  water: ["Cormorant Garamond Italic"],
+  
+  // Font for POI labels
+  poi: ["Noto Sans Regular"],
+  
+  // Font for grid labels (latitude/longitude)
+  grid: ["Noto Sans Regular"],
+};
+```
+
+Then add it to your theme:
+
+```typescript
+export const myTheme: Theme = {
+  // ...
+  labelFonts: myLabelFonts,
+  // ...
+};
+```
+
+### Font Fallback Order
+
+For each label type, fonts fall back in this order:
+1. Specific label font (e.g., `labelFonts.place`)
+2. Default label font (`labelFonts.default`)
+3. Theme fonts (`fonts.regular` or `fonts.italic` depending on label type)
+
+### Using Decorative Fonts
+
+For a medieval or historical map style:
+
+```typescript
+export const medievalLabelFonts: ThemeLabelFonts = {
+  default: ["IM FELL English Regular"],
+  place: ["IM FELL English SC Regular"],  // Small caps for places
+  water: ["IM FELL English Italic"],
+  road: ["Junicode Regular"],
 };
 ```
 
