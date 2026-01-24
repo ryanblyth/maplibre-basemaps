@@ -13,8 +13,11 @@ export function createRoadLabelLayers(theme: Theme): LayerSpecification[] {
   const tertiaryFilter = ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["match", ["get", "class"], ["tertiary", "residential"], true, false], ["has", "name"]];
   const otherFilter = ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["!", ["match", ["get", "class"], ["motorway", "trunk", "primary", "secondary", "tertiary", "residential"], true, false]], ["has", "name"]];
   
+  // Use theme-configured font for road labels, with fallback to default fonts
+  const roadFont = theme.labelFonts?.road ?? theme.labelFonts?.default ?? theme.fonts.regular;
+  
   const baseLabelLayout = { 
-    "text-font": theme.fonts.regular, 
+    "text-font": roadFont, 
     "symbol-placement": "line" as const, 
     "text-rotation-alignment": "map" as const, 
     "text-pitch-alignment": "viewport" as const, 

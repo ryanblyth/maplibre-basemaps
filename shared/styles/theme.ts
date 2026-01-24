@@ -14,9 +14,43 @@ export const fonts = {
   regular: ["Noto Sans Regular"] as [string],
   semibold: ["Noto Sans SemiBold"] as [string],
   italic: ["Noto Sans Italic"] as [string],
+  // Cormorant Garamond family (CDN: glyphs/Cormorant Garamond {variant}/)
+  cormorantRegular: ["Cormorant Garamond Regular"] as [string],
+  cormorantSemiBold: ["Cormorant Garamond SemiBold"] as [string],
+  cormorantItalic: ["Cormorant Garamond Italic"] as [string],
+  cormorantBold: ["Cormorant Garamond Bold"] as [string],
+  cormorantBoldItalic: ["Cormorant Garamond Bold Italic"] as [string],
+  // IM FELL English family (CDN: glyphs/IM FELL English {variant}/)
+  imFellRegular: ["IM FELL English Regular"] as [string],
+  imFellItalic: ["IM FELL English Italic"] as [string],
+  imFellScRegular: ["IM FELL English SC Regular"] as [string],
+  // Junicode family (CDN: glyphs/Junicode {variant}/)
+  junicodeRegular: ["Junicode Regular"] as [string],
+  junicodeBold: ["Junicode Bold"] as [string],
+  junicodeItalic: ["Junicode Italic"] as [string],
 } as const;
 
 export type FontStack = typeof fonts;
+
+// ============================================================================
+// LABEL FONT TYPES - Per-label-type font configuration
+// ============================================================================
+
+/** Per-label-type font configuration */
+export interface ThemeLabelFonts {
+  /** Default font for all labels (fallback when specific label fonts not set) */
+  default?: string[];
+  /** Font for place labels (continents, countries, cities, etc.) */
+  place?: string[];
+  /** Font for road labels */
+  road?: string[];
+  /** Font for water labels (oceans, lakes, rivers) */
+  water?: string[];
+  /** Font for POI labels */
+  poi?: string[];
+  /** Font for grid labels (latitude/longitude) */
+  grid?: string[];
+}
 
 // ============================================================================
 // COLOR TYPES
@@ -666,6 +700,8 @@ export interface Theme {
   widths: ThemeWidths;
   opacities: ThemeOpacities;
   settings?: ThemeSettings;
+  /** Per-label-type font configuration - optional, falls back to fonts.regular/italic */
+  labelFonts?: ThemeLabelFonts;
   /** Highway shield configuration - optional, defaults to enabled with standard sprites */
   shields?: ThemeShields;
   /** POI configuration - optional, defaults to all enabled */

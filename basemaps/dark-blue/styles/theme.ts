@@ -16,7 +16,8 @@ import {
   type ThemeWidths, 
   type ThemeOpacities,
   type ThemePOIs,
-  type ThemeSettings
+  type ThemeSettings,
+  type ThemeLabelFonts
 } from "../../../shared/styles/theme.js";
 
 // ============================================================================
@@ -46,6 +47,42 @@ export const darkBlueSettings: ThemeSettings = {
    * Below this zoom, roads use fixed pixel widths.
    */
   realWorldScaleMinZoom: 16,
+};
+
+// ============================================================================
+// LABEL FONTS
+// ============================================================================
+
+/**
+ * Per-label-type font configuration.
+ * 
+ * Available font stacks (from CDN):
+ * - Noto Sans Regular, SemiBold, Italic (default)
+ * - Cormorant Garamond Regular, SemiBold, Italic
+ * 
+ * CDN paths for Cormorant Garamond:
+ * - storypath-data/glyphs/Cormorant Garamond Regular/
+ * - storypath-data/glyphs/Cormorant Garamond SemiBold/
+ * - storypath-data/glyphs/Cormorant Garamond Italic/
+ */
+export const darkBlueLabelFonts: ThemeLabelFonts = {
+  /** Default font for all labels (fallback when specific label fonts not set) */
+  default: ["Noto Sans Regular"],
+  
+  /** Font for place labels (continents, countries, cities, etc.) */
+  place: ["Noto Sans Regular"],
+  
+  /** Font for road labels */
+  road: ["Noto Sans Regular"],
+  
+  /** Font for water labels (oceans, lakes, rivers) - uses italic by default */
+  water: ["Noto Sans Italic"],
+  
+  /** Font for POI labels */
+  poi: ["Noto Sans Regular"],
+  
+  /** Font for grid labels (latitude/longitude) */
+  grid: ["Noto Sans Regular"],
 };
 
 // ============================================================================
@@ -841,6 +878,7 @@ export const darkBlueAeroway = {
 export const darkBlueTheme: Theme = {
   name: "Dark Blue Basemap",
   fonts,
+  labelFonts: darkBlueLabelFonts,
   colors: darkBlueColors,
   widths: darkBlueWidths,
   opacities: darkBlueOpacities,

@@ -48,13 +48,16 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
     "text-halo-blur": 1,
   };
   
+  // Use theme-configured font for POI labels, with fallback to default fonts
+  const poiFont = theme.labelFonts?.poi ?? theme.labelFonts?.default ?? theme.fonts.regular;
+  
   // Base layout for POI icons
   const baseLayout = {
     "icon-size": poiConfig.iconSize || 0.8,
     "icon-allow-overlap": false,
     "icon-ignore-placement": false,
     "text-field": createTextField(),
-    "text-font": theme.fonts.regular,
+    "text-font": poiFont,
     "text-size": ["interpolate", ["linear"], ["zoom"], 12, 10, 14, 12, 16, 14],
     "text-offset": [0, 1.2],
     "text-anchor": "top",
@@ -623,7 +626,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
           "icon-ignore-placement": false,
           "icon-optional": false,
           "text-field": createTextField(),
-          "text-font": theme.fonts.regular,
+          "text-font": poiFont,
           "text-size": ["interpolate", ["linear"], ["zoom"], 14, 10, 15, 12, 16, 14],
           "text-offset": [0, 1.2],
           "text-anchor": "top",
@@ -678,7 +681,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
           "icon-ignore-placement": false,
           "icon-optional": false,
           "text-field": createTextField(),
-          "text-font": theme.fonts.regular,
+          "text-font": poiFont,
           "text-size": ["interpolate", ["linear"], ["zoom"], 14.5, 10, 15, 12, 16, 14],
           "text-offset": [0, 1.2],
           "text-anchor": "top",
@@ -741,7 +744,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
           "icon-ignore-placement": false,
           "icon-optional": false,
           "text-field": createTextField(),
-          "text-font": theme.fonts.regular,
+          "text-font": poiFont,
           "text-size": ["interpolate", ["linear"], ["zoom"], 15, 9, 16, 12],
           "text-offset": [0, 1.2],
           "text-anchor": "top",
