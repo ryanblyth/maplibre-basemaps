@@ -104,6 +104,7 @@ The main file to edit is `basemaps/<name>/styles/theme.ts`. This file contains a
 - **Grid** - Lat/lon reference lines
 - **Buildings** - Building fill and height colors
 - **Aeroway** - Airport features
+- **Starfield** - Globe projection background glow (optional)
 
 See [Customizing Themes](./customizing-themes.md) for detailed documentation on each section.
 
