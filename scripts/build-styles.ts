@@ -23,14 +23,16 @@ const projectRoot = join(__dirname, "..");
 
 /** Configuration for production build */
 const productionConfig: BaseStyleConfig = {
-  glyphsBaseUrl: "http://localhost:8080",
+  glyphsBaseUrl: "https://data.storypath.studio",
+  glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",
   dataBaseUrl: "https://data.storypath.studio",
 };
 
 /** Configuration for local development */
 const localConfig: BaseStyleConfig = {
-  glyphsBaseUrl: "http://localhost:8080",
+  glyphsBaseUrl: "https://data.storypath.studio",
+  glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",
   dataBaseUrl: "https://data.storypath.studio",
 };

@@ -16,7 +16,8 @@ import {
   type ThemeWidths, 
   type ThemeOpacities,
   type ThemePOIs,
-  type ThemeSettings
+  type ThemeSettings,
+  type ThemeLabelFonts
 } from "../../../shared/styles/theme.js";
 
 // ============================================================================
@@ -46,6 +47,57 @@ export const darkGraySettings: ThemeSettings = {
    * Below this zoom, roads use fixed pixel widths.
    */
   realWorldScaleMinZoom: 16,
+};
+
+// ============================================================================
+// LABEL FONTS
+// ============================================================================
+
+/**
+ * Per-label-type font configuration.
+ * 
+ * Available fonts (from CDN at https://data.storypath.studio/glyphs/):
+ * 
+ * Noto Sans (default):
+ *   - "Noto Sans Regular"
+ *   - "Noto Sans SemiBold"
+ *   - "Noto Sans Italic"
+ * 
+ * Cormorant Garamond:
+ *   - "Cormorant Garamond Regular"
+ *   - "Cormorant Garamond SemiBold"
+ *   - "Cormorant Garamond Italic"
+ *   - "Cormorant Garamond Bold"
+ *   - "Cormorant Garamond Bold Italic"
+ * 
+ * IM FELL English:
+ *   - "IM FELL English Regular"
+ *   - "IM FELL English Italic"
+ *   - "IM FELL English SC Regular" (small caps)
+ * 
+ * Junicode:
+ *   - "Junicode Regular"
+ *   - "Junicode Bold"
+ *   - "Junicode Italic"
+ */
+export const darkGrayLabelFonts: ThemeLabelFonts = {
+  /** Default font for all labels (fallback when specific label fonts not set) */
+  default: ["Noto Sans Regular"],
+  
+  /** Font for place labels (continents, countries, cities, etc.) */
+  place: ["Noto Sans Regular"],
+  
+  /** Font for road labels */
+  road: ["Noto Sans Regular"],
+  
+  /** Font for water labels (oceans, lakes, rivers) - uses italic by default */
+  water: ["Noto Sans Italic"],
+  
+  /** Font for POI labels */
+  poi: ["Noto Sans Regular"],
+  
+  /** Font for grid labels (latitude/longitude) */
+  grid: ["Noto Sans Regular"],
 };
 
 // ============================================================================
@@ -840,6 +892,7 @@ export const darkGrayAeroway = {
 export const darkGrayTheme: Theme = {
   name: "Dark Gray Basemap",
   fonts,
+  labelFonts: darkGrayLabelFonts,
   colors: darkGrayColors,
   widths: darkGrayWidths,
   opacities: darkGrayOpacities,

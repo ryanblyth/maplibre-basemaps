@@ -114,6 +114,9 @@ export function createGridLayers(theme: Theme): LayerSpecification[] {
   const gridMinZoom = grid.minZoom ?? DEFAULT_MIN_ZOOM;
   const gridMaxZoom = grid.maxZoom ?? DEFAULT_MAX_ZOOM;
   
+  // Use theme-configured font for grid labels, with fallback to default fonts
+  const gridFont = theme.labelFonts?.grid ?? theme.labelFonts?.default ?? theme.fonts.regular;
+  
   // Helper function to create grid line and label layers
   function createGridLineLayers(
     kind: "parallel" | "meridian",
@@ -180,7 +183,7 @@ export function createGridLayers(theme: Theme): LayerSpecification[] {
         filter,
         layout: {
           "text-field": labelField,
-          "text-font": theme.fonts.regular,
+          "text-font": gridFont,
           "text-size": labelSize,
           "symbol-placement": "line",
           "text-rotation-alignment": "map",

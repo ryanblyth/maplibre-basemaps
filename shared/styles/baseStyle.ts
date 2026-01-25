@@ -9,8 +9,10 @@ import type { StyleSpecification, LayerSpecification, SourceSpecification } from
 
 /** Configuration options for base style */
 export interface BaseStyleConfig {
-  /** Base URL for glyph files (e.g., "http://localhost:8080") */
+  /** Base URL for glyph files (e.g., "http://localhost:8080" or "https://data.storypath.studio") */
   glyphsBaseUrl: string;
+  /** Glyphs path relative to glyphsBaseUrl (e.g., "glyphs" or "shared/assets/glyphs"). Defaults to "shared/assets/glyphs" for local dev */
+  glyphsPath?: string;
   /** Base URL for sprite files (e.g., "http://localhost:8080") */
   spriteBaseUrl: string;
   /** Sprite path relative to spriteBaseUrl (e.g., "basemaps/dark-blue/sprites/basemap"). Defaults to "shared/assets/sprites/basemap" for backward compatibility */
@@ -51,10 +53,12 @@ export function createGlobalSources(config: BaseStyleConfig): Record<string, Sou
 export function createBaseStyle(config: BaseStyleConfig = defaultConfig): StyleSpecification {
   // Use configurable sprite path, defaulting to shared location for backward compatibility
   const spritePath = config.spritePath || 'shared/assets/sprites/basemap';
+  // Use configurable glyphs path, defaulting to shared/assets/glyphs for local dev
+  const glyphsPath = config.glyphsPath || 'shared/assets/glyphs';
   return {
     version: 8,
     name: "Base Style",
-    glyphs: `${config.glyphsBaseUrl}/shared/assets/glyphs/{fontstack}/{range}.pbf`,
+    glyphs: `${config.glyphsBaseUrl}/${glyphsPath}/{fontstack}/{range}.pbf`,
     sprite: `${config.spriteBaseUrl}/${spritePath}`,
     sources: createGlobalSources(config),
     layers: [],

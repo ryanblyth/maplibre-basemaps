@@ -1,7 +1,7 @@
 {
   "version": 8,
   "name": "Dark Blue Basemap",
-  "glyphs": "http://localhost:8080/shared/assets/glyphs/{fontstack}/{range}.pbf",
+  "glyphs": "https://data.storypath.studio/glyphs/{fontstack}/{range}.pbf",
   "sprite": "http://localhost:8080/basemaps/dark-blue/sprites/basemap",
   "sources": {
     "world_labels": {

@@ -9,14 +9,74 @@
  *   basemaps/<name>/styles/theme.ts
  */
 
-/** Available font stacks (shared across all basemaps) */
+/**
+ * Available font stacks (shared across all basemaps)
+ * 
+ * All fonts available from CDN at https://data.storypath.studio/glyphs/
+ * 
+ * Noto Sans (default):
+ *   - "Noto Sans Regular"
+ *   - "Noto Sans SemiBold"
+ *   - "Noto Sans Italic"
+ * 
+ * Cormorant Garamond:
+ *   - "Cormorant Garamond Regular"
+ *   - "Cormorant Garamond SemiBold"
+ *   - "Cormorant Garamond Italic"
+ *   - "Cormorant Garamond Bold"
+ *   - "Cormorant Garamond Bold Italic"
+ * 
+ * IM FELL English:
+ *   - "IM FELL English Regular"
+ *   - "IM FELL English Italic"
+ *   - "IM FELL English SC Regular" (small caps)
+ * 
+ * Junicode:
+ *   - "Junicode Regular"
+ *   - "Junicode Bold"
+ *   - "Junicode Italic"
+ */
 export const fonts = {
   regular: ["Noto Sans Regular"] as [string],
   semibold: ["Noto Sans SemiBold"] as [string],
   italic: ["Noto Sans Italic"] as [string],
+  // Cormorant Garamond family
+  cormorantRegular: ["Cormorant Garamond Regular"] as [string],
+  cormorantSemiBold: ["Cormorant Garamond SemiBold"] as [string],
+  cormorantItalic: ["Cormorant Garamond Italic"] as [string],
+  cormorantBold: ["Cormorant Garamond Bold"] as [string],
+  cormorantBoldItalic: ["Cormorant Garamond Bold Italic"] as [string],
+  // IM FELL English family
+  imFellRegular: ["IM FELL English Regular"] as [string],
+  imFellItalic: ["IM FELL English Italic"] as [string],
+  imFellScRegular: ["IM FELL English SC Regular"] as [string],
+  // Junicode family
+  junicodeRegular: ["Junicode Regular"] as [string],
+  junicodeBold: ["Junicode Bold"] as [string],
+  junicodeItalic: ["Junicode Italic"] as [string],
 } as const;
 
 export type FontStack = typeof fonts;
+
+// ============================================================================
+// LABEL FONT TYPES - Per-label-type font configuration
+// ============================================================================
+
+/** Per-label-type font configuration */
+export interface ThemeLabelFonts {
+  /** Default font for all labels (fallback when specific label fonts not set) */
+  default?: string[];
+  /** Font for place labels (continents, countries, cities, etc.) */
+  place?: string[];
+  /** Font for road labels */
+  road?: string[];
+  /** Font for water labels (oceans, lakes, rivers) */
+  water?: string[];
+  /** Font for POI labels */
+  poi?: string[];
+  /** Font for grid labels (latitude/longitude) */
+  grid?: string[];
+}
 
 // ============================================================================
 // COLOR TYPES
@@ -666,6 +726,8 @@ export interface Theme {
   widths: ThemeWidths;
   opacities: ThemeOpacities;
   settings?: ThemeSettings;
+  /** Per-label-type font configuration - optional, falls back to fonts.regular/italic */
+  labelFonts?: ThemeLabelFonts;
   /** Highway shield configuration - optional, defaults to enabled with standard sprites */
   shields?: ThemeShields;
   /** POI configuration - optional, defaults to all enabled */
@@ -753,6 +815,34 @@ export interface ThemeWater {
   useOverrideColorWaterway?: boolean;
   /** Override color to use for all waterway types when useOverrideColorWaterway is true */
   overrideColorWaterway?: string;
+}
+
+// ============================================================================
+// HILLSHADE CONFIGURATION
+// ============================================================================
+
+/** Configuration for hillshade layers (terrain shading from elevation data) */
+export interface ThemeHillshade {
+  /** Whether to show hillshade at all */
+  enabled?: boolean;
+  /** Minimum zoom level to show hillshade */
+  minZoom?: number;
+  /** Maximum zoom level to show hillshade (fades out after this) */
+  maxZoom?: number;
+  /** Base opacity for hillshade (0.0 to 1.0) */
+  opacity?: number;
+  /** Illumination direction (0-360 degrees, where 0 is north, 90 is east) */
+  illuminationDirection?: number;
+  /** Illumination anchor - "map" (fixed to map) or "viewport" (fixed to viewport) */
+  illuminationAnchor?: "map" | "viewport";
+  /** Exaggeration factor for terrain relief (0.0 to 1.0, higher = more dramatic) */
+  exaggeration?: number;
+  /** Shadow color (darker areas) */
+  shadowColor?: string;
+  /** Highlight color (lighter areas) */
+  highlightColor?: string;
+  /** Accent color (mid-tones) */
+  accentColor?: string;
 }
 
 // ============================================================================
