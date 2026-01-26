@@ -425,6 +425,105 @@ function setupRoadClickHandler() {
     console.groupEnd();
   });
   
+  // Stadium Inspector: Query stadium features at click location
+  map.on('click', (e) => {
+    console.group('🏟️ Stadium Inspector');
+    console.log('Click Location:', e.lngLat);
+    console.log('Zoom Level:', map.getZoom().toFixed(2));
+    
+    // Query rendered features for stadiums
+    const bbox = [
+      [e.point.x - 10, e.point.y - 10],
+      [e.point.x + 10, e.point.y + 10]
+    ];
+    const renderedFeatures = map.queryRenderedFeatures(bbox);
+    
+    // Filter for stadium layers
+    const stadiumFeatures = renderedFeatures.filter(f => 
+      f.layer?.id?.includes('stadium')
+    );
+    
+    if (stadiumFeatures.length > 0) {
+      console.log(`\n🏟️ Stadium Analysis (${stadiumFeatures.length} features):`);
+      stadiumFeatures.forEach((f, i) => {
+        console.log(`  ${i + 1}. ${f.properties?.name || f.properties?.['name:en'] || 'unnamed'}`);
+        console.log(`     Class: ${f.properties?.class || 'N/A'}`);
+        console.log(`     Subclass: ${f.properties?.subclass || 'N/A'}`);
+        console.log(`     Place: ${f.properties?.place || 'N/A'}`);
+        console.log(`     Source Layer: ${f.sourceLayer || 'N/A'}`);
+        console.log(`     Layer: ${f.layer?.id || 'N/A'}`);
+        console.log(`     All properties:`, f.properties);
+      });
+    } else {
+      console.log('\nℹ️  No stadiums found in rendered features at this location');
+      
+      // Check source features to see if stadiums exist but aren't rendering
+      const sources = ['world_low', 'world_mid', 'us_high', 'poi_us', 'world_labels'];
+      console.log('\n🔍 Checking source features for stadiums...');
+      sources.forEach(sourceName => {
+        try {
+          // Check poi layer for stadiums
+          const poiFeatures = map.querySourceFeatures(sourceName, {
+            sourceLayer: 'poi',
+            filter: undefined
+          });
+          
+          const stadiumPoiFeatures = poiFeatures.filter(f => {
+            const props = f.properties || {};
+            const classVal = (props.class || '').toLowerCase();
+            const subclass = (props.subclass || '').toLowerCase();
+            return classVal.includes('stadium') || 
+                   (classVal.includes('entertainment') && subclass.includes('stadium')) ||
+                   (classVal.includes('sport') && subclass.includes('stadium')) ||
+                   (classVal.includes('leisure') && subclass.includes('stadium')) ||
+                   (classVal.includes('amenity') && subclass.includes('stadium'));
+          });
+          
+          if (stadiumPoiFeatures.length > 0) {
+            console.log(`\n✅ Found ${stadiumPoiFeatures.length} stadium POI features in ${sourceName}:`);
+            stadiumPoiFeatures.slice(0, 5).forEach((f, i) => {
+              console.log(`  ${i + 1}. ${f.properties?.name || f.properties?.['name:en'] || 'unnamed'}`);
+              console.log(`     Class: ${f.properties?.class || 'N/A'}`);
+              console.log(`     Subclass: ${f.properties?.subclass || 'N/A'}`);
+              console.log(`     Has name: ${!!f.properties?.name}`);
+              console.log(`     All properties:`, f.properties);
+            });
+          }
+          
+          // Check place layer for stadiums
+          try {
+            const placeFeatures = map.querySourceFeatures(sourceName, {
+              sourceLayer: 'place',
+              filter: undefined
+            });
+            
+            const stadiumPlaceFeatures = placeFeatures.filter(f => {
+              const props = f.properties || {};
+              const place = (props.place || '').toLowerCase();
+              return place.includes('stadium') || place.includes('arena');
+            });
+            
+            if (stadiumPlaceFeatures.length > 0) {
+              console.log(`\n✅ Found ${stadiumPlaceFeatures.length} stadium place features in ${sourceName}:`);
+              stadiumPlaceFeatures.slice(0, 5).forEach((f, i) => {
+                console.log(`  ${i + 1}. ${f.properties?.name || f.properties?.['name:en'] || 'unnamed'}`);
+                console.log(`     Place: ${f.properties?.place || 'N/A'}`);
+                console.log(`     Has name: ${!!f.properties?.name}`);
+                console.log(`     All properties:`, f.properties);
+              });
+            }
+          } catch (err) {
+            // Source-layer may not exist, ignore
+          }
+        } catch (err) {
+          // Source or source-layer may not exist, ignore
+        }
+      });
+    }
+    
+    console.groupEnd();
+  });
+  
 }
 
 /**
