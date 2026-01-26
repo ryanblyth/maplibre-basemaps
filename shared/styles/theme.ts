@@ -463,6 +463,21 @@ export interface ThemeSettings {
     mercator?: number;
     globe?: number;
   } | number; // Also supports a single number for both projections
+  
+  /**
+   * Initial map view configuration.
+   * Controls the initial center point, zoom level, camera tilt, and rotation when the map loads.
+   */
+  view?: {
+    /** Initial center point [longitude, latitude] */
+    center?: [number, number];
+    /** Initial zoom level */
+    zoom?: number;
+    /** Camera tilt angle in degrees (0-60, default 0). 0 = straight down, higher = more tilted */
+    pitch?: number;
+    /** Rotation angle in degrees (0-360, default 0). 0 = north, 90 = east, 180 = south, 270 = west */
+    bearing?: number;
+  };
 }
 
 // ============================================================================

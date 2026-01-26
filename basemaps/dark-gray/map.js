@@ -23,10 +23,14 @@
 // ============================================================================
 // Configuration Constants
 // These values match basemaps/dark-gray/styles/theme.ts darkGraySettings
-// Can be overridden by setting window.mapProjection/window.mapMinZoom before this script runs
+// Can be overridden by setting window.mapProjection/window.mapMinZoom/window.mapCenter/window.mapZoom/window.mapPitch/window.mapBearing before this script runs
 // ============================================================================
 const DEFAULT_PROJECTION = "globe";
 const DEFAULT_MIN_ZOOM = { mercator: 0, globe: 2 };
+const DEFAULT_CENTER = [-98.0, 39.0];
+const DEFAULT_ZOOM = 4.25;
+const DEFAULT_PITCH = 0;
+const DEFAULT_BEARING = 0;
 
 // Get projection and minZoom from window overrides or use defaults
 const projectionType = (typeof window !== 'undefined' && window.mapProjection) 
@@ -42,18 +46,37 @@ const minZoom = projectionType === 'mercator'
   ? minZoomConfig.mercator 
   : minZoomConfig.globe;
 
+// Get center, zoom, pitch, and bearing from window overrides or use defaults
+const center = (typeof window !== 'undefined' && window.mapCenter) 
+  ? window.mapCenter 
+  : DEFAULT_CENTER;
+
+const zoom = (typeof window !== 'undefined' && window.mapZoom !== undefined) 
+  ? window.mapZoom 
+  : DEFAULT_ZOOM;
+
+const pitch = (typeof window !== 'undefined' && window.mapPitch !== undefined) 
+  ? window.mapPitch 
+  : DEFAULT_PITCH;
+
+const bearing = (typeof window !== 'undefined' && window.mapBearing !== undefined) 
+  ? window.mapBearing 
+  : DEFAULT_BEARING;
+
 // Register PMTiles protocol
 const protocol = new pmtiles.Protocol();
 maplibregl.addProtocol("pmtiles", protocol.tile);
 
 // Initialize map (disable default attribution control)
 // maxZoom set high to allow overzooming beyond source limits (6 for world, 15 for US)
-// minZoom comes from theme configuration (different for mercator vs globe)
+// minZoom, center, zoom, pitch, and bearing come from theme configuration
 const map = new maplibregl.Map({
   container: "map-container",
   style: "./style.json?v=" + Date.now(),  // Cache-bust to ensure latest style
-  center: [-98.0, 39.0],
-  zoom: 4.25,
+  center: center,  // From theme.ts darkGraySettings.view.center
+  zoom: zoom,  // From theme.ts darkGraySettings.view.zoom
+  pitch: pitch,  // From theme.ts darkGraySettings.view.pitch
+  bearing: bearing,  // From theme.ts darkGraySettings.view.bearing
   minZoom: minZoom,  // From theme.ts darkGraySettings.minZoom
   maxZoom: 22,
   hash: false,

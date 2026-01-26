@@ -116,6 +116,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
       layout: {
         ...baseLayout,
         "icon-image": "airport",
+        "icon-size": 0.9,
       },
         paint: poiPaint,
       });
@@ -142,6 +143,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
       layout: {
         ...baseLayout,
         "icon-image": "airfield",
+        "icon-size": 0.9,
       },
         paint: poiPaint,
       });
@@ -170,6 +172,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
       layout: {
         ...baseLayout,
         "icon-image": "airport",
+        "icon-size": 0.9,
       },
         paint: poiPaint,
       });
@@ -510,6 +513,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         layout: {
           ...baseLayout,
           "icon-image": "zoo",
+          "icon-size": 0.9,
         },
         paint: poiPaint,
       });
@@ -557,6 +561,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
       layout: {
         ...baseLayout,
         "icon-image": "stadium",
+        "icon-size": 0.9,
         "icon-allow-overlap": true,
         "icon-ignore-placement": true,
         "icon-optional": false,
@@ -588,6 +593,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
       layout: {
         ...baseLayout,
         "icon-image": "stadium",
+        "icon-size": 0.9,
         "icon-allow-overlap": true,
         "icon-ignore-placement": true,
         "icon-optional": false,
@@ -623,6 +629,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
       layout: {
         ...baseLayout,
         "icon-image": "park",
+        "icon-size": 0.9,
       },
         paint: poiPaint,
       });
@@ -899,6 +906,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
       layout: {
         ...baseLayout,
         "icon-image": "airport",
+        "icon-size": 0.9,
         "icon-ignore-placement": false, // Allow collision detection for icons
         "text-ignore-placement": false, // Allow collision detection for labels
       },
@@ -927,6 +935,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         layout: {
           ...baseLayout,
           "icon-image": "park",
+          "icon-size": 0.9,
           "symbol-placement": "point",
           // Prevent duplicate labels by requiring minimum distance
           "symbol-spacing": 250, // Minimum distance between symbols in pixels

@@ -3397,7 +3397,7 @@
         ]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -3434,7 +3434,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["all", ["match", ["get", "class"], ["transport"], true, false], ["==", ["get", "subclass"], "airfield"]]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -3471,7 +3471,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["airport", "aerodrome"], true, false]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -3831,7 +3831,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["==", ["get", "class"], "zoo"], ["==", ["get", "subclass"], "zoo"]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -3877,7 +3877,7 @@
         ]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": true,
         "icon-ignore-placement": true,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -3915,7 +3915,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["stadium", "stadiums"], true, false]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": true,
         "icon-ignore-placement": true,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -3965,7 +3965,7 @@
         ]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -4291,7 +4291,7 @@
         ]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -4328,7 +4328,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["all", ["match", ["get", "class"], ["transport"], true, false], ["==", ["get", "subclass"], "airfield"]]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -4365,7 +4365,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["airport", "aerodrome"], true, false]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -4725,7 +4725,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["==", ["get", "class"], "zoo"], ["==", ["get", "subclass"], "zoo"]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -4771,7 +4771,7 @@
         ]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": true,
         "icon-ignore-placement": true,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -4809,7 +4809,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["stadium", "stadiums"], true, false]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": true,
         "icon-ignore-placement": true,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -4859,7 +4859,7 @@
         ]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -5185,7 +5185,7 @@
         ]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -5222,7 +5222,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["all", ["match", ["get", "class"], ["transport"], true, false], ["==", ["get", "subclass"], "airfield"]]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -5259,7 +5259,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["airport", "aerodrome"], true, false]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -5619,7 +5619,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["==", ["get", "class"], "zoo"], ["==", ["get", "subclass"], "zoo"]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -5665,7 +5665,7 @@
         ]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": true,
         "icon-ignore-placement": true,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -5703,7 +5703,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["stadium", "stadiums"], true, false]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": true,
         "icon-ignore-placement": true,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -5753,7 +5753,7 @@
         ]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -6079,7 +6079,7 @@
         ]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -6116,7 +6116,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["all", ["match", ["get", "class"], ["transport"], true, false], ["==", ["get", "subclass"], "airfield"]]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -6153,7 +6153,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["airport", "aerodrome"], true, false]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -6513,7 +6513,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["==", ["get", "class"], "zoo"], ["==", ["get", "subclass"], "zoo"]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -6559,7 +6559,7 @@
         ]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": true,
         "icon-ignore-placement": true,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -6597,7 +6597,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["stadium", "stadiums"], true, false]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": true,
         "icon-ignore-placement": true,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -6647,7 +6647,7 @@
         ]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -6965,7 +6965,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -7008,7 +7008,7 @@
         ["==", ["geometry-type"], "Point"]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],

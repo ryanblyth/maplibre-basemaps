@@ -4,8 +4,8 @@
  * This file is auto-generated from theme.ts settings.
  * Do not edit manually - changes will be overwritten.
  * 
- * To change the projection, minZoom, or starfield, edit: basemaps/dark-gray/styles/theme.ts
- * Look for: darkGraySettings.projection, darkGraySettings.minZoom, and darkGrayStarfield
+ * To change the projection, minZoom, view, or starfield, edit: basemaps/dark-gray/styles/theme.ts
+ * Look for: darkGraySettings.projection, darkGraySettings.minZoom, darkGraySettings.view, and darkGrayStarfield
  */
 
 // Projection setting from theme.ts -> darkGraySettings.projection
@@ -18,6 +18,15 @@ window.mapMinZoom = {
   mercator: 0,
   globe: 2
 };
+// Initial view configuration from theme.ts -> darkGraySettings.view
+// Center point [longitude, latitude]
+window.mapCenter = [-98, 39];
+// Initial zoom level
+window.mapZoom = 4.25;
+// Camera tilt angle in degrees (0-60)
+window.mapPitch = 0;
+// Rotation angle in degrees (0-360)
+window.mapBearing = 0;
 // Starfield configuration from theme.ts -> darkGrayStarfield
 window.starfieldConfig = {
   glowColors: {
