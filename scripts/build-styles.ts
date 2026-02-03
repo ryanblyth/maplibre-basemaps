@@ -102,6 +102,13 @@ async function generateMapConfig(basemapName: string): Promise<void> {
       }
     }
     
+    // Get view settings (center, zoom, pitch, and bearing)
+    const view = settings.view;
+    const center = view?.center || [-98.0, 39.0];
+    const zoom = view?.zoom ?? 4.25;
+    const pitch = view?.pitch ?? 0;
+    const bearing = view?.bearing ?? 0;
+    
     // Generate starfield config section if available
     let starfieldConfigSection = "";
     if (starfield) {
@@ -122,14 +129,26 @@ window.starfieldConfig = {
 };`;
     }
     
+    // Generate view config section
+    const viewConfigSection = `
+// Initial view configuration from theme.ts -> ${camelCase}Settings.view
+// Center point [longitude, latitude]
+window.mapCenter = [${center[0]}, ${center[1]}];
+// Initial zoom level
+window.mapZoom = ${zoom};
+// Camera tilt angle in degrees (0-60)
+window.mapPitch = ${pitch};
+// Rotation angle in degrees (0-360)
+window.mapBearing = ${bearing};`;
+    
     const mapConfigContent = `/**
  * Map Configuration
  * 
  * This file is auto-generated from theme.ts settings.
  * Do not edit manually - changes will be overwritten.
  * 
- * To change the projection, minZoom, or starfield, edit: basemaps/${basemapName}/styles/theme.ts
- * Look for: ${camelCase}Settings.projection, ${camelCase}Settings.minZoom${starfield ? `, and ${camelCase}Starfield` : ""}
+ * To change the projection, minZoom, view, or starfield, edit: basemaps/${basemapName}/styles/theme.ts
+ * Look for: ${camelCase}Settings.projection, ${camelCase}Settings.minZoom, ${camelCase}Settings.view${starfield ? `, and ${camelCase}Starfield` : ""}
  */
 
 // Projection setting from theme.ts -> ${camelCase}Settings.projection
@@ -141,12 +160,12 @@ window.mapProjection = "${projection}";
 window.mapMinZoom = {
   mercator: ${minZoomMercator},
   globe: ${minZoomGlobe}
-};${starfieldConfigSection}
+};${viewConfigSection}${starfieldConfigSection}
 `;
     
     writeFileSync(mapConfigPath, mapConfigContent, "utf8");
     const starfieldNote = starfield ? ", starfield: enabled" : "";
-    console.log(`  ✓ Generated map-config.js (projection: ${projection}, minZoom: mercator=${minZoomMercator}, globe=${minZoomGlobe}${starfieldNote})`);
+    console.log(`  ✓ Generated map-config.js (projection: ${projection}, minZoom: mercator=${minZoomMercator}, globe=${minZoomGlobe}, center: [${center[0]}, ${center[1]}], zoom: ${zoom}, pitch: ${pitch}, bearing: ${bearing}${starfieldNote})`);
   } catch (error) {
     // Handle gracefully - maybe theme doesn't exist or doesn't have required exports
     console.warn(`  ⚠ Could not generate map-config.js for ${basemapName}:`, error instanceof Error ? error.message : error);

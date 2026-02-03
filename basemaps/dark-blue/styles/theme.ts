@@ -47,6 +47,21 @@ export const darkBlueSettings: ThemeSettings = {
    * Below this zoom, roads use fixed pixel widths.
    */
   realWorldScaleMinZoom: 16,
+  
+  /**
+   * Initial map view configuration.
+   * Controls where the map is centered, the zoom level, camera tilt, and rotation when it first loads.
+   */
+  view: {
+    /** Initial center point [longitude, latitude] */
+    center: [-98.0, 39.0],
+    /** Initial zoom level */
+    zoom: 4.25,
+    /** Camera tilt angle in degrees (0-60, default 0). 0 = straight down, higher = more tilted */
+    pitch: 0,
+    /** Rotation angle in degrees (0-360, default 0). 0 = north, 90 = east, 180 = south, 270 = west */
+    bearing: 0,
+  },
 };
 
 // ============================================================================

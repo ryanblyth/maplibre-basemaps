@@ -116,6 +116,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
       layout: {
         ...baseLayout,
         "icon-image": "airport",
+        "icon-size": 0.9,
       },
         paint: poiPaint,
       });
@@ -142,6 +143,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
       layout: {
         ...baseLayout,
         "icon-image": "airfield",
+        "icon-size": 0.9,
       },
         paint: poiPaint,
       });
@@ -170,6 +172,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
       layout: {
         ...baseLayout,
         "icon-image": "airport",
+        "icon-size": 0.9,
       },
         paint: poiPaint,
       });
@@ -489,6 +492,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
       },
       paint: poiPaint,
     });
+    } // End of if (isPOIEnabled('museum'))
     
     // Zoo POIs
     if (isPOIEnabled('zoo')) {
@@ -509,6 +513,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         layout: {
           ...baseLayout,
           "icon-image": "zoo",
+          "icon-size": 0.9,
         },
         paint: poiPaint,
       });
@@ -517,7 +522,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
     // Stadium POIs
     if (isPOIEnabled('stadium')) {
       const stadiumMinZoom = poiThemeConfig.stadium?.minZoom || source.minZoom;
-      // Stadiums typically have class='stadium' or class='entertainment' with subclass='stadium'
+      // Stadiums can have various class/subclass combinations
       layers.push({
         id: `poi-stadium-${source.name}`,
         type: "symbol",
@@ -529,12 +534,26 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         ["has", "name"],
         [
           "any",
-          // Try class='stadium' directly
-          ["==", ["get", "class"], "stadium"],
-          // Or class='entertainment'/'sport' with subclass='stadium'
+          // Try class='stadium' directly (with or without subclass)
           [
             "all",
-            ["match", ["get", "class"], ["entertainment", "sport"], true, false],
+            ["==", ["get", "class"], "stadium"],
+            [
+              "any",
+              ["!", ["has", "subclass"]], // No subclass = stadium
+              ["==", ["get", "subclass"], "stadium"], // Subclass is 'stadium'
+            ],
+          ],
+          // Or class='entertainment'/'sport'/'leisure' with subclass='stadium'
+          [
+            "all",
+            ["match", ["get", "class"], ["entertainment", "sport", "leisure"], true, false],
+            ["==", ["get", "subclass"], "stadium"],
+          ],
+          // Or class='amenity' with subclass='stadium' (OpenMapTiles style)
+          [
+            "all",
+            ["==", ["get", "class"], "amenity"],
             ["==", ["get", "subclass"], "stadium"],
           ],
         ],
@@ -542,6 +561,42 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
       layout: {
         ...baseLayout,
         "icon-image": "stadium",
+        "icon-size": 0.9,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "icon-optional": false,
+      },
+        paint: poiPaint,
+      });
+    }
+    
+    // Stadium POIs from PLACE layer
+    if (isPOIEnabled('stadium')) {
+      const stadiumMinZoom = poiThemeConfig.stadium?.minZoom || source.minZoom;
+      layers.push({
+        id: `place-stadium-${source.name}`,
+        type: "symbol",
+        source: source.name,
+        "source-layer": "place",
+        minzoom: stadiumMinZoom,
+      filter: [
+        "all",
+        ["has", "name"],
+        [
+          "match",
+          ["get", "place"],
+          ["stadium", "stadiums"],
+          true,
+          false,
+        ],
+      ],
+      layout: {
+        ...baseLayout,
+        "icon-image": "stadium",
+        "icon-size": 0.9,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "icon-optional": false,
       },
         paint: poiPaint,
       });
@@ -574,6 +629,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
       layout: {
         ...baseLayout,
         "icon-image": "park",
+        "icon-size": 0.9,
       },
         paint: poiPaint,
       });
@@ -588,11 +644,11 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         source: source.name,
         "source-layer": "poi",
         minzoom: railMinZoom, // Rank 1 stations appear at zoom 14
-        filter: [
-          "all",
-          ["has", "name"],
-          [
-            "any",
+      filter: [
+        "all",
+        ["has", "name"],
+        [
+          "any",
           // Match class='railway' with subclass='station' (most common)
           [
             "all",
@@ -616,32 +672,18 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
               ["!", ["has", "rank"]], // No rank = rank 1
               ["==", ["get", "rank"], 1], // Rank 1
             ],
-            ],
           ],
         ],
-        layout: {
+      ],
+      layout: {
+          ...baseLayout,
           "icon-image": "rail",
           "icon-size": 0.9,
           "icon-allow-overlap": true,
           "icon-ignore-placement": false,
           "icon-optional": false,
-          "text-field": createTextField(),
-          "text-font": poiFont,
-          "text-size": ["interpolate", ["linear"], ["zoom"], 14, 10, 15, 12, 16, 14],
-          "text-offset": [0, 1.2],
-          "text-anchor": "top",
-          "text-optional": true,
-          "text-allow-overlap": false,
-          "symbol-placement": "point" as const,
         },
-        paint: {
-          "icon-color": poiConfig.iconColor || "#7a8ba3",
-          "icon-opacity": 0.9,
-          "text-color": poiConfig.textColor,
-          "text-halo-color": poiConfig.textHalo,
-          "text-halo-width": poiConfig.textHaloWidth || 1.5,
-          "text-halo-blur": 1,
-        },
+        paint: poiPaint,
       });
       
       // Railway station POIs - Rank 2 stations at zoom 14.5+
@@ -864,6 +906,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
       layout: {
         ...baseLayout,
         "icon-image": "airport",
+        "icon-size": 0.9,
         "icon-ignore-placement": false, // Allow collision detection for icons
         "text-ignore-placement": false, // Allow collision detection for labels
       },
@@ -892,6 +935,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
         layout: {
           ...baseLayout,
           "icon-image": "park",
+          "icon-size": 0.9,
           "symbol-placement": "point",
           // Prevent duplicate labels by requiring minimum distance
           "symbol-spacing": 250, // Minimum distance between symbols in pixels
@@ -903,6 +947,4 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
   }
   
   return layers;
-}
-
 }

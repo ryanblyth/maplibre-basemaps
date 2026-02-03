@@ -42,7 +42,7 @@
       "id": "background",
       "type": "background",
       "paint": {
-        "background-color": "#212121"
+        "background-color": "#303030"
       }
     },
     {
@@ -62,9 +62,9 @@
           12, 0.0625,
           13, 0
         ],
-        "hillshade-shadow-color": "#121212",
-        "hillshade-highlight-color": "#1a1a1a",
-        "hillshade-accent-color": "#121212"
+        "hillshade-shadow-color": "#252525",
+        "hillshade-highlight-color": "#303030",
+        "hillshade-accent-color": "#252525"
       }
     },
     {
@@ -76,9 +76,9 @@
       "maxzoom": 6.5,
       "filter": true,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "wood", "#1f1f1f", "grass", "#252525", "scrub", "#262626", "scrubland", "#262626", "cropland", "#272727", "farmland", "#272727", "rock", "#232323", "sand", "#282828", "wetland", "#202020", "#242424"],
+        "fill-color": ["match", ["get", "class"], "wood", "#2e2e2e", "grass", "#353535", "scrub", "#3a3a3a", "scrubland", "#3a3a3a", "cropland", "#3b3b3b", "farmland", "#3b3b3b", "rock", "#373737", "sand", "#3c3c3c", "wetland", "#343434", "#303030"],
         "fill-opacity": 0.6,
-        "fill-outline-color": ["match", ["get", "class"], "wood", "#1f1f1f", "grass", "#252525", "scrub", "#262626", "scrubland", "#262626", "cropland", "#272727", "farmland", "#272727", "rock", "#232323", "sand", "#282828", "wetland", "#202020", "#242424"]
+        "fill-outline-color": ["match", ["get", "class"], "wood", "#2e2e2e", "grass", "#353535", "scrub", "#3a3a3a", "scrubland", "#3a3a3a", "cropland", "#3b3b3b", "farmland", "#3b3b3b", "rock", "#373737", "sand", "#3c3c3c", "wetland", "#343434", "#303030"]
       }
     },
     {
@@ -89,9 +89,9 @@
       "minzoom": 6,
       "filter": true,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "wood", "#1f1f1f", "grass", "#252525", "scrub", "#262626", "scrubland", "#262626", "cropland", "#272727", "farmland", "#272727", "rock", "#232323", "sand", "#282828", "wetland", "#202020", "#242424"],
+        "fill-color": ["match", ["get", "class"], "wood", "#2e2e2e", "grass", "#353535", "scrub", "#3a3a3a", "scrubland", "#3a3a3a", "cropland", "#3b3b3b", "farmland", "#3b3b3b", "rock", "#373737", "sand", "#3c3c3c", "wetland", "#343434", "#303030"],
         "fill-opacity": 0.6,
-        "fill-outline-color": ["match", ["get", "class"], "wood", "#1f1f1f", "grass", "#252525", "scrub", "#262626", "scrubland", "#262626", "cropland", "#272727", "farmland", "#272727", "rock", "#232323", "sand", "#282828", "wetland", "#202020", "#242424"]
+        "fill-outline-color": ["match", ["get", "class"], "wood", "#2e2e2e", "grass", "#353535", "scrub", "#3a3a3a", "scrubland", "#3a3a3a", "cropland", "#3b3b3b", "farmland", "#3b3b3b", "rock", "#373737", "sand", "#3c3c3c", "wetland", "#343434", "#303030"]
       }
     },
     {
@@ -102,7 +102,7 @@
       "minzoom": 0,
       "maxzoom": 6.5,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "park", "#252525", "cemetery", "#252525", "pitch", "#262626", "stadium", "#262626", "residential", "#232323", "college", "#252525", "commercial", "#252525", "construction", "#242424", "dam", "#242424", "farmland", "#272727", "grass", "#252525", "hospital", "#252525", "industrial", "#242424", "military", "#1f1f1f", "neighbourhood", "#242424", "quarry", "#242424", "quarter", "#242424", "railway", "#242424", "retail", "#252525", "school", "#252525", "suburb", "#242424", "theme_park", "#252525", "track", "#252525", "university", "#252525", "zoo", "#252525", "#242424"],
+        "fill-color": ["match", ["get", "class"], "park", "#3a3a3a", "cemetery", "#3a3a3a", "pitch", "#3a3a3a", "stadium", "#3a3a3a", "residential", "#343434", "college", "#3a3a3a", "commercial", "#3a3a3a", "construction", "#343434", "dam", "#343434", "farmland", "#3b3b3b", "grass", "#353535", "hospital", "#3a3a3a", "industrial", "#343434", "military", "#2f2f2f", "neighbourhood", "#343434", "quarry", "#343434", "quarter", "#343434", "railway", "#343434", "retail", "#3a3a3a", "school", "#3a3a3a", "suburb", "#343434", "theme_park", "#3a3a3a", "track", "#3a3a3a", "university", "#3a3a3a", "zoo", "#3a3a3a", "#303030"],
         "fill-opacity": 0.6
       }
     },
@@ -113,7 +113,7 @@
       "source-layer": "landuse",
       "minzoom": 6,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "park", "#252525", "cemetery", "#252525", "pitch", "#262626", "stadium", "#262626", "residential", "#232323", "college", "#252525", "commercial", "#252525", "construction", "#242424", "dam", "#242424", "farmland", "#272727", "grass", "#252525", "hospital", "#252525", "industrial", "#242424", "military", "#1f1f1f", "neighbourhood", "#242424", "quarry", "#242424", "quarter", "#242424", "railway", "#242424", "retail", "#252525", "school", "#252525", "suburb", "#242424", "theme_park", "#252525", "track", "#252525", "university", "#252525", "zoo", "#252525", "#242424"],
+        "fill-color": ["match", ["get", "class"], "park", "#3a3a3a", "cemetery", "#3a3a3a", "pitch", "#3a3a3a", "stadium", "#3a3a3a", "residential", "#343434", "college", "#3a3a3a", "commercial", "#3a3a3a", "construction", "#343434", "dam", "#343434", "farmland", "#3b3b3b", "grass", "#353535", "hospital", "#3a3a3a", "industrial", "#343434", "military", "#2f2f2f", "neighbourhood", "#343434", "quarry", "#343434", "quarter", "#343434", "railway", "#343434", "retail", "#3a3a3a", "school", "#3a3a3a", "suburb", "#343434", "theme_park", "#3a3a3a", "track", "#3a3a3a", "university", "#3a3a3a", "zoo", "#3a3a3a", "#303030"],
         "fill-opacity": 0.6
       }
     },
@@ -260,7 +260,7 @@
       "minzoom": 0,
       "maxzoom": 6.5,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "ocean", "#080808", "sea", "#080808", "lake", "#080808", "pond", "#080808", "river", "#080808", "reservoir", "#080808", "bay", "#080808", "gulf", "#080808", "#080808"],
+        "fill-color": ["match", ["get", "class"], "ocean", "#1e1e1e", "sea", "#1e1e1e", "lake", "#1e1e1e", "pond", "#1e1e1e", "river", "#1e1e1e", "reservoir", "#1e1e1e", "bay", "#1e1e1e", "gulf", "#1e1e1e", "#1e1e1e"],
         "fill-opacity": 0.85
       }
     },
@@ -271,7 +271,7 @@
       "source-layer": "water",
       "minzoom": 6,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "ocean", "#080808", "sea", "#080808", "lake", "#080808", "pond", "#080808", "river", "#080808", "reservoir", "#080808", "bay", "#080808", "gulf", "#080808", "#080808"],
+        "fill-color": ["match", ["get", "class"], "ocean", "#1e1e1e", "sea", "#1e1e1e", "lake", "#1e1e1e", "pond", "#1e1e1e", "river", "#1e1e1e", "reservoir", "#1e1e1e", "bay", "#1e1e1e", "gulf", "#1e1e1e", "#1e1e1e"],
         "fill-opacity": 0.85
       }
     },
@@ -283,7 +283,7 @@
       "minzoom": 0,
       "maxzoom": 6.5,
       "paint": {
-        "line-color": ["match", ["get", "class"], "river", "#080808", "canal", "#080808", "stream", "#080808", "ditch", "#080808", "drain", "#080808", "#080808"],
+        "line-color": ["match", ["get", "class"], "river", "#1e1e1e", "canal", "#1e1e1e", "stream", "#1e1e1e", "ditch", "#1e1e1e", "drain", "#1e1e1e", "#1e1e1e"],
         "line-opacity": 1,
         "line-width": [
           "interpolate",
@@ -301,7 +301,7 @@
       "source-layer": "waterway",
       "minzoom": 6,
       "paint": {
-        "line-color": ["match", ["get", "class"], "river", "#080808", "canal", "#080808", "stream", "#080808", "ditch", "#080808", "drain", "#080808", "#080808"],
+        "line-color": ["match", ["get", "class"], "river", "#1e1e1e", "canal", "#1e1e1e", "stream", "#1e1e1e", "ditch", "#1e1e1e", "drain", "#1e1e1e", "#1e1e1e"],
         "line-opacity": 1,
         "line-width": [
           "interpolate",
@@ -319,7 +319,7 @@
       "source-layer": "water",
       "minzoom": 6,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "ocean", "#080808", "sea", "#080808", "lake", "#080808", "pond", "#080808", "river", "#080808", "reservoir", "#080808", "bay", "#080808", "gulf", "#080808", "#080808"],
+        "fill-color": ["match", ["get", "class"], "ocean", "#1e1e1e", "sea", "#1e1e1e", "lake", "#1e1e1e", "pond", "#1e1e1e", "river", "#1e1e1e", "reservoir", "#1e1e1e", "bay", "#1e1e1e", "gulf", "#1e1e1e", "#1e1e1e"],
         "fill-opacity": 0.85
       }
     },
@@ -330,7 +330,7 @@
       "source-layer": "waterway",
       "minzoom": 6,
       "paint": {
-        "line-color": ["match", ["get", "class"], "river", "#080808", "canal", "#080808", "stream", "#080808", "ditch", "#080808", "drain", "#080808", "#080808"],
+        "line-color": ["match", ["get", "class"], "river", "#1e1e1e", "canal", "#1e1e1e", "stream", "#1e1e1e", "ditch", "#1e1e1e", "drain", "#1e1e1e", "#1e1e1e"],
         "line-opacity": 1,
         "line-width": [
           "interpolate",
@@ -364,13 +364,13 @@
       ],
       0
     ],
-          0, "#0a0a0a",
-          200, "#080808",
-          1000, "#080808",
-          2000, "#070707",
-          4000, "#060606",
-          6000, "#050505",
-          10000, "#040404"
+          0, "#1f1f1f",
+          200, "#1e1e1e",
+          1000, "#1e1e1e",
+          2000, "#1d1d1d",
+          4000, "#1c1c1c",
+          6000, "#1b1b1b",
+          10000, "#1a1a1a"
         ],
         "fill-opacity": [
           "interpolate",
@@ -404,13 +404,13 @@
       ],
       0
     ],
-          0, "#0a0a0a",
-          200, "#080808",
-          1000, "#080808",
-          2000, "#070707",
-          4000, "#060606",
-          6000, "#050505",
-          10000, "#040404"
+          0, "#1f1f1f",
+          200, "#1e1e1e",
+          1000, "#1e1e1e",
+          2000, "#1d1d1d",
+          4000, "#1c1c1c",
+          6000, "#1b1b1b",
+          10000, "#1a1a1a"
         ],
         "fill-opacity": [
           "interpolate",
@@ -444,13 +444,13 @@
       ],
       0
     ],
-          0, "#0a0a0a",
-          200, "#080808",
-          1000, "#080808",
-          2000, "#070707",
-          4000, "#060606",
-          6000, "#050505",
-          10000, "#040404"
+          0, "#1f1f1f",
+          200, "#1e1e1e",
+          1000, "#1e1e1e",
+          2000, "#1d1d1d",
+          4000, "#1c1c1c",
+          6000, "#1b1b1b",
+          10000, "#1a1a1a"
         ],
         "fill-opacity": [
           "interpolate",
@@ -484,13 +484,13 @@
       ],
       0
     ],
-          0, "#0a0a0a",
-          200, "#080808",
-          1000, "#080808",
-          2000, "#070707",
-          4000, "#060606",
-          6000, "#050505",
-          10000, "#040404"
+          0, "#1f1f1f",
+          200, "#1e1e1e",
+          1000, "#1e1e1e",
+          2000, "#1d1d1d",
+          4000, "#1c1c1c",
+          6000, "#1b1b1b",
+          10000, "#1a1a1a"
         ],
         "fill-opacity": [
           "interpolate",
@@ -524,13 +524,13 @@
       ],
       0
     ],
-          0, "#0a0a0a",
-          200, "#080808",
-          1000, "#080808",
-          2000, "#070707",
-          4000, "#060606",
-          6000, "#050505",
-          10000, "#040404"
+          0, "#1f1f1f",
+          200, "#1e1e1e",
+          1000, "#1e1e1e",
+          2000, "#1d1d1d",
+          4000, "#1c1c1c",
+          6000, "#1b1b1b",
+          10000, "#1a1a1a"
         ],
         "fill-opacity": [
           "interpolate",
@@ -564,13 +564,13 @@
       ],
       0
     ],
-          0, "#0a0a0a",
-          200, "#080808",
-          1000, "#080808",
-          2000, "#070707",
-          4000, "#060606",
-          6000, "#050505",
-          10000, "#040404"
+          0, "#1f1f1f",
+          200, "#1e1e1e",
+          1000, "#1e1e1e",
+          2000, "#1d1d1d",
+          4000, "#1c1c1c",
+          6000, "#1b1b1b",
+          10000, "#1a1a1a"
         ],
         "fill-opacity": [
           "interpolate",
@@ -604,13 +604,13 @@
       ],
       0
     ],
-          0, "#0a0a0a",
-          200, "#080808",
-          1000, "#080808",
-          2000, "#070707",
-          4000, "#060606",
-          6000, "#050505",
-          10000, "#040404"
+          0, "#1f1f1f",
+          200, "#1e1e1e",
+          1000, "#1e1e1e",
+          2000, "#1d1d1d",
+          4000, "#1c1c1c",
+          6000, "#1b1b1b",
+          10000, "#1a1a1a"
         ],
         "fill-opacity": [
           "interpolate",
@@ -644,13 +644,13 @@
       ],
       0
     ],
-          0, "#0a0a0a",
-          200, "#080808",
-          1000, "#080808",
-          2000, "#070707",
-          4000, "#060606",
-          6000, "#050505",
-          10000, "#040404"
+          0, "#1f1f1f",
+          200, "#1e1e1e",
+          1000, "#1e1e1e",
+          2000, "#1d1d1d",
+          4000, "#1c1c1c",
+          6000, "#1b1b1b",
+          10000, "#1a1a1a"
         ],
         "fill-opacity": [
           "interpolate",
@@ -684,13 +684,13 @@
       ],
       0
     ],
-          0, "#0a0a0a",
-          200, "#080808",
-          1000, "#080808",
-          2000, "#070707",
-          4000, "#060606",
-          6000, "#050505",
-          10000, "#040404"
+          0, "#1f1f1f",
+          200, "#1e1e1e",
+          1000, "#1e1e1e",
+          2000, "#1d1d1d",
+          4000, "#1c1c1c",
+          6000, "#1b1b1b",
+          10000, "#1a1a1a"
         ],
         "fill-opacity": [
           "interpolate",
@@ -724,13 +724,13 @@
       ],
       0
     ],
-          0, "#0a0a0a",
-          200, "#080808",
-          1000, "#080808",
-          2000, "#070707",
-          4000, "#060606",
-          6000, "#050505",
-          10000, "#040404"
+          0, "#1f1f1f",
+          200, "#1e1e1e",
+          1000, "#1e1e1e",
+          2000, "#1d1d1d",
+          4000, "#1c1c1c",
+          6000, "#1b1b1b",
+          10000, "#1a1a1a"
         ],
         "fill-opacity": [
           "interpolate",
@@ -764,13 +764,13 @@
       ],
       0
     ],
-          0, "#0a0a0a",
-          200, "#080808",
-          1000, "#080808",
-          2000, "#070707",
-          4000, "#060606",
-          6000, "#050505",
-          10000, "#040404"
+          0, "#1f1f1f",
+          200, "#1e1e1e",
+          1000, "#1e1e1e",
+          2000, "#1d1d1d",
+          4000, "#1c1c1c",
+          6000, "#1b1b1b",
+          10000, "#1a1a1a"
         ],
         "fill-opacity": [
           "interpolate",
@@ -804,13 +804,13 @@
       ],
       0
     ],
-          0, "#0a0a0a",
-          200, "#080808",
-          1000, "#080808",
-          2000, "#070707",
-          4000, "#060606",
-          6000, "#050505",
-          10000, "#040404"
+          0, "#1f1f1f",
+          200, "#1e1e1e",
+          1000, "#1e1e1e",
+          2000, "#1d1d1d",
+          4000, "#1c1c1c",
+          6000, "#1b1b1b",
+          10000, "#1a1a1a"
         ],
         "fill-opacity": [
           "interpolate",
@@ -880,7 +880,7 @@
       "filter": ["==", ["get", "brunnel"], "tunnel"],
       "layout": {"line-cap": "round", "line-join": "round"},
       "paint": {
-        "line-color": "#141414",
+        "line-color": "#252525",
         "line-width": [
           "interpolate",
           ["linear"],
@@ -930,7 +930,7 @@
       ],
       "layout": {"line-cap": "round", "line-join": "round"},
       "paint": {
-        "line-color": "#141414",
+        "line-color": "#252525",
         "line-width": [
           "interpolate",
           ["linear"],
@@ -1009,21 +1009,21 @@
         "fill-color": [
           "step",
           ["zoom"],
-          "#282828",
+          "#303030",
           13.999,
           [
             "interpolate",
             ["linear"],
             ["coalesce", ["get", "render_height"], 0],
-            0, "#282828",
-            10, "#2b2b2b",
-            50, "#2e2e2e",
-            150, "#323232",
-            300, "#353535",
-            600, "#383838"
+            0, "#303030",
+            10, "#353535",
+            50, "#3a3a3a",
+            150, "#3f3f3f",
+            300, "#444444",
+            600, "#494949"
           ]
         ],
-        "fill-outline-color": "#1e1e1e",
+        "fill-outline-color": "#252525",
         "fill-opacity": 0.9
       }
     },
@@ -1035,9 +1035,9 @@
       "minzoom": 6,
       "filter": true,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "wood", "#1f1f1f", "grass", "#252525", "scrub", "#262626", "scrubland", "#262626", "cropland", "#272727", "farmland", "#272727", "rock", "#232323", "sand", "#282828", "wetland", "#202020", "#242424"],
+        "fill-color": ["match", ["get", "class"], "wood", "#2e2e2e", "grass", "#353535", "scrub", "#3a3a3a", "scrubland", "#3a3a3a", "cropland", "#3b3b3b", "farmland", "#3b3b3b", "rock", "#373737", "sand", "#3c3c3c", "wetland", "#343434", "#303030"],
         "fill-opacity": 0.6,
-        "fill-outline-color": ["match", ["get", "class"], "wood", "#1f1f1f", "grass", "#252525", "scrub", "#262626", "scrubland", "#262626", "cropland", "#272727", "farmland", "#272727", "rock", "#232323", "sand", "#282828", "wetland", "#202020", "#242424"]
+        "fill-outline-color": ["match", ["get", "class"], "wood", "#2e2e2e", "grass", "#353535", "scrub", "#3a3a3a", "scrubland", "#3a3a3a", "cropland", "#3b3b3b", "farmland", "#3b3b3b", "rock", "#373737", "sand", "#3c3c3c", "wetland", "#343434", "#303030"]
       }
     },
     {
@@ -1047,7 +1047,7 @@
       "source-layer": "landuse",
       "minzoom": 6,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "park", "#252525", "cemetery", "#252525", "pitch", "#262626", "stadium", "#262626", "residential", "#232323", "college", "#252525", "commercial", "#252525", "construction", "#242424", "dam", "#242424", "farmland", "#272727", "grass", "#252525", "hospital", "#252525", "industrial", "#242424", "military", "#1f1f1f", "neighbourhood", "#242424", "quarry", "#242424", "quarter", "#242424", "railway", "#242424", "retail", "#252525", "school", "#252525", "suburb", "#242424", "theme_park", "#252525", "track", "#252525", "university", "#252525", "zoo", "#252525", "#242424"],
+        "fill-color": ["match", ["get", "class"], "park", "#3a3a3a", "cemetery", "#3a3a3a", "pitch", "#3a3a3a", "stadium", "#3a3a3a", "residential", "#343434", "college", "#3a3a3a", "commercial", "#3a3a3a", "construction", "#343434", "dam", "#343434", "farmland", "#3b3b3b", "grass", "#353535", "hospital", "#3a3a3a", "industrial", "#343434", "military", "#2f2f2f", "neighbourhood", "#343434", "quarry", "#343434", "quarter", "#343434", "railway", "#343434", "retail", "#3a3a3a", "school", "#3a3a3a", "suburb", "#343434", "theme_park", "#3a3a3a", "track", "#3a3a3a", "university", "#3a3a3a", "zoo", "#3a3a3a", "#303030"],
         "fill-opacity": 0.6
       }
     },
@@ -1061,21 +1061,21 @@
         "fill-color": [
           "step",
           ["zoom"],
-          "#282828",
+          "#303030",
           13.999,
           [
             "interpolate",
             ["linear"],
             ["coalesce", ["get", "render_height"], 0],
-            0, "#282828",
-            10, "#2b2b2b",
-            50, "#2e2e2e",
-            150, "#323232",
-            300, "#353535",
-            600, "#383838"
+            0, "#303030",
+            10, "#353535",
+            50, "#3a3a3a",
+            150, "#3f3f3f",
+            300, "#444444",
+            600, "#494949"
           ]
         ],
-        "fill-outline-color": "#1e1e1e",
+        "fill-outline-color": "#252525",
         "fill-opacity": 0.9
       }
     },
@@ -1095,7 +1095,7 @@
       ],
       "layout": {"line-cap": "round", "line-join": "round"},
       "paint": {
-        "line-color": "#141414",
+        "line-color": "#252525",
         "line-width": [
           "interpolate",
           ["linear"],
@@ -1352,7 +1352,7 @@
         "text-halo-color": "#313131",
         "text-halo-width": 1.5,
         "text-halo-blur": 1,
-        "text-color": "#a1a1a1",
+        "text-color": "#b1b1b1",
         "text-opacity": 0.8
       }
     },
@@ -1468,7 +1468,7 @@
         "text-halo-color": "#313131",
         "text-halo-width": 1.5,
         "text-halo-blur": 1,
-        "text-color": "#a1a1a1",
+        "text-color": "#b1b1b1",
         "text-opacity": 0.7
       }
     },
@@ -1589,7 +1589,7 @@
         "text-halo-color": "#313131",
         "text-halo-width": 1.5,
         "text-halo-blur": 1,
-        "text-color": "#a1a1a1",
+        "text-color": "#b1b1b1",
         "text-opacity": 0.7
       }
     },
@@ -1710,7 +1710,7 @@
         "text-halo-color": "#313131",
         "text-halo-width": 1.5,
         "text-halo-blur": 1,
-        "text-color": "#a1a1a1",
+        "text-color": "#b1b1b1",
         "text-opacity": 0.7
       }
     },
@@ -2982,8 +2982,8 @@
         ]
       },
       "paint": {
-        "text-color": "#c1c1c1",
-        "text-halo-color": "#313131",
+        "text-color": "#b1b1b1",
+        "text-halo-color": "#252525",
         "text-halo-width": 2,
         "text-halo-blur": 1,
         "text-opacity": 0.75
@@ -3097,8 +3097,8 @@
         "text-letter-spacing": 0.1
       },
       "paint": {
-        "text-color": "#c1c1c1",
-        "text-halo-color": "#313131",
+        "text-color": "#b1b1b1",
+        "text-halo-color": "#252525",
         "text-halo-width": 2,
         "text-halo-blur": 1,
         "text-opacity": 0.75
@@ -3210,8 +3210,8 @@
         "text-letter-spacing": 0.1
       },
       "paint": {
-        "text-color": "#c1c1c1",
-        "text-halo-color": "#313131",
+        "text-color": "#b1b1b1",
+        "text-halo-color": "#252525",
         "text-halo-width": 2,
         "text-halo-blur": 1,
         "text-opacity": 0.75
@@ -3324,8 +3324,8 @@
         "text-letter-spacing": 0.1
       },
       "paint": {
-        "text-color": "#c1c1c1",
-        "text-halo-color": "#313131",
+        "text-color": "#b1b1b1",
+        "text-halo-color": "#252525",
         "text-halo-width": 2,
         "text-halo-blur": 1,
         "text-opacity": 0.75
@@ -3380,8 +3380,8 @@
         "text-letter-spacing": 0.05
       },
       "paint": {
-        "text-color": "#c1c1c1",
-        "text-halo-color": "#313131",
+        "text-color": "#b1b1b1",
+        "text-halo-color": "#252525",
         "text-halo-width": 2,
         "text-halo-blur": 1,
         "text-opacity": 0.5
@@ -3432,8 +3432,8 @@
         "text-letter-spacing": 0.05
       },
       "paint": {
-        "text-color": "#c1c1c1",
-        "text-halo-color": "#313131",
+        "text-color": "#b1b1b1",
+        "text-halo-color": "#252525",
         "text-halo-width": 2,
         "text-halo-blur": 1,
         "text-opacity": 0.5
@@ -3565,8 +3565,8 @@
         "text-letter-spacing": 0.05
       },
       "paint": {
-        "text-color": "#c1c1c1",
-        "text-halo-color": "#313131",
+        "text-color": "#b1b1b1",
+        "text-halo-color": "#252525",
         "text-halo-width": 1.5,
         "text-halo-blur": 1,
         "text-opacity": 0.75
@@ -3697,8 +3697,8 @@
         "text-letter-spacing": 0.05
       },
       "paint": {
-        "text-color": "#c1c1c1",
-        "text-halo-color": "#313131",
+        "text-color": "#b1b1b1",
+        "text-halo-color": "#252525",
         "text-halo-width": 1.5,
         "text-halo-blur": 1,
         "text-opacity": 0.75
@@ -3888,8 +3888,8 @@
         "text-letter-spacing": 0.05
       },
       "paint": {
-        "text-color": "#c1c1c1",
-        "text-halo-color": "#313131",
+        "text-color": "#b1b1b1",
+        "text-halo-color": "#252525",
         "text-halo-width": 1.5,
         "text-halo-blur": 1,
         "text-opacity": 0.6
@@ -3911,7 +3911,7 @@
         ]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -3948,7 +3948,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["all", ["match", ["get", "class"], ["transport"], true, false], ["==", ["get", "subclass"], "airfield"]]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -3985,7 +3985,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["airport", "aerodrome"], true, false]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -4345,7 +4345,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"], ["==", ["get", "class"], "zoo"], ["==", ["get", "subclass"], "zoo"]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -4385,14 +4385,15 @@
         ["has", "name"],
         [
           "any",
-          ["==", ["get", "class"], "stadium"],
-          ["all", ["match", ["get", "class"], ["entertainment", "sport"], true, false], ["==", ["get", "subclass"], "stadium"]]
+          ["all", ["==", ["get", "class"], "stadium"], ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "stadium"]]],
+          ["all", ["match", ["get", "class"], ["entertainment", "sport", "leisure"], true, false], ["==", ["get", "subclass"], "stadium"]],
+          ["all", ["==", ["get", "class"], "amenity"], ["==", ["get", "subclass"], "stadium"]]
         ]
       ],
       "layout": {
-        "icon-size": 0.8,
-        "icon-allow-overlap": false,
-        "icon-ignore-placement": false,
+        "icon-size": 0.9,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
         "text-font": ["Noto Sans Regular"],
         "text-size": [
@@ -4408,7 +4409,46 @@
         "text-optional": true,
         "text-allow-overlap": false,
         "symbol-placement": "point",
-        "icon-image": "stadium"
+        "icon-image": "stadium",
+        "icon-optional": false
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "place-stadium-poi_us",
+      "type": "symbol",
+      "source": "poi_us",
+      "source-layer": "place",
+      "minzoom": 12,
+      "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["stadium", "stadiums"], true, false]],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "stadium",
+        "icon-optional": false
       },
       "paint": {
         "icon-color": "#a1a1a1",
@@ -4439,7 +4479,7 @@
         ]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -4489,26 +4529,26 @@
         ]
       ],
       "layout": {
-        "icon-image": "rail",
         "icon-size": 0.9,
         "icon-allow-overlap": true,
         "icon-ignore-placement": false,
-        "icon-optional": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
         "text-font": ["Noto Sans Regular"],
         "text-size": [
           "interpolate",
           ["linear"],
           ["zoom"],
-          14, 10,
-          15, 12,
+          12, 10,
+          14, 12,
           16, 14
         ],
         "text-offset": [0, 1.2],
         "text-anchor": "top",
         "text-optional": true,
         "text-allow-overlap": false,
-        "symbol-placement": "point"
+        "symbol-placement": "point",
+        "icon-image": "rail",
+        "icon-optional": false
       },
       "paint": {
         "icon-color": "#a1a1a1",
@@ -4750,6 +4790,2688 @@
       }
     },
     {
+      "id": "poi-airport-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["match", ["get", "class"], ["transport"], true, false], ["==", ["get", "subclass"], "airport"]],
+          ["==", ["get", "class"], "airport"]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "airport"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-airfield-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": ["all", ["has", "name"], ["all", ["match", ["get", "class"], ["transport"], true, false], ["==", ["get", "subclass"], "airfield"]]],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "airfield"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "place-airport-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "place",
+      "minzoom": 12,
+      "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["airport", "aerodrome"], true, false]],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "airport"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-hospital-rank1-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["healthcare"], true, false],
+            ["==", ["get", "subclass"], "hospital"],
+            ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+          ],
+          [
+            "all",
+            ["==", ["get", "class"], "hospital"],
+            ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "hospital"]],
+            ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+          ],
+          [
+            "all",
+            ["match", ["get", "class"], ["amenity"], true, false],
+            ["==", ["get", "subclass"], "hospital"],
+            ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "hospital"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-hospital-rank2-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 14.5,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["match", ["get", "class"], ["healthcare"], true, false], ["==", ["get", "subclass"], "hospital"], ["==", ["get", "rank"], 2]],
+          [
+            "all",
+            ["==", ["get", "class"], "hospital"],
+            ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "hospital"]],
+            ["==", ["get", "rank"], 2]
+          ],
+          ["all", ["match", ["get", "class"], ["amenity"], true, false], ["==", ["get", "subclass"], "hospital"], ["==", ["get", "rank"], 2]]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.85,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "hospital"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-hospital-rank3plus-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 15,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["healthcare"], true, false],
+            ["==", ["get", "subclass"], "hospital"],
+            ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+          ],
+          [
+            "all",
+            ["==", ["get", "class"], "hospital"],
+            ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "hospital"]],
+            ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+          ],
+          [
+            "all",
+            ["match", ["get", "class"], ["amenity"], true, false],
+            ["==", ["get", "subclass"], "hospital"],
+            ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.75,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "hospital"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-museum-rank1-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 14,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["entertainment", "tourism"], true, false],
+            ["match", ["get", "subclass"], ["museum", "gallery"], true, false],
+            ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+          ],
+          ["all", ["==", ["get", "class"], "museum"], ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "museum"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-museum-rank2-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 14.5,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["entertainment", "tourism"], true, false],
+            ["match", ["get", "subclass"], ["museum", "gallery"], true, false],
+            ["==", ["get", "rank"], 2]
+          ],
+          ["all", ["==", ["get", "class"], "museum"], ["==", ["get", "rank"], 2]]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.85,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "museum"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-museum-rank3plus-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 15,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["entertainment", "tourism"], true, false],
+            ["match", ["get", "subclass"], ["museum", "gallery"], true, false],
+            ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+          ],
+          ["all", ["==", ["get", "class"], "museum"], ["all", ["has", "rank"], [">", ["get", "rank"], 2]]]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.75,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "museum"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-zoo-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": ["all", ["has", "name"], ["==", ["get", "class"], "zoo"], ["==", ["get", "subclass"], "zoo"]],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "zoo"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-stadium-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["==", ["get", "class"], "stadium"], ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "stadium"]]],
+          ["all", ["match", ["get", "class"], ["entertainment", "sport", "leisure"], true, false], ["==", ["get", "subclass"], "stadium"]],
+          ["all", ["==", ["get", "class"], "amenity"], ["==", ["get", "subclass"], "stadium"]]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "stadium",
+        "icon-optional": false
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "place-stadium-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "place",
+      "minzoom": 12,
+      "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["stadium", "stadiums"], true, false]],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "stadium",
+        "icon-optional": false
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-park-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["leisure", "park"], true, false],
+            ["match", ["get", "subclass"], ["national_park", "national_monument", "state_park"], true, false]
+          ],
+          ["match", ["get", "tourism"], ["national_park", "national_monument"], true, false]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "park"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-rail-rank1-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["==", ["get", "class"], "railway"], ["==", ["get", "subclass"], "station"], ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]],
+          [
+            "all",
+            ["match", ["get", "class"], ["transport"], true, false],
+            ["match", ["get", "subclass"], ["railway_station", "station", "subway", "train_station"], true, false],
+            ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "rail",
+        "icon-optional": false
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-rail-rank2-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 14.5,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["==", ["get", "class"], "railway"], ["==", ["get", "subclass"], "station"], ["==", ["get", "rank"], 2]],
+          [
+            "all",
+            ["match", ["get", "class"], ["transport"], true, false],
+            ["match", ["get", "subclass"], ["railway_station", "station", "subway", "train_station"], true, false],
+            ["==", ["get", "rank"], 2]
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-image": "rail",
+        "icon-size": 0.85,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": false,
+        "icon-optional": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          14.5, 10,
+          15, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.85,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-rail-rank3plus-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 15,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["==", ["get", "class"], "railway"], ["==", ["get", "subclass"], "station"], ["all", ["has", "rank"], [">", ["get", "rank"], 2]]],
+          [
+            "all",
+            ["match", ["get", "class"], ["transport"], true, false],
+            ["match", ["get", "subclass"], ["railway_station", "station", "subway", "train_station"], true, false],
+            ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-image": "rail",
+        "icon-size": 0.75,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": false,
+        "icon-optional": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          15, 9,
+          16, 12
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.8,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-school-rank1-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        ["==", ["get", "class"], "college"],
+        ["match", ["get", "subclass"], ["university", "college"], true, false],
+        ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "school"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-school-rank2-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 14.5,
+      "filter": [
+        "all",
+        ["has", "name"],
+        ["==", ["get", "class"], "college"],
+        ["match", ["get", "subclass"], ["university", "college"], true, false],
+        ["==", ["get", "rank"], 2]
+      ],
+      "layout": {
+        "icon-size": 0.85,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "school"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-school-rank3plus-us_high",
+      "type": "symbol",
+      "source": "us_high",
+      "source-layer": "poi",
+      "minzoom": 15,
+      "filter": [
+        "all",
+        ["has", "name"],
+        ["==", ["get", "class"], "college"],
+        ["match", ["get", "subclass"], ["university", "college"], true, false],
+        ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+      ],
+      "layout": {
+        "icon-size": 0.75,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "school"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-airport-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["match", ["get", "class"], ["transport"], true, false], ["==", ["get", "subclass"], "airport"]],
+          ["==", ["get", "class"], "airport"]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "airport"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-airfield-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": ["all", ["has", "name"], ["all", ["match", ["get", "class"], ["transport"], true, false], ["==", ["get", "subclass"], "airfield"]]],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "airfield"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "place-airport-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "place",
+      "minzoom": 12,
+      "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["airport", "aerodrome"], true, false]],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "airport"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-hospital-rank1-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["healthcare"], true, false],
+            ["==", ["get", "subclass"], "hospital"],
+            ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+          ],
+          [
+            "all",
+            ["==", ["get", "class"], "hospital"],
+            ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "hospital"]],
+            ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+          ],
+          [
+            "all",
+            ["match", ["get", "class"], ["amenity"], true, false],
+            ["==", ["get", "subclass"], "hospital"],
+            ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "hospital"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-hospital-rank2-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 14.5,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["match", ["get", "class"], ["healthcare"], true, false], ["==", ["get", "subclass"], "hospital"], ["==", ["get", "rank"], 2]],
+          [
+            "all",
+            ["==", ["get", "class"], "hospital"],
+            ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "hospital"]],
+            ["==", ["get", "rank"], 2]
+          ],
+          ["all", ["match", ["get", "class"], ["amenity"], true, false], ["==", ["get", "subclass"], "hospital"], ["==", ["get", "rank"], 2]]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.85,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "hospital"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-hospital-rank3plus-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 15,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["healthcare"], true, false],
+            ["==", ["get", "subclass"], "hospital"],
+            ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+          ],
+          [
+            "all",
+            ["==", ["get", "class"], "hospital"],
+            ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "hospital"]],
+            ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+          ],
+          [
+            "all",
+            ["match", ["get", "class"], ["amenity"], true, false],
+            ["==", ["get", "subclass"], "hospital"],
+            ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.75,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "hospital"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-museum-rank1-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 14,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["entertainment", "tourism"], true, false],
+            ["match", ["get", "subclass"], ["museum", "gallery"], true, false],
+            ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+          ],
+          ["all", ["==", ["get", "class"], "museum"], ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "museum"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-museum-rank2-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 14.5,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["entertainment", "tourism"], true, false],
+            ["match", ["get", "subclass"], ["museum", "gallery"], true, false],
+            ["==", ["get", "rank"], 2]
+          ],
+          ["all", ["==", ["get", "class"], "museum"], ["==", ["get", "rank"], 2]]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.85,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "museum"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-museum-rank3plus-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 15,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["entertainment", "tourism"], true, false],
+            ["match", ["get", "subclass"], ["museum", "gallery"], true, false],
+            ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+          ],
+          ["all", ["==", ["get", "class"], "museum"], ["all", ["has", "rank"], [">", ["get", "rank"], 2]]]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.75,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "museum"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-zoo-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": ["all", ["has", "name"], ["==", ["get", "class"], "zoo"], ["==", ["get", "subclass"], "zoo"]],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "zoo"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-stadium-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["==", ["get", "class"], "stadium"], ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "stadium"]]],
+          ["all", ["match", ["get", "class"], ["entertainment", "sport", "leisure"], true, false], ["==", ["get", "subclass"], "stadium"]],
+          ["all", ["==", ["get", "class"], "amenity"], ["==", ["get", "subclass"], "stadium"]]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "stadium",
+        "icon-optional": false
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "place-stadium-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "place",
+      "minzoom": 12,
+      "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["stadium", "stadiums"], true, false]],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "stadium",
+        "icon-optional": false
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-park-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["leisure", "park"], true, false],
+            ["match", ["get", "subclass"], ["national_park", "national_monument", "state_park"], true, false]
+          ],
+          ["match", ["get", "tourism"], ["national_park", "national_monument"], true, false]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "park"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-rail-rank1-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["==", ["get", "class"], "railway"], ["==", ["get", "subclass"], "station"], ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]],
+          [
+            "all",
+            ["match", ["get", "class"], ["transport"], true, false],
+            ["match", ["get", "subclass"], ["railway_station", "station", "subway", "train_station"], true, false],
+            ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "rail",
+        "icon-optional": false
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-rail-rank2-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 14.5,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["==", ["get", "class"], "railway"], ["==", ["get", "subclass"], "station"], ["==", ["get", "rank"], 2]],
+          [
+            "all",
+            ["match", ["get", "class"], ["transport"], true, false],
+            ["match", ["get", "subclass"], ["railway_station", "station", "subway", "train_station"], true, false],
+            ["==", ["get", "rank"], 2]
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-image": "rail",
+        "icon-size": 0.85,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": false,
+        "icon-optional": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          14.5, 10,
+          15, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.85,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-rail-rank3plus-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 15,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["==", ["get", "class"], "railway"], ["==", ["get", "subclass"], "station"], ["all", ["has", "rank"], [">", ["get", "rank"], 2]]],
+          [
+            "all",
+            ["match", ["get", "class"], ["transport"], true, false],
+            ["match", ["get", "subclass"], ["railway_station", "station", "subway", "train_station"], true, false],
+            ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-image": "rail",
+        "icon-size": 0.75,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": false,
+        "icon-optional": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          15, 9,
+          16, 12
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.8,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-school-rank1-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        ["==", ["get", "class"], "college"],
+        ["match", ["get", "subclass"], ["university", "college"], true, false],
+        ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "school"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-school-rank2-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 14.5,
+      "filter": [
+        "all",
+        ["has", "name"],
+        ["==", ["get", "class"], "college"],
+        ["match", ["get", "subclass"], ["university", "college"], true, false],
+        ["==", ["get", "rank"], 2]
+      ],
+      "layout": {
+        "icon-size": 0.85,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "school"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-school-rank3plus-world_mid",
+      "type": "symbol",
+      "source": "world_mid",
+      "source-layer": "poi",
+      "minzoom": 15,
+      "filter": [
+        "all",
+        ["has", "name"],
+        ["==", ["get", "class"], "college"],
+        ["match", ["get", "subclass"], ["university", "college"], true, false],
+        ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+      ],
+      "layout": {
+        "icon-size": 0.75,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "school"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-airport-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["match", ["get", "class"], ["transport"], true, false], ["==", ["get", "subclass"], "airport"]],
+          ["==", ["get", "class"], "airport"]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "airport"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-airfield-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": ["all", ["has", "name"], ["all", ["match", ["get", "class"], ["transport"], true, false], ["==", ["get", "subclass"], "airfield"]]],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "airfield"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "place-airport-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "place",
+      "minzoom": 12,
+      "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["airport", "aerodrome"], true, false]],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "airport"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-hospital-rank1-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["healthcare"], true, false],
+            ["==", ["get", "subclass"], "hospital"],
+            ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+          ],
+          [
+            "all",
+            ["==", ["get", "class"], "hospital"],
+            ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "hospital"]],
+            ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+          ],
+          [
+            "all",
+            ["match", ["get", "class"], ["amenity"], true, false],
+            ["==", ["get", "subclass"], "hospital"],
+            ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "hospital"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-hospital-rank2-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 14.5,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["match", ["get", "class"], ["healthcare"], true, false], ["==", ["get", "subclass"], "hospital"], ["==", ["get", "rank"], 2]],
+          [
+            "all",
+            ["==", ["get", "class"], "hospital"],
+            ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "hospital"]],
+            ["==", ["get", "rank"], 2]
+          ],
+          ["all", ["match", ["get", "class"], ["amenity"], true, false], ["==", ["get", "subclass"], "hospital"], ["==", ["get", "rank"], 2]]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.85,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "hospital"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-hospital-rank3plus-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 15,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["healthcare"], true, false],
+            ["==", ["get", "subclass"], "hospital"],
+            ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+          ],
+          [
+            "all",
+            ["==", ["get", "class"], "hospital"],
+            ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "hospital"]],
+            ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+          ],
+          [
+            "all",
+            ["match", ["get", "class"], ["amenity"], true, false],
+            ["==", ["get", "subclass"], "hospital"],
+            ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.75,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "hospital"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-museum-rank1-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 14,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["entertainment", "tourism"], true, false],
+            ["match", ["get", "subclass"], ["museum", "gallery"], true, false],
+            ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+          ],
+          ["all", ["==", ["get", "class"], "museum"], ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "museum"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-museum-rank2-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 14.5,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["entertainment", "tourism"], true, false],
+            ["match", ["get", "subclass"], ["museum", "gallery"], true, false],
+            ["==", ["get", "rank"], 2]
+          ],
+          ["all", ["==", ["get", "class"], "museum"], ["==", ["get", "rank"], 2]]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.85,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "museum"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-museum-rank3plus-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 15,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["entertainment", "tourism"], true, false],
+            ["match", ["get", "subclass"], ["museum", "gallery"], true, false],
+            ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+          ],
+          ["all", ["==", ["get", "class"], "museum"], ["all", ["has", "rank"], [">", ["get", "rank"], 2]]]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.75,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "museum"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-zoo-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": ["all", ["has", "name"], ["==", ["get", "class"], "zoo"], ["==", ["get", "subclass"], "zoo"]],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "zoo"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-stadium-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["==", ["get", "class"], "stadium"], ["any", ["!", ["has", "subclass"]], ["==", ["get", "subclass"], "stadium"]]],
+          ["all", ["match", ["get", "class"], ["entertainment", "sport", "leisure"], true, false], ["==", ["get", "subclass"], "stadium"]],
+          ["all", ["==", ["get", "class"], "amenity"], ["==", ["get", "subclass"], "stadium"]]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "stadium",
+        "icon-optional": false
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "place-stadium-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "place",
+      "minzoom": 12,
+      "filter": ["all", ["has", "name"], ["match", ["get", "place"], ["stadium", "stadiums"], true, false]],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "stadium",
+        "icon-optional": false
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-park-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          [
+            "all",
+            ["match", ["get", "class"], ["leisure", "park"], true, false],
+            ["match", ["get", "subclass"], ["national_park", "national_monument", "state_park"], true, false]
+          ],
+          ["match", ["get", "tourism"], ["national_park", "national_monument"], true, false]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "park"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-rail-rank1-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["==", ["get", "class"], "railway"], ["==", ["get", "subclass"], "station"], ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]],
+          [
+            "all",
+            ["match", ["get", "class"], ["transport"], true, false],
+            ["match", ["get", "subclass"], ["railway_station", "station", "subway", "train_station"], true, false],
+            ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "rail",
+        "icon-optional": false
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-rail-rank2-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 14.5,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["==", ["get", "class"], "railway"], ["==", ["get", "subclass"], "station"], ["==", ["get", "rank"], 2]],
+          [
+            "all",
+            ["match", ["get", "class"], ["transport"], true, false],
+            ["match", ["get", "subclass"], ["railway_station", "station", "subway", "train_station"], true, false],
+            ["==", ["get", "rank"], 2]
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-image": "rail",
+        "icon-size": 0.85,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": false,
+        "icon-optional": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          14.5, 10,
+          15, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.85,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-rail-rank3plus-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 15,
+      "filter": [
+        "all",
+        ["has", "name"],
+        [
+          "any",
+          ["all", ["==", ["get", "class"], "railway"], ["==", ["get", "subclass"], "station"], ["all", ["has", "rank"], [">", ["get", "rank"], 2]]],
+          [
+            "all",
+            ["match", ["get", "class"], ["transport"], true, false],
+            ["match", ["get", "subclass"], ["railway_station", "station", "subway", "train_station"], true, false],
+            ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-image": "rail",
+        "icon-size": 0.75,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": false,
+        "icon-optional": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          15, 9,
+          16, 12
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.8,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-school-rank1-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        ["has", "name"],
+        ["==", ["get", "class"], "college"],
+        ["match", ["get", "subclass"], ["university", "college"], true, false],
+        ["any", ["!", ["has", "rank"]], ["==", ["get", "rank"], 1]]
+      ],
+      "layout": {
+        "icon-size": 0.9,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "school"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-school-rank2-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 14.5,
+      "filter": [
+        "all",
+        ["has", "name"],
+        ["==", ["get", "class"], "college"],
+        ["match", ["get", "subclass"], ["university", "college"], true, false],
+        ["==", ["get", "rank"], 2]
+      ],
+      "layout": {
+        "icon-size": 0.85,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "school"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi-school-rank3plus-world_low",
+      "type": "symbol",
+      "source": "world_low",
+      "source-layer": "poi",
+      "minzoom": 15,
+      "filter": [
+        "all",
+        ["has", "name"],
+        ["==", ["get", "class"], "college"],
+        ["match", ["get", "subclass"], ["university", "college"], true, false],
+        ["all", ["has", "rank"], [">", ["get", "rank"], 2]]
+      ],
+      "layout": {
+        "icon-size": 0.75,
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 10,
+          14, 12,
+          16, 14
+        ],
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-optional": true,
+        "text-allow-overlap": false,
+        "symbol-placement": "point",
+        "icon-image": "school"
+      },
+      "paint": {
+        "icon-color": "#a1a1a1",
+        "icon-opacity": 0.9,
+        "text-color": "#a1a1a1",
+        "text-halo-color": "#313131",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
       "id": "aerodrome-label-airport-us_high",
       "type": "symbol",
       "source": "us_high",
@@ -4757,7 +7479,7 @@
       "minzoom": 12,
       "filter": ["all", ["has", "name"]],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -4800,7 +7522,7 @@
         ["==", ["geometry-type"], "Point"]
       ],
       "layout": {
-        "icon-size": 0.8,
+        "icon-size": 0.9,
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "text-field": ["coalesce", ["get", "name:en"], ["get", "name"]],
