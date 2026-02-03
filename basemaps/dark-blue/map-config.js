@@ -26,7 +26,7 @@ window.mapZoom = 4.25;
 // Camera tilt angle in degrees (0-60)
 window.mapPitch = 0;
 // Rotation angle in degrees (0-360)
-window.mapBearing = 180;
+window.mapBearing = 0;
 // Starfield configuration from theme.ts -> darkBlueStarfield
 window.starfieldConfig = {
   glowColors: {
