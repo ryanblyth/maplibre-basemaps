@@ -409,15 +409,15 @@ export const darkGrayShields = {
   interstate: {
     enabled: true,
     sprite: "shield-interstate-custom",
-    textColor: "#8d8d8d",                 // Light blue-gray text
+    textColor: "#a1a1a1",                 // Light blue-gray text
     minZoom: 6,
     textPadding: [5, 5, 5, 5] as [number, number, number, number],  // [top, right, bottom, left]
     textSize: [6, 9, 14, 13] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
     textFont: ["Noto Sans SemiBold"],     // Font family
     // Custom shield appearance - subtle two-tone for dark theme
-    upperBackground: "#5d5d5d",           // Slightly lighter dark blue
-    lowerBackground: "#5d5d5d",           // Darker blue background
-    strokeColor: "#5d5d5d",               // Subtle blue-gray border
+    upperBackground: "#444444",           // Slightly lighter dark blue
+    lowerBackground: "#444444",           // Darker blue background
+    strokeColor: "#444444",               // Subtle blue-gray border
     strokeWidth: 2,
   },
   
@@ -425,14 +425,14 @@ export const darkGrayShields = {
   usHighway: {
     enabled: true,
     sprite: "shield-ushighway-custom",
-    textColor: "#8d8d8d",                 // Light blue-gray text
+    textColor: "#a1a1a1",                 // Light blue-gray text
     minZoom: 7,
     textPadding: [5, 5, 5, 5] as [number, number, number, number],  // [top, right, bottom, left]
     textSize: [6, 9, 14, 13] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
     textFont: ["Noto Sans SemiBold"],     // Font family
     // Custom shield appearance - subtle for dark theme
-    background: "#5d5d5d",                // Dark blue background
-    strokeColor: "#5d5d5d",               // Subtle blue-gray border
+    background: "#444444",                // Dark blue background
+    strokeColor: "#444444",               // Subtle blue-gray border
     strokeWidth: 2.5,
   },
   
@@ -440,14 +440,14 @@ export const darkGrayShields = {
   stateHighway: {
     enabled: true,
     sprite: "shield-state-custom",
-    textColor: "#8d8d8d",                 // Light blue-gray text
+    textColor: "#a1a1a1",                 // Light blue-gray text
     minZoom: 8,
     textPadding: [4, 4, 4, 4] as [number, number, number, number],  // [top, right, bottom, left]
     textSize: [8, 8, 14, 12] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
     textFont: ["Noto Sans SemiBold"],     // Font family
     // Custom shield appearance - subtle oval for dark theme
-    background: "#5d5d5d",                // Dark blue background
-    strokeColor: "#5d5d5d",               // Subtle blue-gray border
+    background: "#444444",                // Dark blue background
+    strokeColor: "#444444",               // Subtle blue-gray border
     strokeWidth: 1,                       // Border thickness (adjustable - reduce if cutoff occurs)
   },
 };

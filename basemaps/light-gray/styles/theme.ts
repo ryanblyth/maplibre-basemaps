@@ -195,40 +195,40 @@ export const lightGrayColors: ThemeColors = {
     state: "#b8b8b8",
   },
   
-  // Roads - light gray fills with darker casings
+  // Roads - moderate gray fills (visible without casings at high zoom)
   road: {
-    motorway: "#f5f5f5",   // Light gray (was orange)
-    trunk: "#f5f5f5",      // Light gray
-    primary: "#f8f8f8",    // Very light
-    secondary: "#fafafa",  // Lightest
-    tertiary: "#fafafa",   // Lightest
-    residential: "#fafafa", 
-    service: "#f5f5f5", 
-    parkingAisle: "#f2f2f2",  // Slightly darker
-    other: "#f5f5f5", 
+    motorway: "#e0e0e0",   // Darkest - major roads
+    trunk: "#e2e2e2",      // Slightly lighter
+    primary: "#e5e5e5",    // Medium gray
+    secondary: "#e8e8e8",  // Lighter
+    tertiary: "#e8e8e8",   // Lighter
+    residential: "#e8e8e8", 
+    service: "#ebebeb", 
+    parkingAisle: "#eaeaea",  // Slightly darker than service
+    other: "#ebebeb", 
     casing: "#c0c0c0",
     
     // Tunnel colors - slightly muted grays
     tunnel: {
-      motorway: "#ebebeb",
-      trunk: "#ebebeb",
-      primary: "#ededed",
-      secondary: "#f0f0f0",
-      tertiary: "#f0f0f0",
-      residential: "#f0f0f0",
-      service: "#ededed",
-      default: "#ededed",
+      motorway: "#d8d8d8",
+      trunk: "#dadada",
+      primary: "#dedede",
+      secondary: "#e0e0e0",
+      tertiary: "#e0e0e0",
+      residential: "#e0e0e0",
+      service: "#e2e2e2",
+      default: "#e2e2e2",
     },
     
     // Bridge colors - same as road
     bridge: {
-      motorway: "#f5f5f5",
-      trunk: "#f5f5f5",
-      primary: "#f8f8f8",
-      secondary: "#fafafa",
-      tertiary: "#fafafa",
-      residential: "#fafafa",
-      default: "#fafafa",
+      motorway: "#e0e0e0",
+      trunk: "#e2e2e2",
+      primary: "#e5e5e5",
+      secondary: "#e8e8e8",
+      tertiary: "#e8e8e8",
+      residential: "#e8e8e8",
+      default: "#e8e8e8",
       casing: "#b0b0b0",
     },
     
@@ -313,9 +313,9 @@ export const lightGrayWidths: ThemeWidths = {
   // Road casing widths (slightly larger than road - using same zoom stops)
   // Note: Casing currently uses fixed scaling, not real-world scaling
   roadCasing: {
-    motorway: { z6: 1.5, z12: 4, z15: 11 },
-    trunk: { z6: 1.2, z12: 3.5, z15: 11 },
-    primary: { z6: 1.0, z12: 2.8, z15: 11 },
+    motorway: { z6: 1.5, z12: 3.5, z15: 11 },
+    trunk: { z6: 1.2, z12: 3.25, z15: 11 },
+    primary: { z6: 1.0, z12: 2.5, z15: 11 },
     secondary: { z6: 0.9, z12: 2.2, z15: 8.5 },
     tertiary: { z6: 0.8, z12: 2.2, z15: 7 },
     residential: { z6: 0.7, z12: 1.8, z15: 5 },
@@ -411,9 +411,9 @@ export const lightGrayShields = {
     textSize: [6, 9, 14, 13] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
     textFont: ["Noto Sans SemiBold"],     // Font family
     // Custom shield appearance - grayscale two-tone
-    upperBackground: "#707070",           // Medium gray top
-    lowerBackground: "#505050",           // Darker gray bottom
-    strokeColor: "#fafafa",               // Light border
+    upperBackground: "#b5b5b5",           // Medium gray top
+    lowerBackground: "#c5c5c5",           // Lighter gray bottom
+    strokeColor: "#b5b5b5",               
     strokeWidth: 2,
   },
   
@@ -444,7 +444,7 @@ export const lightGrayShields = {
     // Custom shield appearance - light gray oval with gray border
     background: "#f0f0f0",                // Light gray background
     strokeColor: "#808080",               // Gray border
-    strokeWidth: 1,                       // Border thickness
+    strokeWidth: 2,                       // Border thickness
   },
 };
 

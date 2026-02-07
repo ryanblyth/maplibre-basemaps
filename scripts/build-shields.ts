@@ -57,7 +57,7 @@ const shields = [
   // Custom shields (uses theme colors from basemap theme)
   { name: 'shield-interstate-custom', file: 'shield-interstate-custom.svg', width: 28, height: 28, useTheme: 'interstate' },
   { name: 'shield-ushighway-custom', file: 'shield-ushighway-custom.svg', width: 26, height: 26, useTheme: 'usHighway' },
-  { name: 'shield-state-custom', file: 'shield-state-custom.svg', width: 32, height: 34, useTheme: 'stateHighway' },
+  { name: 'shield-state-custom', file: 'shield-state-custom.svg', width: 34, height: 34, useTheme: 'stateHighway' },
 ];
 
 /**
