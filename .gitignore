@@ -1,3 +1,6 @@
+# Spinoffs (temporary projects to be moved to other repos)
+spinoffs/
+
 # Dependencies
 node_modules/
 package-lock.json
