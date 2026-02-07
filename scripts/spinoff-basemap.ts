@@ -149,6 +149,9 @@ function createContentTransformer(
     content = content.replace(/from ["']\.\.\/\.\.\/\.\.\/shared\//g, 'from "../shared/');
     content = content.replace(/import ["']\.\.\/\.\.\/\.\.\/shared\//g, 'import "../shared/');
 
+    // Fix sprite path: remove 'basemaps/<name>/' prefix from spritePath
+    content = content.replace(/spritePath:\s*['"]basemaps\/[^\/]+\/sprites\/basemap['"]/g, 'spritePath: \'sprites/basemap\'');
+
     return content;
   };
 }
@@ -224,10 +227,39 @@ function spinoffBasemap(sourceBasemap: string, spinoffName: string): void {
   const spritesSourceDir = join(sourceDir, "sprites");
   const spritesDestDir = join(spinoffDir, "sprites");
   if (existsSync(spritesSourceDir)) {
-    copyDirectoryWithTransform(spritesSourceDir, spritesDestDir, () => "", []);
+    // Use plain directory copy - sprites don't need transformation
+    mkdirSync(spritesDestDir, { recursive: true });
+    const spriteFiles = readdirSync(spritesSourceDir);
+    for (const file of spriteFiles) {
+      const srcPath = join(spritesSourceDir, file);
+      const destPath = join(spritesDestDir, file);
+      const stat = statSync(srcPath);
+      if (stat.isDirectory()) {
+        // Skip subdirectories for now
+        continue;
+      }
+      copyFileSync(srcPath, destPath);
+    }
     console.log(`  ✓ Copied sprites/ directory`);
   } else {
     console.log(`  ⚠ No sprites directory found in source basemap`);
+  }
+
+  // Step 2b: Copy shield SVG templates
+  console.log("Copying shield templates...");
+  const shieldsSourceDir = join(projectRoot, "shared", "assets", "sprites", "shields");
+  const shieldsDestDir = join(spinoffDir, "sprites", "shields");
+  if (existsSync(shieldsSourceDir)) {
+    mkdirSync(shieldsDestDir, { recursive: true });
+    const shieldFiles = ["shield-interstate-custom.svg", "shield-ushighway-custom.svg", "shield-state-custom.svg"];
+    for (const file of shieldFiles) {
+      const srcPath = join(shieldsSourceDir, file);
+      const destPath = join(shieldsDestDir, file);
+      if (existsSync(srcPath)) {
+        copyFileSync(srcPath, destPath);
+      }
+    }
+    console.log(`  ✓ Copied shield templates`);
   }
 
   // Step 3: Copy and adapt preview.html
@@ -357,6 +389,7 @@ const productionConfig: BaseStyleConfig = {
   glyphsBaseUrl: "https://data.storypath.studio",
   glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",
+  spritePath: "sprites/basemap",
   dataBaseUrl: "https://data.storypath.studio",
 };
 
@@ -365,6 +398,7 @@ const localConfig: BaseStyleConfig = {
   glyphsBaseUrl: "https://data.storypath.studio",
   glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",
+  spritePath: "sprites/basemap",
   dataBaseUrl: "https://data.storypath.studio",
 };
 
@@ -494,6 +528,17 @@ function generateBuildShieldsScript(scriptsDir: string, spinoffName: string): vo
   // Read the original build-shields.ts and adapt it
   const originalScript = join(projectRoot, "scripts", "build-shields.ts");
   let content = readFileSync(originalScript, "utf8");
+  
+  // Add ES module __dirname definition after imports
+  content = content.replace(
+    `import sharp from 'sharp';`,
+    `import sharp from 'sharp';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);`
+  );
   
   // Update basemap paths - replace the const declarations
   content = content.replace(
