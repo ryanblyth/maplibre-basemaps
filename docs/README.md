@@ -14,8 +14,9 @@ A modular, TypeScript-based style system for creating MapLibre GL basemaps.
 - [Contours](./contours.md) - Topographic elevation lines
 - [Grid Lines](./grid.md) - Latitude and longitude reference lines
 - [Sprites](./sprites.md) - POI icons and highway shields (global and per-basemap)
-- [Creating a New Basemap](./creating-basemap.md) - Scaffold a new basemap with `npm run create:basemap`
+- [Creating a New Basemap](./creating-basemap.md) - Scaffold a new basemap in this repo with `npm run create:basemap`
 - [Exporting Basemaps](./exporting-basemaps.md) - Export basemap bundles for use in other codebases
+- [Spinning Off Basemaps](./spinning-off-basemaps.md) - Create standalone projects for other repositories
 - [Map Elements Cheat Sheet](./MAP_ELEMENTS.md) - Quick reference for MapLibre concepts
 
 ## Overview

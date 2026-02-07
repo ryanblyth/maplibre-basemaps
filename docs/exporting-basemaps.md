@@ -2,6 +2,38 @@
 
 This guide explains how to export a basemap bundle for use in other codebases (Astro, static sites, or other frameworks).
 
+## Choosing Between Export and Spinoff
+
+This project offers two ways to use basemaps in other codebases:
+
+| Feature | Export Bundle | Spinoff |
+|---------|--------------|---------|
+| **Command** | `npm run export:bundle` | `npm run spinoff` |
+| **Use case** | Static deployment only | Full development + customization |
+| **Output** | Minimal runtime files | Complete project with source |
+| **Size** | Small (~300KB) | Larger (includes source + node_modules) |
+| **Includes source** | No | Yes (full TypeScript) |
+| **Includes build tools** | No | Yes (build:styles, build:shields) |
+| **Can customize** | Limited (JSON only) | Full (TypeScript source) |
+| **Can add data layers** | No | Yes |
+| **Development server** | No | Yes (serve.js) |
+| **Documentation** | Usage only | Complete dev docs |
+
+**Choose export:bundle when:**
+- You just need the map for static display
+- No customization needed
+- Minimal bundle size preferred
+- No build process required
+
+**Choose spinoff when:**
+- Moving basemap to another repository
+- Need to add custom data layers
+- Want to customize colors, layers, features
+- Need full development environment
+- Plan ongoing development
+
+See [Spinning Off Basemaps](./spinning-off-basemaps.md) for spinoff documentation.
+
 ## Overview
 
 The bundle export feature creates a self-contained package with all the essential files needed to render a basemap in another project. The bundle includes:
