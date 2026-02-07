@@ -212,6 +212,40 @@ The bundle is self-contained and ready to copy to another project. External depe
 
 See `docs/exporting-basemaps.md` for detailed documentation on using the bundle in different frameworks.
 
+## Spinning Off Basemaps
+
+To create a fully independent project from a basemap for use in another repository:
+
+```bash
+npm run spinoff -- <source-basemap> <spinoff-name>
+```
+
+Example:
+```bash
+npm run spinoff -- dark-gray my-custom-map
+```
+
+This creates a complete standalone project at `spinoffs/my-custom-map/` with:
+- Full TypeScript source files (theme.ts, style definitions)
+- Build scripts (build:styles, build:shields)
+- Development server (serve.js)
+- All shared utilities (copied locally, no parent dependencies)
+- Sprite files and shield templates
+- Complete documentation
+- package.json with all dependencies
+
+**When to use spinoff:**
+- Creating a custom map for another repository
+- Need to add custom data layers on top of the basemap
+- Want full development environment with build tools
+- Plan to heavily customize the map style
+
+**Difference from export:bundle:**
+- `export:bundle` creates minimal files for static deployment (no source, no build tools)
+- `spinoff` creates a complete development project (full source + build tools)
+
+See `docs/spinning-off-basemaps.md` for detailed documentation.
+
 ## Troubleshooting
 
 - **White screen**: Check browser console for errors. Common issues:

@@ -2,6 +2,8 @@
 
 This guide walks through creating a new basemap from an existing template.
 
+**Note:** This guide is for creating a new basemap **within this repository**. If you want to create a standalone project for another repository, see [Spinning Off Basemaps](./spinning-off-basemaps.md) instead.
+
 ## Quick Start (Recommended)
 
 Use the automated scaffolding script to create a new basemap:
