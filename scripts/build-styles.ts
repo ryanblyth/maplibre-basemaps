@@ -15,6 +15,7 @@ import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import { createDarkBlueStyle } from "../basemaps/dark-blue/styles/darkBlueStyle.js";
 import { createDarkGrayStyle } from "../basemaps/dark-gray/styles/darkGrayStyle.js";
+import { createLightGrayStyle } from "../basemaps/light-gray/styles/lightGrayStyle.js";
 import type { BaseStyleConfig } from "../shared/styles/baseStyle.js";
 import { formatJSON } from "./format-json.js";
 
@@ -53,6 +54,11 @@ const stylesToBuild: StyleBuild[] = [
     name: "dark-gray",
     outputPath: "basemaps/dark-gray/style.generated.json",
     generator: createDarkGrayStyle,
+  },
+  {
+    name: "light-gray",
+    outputPath: "basemaps/light-gray/style.generated.json",
+    generator: createLightGrayStyle,
   },
 ];
 

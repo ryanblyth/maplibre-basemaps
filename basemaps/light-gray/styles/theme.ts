@@ -1,7 +1,7 @@
 /**
- * Dark Gray Basemap Theme
+ * Light Gray Basemap Theme
  * 
- * This file contains ALL configurable values for the dark-gray basemap:
+ * This file contains ALL configurable values for the light-gray basemap:
  * - Colors (fills, strokes, labels)
  * - Line widths (roads, boundaries, water)
  * - Opacities
@@ -24,7 +24,7 @@ import {
 // SETTINGS
 // ============================================================================
 
-export const darkGraySettings: ThemeSettings = {
+export const lightGraySettings: ThemeSettings = {
   /** Map projection type - "mercator" for flat map, "globe" for 3D globe */
   projection: "globe",
   
@@ -95,7 +95,7 @@ export const darkGraySettings: ThemeSettings = {
  *   - "Junicode Bold"
  *   - "Junicode Italic"
  */
-export const darkGrayLabelFonts: ThemeLabelFonts = {
+export const lightGrayLabelFonts: ThemeLabelFonts = {
   /** Default font for all labels (fallback when specific label fonts not set) */
   default: ["Noto Sans Regular"],
   
@@ -119,168 +119,164 @@ export const darkGrayLabelFonts: ThemeLabelFonts = {
 // COLORS
 // ============================================================================
 
-export const darkGrayColors: ThemeColors = {
-  // Background
-  background: "#303030",
+export const lightGrayColors: ThemeColors = {
+  // Background - light gray base
+  background: "#fafafa",
   
-  // Land/terrain - Harmonious monochrome grays based on #212121
+  // Land/terrain - subtle gray variations
   land: {
-    wood: "#2e2e2e",      // Slightly darker gray
-    grass: "#353535",     // Slightly lighter gray
-    scrub: "#3a3a3a",     // Lighter gray
-    cropland: "#3b3b3b",   // Lighter gray
-    farmland: "#3b3b3b",   // Same as cropland
-    rock: "#373737",      // Very slightly lighter gray
-    sand: "#3c3c3c",      // Lighter gray
-    wetland: "#343434",   // Slightly darker gray
-    default: "#303030",   // Neutral gray - default/unknown
+    wood: "#e8e8e8",      // Slightly darker - forests
+    grass: "#ededed",     // Light gray
+    scrub: "#eaeaea",     // Between wood and grass
+    cropland: "#efefef",  // Light
+    farmland: "#efefef",  // Same as cropland
+    rock: "#e0e0e0",      // Darker - rocky terrain
+    sand: "#f2f2f2",      // Lighter
+    wetland: "#e5e5e5",   // Darker - wet areas
+    default: "#f0f0f0",   // Default landcover
   },
   
-  // Landuse - Harmonious monochrome grays based on #212121
+  // Landuse - monochrome gray variations
   landuse: {
-    park: "#3a3a3a",        // Lighter gray
-    cemetery: "#3a3a3a",    // Lighter gray
-    pitch: "#3a3a3a",       // Lighter gray
-    stadium: "#3a3a3a",     // Lighter gray
-    residential: "#343434", // Slightly lighter gray
+    park: "#e8e8e8",        // Gray (was green)
+    cemetery: "#eaeaea",    // Gray
+    pitch: "#e5e5e5",       // Sports fields - slightly darker
+    stadium: "#e5e5e5",     // Same as pitch
+    residential: "#f2f2f2", // Very light gray
     // Additional landuse classes - subtle gray variations
-    college: "#3a3a3a",     // Lighter gray
-    commercial: "#3a3a3a",  // Lighter gray
-    construction: "#343434", // Neutral gray
-    dam: "#343434",         // Neutral gray
-    farmland: "#3b3b3b",     // Matches land.cropland
-    grass: "#353535",       // Matches land.grass
-    hospital: "#3a3a3a",    // Lighter gray
-    industrial: "#343434",  // Neutral gray
-    military: "#2f2f2f",    // Darker gray
-    neighbourhood: "#343434", // Neutral gray
-    quarry: "#343434",      // Neutral gray
-    quarter: "#343434",     // Neutral gray
-    railway: "#343434",     // Neutral gray
-    retail: "#3a3a3a",      // Lighter gray
-    school: "#3a3a3a",      // Lighter gray
-    suburb: "#343434",      // Neutral gray
-    theme_park: "#3a3a3a",  // Lighter gray
-    track: "#3a3a3a",       // Lighter gray
-    university: "#3a3a3a",   // Lighter gray
-    zoo: "#3a3a3a",         // Lighter gray
-    default: "#303030",     // Neutral gray - default
+    college: "#ebedeb",     // Light gray
+    commercial: "#f0f0f0",  // Light gray
+    construction: "#e8e8e8", // Gray
+    dam: "#e0e0e0",         // Darker gray
+    farmland: "#efefef",    // Light (matches land.cropland)
+    grass: "#ededed",       // Light (matches land.grass)
+    hospital: "#ececec",    // Light gray
+    industrial: "#e8e8e8",  // Gray
+    military: "#e5e5e5",    // Gray
+    neighbourhood: "#f2f2f2", // Light gray
+    quarry: "#e0e0e0",      // Darker gray
+    quarter: "#f2f2f2",     // Light gray
+    railway: "#e8e8e8",     // Gray
+    retail: "#f0f0f0",      // Light gray
+    school: "#ebedeb",      // Light gray
+    suburb: "#f2f2f2",      // Light gray
+    theme_park: "#e8e8e8",  // Gray
+    track: "#ededed",       // Light gray
+    university: "#ebedeb",  // Light gray
+    zoo: "#e8e8e8",         // Gray
+    default: "#f0f0f0",     // Light gray
   },
   
-  // Water - Harmonious monochrome grays (darker than background)
+  // Water - grayscale based on #dadada
   water: {
-    fill: "#1e1e1e",      // Darker gray
-    line: "#2f2f2f",      // Slightly lighter than fill
-    labelColor: "#424242", // Lighter gray for labels
-    labelHalo: "#2f2f2f",  // Dark halo
+    fill: "#dadada",
+    line: "#c8c8c8",
+    labelColor: "#707070",
+    labelHalo: "#fafafa",
     // Water class colors - subtle gray variations
-    ocean: "#1e1e1e",      // Base dark gray - ocean (matches fill)
-    sea: "#1e1e1e",       // Slightly lighter gray - sea
-    lake: "#1e1e1e",      // Slightly lighter gray - lake
-    pond: "#1e1e1e",      // Slightly lighter gray - pond
-    river: "#1e1e1e",     // Matches line color - river
-    canal: "#1e1e1e",     // Same as river - canal
-    stream: "#1e1e1e",    // Slightly lighter gray - stream
-    ditch: "#1e1e1e",     // Slightly lighter gray - ditch
-    drain: "#1e1e1e",     // Same as ditch - drain
-    bay: "#1e1e1e",       // Same as sea - bay
-    gulf: "#1e1e1e",      // Same as sea - gulf
-    reservoir: "#1e1e1e", // Same as lake - reservoir
-    default: "#1e1e1e",   // Default water color (matches fill)
+    ocean: "#dadada",     // Base water color
+    sea: "#dcdcdc",       // Slightly lighter
+    lake: "#d8d8d8",      // Slightly darker
+    pond: "#d6d6d6",      // Slightly darker
+    river: "#d5d5d5",     // Darker for rivers
+    canal: "#d5d5d5",     // Same as river
+    stream: "#d3d3d3",    // Slightly darker
+    ditch: "#d0d0d0",     // Darker
+    drain: "#d0d0d0",     // Same as ditch
+    bay: "#dcdcdc",       // Same as sea
+    gulf: "#dcdcdc",      // Same as sea
+    reservoir: "#d8d8d8", // Same as lake
+    default: "#dadada",   // Default water color
   },
   
-  // Boundaries - Harmonious monochrome grays (subtle, low-contrast)
+  // Boundaries - gray tones
   boundary: {
-    country: "#9a9a9a",      // Subtle lighter gray
-    state: "#6e6e6e",         // Slightly darker gray
+    country: "#a0a0a0",
+    state: "#b8b8b8",
   },
   
-  // Roads - Harmonious monochrome grays with progressive lightness for hierarchy
+  // Roads - moderate gray fills (visible without casings at high zoom)
   road: {
-    motorway: "#5e5e5e",      // Lightest gray for visibility
-    trunk: "#595959",         // Slightly darker
-    primary: "#545454",       // Progressively darker
-    secondary: "#4f4f4f",     // Progressively darker
-    tertiary: "#4a4a4a",      // Progressively darker
-    residential: "#454545",  // Progressively darker
-    service: "#404040",       // Progressively darker
-    parkingAisle: "#3d3d3d",  // Darkest road color
-    other: "#404040", 
-    casing: "#252525",        // Very dark gray for outlines
+    motorway: "#e0e0e0",   // Darkest - major roads
+    trunk: "#e2e2e2",      // Slightly lighter
+    primary: "#e5e5e5",    // Medium gray
+    secondary: "#e8e8e8",  // Lighter
+    tertiary: "#e8e8e8",   // Lighter
+    residential: "#e8e8e8", 
+    service: "#ebebeb", 
+    parkingAisle: "#eaeaea",  // Slightly darker than service
+    other: "#ebebeb", 
+    casing: "#c0c0c0",
     
-    // Tunnel colors - COMMENTED OUT: tunnels inherit road colors by default
-    // Uncomment to override with custom tunnel colors:
-    // tunnel: {
-    //   motorway: "#364252",
-    //   trunk: "#323c4a",
-    //   primary: "#2f3947",
-    //   secondary: "#2b3441",
-    //   tertiary: "#29323e",
-    //   residential: "#27303b",
-    //   service: "#252d38",
-    //   default: "#242b35",
-    // },
+    // Tunnel colors - slightly muted grays
+    tunnel: {
+      motorway: "#d8d8d8",
+      trunk: "#dadada",
+      primary: "#dedede",
+      secondary: "#e0e0e0",
+      tertiary: "#e0e0e0",
+      residential: "#e0e0e0",
+      service: "#e2e2e2",
+      default: "#e2e2e2",
+    },
     
-    // Bridge colors - COMMENTED OUT: bridges inherit road colors by default
-    // Uncomment to override with custom bridge colors:
-    // bridge: {
-    //   motorway: "#3f4a5b",
-    //   trunk: "#3a4655",
-    //   primary: "#374252",
-    //   secondary: "#343e4c",
-    //   tertiary: "#303a47",
-    //   residential: "#2d3542",
-    //   default: "#2a3240",
-    //   casing: "#0f1520",
-    // },
+    // Bridge colors - same as road
+    bridge: {
+      motorway: "#e0e0e0",
+      trunk: "#e2e2e2",
+      primary: "#e5e5e5",
+      secondary: "#e8e8e8",
+      tertiary: "#e8e8e8",
+      residential: "#e8e8e8",
+      default: "#e8e8e8",
+      casing: "#b0b0b0",
+    },
     
-    // Tunnel casing color - COMMENTED OUT: uses road casing color by default
-    // tunnelCasing: "#0a0e13",
+    tunnelCasing: "#c8c8c8",
   },
   
-  // Paths - Harmonious monochrome gray
-  path: "#292929",
+  // Paths - medium gray
+  path: "#d0d0d0",
   
-  // Railway - Harmonious monochrome gray
-  railway: "#282828",
+  // Railway - darker gray for visibility
+  railway: "#a0a0a0",
   
-  // Buildings - Harmonious monochrome grays with height-based variations
+  // Buildings - gray fills
   building: {
-    fill: "#303030",      // Slightly lighter than background
-    outline: "#252525",   // Darker gray for outline
-    // Height-based building colors (buildings don't have class property)
-    // Colors vary by building height (render_height) - subtle gradient from dark to slightly lighter
-    short: "#303030",      // Base gray - short buildings (0-10m)
-    medium: "#353535",     // Slightly lighter gray - medium buildings (10-50m)
-    tall: "#3a3a3a",       // Lighter gray - tall buildings (50-150m)
-    skyscraper: "#3f3f3f", // Lighter gray - skyscrapers (150-300m)
-    supertall: "#444444",  // Even lighter gray - supertall buildings (300-600m)
-    megatall: "#494949",   // Lightest gray - megatall buildings (600m+)
-    default: "#303030",    // Default building color (matches short)
+    fill: "#e5e5e5",
+    outline: "#d0d0d0",
+    // Height-based building colors - subtle gradient
+    short: "#e5e5e5",      // Light gray - short buildings (0-10m)
+    medium: "#e0e0e0",     // Slightly darker - medium buildings (10-50m)
+    tall: "#dadada",       // Medium gray - tall buildings (50-150m)
+    skyscraper: "#d5d5d5", // Darker gray - skyscrapers (150-300m)
+    supertall: "#d0d0d0",  // Even darker - supertall buildings (300-600m)
+    megatall: "#c8c8c8",   // Darkest - megatall buildings (600m+)
+    default: "#e5e5e5",    // Default building color (matches short)
   },
   
-  // Labels - Harmonious monochrome grays with good contrast
+  // Labels - dark grays on light background
   label: {
     place: {
-      color: "#b1b1b1",      // Light gray for good contrast
-      halo: "#252525",       // Very dark halo
+      color: "#505050",
+      halo: "#fafafa",
     },
     road: {
-      major: { color: "#b1b1b1", opacity: 0.8 },      // Light gray
-      secondary: { color: "#b1b1b1", opacity: 0.7 },  // Medium gray
-      tertiary: { color: "#b1b1b1", opacity: 0.7 },   // Darker gray
-      other: { color: "#b1b1b1", opacity: 0.7 },      // Darker gray
-      halo: "#313131",       // Very dark halo
+      major: { color: "#606060", opacity: 0.9 },
+      secondary: { color: "#707070", opacity: 0.85 },
+      tertiary: { color: "#808080", opacity: 0.8 },
+      other: { color: "#909090", opacity: 0.75 },
+      halo: "#fafafa",
     },
     water: {
-      color: "#c1c1c1",      // Medium gray for labels
-      halo: "#313131",       // Dark halo matching water fill
+      color: "#707070",
+      halo: "#fafafa",
     },
     poi: {
-      iconColor: "#a1a1a1",           // Medium gray for icons
+      iconColor: "#707070",            // Medium gray for icons
       iconSize: 0.8,                   // Slightly smaller icons
-      textColor: "#a1a1a1",            // Light gray for labels
-      textHalo: "#313131",             // Very dark halo for contrast
+      textColor: "#606060",            // Dark gray for labels
+      textHalo: "#fafafa",             // Light halo for contrast
       textHaloWidth: 1.5,
     },
   },
@@ -290,7 +286,7 @@ export const darkGrayColors: ThemeColors = {
 // LINE WIDTHS (at different zoom levels)
 // ============================================================================
 
-export const darkGrayWidths: ThemeWidths = {
+export const lightGrayWidths: ThemeWidths = {
   // Boundary widths
   boundary: {
     country: { z0: 0.4, z6: 1.2, z10: 2.0, z15: 2.5 },
@@ -317,9 +313,9 @@ export const darkGrayWidths: ThemeWidths = {
   // Road casing widths (slightly larger than road - using same zoom stops)
   // Note: Casing currently uses fixed scaling, not real-world scaling
   roadCasing: {
-    motorway: { z6: 1.5, z12: 4, z15: 11 },
-    trunk: { z6: 1.2, z12: 3.5, z15: 11 },
-    primary: { z6: 1.0, z12: 2.8, z15: 11 },
+    motorway: { z6: 1.5, z12: 3.5, z15: 11 },
+    trunk: { z6: 1.2, z12: 3.25, z15: 11 },
+    primary: { z6: 1.0, z12: 2.5, z15: 11 },
     secondary: { z6: 0.9, z12: 2.2, z15: 8.5 },
     tertiary: { z6: 0.8, z12: 2.2, z15: 7 },
     residential: { z6: 0.7, z12: 1.8, z15: 5 },
@@ -372,7 +368,7 @@ export const darkGrayWidths: ThemeWidths = {
 // OPACITIES
 // ============================================================================
 
-export const darkGrayOpacities: ThemeOpacities = {
+export const lightGrayOpacities: ThemeOpacities = {
   landcover: 0.6,
   landuse: 0.6,
   building: 0.9,
@@ -398,7 +394,7 @@ export const darkGrayOpacities: ThemeOpacities = {
 
 // To build shield icons and styles, run: npx tsx scripts/build-shields.ts && npm run build:styles
 
-export const darkGrayShields = {
+export const lightGrayShields = {
   /** Whether to show highway shields */
   enabled: true,
   
@@ -409,15 +405,15 @@ export const darkGrayShields = {
   interstate: {
     enabled: true,
     sprite: "shield-interstate-custom",
-    textColor: "#a1a1a1",                 // Light blue-gray text
+    textColor: "#fafafa",                 // Light text on dark background
     minZoom: 6,
     textPadding: [5, 5, 5, 5] as [number, number, number, number],  // [top, right, bottom, left]
     textSize: [6, 9, 14, 13] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
     textFont: ["Noto Sans SemiBold"],     // Font family
-    // Custom shield appearance - subtle two-tone for dark theme
-    upperBackground: "#444444",           // Slightly lighter dark blue
-    lowerBackground: "#444444",           // Darker blue background
-    strokeColor: "#444444",               // Subtle blue-gray border
+    // Custom shield appearance - grayscale two-tone
+    upperBackground: "#b5b5b5",           // Medium gray top
+    lowerBackground: "#c5c5c5",           // Lighter gray bottom
+    strokeColor: "#b5b5b5",               
     strokeWidth: 2,
   },
   
@@ -425,14 +421,14 @@ export const darkGrayShields = {
   usHighway: {
     enabled: true,
     sprite: "shield-ushighway-custom",
-    textColor: "#a1a1a1",                 // Light blue-gray text
+    textColor: "#404040",                 // Dark gray text
     minZoom: 7,
     textPadding: [5, 5, 5, 5] as [number, number, number, number],  // [top, right, bottom, left]
     textSize: [6, 9, 14, 13] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
     textFont: ["Noto Sans SemiBold"],     // Font family
-    // Custom shield appearance - subtle for dark theme
-    background: "#444444",                // Dark blue background
-    strokeColor: "#444444",               // Subtle blue-gray border
+    // Custom shield appearance - light gray with dark outline
+    background: "#f0f0f0",                // Light gray background
+    strokeColor: "#606060",               // Medium gray border
     strokeWidth: 2.5,
   },
   
@@ -440,15 +436,15 @@ export const darkGrayShields = {
   stateHighway: {
     enabled: true,
     sprite: "shield-state-custom",
-    textColor: "#a1a1a1",                 // Light blue-gray text
+    textColor: "#404040",                 // Dark gray text
     minZoom: 8,
     textPadding: [4, 4, 4, 4] as [number, number, number, number],  // [top, right, bottom, left]
     textSize: [8, 8, 14, 12] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
     textFont: ["Noto Sans SemiBold"],     // Font family
-    // Custom shield appearance - subtle oval for dark theme
-    background: "#444444",                // Dark blue background
-    strokeColor: "#444444",               // Subtle blue-gray border
-    strokeWidth: 1,                       // Border thickness (adjustable - reduce if cutoff occurs)
+    // Custom shield appearance - light gray oval with gray border
+    background: "#f0f0f0",                // Light gray background
+    strokeColor: "#808080",               // Gray border
+    strokeWidth: 2,                       // Border thickness
   },
 };
 
@@ -456,29 +452,29 @@ export const darkGrayShields = {
 // STARFIELD CONFIGURATION
 // ============================================================================
 
-export const darkGrayStarfield = {
-  /** Starfield glow colors - monochrome grays for dark-gray theme */
+export const lightGrayStarfield = {
+  /** Starfield glow colors - subtle gray scheme for light-gray theme */
   glowColors: {
-    inner: "rgba(200, 200, 200, 0.9)",   // Light gray
-    middle: "rgba(150, 150, 150, 0.7)",  // Medium gray
-    outer: "rgba(100, 100, 100, 0.4)",   // Dark gray
-    fade: "rgba(50, 50, 50, 0)"          // Very dark gray
+    inner: "rgba(180, 180, 180, 0.4)",   // Light gray
+    middle: "rgba(160, 160, 160, 0.3)",  // Medium gray
+    outer: "rgba(140, 140, 140, 0.2)",   // Darker gray
+    fade: "rgba(120, 120, 120, 0)"       // Fade out
   },
   /** Number of stars in the starfield */
-  starCount: 200,
-  /** Glow intensity (0.0 to 1.0) */
-  glowIntensity: 0.5,
+  starCount: 100,
+  /** Glow intensity (0.0 to 1.0) - reduced for light theme */
+  glowIntensity: 0.3,
   /** Glow size multiplier relative to globe */
-  glowSizeMultiplier: 1.25,
+  glowSizeMultiplier: 1.15,
   /** Glow blur multiplier */
-  glowBlurMultiplier: 0.1,
+  glowBlurMultiplier: 0.08,
 };
 
 // ============================================================================
 // POI CONFIGURATION
 // ============================================================================
 
-export const darkGrayPOIs: ThemePOIs = {
+export const lightGrayPOIs: ThemePOIs = {
   /** Whether to show POIs at all */
   enabled: true,
   
@@ -544,7 +540,7 @@ export const darkGrayPOIs: ThemePOIs = {
 // BATHYMETRY CONFIGURATION
 // ============================================================================
 
-export const darkGrayBathymetry = {
+export const lightGrayBathymetry = {
   /** Whether to show bathymetry at all */
   enabled: true,
   
@@ -556,19 +552,19 @@ export const darkGrayBathymetry = {
   
   /** Opacity range */
   opacity: {
-    min: 0.7,  // Opacity at minZoom
-    max: 0.9,  // Opacity at maxZoom
+    min: 0.5,  // Opacity at minZoom
+    max: 0.7,  // Opacity at maxZoom
   },
   
-  /** Custom colors for each depth level */
+  /** Custom colors for each depth level - grayscale */
   colors: {
-    shallow: "#1f1f1f",  // 0m - shallowest (lighter than water)
-    shelf: "#1e1e1e",    // 200m - shelf
-    slope: "#1e1e1e",    // 1000m - slope
-    deep1: "#1d1d1d",    // 2000m - deep1
-    deep2: "#1c1c1c",    // 4000m - deep2
-    abyss: "#1b1b1b",    // 6000m - abyss
-    trench: "#1a1a1a",   // 10000m - trench (deepest)
+    shallow: "#dadada",  // 0m - shallowest (lighter)
+    shelf: "#d1d1d1",    // 200m - shelf
+    slope: "#d1d1d1",    // 1000m - slope
+    deep1: "#d2d2d2",    // 2000m - deep1
+    deep2: "#d3d3d3",    // 4000m - deep2
+    abyss: "#d4d4d4",    // 6000m - abyss
+    trench: "#d6d6d6",   // 10000m - trench (deepest/darkest)
   },
   
   /** Custom opacity for each depth level */
@@ -587,7 +583,7 @@ export const darkGrayBathymetry = {
 // CONTOURS CONFIGURATION
 // ============================================================================
 
-export const darkGrayContours = {
+export const lightGrayContours = {
   /** Whether to show contours at all */
   enabled: false,
   
@@ -599,23 +595,23 @@ export const darkGrayContours = {
   
   /** Major contour line styling (800m intervals) */
   major: {
-    color: "#4a5568",  // Medium gray
+    color: "#a0a0a0",  // Medium gray for light theme
     width: {
       min: 0.5,  // Width at minZoom
       max: 1.5,  // Width at maxZoom
     },
-    opacity: 0.6,
+    opacity: 0.5,
     minZoom: 4,  // Major contours start at z4
   },
   
   /** Minor contour line styling (350m intervals) */
   minor: {
-    color: "#3a4455",  // Darker gray
+    color: "#b8b8b8",  // Lighter gray
     width: {
       min: 0.25,  // Width at minZoom
       max: 0.75,  // Width at maxZoom
     },
-    opacity: 0.4,
+    opacity: 0.35,
     minZoom: 6,  // Minor contours start at z6
   },
 };
@@ -624,7 +620,7 @@ export const darkGrayContours = {
 // ICE CONFIGURATION
 // ============================================================================
 
-export const darkGrayIce = {
+export const lightGrayIce = {
   /** Whether to show ice at all */
   enabled: false,
   
@@ -642,20 +638,20 @@ export const darkGrayIce = {
   
   /** Glaciated areas (glaciers, ice caps) */
   glaciated: {
-    color: "#e8f4f8",  // Light blue-white
+    color: "#f8f8f8",  // Very light gray (almost white)
     opacity: 0.9,
   },
   
   /** Ice shelves */
   iceShelves: {
-    color: "#d0e8f0",  // Slightly darker blue-white
+    color: "#f0f0f0",  // Light gray
     opacity: 0.9,
   },
   
   /** Ice edge (outline) - set to null or enabled: false to disable */
   iceEdge: {
     enabled: false,  // Outline of ice shelves (Antarctica only)
-    color: "#a0c8d8",  // Medium blue-gray (matches original design)
+    color: "#c0c0c0",  // Medium gray
     width: 1.0,  // Increased from 0.5 for better visibility
     opacity: 0.8,  // Increased from 0.6 for better visibility
   },
@@ -665,7 +661,7 @@ export const darkGrayIce = {
 // HILLSHADE CONFIGURATION
 // ============================================================================
 
-export const darkGrayHillshade = {
+export const lightGrayHillshade = {
   /** Whether to show hillshade at all */
   enabled: true,
   
@@ -675,8 +671,8 @@ export const darkGrayHillshade = {
   /** Maximum zoom level to show hillshade (fades out after this) */
   maxZoom: 12,
   
-  /** Base opacity for hillshade (0.0 to 1.0) */
-  opacity: 0.25,
+  /** Base opacity for hillshade (0.0 to 1.0) - reduced for light theme */
+  opacity: 0.33,
   
   /** Illumination direction (0-360 degrees, where 0 is north, 90 is east) */
   illuminationDirection: 335,  // Northwest (typical for natural lighting)
@@ -685,23 +681,23 @@ export const darkGrayHillshade = {
   illuminationAnchor: "viewport" as const,
   
   /** Exaggeration factor for terrain relief (0.0 to 1.0, higher = more dramatic) */
-  exaggeration: 0.25,
+  exaggeration: 0.33,
   
-  /** Shadow color (darker areas) */
-  shadowColor: "#252525",
+  /** Shadow color (darker areas) - gray for light theme */
+  shadowColor: "#ececec",
   
   /** Highlight color (lighter areas) */
-  highlightColor: "#303030",
+  highlightColor: "#f1f1f1",
   
   /** Accent color (mid-tones) */
-  accentColor: "#252525",
+  accentColor: "#ececec",
 };
 
 // ============================================================================
 // GRID CONFIGURATION
 // ============================================================================
 
-export const darkGrayGrid = {
+export const lightGrayGrid = {
   /** Whether to show grid lines at all */
   enabled: false,
   
@@ -713,16 +709,16 @@ export const darkGrayGrid = {
   
   /** Latitude lines (horizontal) styling */
   latitude: {
-    color: "#6b7280",  // Lighter gray for better visibility
+    color: "#b0b0b0",  // Medium gray for light theme
     width: {
-      min: 1.0,  // Width at minZoom (increased for visibility)
+      min: 1.0,  // Width at minZoom
       max: 1.5,  // Width at maxZoom
     },
-    opacity: 0.6,  // Increased opacity for better visibility
+    opacity: 0.5,  // Moderate opacity
     interval: 10,  // Lines every 10 degrees
     label: {
       enabled: false,  // Enable labels for latitude lines
-      color: "#9ca3af",  // Light gray for labels
+      color: "#707070",  // Dark gray for labels
       size: {
         min: 10,  // Size at minZoom
         max: 12,  // Size at maxZoom
@@ -734,16 +730,16 @@ export const darkGrayGrid = {
   
   /** Longitude lines (vertical) styling */
   longitude: {
-    color: "#6b7280",  // Lighter gray for better visibility
+    color: "#b0b0b0",  // Medium gray for light theme
     width: {
-      min: 1.0,  // Width at minZoom (increased for visibility)
+      min: 1.0,  // Width at minZoom
       max: 1.5,  // Width at maxZoom
     },
-    opacity: 0.6,  // Increased opacity for better visibility
+    opacity: 0.5,  // Moderate opacity
     interval: 10,  // Lines every 10 degrees
     label: {
       enabled: false,  // Enable labels for longitude lines
-      color: "#9ca3af",  // Light gray for labels
+      color: "#707070",  // Dark gray for labels
       size: {
         min: 10,  // Size at minZoom
         max: 12,  // Size at maxZoom
@@ -758,7 +754,7 @@ export const darkGrayGrid = {
 // BOUNDARY CONFIGURATION
 // ============================================================================
 
-export const darkGrayBoundary = {
+export const lightGrayBoundary = {
   /** Whether to show country boundaries */
   country: true,  // Set to false to hide country boundaries
   /** Whether to show state boundaries */
@@ -773,7 +769,7 @@ export const darkGrayBoundary = {
 // BUILDING CONFIGURATION
 // ============================================================================
 
-export const darkGrayBuildings = {
+export const lightGrayBuildings = {
   /** Whether to show buildings at all */
   enabled: true,  // Set to false to hide all buildings
   /** Minimum zoom level to show buildings */
@@ -788,7 +784,7 @@ export const darkGrayBuildings = {
 // LAND CONFIGURATION
 // ============================================================================
 
-export const darkGrayLand = {
+export const lightGrayLand = {
   /** 
    * Whether to make all landcover layers transparent (sets opacity to 0, layers still exist but are invisible).
    * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
@@ -799,14 +795,14 @@ export const darkGrayLand = {
   /** Whether to use a single override color for all landcover types */
   useOverrideColor: false,  // Set to true to use overrideColor for all landcover types
   /** Override color to use for all landcover types when useOverrideColor is true */
-  overrideColor: "#0f141b",  // Default landcover color - used when useOverrideColor is true (matches land.default)
+  overrideColor: "#f0f0f0",  // Default landcover color - used when useOverrideColor is true (matches land.default)
 };
 
 // ============================================================================
 // LANDUSE CONFIGURATION
 // ============================================================================
 
-export const darkGrayLanduse = {
+export const lightGrayLanduse = {
   /** 
    * Whether to make all landuse layers transparent (sets opacity to 0, layers still exist but are invisible).
    * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
@@ -817,14 +813,14 @@ export const darkGrayLanduse = {
   /** Whether to use a single override color for all landuse types */
   useOverrideColor: false,  // Set to true to use overrideColor for all landuse types
   /** Override color to use for all landuse types when useOverrideColor is true */
-  overrideColor: "#0e131a",  // Default landuse color - used when useOverrideColor is true (matches landuse.default)
+  overrideColor: "#f0f0f0",  // Default landuse color - used when useOverrideColor is true (matches landuse.default)
 };
 
 // ============================================================================
 // WATER CONFIGURATION
 // ============================================================================
 
-export const darkGrayWater = {
+export const lightGrayWater = {
   /** 
    * Whether to make all water fill layers transparent (sets opacity to 0, layers still exist but are invisible).
    * Uses transparency instead of removing layers to allow runtime toggling via map.setPaintProperty().
@@ -842,24 +838,24 @@ export const darkGrayWater = {
   /** Whether to use a single override color for all water fill types */
   useOverrideColor: false,  // Set to true to use overrideColor for all water fill types
   /** Override color to use for all water fill types when useOverrideColor is true */
-  overrideColor: "#0a2846",  // Default water fill color - used when useOverrideColor is true (matches water.fill)
+  overrideColor: "#dadada",  // Default water fill color - used when useOverrideColor is true (matches water.fill)
   /** Whether to use a single override color for all waterway (line) types */
   useOverrideColorWaterway: false,  // Set to true to use overrideColorWaterway for all waterway types
   /** Override color to use for all waterway types when useOverrideColorWaterway is true */
-  overrideColorWaterway: "#103457",  // Default waterway line color - used when useOverrideColorWaterway is true (matches water.line)
+  overrideColorWaterway: "#c8c8c8",  // Default waterway line color - used when useOverrideColorWaterway is true (matches water.line)
 };
 
 // ============================================================================
 // AEROWAY CONFIGURATION
 // ============================================================================
 
-export const darkGrayAeroway = {
+export const lightGrayAeroway = {
   /** Whether to show aeroway features at all */
   enabled: false,
   
   /** Runway line styling */
   runway: {
-    color: "#4a5568",        // Medium gray for runways
+    color: "#808080",        // Medium gray for runways
     width: 0.5,              // Thin lines
     opacity: 0.8,
     majorLength: 2500,       // Minimum length (meters) for major runways shown at z6-7
@@ -867,33 +863,33 @@ export const darkGrayAeroway = {
   
   /** Apron polygon styling */
   apron: {
-    fillColor: "#4a5568",    // Dark gray fill
-    fillOpacity: 0.3,         // Thin fill (semi-transparent)
-    outlineColor: "#5a6578",  // Medium gray outline
-    outlineWidth: 0.3,        // Thin outline
+    fillColor: "#d0d0d0",    // Light gray fill
+    fillOpacity: 0.4,        // Semi-transparent
+    outlineColor: "#a0a0a0", // Medium gray outline
+    outlineWidth: 0.3,       // Thin outline
   },
   
   /** Taxiway line styling */
   taxiway: {
-    color: "#6a7588",        // Slightly lighter gray than runways
+    color: "#a0a0a0",        // Lighter gray than runways
     width: 0.4,              // Slightly thinner than runways
     opacity: 0.7,
   },
   
   /** Helipad point styling */
   helipad: {
-    fillColor: "#6a7588",    // Medium gray fill
+    fillColor: "#a0a0a0",    // Medium gray fill
     fillOpacity: 0.6,
-    outlineColor: "#7a8598", // Lighter gray outline
+    outlineColor: "#808080", // Darker gray outline
     outlineWidth: 0.3,
     size: 4,                 // Circle radius in pixels
   },
   
   /** Airport label styling */
   label: {
-    color: "#b8c8e0",        // Light blue-gray text (matches place labels)
-    haloColor: "#0b0f14",    // Dark halo for contrast
-    haloWidth: 0,
+    color: "#404040",        // Dark gray text (matches place labels)
+    haloColor: "#ffffff",    // White halo for contrast
+    haloWidth: 1,
     opacity: 0.9,
     majorSize: { min: 10, max: 12 },      // Font size for major airports (z8-9)
     detailedSize: { min: 10, max: 12 },   // Font size for detailed labels (z13+)
@@ -904,26 +900,26 @@ export const darkGrayAeroway = {
 // COMPLETE THEME
 // ============================================================================
 
-export const darkGrayTheme: Theme = {
-  name: "Dark Gray Basemap",
+export const lightGrayTheme: Theme = {
+  name: "Light Gray Basemap",
   fonts,
-  labelFonts: darkGrayLabelFonts,
-  colors: darkGrayColors,
-  widths: darkGrayWidths,
-  opacities: darkGrayOpacities,
-  settings: darkGraySettings,
-  shields: darkGrayShields,
-  pois: darkGrayPOIs,
-  bathymetry: darkGrayBathymetry,
-  contours: darkGrayContours,
-  ice: darkGrayIce,
-  hillshade: darkGrayHillshade,
-  grid: darkGrayGrid,
-  boundary: darkGrayBoundary,
-  buildings: darkGrayBuildings,
-  land: darkGrayLand,
-  landuse: darkGrayLanduse,
-  water: darkGrayWater,
-  aeroway: darkGrayAeroway,
-  starfield: darkGrayStarfield,
+  labelFonts: lightGrayLabelFonts,
+  colors: lightGrayColors,
+  widths: lightGrayWidths,
+  opacities: lightGrayOpacities,
+  settings: lightGraySettings,
+  shields: lightGrayShields,
+  pois: lightGrayPOIs,
+  bathymetry: lightGrayBathymetry,
+  contours: lightGrayContours,
+  ice: lightGrayIce,
+  hillshade: lightGrayHillshade,
+  grid: lightGrayGrid,
+  boundary: lightGrayBoundary,
+  buildings: lightGrayBuildings,
+  land: lightGrayLand,
+  landuse: lightGrayLanduse,
+  water: lightGrayWater,
+  aeroway: lightGrayAeroway,
+  starfield: lightGrayStarfield,
 };
