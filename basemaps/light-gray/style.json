@@ -3578,7 +3578,7 @@
       "source": "us_high",
       "source-layer": "place",
       "minzoom": 4,
-      "filter": ["all", ["==", ["get", "class"], "city"], ["<=", ["coalesce", ["get", "rank"], 10], 2]],
+      "filter": ["all", ["any", ["has", "name"], ["has", "name:en"]], ["==", ["get", "class"], "city"], ["<=", ["coalesce", ["get", "rank"], 10], 2]],
       "layout": {
         "text-field": [
           "let",
@@ -3712,14 +3712,21 @@
       "minzoom": 8,
       "filter": [
         "all",
-        ["match", ["get", "class"], ["city", "town", "village", "hamlet"], true, false],
+        ["any", ["has", "name"], ["has", "name:en"]],
+        ["match", ["get", "class"], "city", true, "town", true, "village", true, "hamlet", true, "locality", true, "suburb", true, false],
+          [
+            "case",
+            ["==", ["get", "class"], "suburb"],
+            ["all", ["has", "rank"], ["<=", ["get", "rank"], 8]],
+            true
+          ],
           [
             "case",
             ["==", ["get", "class"], "village"],
             [
               "case",
               ["has", "rank"],
-              ["<=", ["get", "rank"], 10],
+              ["<=", ["get", "rank"], 15],
               true
             ],
             true

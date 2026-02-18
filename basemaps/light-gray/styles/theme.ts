@@ -261,6 +261,8 @@ export const lightGrayColors: ThemeColors = {
       color: "#505050",
       halo: "#fafafa",
     },
+    // Optional: place label display config (uncomment to customize)
+    // placeLabels: { suburbMaxRank: 8, villageMaxRank: 15, minZoom: 8 },
     road: {
       major: { color: "#606060", opacity: 0.9 },
       secondary: { color: "#707070", opacity: 0.85 },
