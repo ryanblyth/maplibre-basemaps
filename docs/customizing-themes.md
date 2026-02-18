@@ -563,7 +563,37 @@ colors: {
 }
 ```
 
-**Place labels (cities, towns):** US place labels at zoom 8+ show settlement-level places only: **city**, **town**, **village**, **hamlet**, **locality**, and **suburb** (suburb is restricted by rank ≤ 8 so suburban towns show but neighborhood-level labels do not). Neighborhood-level classes (**neighbourhood**, **quarter**) are intentionally excluded. Only features with a name (`name` or `name:en`) are labeled. Villages are limited by rank (e.g. rank ≤ 15). To change which place types or ranks are shown, edit `shared/styles/layers/labels/place.ts` and run `npm run build:styles`.
+**Place labels (cities, towns):** US place labels at zoom 8+ show settlement-level places only: **city**, **town**, **village**, **hamlet**, **locality**, and **suburb** (suburb is restricted by rank so suburban towns show but neighborhood-level labels do not). Neighborhood-level classes (**neighbourhood**, **quarter**) are intentionally excluded. Only features with a name (`name` or `name:en`) are labeled. You can configure this from the theme via `placeLabels` (see below), or edit `shared/styles/layers/labels/place.ts` for low-level changes.
+
+### Place label configuration
+
+Optional `placeLabels` controls settlement-level place label display. Set it on **`theme.colors.label.placeLabels`** (next to place color/halo in the Labels section) or on **`theme.placeLabels`** at the theme root; the label section is preferred so styling and display config stay together.
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `enabled` | `true` | Set to `false` to hide all place labels (cities, countries, states, towns, etc.). |
+| `settlementClasses` | `["city", "town", "village", "hamlet", "locality", "suburb"]` | Place classes to show at zoom 8+ (US). Do not add neighbourhood/quarter if you want only city/town-level labels. |
+| `suburbMaxRank` | `8` | Show suburb only when rank ≤ this (lower rank = more important). Use to hide neighborhood-level suburb labels. |
+| `villageMaxRank` | `15` | Show village only when rank ≤ this. |
+| `minZoom` | `8` | Minimum zoom for the "all places" (towns, villages, localities, suburbs) layer. |
+
+Example in your basemap's `styles/theme.ts` (inside the `label` object in your colors):
+
+```typescript
+label: {
+  place: {
+    color: "#b1b1b1",
+    halo: "#252525",
+  },
+  placeLabels: {
+    suburbMaxRank: 10,   // Show more suburbs
+    villageMaxRank: 12,  // Stricter village cutoff
+    minZoom: 9,          // Show towns only from zoom 9+
+  },
+  road: { ... },
+  // ...
+},
+```
 
 ---
 
