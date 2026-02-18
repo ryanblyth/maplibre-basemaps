@@ -563,6 +563,8 @@ colors: {
 }
 ```
 
+**Place labels (cities, towns):** US place labels at zoom 8+ show settlement-level places only: **city**, **town**, **village**, **hamlet**, **locality**, and **suburb** (suburb is restricted by rank ≤ 8 so suburban towns show but neighborhood-level labels do not). Neighborhood-level classes (**neighbourhood**, **quarter**) are intentionally excluded. Only features with a name (`name` or `name:en`) are labeled. Villages are limited by rank (e.g. rank ≤ 15). To change which place types or ranks are shown, edit `shared/styles/layers/labels/place.ts` and run `npm run build:styles`.
+
 ---
 
 ## Widths

@@ -429,6 +429,10 @@ const roads = roadLayers({
 });
 ```
 
+### Place labels (cities, towns)
+
+Spinoffs use the same place label logic as the parent: **city**, **town**, **village**, **hamlet**, **locality**, and **suburb** at zoom 8+ (US), with name and village-rank rules. To change which place types or ranks appear, edit **`shared/styles/layers/labels/place.ts`** in the spinoff (e.g. the `class` match or village rank threshold), then run `npm run build:styles`.
+
 ## Moving to Another Repository
 
 ### Complete Workflow
