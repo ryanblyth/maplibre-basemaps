@@ -265,6 +265,8 @@ export const darkGrayColors: ThemeColors = {
       color: "#b1b1b1",      // Light gray for good contrast
       halo: "#252525",       // Very dark halo
     },
+    // Optional: place label display config (uncomment to customize)
+    // placeLabels: { suburbMaxRank: 8, villageMaxRank: 15, minZoom: 8 },
     road: {
       major: { color: "#b1b1b1", opacity: 0.8 },      // Light gray
       secondary: { color: "#b1b1b1", opacity: 0.7 },  // Medium gray

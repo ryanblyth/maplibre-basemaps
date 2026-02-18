@@ -204,6 +204,8 @@ export interface ThemeColors {
       color: string;
       halo: string;
     };
+    /** Place label display config (settlement classes, rank cutoffs, minZoom). Optional; can also be set at theme root as placeLabels. */
+    placeLabels?: ThemePlaceLabels;
     road: {
       major: { color: string; opacity: number };
       secondary: { color: string; opacity: number };
@@ -287,6 +289,24 @@ export interface ThemePOIs {
     enabled: boolean;
     minZoom?: number;
   };
+}
+
+// ============================================================================
+// PLACE LABELS TYPES - Settlement-level place label configuration
+// ============================================================================
+
+/** Place label display configuration (settlement-level cities, towns, etc.) */
+export interface ThemePlaceLabels {
+  /** Whether to show place labels (cities, countries, states, towns, etc.). Default true when omitted. */
+  enabled?: boolean;
+  /** Settlement-level place classes to show (US zoom 8+). Default: city, town, village, hamlet, locality, suburb. Excludes neighbourhood/quarter. */
+  settlementClasses?: string[];
+  /** Max rank for suburb to show (lower rank = more important). Default 8. Use to hide neighborhood-level suburb labels. */
+  suburbMaxRank?: number;
+  /** Max rank for village to show. Default 15. */
+  villageMaxRank?: number;
+  /** Min zoom for the "all places" (towns, villages, localities, suburbs) layer. Default 8. */
+  minZoom?: number;
 }
 
 // ============================================================================
@@ -743,6 +763,8 @@ export interface Theme {
   settings?: ThemeSettings;
   /** Per-label-type font configuration - optional, falls back to fonts.regular/italic */
   labelFonts?: ThemeLabelFonts;
+  /** Place label configuration - optional, defaults to current behavior */
+  placeLabels?: ThemePlaceLabels;
   /** Highway shield configuration - optional, defaults to enabled with standard sprites */
   shields?: ThemeShields;
   /** POI configuration - optional, defaults to all enabled */

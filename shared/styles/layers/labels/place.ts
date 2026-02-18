@@ -2,7 +2,7 @@
  * Place label layers (continents, countries, states, cities)
  */
 
-import type { LayerSpecification } from "maplibre-gl";
+import type { FilterSpecification, LayerSpecification } from "maplibre-gl";
 import type { Theme } from "../../theme.js";
 import { createAbbreviatedTextField } from "../../baseStyle.js";
 import { filters } from "../expressions.js";
@@ -64,14 +64,39 @@ const usStatesFilter = ["match", ["coalesce", ["get", "name:en"], ["get", "name"
 // PLACE LABEL LAYERS
 // ============================================================================
 
+const DEFAULT_SETTLEMENT_CLASSES = ["city", "town", "village", "hamlet", "locality", "suburb"] as const;
+const DEFAULT_SUBURB_MAX_RANK = 8;
+const DEFAULT_VILLAGE_MAX_RANK = 15;
+const DEFAULT_ALL_PLACES_MIN_ZOOM = 8;
+
 export function createPlaceLabelLayers(theme: Theme): LayerSpecification[] {
+  const placeLabelsConfig = theme.colors.label?.placeLabels ?? theme.placeLabels;
+  if (placeLabelsConfig?.enabled === false) {
+    return [];
+  }
+
   const c = theme.colors;
   const placeLabelPaint = { "text-color": c.label.place.color, "text-halo-color": c.label.place.halo, "text-halo-width": 2, "text-halo-blur": 1 };
   const placeLabelPaintThin = { ...placeLabelPaint, "text-halo-width": 1.5 };
-  
+
+  const settlementClasses = placeLabelsConfig?.settlementClasses ?? [...DEFAULT_SETTLEMENT_CLASSES];
+  const suburbMaxRank = placeLabelsConfig?.suburbMaxRank ?? DEFAULT_SUBURB_MAX_RANK;
+  const villageMaxRank = placeLabelsConfig?.villageMaxRank ?? DEFAULT_VILLAGE_MAX_RANK;
+  const allPlacesMinZoom = placeLabelsConfig?.minZoom ?? DEFAULT_ALL_PLACES_MIN_ZOOM;
+
+  const settlementClassMatch = ["match", ["get", "class"], ...settlementClasses.flatMap((cls) => [cls, true]), false];
+
+  const cityLabelUsAllFilter: unknown[] = [
+    "all",
+    filters.hasName,
+    settlementClassMatch,
+    ["case", ["==", ["get", "class"], "suburb"], ["all", ["has", "rank"], ["<=", ["get", "rank"], suburbMaxRank]], true],
+    ["case", ["==", ["get", "class"], "village"], ["case", ["has", "rank"], ["<=", ["get", "rank"], villageMaxRank], true], true],
+  ];
+
   // Use theme-configured font for place labels, with fallback to default fonts
   const placeFont = theme.labelFonts?.place ?? theme.labelFonts?.default ?? theme.fonts.regular;
-  
+
   return [
     // Continent labels
     { id: "continent-label", type: "symbol", source: "world_low", "source-layer": "place", minzoom: 0, maxzoom: 6.5, filter: ["all", ["==", ["get", "class"], "continent"], ["<=", ["zoom"], 2.5], ["!=", ["coalesce", ["get", "name:en"], ["get", "name"]], "America"]], layout: { "text-field": ["case", ["==", ["coalesce", ["get", "name:en"], ["get", "name"]], "North America"], "NORTH\nAMERICA", ["==", ["coalesce", ["get", "name:en"], ["get", "name"]], "South America"], "SOUTH\nAMERICA", ["upcase", ["coalesce", ["get", "name:en"], ["get", "name"]]]], "text-font": placeFont, "text-size": ["interpolate", ["linear"], ["zoom"], 0, 12, 2.5, 16], "text-transform": "none", "text-letter-spacing": 0.1, "text-offset": ["case", ["==", ["coalesce", ["get", "name:en"], ["get", "name"]], "North America"], ["literal", [2.0, 4.0]], ["==", ["coalesce", ["get", "name:en"], ["get", "name"]], "South America"], ["literal", [0, -2.0]], ["literal", [0, 0]]] }, paint: { ...placeLabelPaint, "text-opacity": 0.75 } },
@@ -97,9 +122,8 @@ export function createPlaceLabelLayers(theme: Theme): LayerSpecification[] {
     // City labels - rank 1-2 (us_high)
     { id: "city-label-us-rank1-2", type: "symbol", source: "us_high", "source-layer": "place", minzoom: 4, filter: ["all", filters.hasName, ["==", ["get", "class"], "city"], ["<=", ["coalesce", ["get", "rank"], 10], 2]], layout: { "text-field": createAbbreviatedTextField(), "text-font": placeFont, "text-size": ["interpolate", ["linear"], ["zoom"], 4, ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 15, 12], 8, ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 25, 20], 12, ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 32, 26]], "text-transform": "none", "text-letter-spacing": 0.05 }, paint: { ...placeLabelPaintThin, "text-opacity": 0.75 } },
     
-    // Settlement-level places only (city, town, village, hamlet, locality, suburb). Excludes neighbourhood/quarter.
-    // Suburb restricted by rank (<=8) so suburban towns show but neighborhood-level suburb labels do not.
-    { id: "city-label-us-all", type: "symbol", source: "us_high", "source-layer": "place", minzoom: 8, filter: ["all", filters.hasName, ["match", ["get", "class"], ["city", "town", "village", "hamlet", "locality", "suburb"], true, false], ["case", ["==", ["get", "class"], "suburb"], ["all", ["has", "rank"], ["<=", ["get", "rank"], 8]], true], ["case", ["==", ["get", "class"], "village"], ["case", ["has", "rank"], ["<=", ["get", "rank"], 15], true], true]], layout: { "text-field": createAbbreviatedTextField(), "text-font": placeFont, "text-size": createPlaceSizeExpression(), "text-transform": "none", "text-letter-spacing": 0.05 }, paint: { ...placeLabelPaintThin, "text-opacity": 0.6 } }
+    // Settlement-level places (configurable via theme.placeLabels)
+    { id: "city-label-us-all", type: "symbol", source: "us_high", "source-layer": "place", minzoom: allPlacesMinZoom, filter: cityLabelUsAllFilter as FilterSpecification, layout: { "text-field": createAbbreviatedTextField(), "text-font": placeFont, "text-size": createPlaceSizeExpression(), "text-transform": "none", "text-letter-spacing": 0.05 }, paint: { ...placeLabelPaintThin, "text-opacity": 0.6 } }
   ];
 }
 

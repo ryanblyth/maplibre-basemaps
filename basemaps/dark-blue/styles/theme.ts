@@ -265,6 +265,8 @@ export const darkBlueColors: ThemeColors = {
       color: "#a8b8d0",
       halo: "#0b0f14",
     },
+    // Optional: place label display config (uncomment to customize)
+    // placeLabels: { suburbMaxRank: 8, villageMaxRank: 15, minZoom: 8 },
     road: {
       major: { color: "#7a8ba3", opacity: 0.8 },
       secondary: { color: "#6b7a90", opacity: 0.7 },

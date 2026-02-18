@@ -3199,7 +3199,7 @@
       "filter": [
         "all",
         ["any", ["has", "name"], ["has", "name:en"]],
-        ["match", ["get", "class"], ["city", "town", "village", "hamlet", "locality", "suburb"], true, false],
+        ["match", ["get", "class"], "city", true, "town", true, "village", true, "hamlet", true, "locality", true, "suburb", true, false],
           [
             "case",
             ["==", ["get", "class"], "suburb"],
