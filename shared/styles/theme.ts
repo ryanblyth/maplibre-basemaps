@@ -203,6 +203,10 @@ export interface ThemeColors {
     place: {
       color: string;
       halo: string;
+      /** Optional text halo width override for place labels */
+      haloWidth?: number;
+      /** Optional text halo blur override for place labels */
+      haloBlur?: number;
     };
     /** Place label display config (settlement classes, rank cutoffs, minZoom). Optional; can also be set at theme root as placeLabels. */
     placeLabels?: ThemePlaceLabels;
@@ -216,6 +220,10 @@ export interface ThemeColors {
     water: {
       color: string;
       halo: string;
+      /** Optional text halo width override for water labels */
+      haloWidth?: number;
+      /** Optional text halo blur override for water labels */
+      haloBlur?: number;
     };
     /** POI icon and label styling */
     poi?: {

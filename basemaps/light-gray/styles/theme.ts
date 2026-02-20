@@ -260,6 +260,8 @@ export const lightGrayColors: ThemeColors = {
     place: {
       color: "#505050",
       halo: "#fafafa",
+      // haloWidth: 2,        // Optional: override place label halo width
+      // haloBlur: 1,         // Optional: override place label halo blur
     },
     // Optional: place label display config (uncomment to customize)
     // placeLabels: { suburbMaxRank: 8, villageMaxRank: 15, minZoom: 8 },
@@ -273,6 +275,8 @@ export const lightGrayColors: ThemeColors = {
     water: {
       color: "#707070",
       halo: "#fafafa",
+      // haloWidth: 2,        // Optional: override water label halo width
+      // haloBlur: 1,         // Optional: override water label halo blur
     },
     poi: {
       iconColor: "#707070",            // Medium gray for icons

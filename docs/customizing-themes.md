@@ -563,7 +563,7 @@ colors: {
 }
 ```
 
-**Place labels (cities, towns):** US place labels at zoom 8+ show settlement-level places only: **city**, **town**, **village**, **hamlet**, **locality**, and **suburb** (suburb is restricted by rank so suburban towns show but neighborhood-level labels do not). Neighborhood-level classes (**neighbourhood**, **quarter**) are intentionally excluded. Only features with a name (`name` or `name:en`) are labeled. You can configure this from the theme via `placeLabels` (see below), or edit `shared/styles/layers/labels/place.ts` for low-level changes.
+**Place labels (cities, towns):** US place labels at zoom 8+ show settlement-level places only: **city**, **town**, **village**, **hamlet**, **locality**, and **suburb** (suburb is restricted by rank so suburban towns show but neighborhood-level labels do not). Neighborhood-level classes (**neighbourhood**, **quarter**) are intentionally excluded. Only features with a name (`name` or `name:en`) are labeled. You can configure this from the theme via `placeLabels` (see below), including halo width/blur, or edit `shared/styles/layers/labels/place.ts` for low-level changes.
 
 ### Place label configuration
 
@@ -576,6 +576,8 @@ Optional `placeLabels` controls settlement-level place label display. Set it on 
 | `suburbMaxRank` | `8` | Show suburb only when rank ≤ this (lower rank = more important). Use to hide neighborhood-level suburb labels. |
 | `villageMaxRank` | `15` | Show village only when rank ≤ this. |
 | `minZoom` | `8` | Minimum zoom for the "all places" (towns, villages, localities, suburbs) layer. |
+| `haloWidth` | `2` (thin: `1.5`) | Text halo width for place labels (thin labels use 75% of this when set). |
+| `haloBlur` | `1` | Text halo blur for place labels. |
 
 Example in your basemap's `styles/theme.ts` (inside the `label` object in your colors):
 
@@ -589,10 +591,33 @@ label: {
     suburbMaxRank: 10,   // Show more suburbs
     villageMaxRank: 12,  // Stricter village cutoff
     minZoom: 9,          // Show towns only from zoom 9+
+    haloWidth: 2.2,      // Slightly thicker halo
+    haloBlur: 1.2,       // Slightly more blur
   },
   road: { ... },
   // ...
 },
+```
+
+**Water labels:** You can override halo width/blur for water labels in `label.water`:
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `haloWidth` | `2` (thin: `1.5`) | Text halo width for water labels (thin uses 75% of this when set). |
+| `haloBlur` | `1` | Text halo blur for water labels. |
+
+Example inside `label`:
+
+```typescript
+label: {
+  water: {
+    color: "#5b8db8",
+    halo: "#0a2846",
+    // haloWidth: 2,
+    // haloBlur: 1,
+  },
+  // ...
+}
 ```
 
 ---
