@@ -83,9 +83,19 @@ function createUSMajorWaterSizeExpression(): unknown {
 // WATER LABEL LAYERS FROM WORLD_LABELS SOURCE
 // ============================================================================
 
+const DEFAULT_WATER_HALO_WIDTH = 2;
+const DEFAULT_WATER_HALO_WIDTH_THIN = 1.5;
+const DEFAULT_WATER_HALO_BLUR = 1;
+
 export function createWaterLabelLayersFromWorldLabels(theme: Theme): LayerSpecification[] {
   const c = theme.colors;
-  const waterLabelPaint = { "text-color": c.label.water.color, "text-halo-color": c.label.water.halo, "text-halo-width": 2, "text-halo-blur": 1, "text-opacity": 0.9 };
+  const haloWidth = c.label.water.haloWidth ?? DEFAULT_WATER_HALO_WIDTH;
+  const haloBlur = c.label.water.haloBlur ?? DEFAULT_WATER_HALO_BLUR;
+  const haloWidthThin = c.label.water.haloWidth !== undefined
+    ? Math.max(0, haloWidth * 0.75)
+    : DEFAULT_WATER_HALO_WIDTH_THIN;
+
+  const waterLabelPaint = { "text-color": c.label.water.color, "text-halo-color": c.label.water.halo, "text-halo-width": haloWidth, "text-halo-blur": haloBlur, "text-opacity": 0.9 };
   
   // Use theme-configured font for water labels, with fallback to italic
   const waterFont = theme.labelFonts?.water ?? theme.labelFonts?.default ?? theme.fonts.italic;
@@ -111,8 +121,14 @@ export function createWaterLabelLayersFromWorldLabels(theme: Theme): LayerSpecif
 
 export function createWaterLabelLayersFromBasemapSources(theme: Theme): LayerSpecification[] {
   const c = theme.colors;
-  const waterLabelPaint = { "text-color": c.label.water.color, "text-halo-color": c.label.water.halo, "text-halo-width": 2, "text-halo-blur": 1, "text-opacity": 0.9 };
-  const waterLabelPaintThin = { ...waterLabelPaint, "text-halo-width": 1.5 };
+  const haloWidth = c.label.water.haloWidth ?? DEFAULT_WATER_HALO_WIDTH;
+  const haloBlur = c.label.water.haloBlur ?? DEFAULT_WATER_HALO_BLUR;
+  const haloWidthThin = c.label.water.haloWidth !== undefined
+    ? Math.max(0, haloWidth * 0.75)
+    : DEFAULT_WATER_HALO_WIDTH_THIN;
+
+  const waterLabelPaint = { "text-color": c.label.water.color, "text-halo-color": c.label.water.halo, "text-halo-width": haloWidth, "text-halo-blur": haloBlur, "text-opacity": 0.9 };
+  const waterLabelPaintThin = { ...waterLabelPaint, "text-halo-width": haloWidthThin };
   const hasClassFilter = ["case", ["has", "class"], ["match", ["get", "class"], ["ocean", "sea", "gulf", "bay"], true, false], true];
   
   // Use theme-configured font for water labels, with fallback to italic
@@ -158,7 +174,11 @@ export function createWaterLabelLayersFromBasemapSources(theme: Theme): LayerSpe
 
 export function createWaterwayLabelLayers(theme: Theme): LayerSpecification[] {
   const c = theme.colors;
-  const waterwayLabelPaint = { "text-color": c.label.water.color, "text-halo-color": c.label.water.halo, "text-halo-width": 1.5, "text-halo-blur": 1, "text-opacity": 0.85 };
+  const haloWidth = c.label.water.haloWidth !== undefined
+    ? Math.max(0, (c.label.water.haloWidth ?? DEFAULT_WATER_HALO_WIDTH) * 0.75)
+    : DEFAULT_WATER_HALO_WIDTH_THIN;
+  const haloBlur = c.label.water.haloBlur ?? DEFAULT_WATER_HALO_BLUR;
+  const waterwayLabelPaint = { "text-color": c.label.water.color, "text-halo-color": c.label.water.halo, "text-halo-width": haloWidth, "text-halo-blur": haloBlur, "text-opacity": 0.85 };
   
   // Use theme-configured font for water labels, with fallback to italic
   const waterFont = theme.labelFonts?.water ?? theme.labelFonts?.default ?? theme.fonts.italic;

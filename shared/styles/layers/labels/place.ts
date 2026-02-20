@@ -68,6 +68,9 @@ const DEFAULT_SETTLEMENT_CLASSES = ["city", "town", "village", "hamlet", "locali
 const DEFAULT_SUBURB_MAX_RANK = 8;
 const DEFAULT_VILLAGE_MAX_RANK = 15;
 const DEFAULT_ALL_PLACES_MIN_ZOOM = 8;
+const DEFAULT_PLACE_HALO_WIDTH = 2;
+const DEFAULT_PLACE_HALO_WIDTH_THIN = 1.5;
+const DEFAULT_PLACE_HALO_BLUR = 1;
 
 export function createPlaceLabelLayers(theme: Theme): LayerSpecification[] {
   const placeLabelsConfig = theme.colors.label?.placeLabels ?? theme.placeLabels;
@@ -76,8 +79,23 @@ export function createPlaceLabelLayers(theme: Theme): LayerSpecification[] {
   }
 
   const c = theme.colors;
-  const placeLabelPaint = { "text-color": c.label.place.color, "text-halo-color": c.label.place.halo, "text-halo-width": 2, "text-halo-blur": 1 };
-  const placeLabelPaintThin = { ...placeLabelPaint, "text-halo-width": 1.5 };
+  const haloWidth = c.label.place.haloWidth ?? DEFAULT_PLACE_HALO_WIDTH;
+  const haloBlur = c.label.place.haloBlur ?? DEFAULT_PLACE_HALO_BLUR;
+  const haloWidthThin = c.label.place.haloWidth !== undefined
+    ? Math.max(0, haloWidth * 0.75)
+    : DEFAULT_PLACE_HALO_WIDTH_THIN;
+
+  const placeLabelPaint = {
+    "text-color": c.label.place.color,
+    "text-halo-color": c.label.place.halo,
+    "text-halo-width": haloWidth,
+    "text-halo-blur": haloBlur
+  };
+  const placeLabelPaintThin = {
+    ...placeLabelPaint,
+    "text-halo-width": haloWidthThin,
+    "text-halo-blur": haloBlur
+  };
 
   const settlementClasses = placeLabelsConfig?.settlementClasses ?? [...DEFAULT_SETTLEMENT_CLASSES];
   const suburbMaxRank = placeLabelsConfig?.suburbMaxRank ?? DEFAULT_SUBURB_MAX_RANK;

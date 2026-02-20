@@ -264,6 +264,8 @@ export const darkGrayColors: ThemeColors = {
     place: {
       color: "#b1b1b1",      // Light gray for good contrast
       halo: "#252525",       // Very dark halo
+      // haloWidth: 2,        // Optional: override place label halo width
+      // haloBlur: 1,         // Optional: override place label halo blur
     },
     // Optional: place label display config (uncomment to customize)
     // placeLabels: { suburbMaxRank: 8, villageMaxRank: 15, minZoom: 8 },
@@ -277,6 +279,8 @@ export const darkGrayColors: ThemeColors = {
     water: {
       color: "#c1c1c1",      // Medium gray for labels
       halo: "#313131",       // Dark halo matching water fill
+      // haloWidth: 2,        // Optional: override water label halo width
+      // haloBlur: 1,         // Optional: override water label halo blur
     },
     poi: {
       iconColor: "#a1a1a1",           // Medium gray for icons

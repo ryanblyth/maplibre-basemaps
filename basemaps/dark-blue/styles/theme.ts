@@ -264,6 +264,8 @@ export const darkBlueColors: ThemeColors = {
     place: {
       color: "#a8b8d0",
       halo: "#0b0f14",
+      // haloWidth: 2,        // Optional: override place label halo width
+      // haloBlur: 1,         // Optional: override place label halo blur
     },
     // Optional: place label display config (uncomment to customize)
     // placeLabels: { suburbMaxRank: 8, villageMaxRank: 15, minZoom: 8 },
@@ -277,6 +279,8 @@ export const darkBlueColors: ThemeColors = {
     water: {
       color: "#5b8db8",
       halo: "#0a2846",
+      // haloWidth: 2,        // Optional: override water label halo width
+      // haloBlur: 1,         // Optional: override water label halo blur
     },
     poi: {
       iconColor: "#7a8ba3",           // Light blue-gray for icons
