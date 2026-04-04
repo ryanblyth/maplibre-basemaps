@@ -71,7 +71,7 @@ export const darkBlueSettings: ThemeSettings = {
 /**
  * Per-label-type font configuration.
  * 
- * Available fonts (from CDN at https://data.storypath.studio/glyphs/):
+ * Available fonts (from CDN at https://assets.storypath.studio/glyphs/):
  * 
  * Noto Sans (default):
  *   - "Noto Sans Regular"

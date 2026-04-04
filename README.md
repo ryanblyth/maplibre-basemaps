@@ -87,7 +87,7 @@ Production map data uses **TileJSON** documents on Cloudflare (`https://data.sto
 Font glyphs are stored in `/shared/assets/glyphs/` and shared across all basemaps. Each font family has its own directory with PBF files for character ranges.
 
 - **Local development**: Files are served from `shared/assets/glyphs/` via the development server
-- **Production**: Glyphs are hosted on CDN at `https://data.storypath.studio/glyphs/`
+- **Production**: Glyphs are hosted on CDN at `https://assets.storypath.studio/glyphs/`
 - Local files are the source of truth and required for build scripts
 
 ### Sprites
@@ -255,7 +255,7 @@ See `docs/spinning-off-basemaps.md` for detailed documentation.
 
 - **Assets not loading**: Verify paths in `style.json` match your environment:
   - **Local development**: Use `http://localhost:8080/shared/assets/glyphs/...` and `http://localhost:8080/shared/assets/sprites/...`
-  - **Production**: Use CDN URLs like `https://data.storypath.studio/glyphs/...` and `https://data.storypath.studio/...`
+  - **Production**: Use CDN URLs like `https://assets.storypath.studio/glyphs/...` and `https://data.storypath.studio/...`
   - Verify which environment you're targeting and that the appropriate server/CDN is accessible
 
 - **Tile / CDN errors**: Confirm TileJSON URLs return JSON (200) and that tile URLs from the document load; for local `pmtiles://` archives, the server must support HTTP Range requests (`serve.js` handles this)

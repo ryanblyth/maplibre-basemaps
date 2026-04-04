@@ -37,7 +37,7 @@ Configure which fonts to use for different label types. If not specified, labels
 
 ### Available Fonts
 
-All fonts are served from the CDN at `https://data.storypath.studio/glyphs/`:
+All fonts are served from the CDN at `https://assets.storypath.studio/glyphs/`:
 
 | Font Family | Variants |
 |-------------|----------|

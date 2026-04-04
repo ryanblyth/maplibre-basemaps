@@ -337,7 +337,7 @@ The following are loaded from CDN and do not need to be bundled:
 - **MapLibre GL CSS**: \`https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.css\`
 - **PMTiles library**: \`https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js\`
 - **Starfield script**: \`https://data.storypath.studio/js/maplibre-gl-starfield.js\`
-- **Glyphs**: \`https://data.storypath.studio/glyphs/{fontstack}/{range}.pbf\` (referenced in style.json)
+- **Glyphs**: \`https://assets.storypath.studio/glyphs/{fontstack}/{range}.pbf\` (referenced in style.json)
 - **PMTiles data**: All data sources use external URLs (referenced in style.json)
 
 ## Usage

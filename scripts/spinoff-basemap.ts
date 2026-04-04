@@ -831,7 +831,7 @@ This map is designed to work with Cloudflare Pages or any static hosting.
 
 - **Local files**: Sprites (bundled in \`sprites/\`)
 - **CDN files**: 
-  - Glyphs (fonts): \`https://data.storypath.studio/glyphs/\`
+  - Glyphs (fonts): \`https://assets.storypath.studio/glyphs/\`
   - Starfield script: \`https://data.storypath.studio/js/maplibre-gl-starfield.js\`
   - PMTiles data: External URLs in \`style.json\`
 
@@ -868,7 +868,7 @@ See [docs/deploying.md](docs/deploying.md) for detailed deployment guide.
 
 This map uses external CDN assets to reduce bundle size:
 
-- **Glyphs** (fonts): Loaded from \`https://data.storypath.studio/glyphs/\`
+- **Glyphs** (fonts): Loaded from \`https://assets.storypath.studio/glyphs/\`
 - **Starfield**: Loaded from \`https://data.storypath.studio/js/maplibre-gl-starfield.js\`
 - **PMTiles data**: Map data loaded from external URLs
 
@@ -1423,7 +1423,7 @@ The map uses a hybrid approach for assets:
 
 ### External Assets (loaded from CDN)
 
-- **Glyphs** (fonts) - \`https://data.storypath.studio/glyphs/\`
+- **Glyphs** (fonts) - \`https://assets.storypath.studio/glyphs/\`
 - **Starfield script** - \`https://data.storypath.studio/js/maplibre-gl-starfield.js\`
 - **PMTiles data** - Map data URLs in \`style.json\`
 
@@ -1643,7 +1643,7 @@ The map loads these assets from CDN:
 ### Glyphs (Fonts)
 
 \`\`\`
-https://data.storypath.studio/glyphs/{fontstack}/{range}.pbf
+https://assets.storypath.studio/glyphs/{fontstack}/{range}.pbf
 \`\`\`
 
 These are loaded on-demand as the map needs different character ranges.
