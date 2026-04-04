@@ -6,25 +6,25 @@
   "sources": {
     "world_low": {
       "type": "vector",
-      "url": "pmtiles://https://data.storypath.studio/pmtiles/world_z0-5.pmtiles",
+      "url": "https://data.storypath.studio/world_z0-5.json",
       "minzoom": 0,
       "maxzoom": 5
     },
     "bathymetry": {
       "type": "vector",
-      "url": "pmtiles://https://data.storypath.studio/pmtiles/ne_bathy_z0-6.pmtiles",
+      "url": "https://data.storypath.studio/ne_bathy_z0-6.json",
       "minzoom": 0,
       "maxzoom": 6
     },
     "us_high": {
       "type": "vector",
-      "url": "pmtiles://https://data.storypath.studio/pmtiles/us_z6-15.pmtiles",
+      "url": "https://data.storypath.studio/us_z6-15.json",
       "minzoom": 6,
       "maxzoom": 15
     },
     "ice": {
       "type": "vector",
-      "url": "pmtiles://https://data.storypath.studio/pmtiles/ne_ice_z0-6.pmtiles",
+      "url": "https://data.storypath.studio/ne_ice_z0-6.json",
       "minzoom": 0,
       "maxzoom": 6
     }

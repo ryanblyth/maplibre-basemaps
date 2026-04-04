@@ -18,7 +18,7 @@ Hillshade provides terrain shading visualization using elevation data, creating 
 Hillshade data comes from elevation raster tiles:
 
 - **Source**: `world-hillshade`
-- **PMTiles URL**: `pmtiles://https://data.storypath.studio/pmtiles/world_mtn_hillshade.pmtiles`
+- **TileJSON URL**: `https://data.storypath.studio/world_mtn_hillshade.json`
 - **Source Type**: `raster-dem` (raster digital elevation model)
 - **Zoom Range**: Configurable via `minZoom` and `maxZoom` settings
 
@@ -314,12 +314,12 @@ This creates a similar visual effect to opacity by reducing the intensity of the
 
 2. **Check URL** - Verify PMTiles URL is correct in `shared/styles/layers/sources.ts`:
    ```typescript
-   url: `pmtiles://${config.dataBaseUrl}/pmtiles/world_mtn_hillshade.pmtiles`
+   url: `${config.dataBaseUrl}/world_mtn_hillshade.json`
    ```
 
 3. **Check CORS** - Ensure PMTiles server allows cross-origin requests
 
-4. **Check Network tab** - Look for `world_mtn_hillshade.pmtiles` request (should be 200 status)
+4. **Check Network tab** - Look for `world_mtn_hillshade.json` (TileJSON, should be 200) and DEM tile requests
 
 5. **Check source type** - Verify source is `raster-dem` type (not `vector` or `raster`)
 

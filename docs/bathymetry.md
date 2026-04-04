@@ -17,7 +17,7 @@ Bathymetry provides depth shading for ocean areas, creating a visual representat
 Bathymetry data comes from Natural Earth bathymetry tiles:
 
 - **Source**: `ne-bathy`
-- **PMTiles URL**: `pmtiles://https://data.storypath.studio/pmtiles/ne_bathy_z0-6.pmtiles`
+- **TileJSON URL**: `https://data.storypath.studio/ne_bathy_z0-6.json`
 - **Zoom Range**: 0-6 (fades out at zoom 7)
 - **Source Layers**: 12 layers representing different depth bands:
   - `ne_10m_bathymetry_A_10000` (10000m - deepest)
@@ -328,7 +328,7 @@ The system safely handles both positive and negative depth values:
 
 3. **Check CORS** - Ensure PMTiles server allows cross-origin requests
 
-4. **Check Network tab** - Look for `ne_bathy_z0-6.pmtiles` request (should be 200 status)
+4. **Check Network tab** - Look for `ne_bathy_z0-6.json` (TileJSON, should be 200) and subsequent tile requests
 
 ## Related Documentation
 

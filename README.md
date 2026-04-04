@@ -66,16 +66,16 @@ npm run build:styles
 
 See `docs/creating-basemap.md` for detailed documentation.
 
-## PMTiles Sources
+## Vector tile sources (CDN)
 
-This project uses PMTiles hosted on Cloudflare CDN. PMTiles sources are configured in each style's `sources` section:
+Production map data uses **TileJSON** documents on Cloudflare (`https://data.storypath.studio/<path>.json`). MapLibre fetches each `url` as TileJSON and requests tiles from the template your Worker provides. Sources are configured in each style's `sources` section:
 
 ```json
 {
   "sources": {
     "openmaptiles": {
       "type": "vector",
-      "url": "pmtiles://https://data.storypath.studio/pmtiles/colorado.pmtiles"
+      "url": "https://data.storypath.studio/colorado.json"
     }
   }
 }
@@ -161,7 +161,7 @@ The `serve.js` server handles:
 - Serving basemap files from `/basemaps/*`
 - Serving shared assets from `/shared/*`
 - CORS headers for asset loading
-- HTTP Range requests for PMTiles
+- HTTP Range requests for local `.pmtiles` files (PMTiles archives) when using `serve.js`
 
 ### Style Development
 - Edit TypeScript style source files in `/basemaps/*/styles/`
@@ -258,7 +258,7 @@ See `docs/spinning-off-basemaps.md` for detailed documentation.
   - **Production**: Use CDN URLs like `https://data.storypath.studio/glyphs/...` and `https://data.storypath.studio/...`
   - Verify which environment you're targeting and that the appropriate server/CDN is accessible
 
-- **PMTiles errors**: Ensure the server supports HTTP Range requests (serve.js handles this)
+- **Tile / CDN errors**: Confirm TileJSON URLs return JSON (200) and that tile URLs from the document load; for local `pmtiles://` archives, the server must support HTTP Range requests (`serve.js` handles this)
 
 ## License
 
