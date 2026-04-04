@@ -115,14 +115,8 @@ if (starfieldConfig && starfieldConfig.glowColors) {
   starryBg.config.glowColors = { ...starryBg.config.glowColors, ...starfieldConfig.glowColors };
 }
 
-// Set projection from theme configuration and attach starfield when style loads
+// Projection is defined in style.json (from theme). Starfield only applies to globe.
 map.on('style.load', () => {
-  // Use projection from theme settings (or fallback)
-  map.setProjection({
-    type: projectionType
-  });
-  
-  // Only attach starfield for globe projection
   if (projectionType === 'globe') {
     starryBg.attachToMap(map, "starfield-container", "globe-glow");
   }

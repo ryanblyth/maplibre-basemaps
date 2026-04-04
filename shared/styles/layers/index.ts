@@ -112,10 +112,12 @@ export function createBasemapStyle(theme: Theme, config: BaseStyleConfig): Style
   const base = createBaseStyle(config);
   const sources = createBasemapSources(config, theme);  // Pass theme to conditionally include bathymetry source
   const layers = createAllLayers(theme);
-  
+  const projectionType = theme.settings?.projection ?? "globe";
+
   return {
     ...base,
     name: theme.name,
+    projection: { type: projectionType },
     sources: {
       ...base.sources,
       ...sources,

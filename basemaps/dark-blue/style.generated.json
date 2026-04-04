@@ -1,7 +1,7 @@
 {
   "version": 8,
   "name": "Dark Blue Basemap",
-  "glyphs": "https://assets.storypath.studio/glyphs/{fontstack}/{range}.pbf",
+  "glyphs": "https://data.storypath.studio/glyphs/{fontstack}/{range}.pbf",
   "sprite": "http://localhost:8080/basemaps/dark-blue/sprites/basemap",
   "sources": {
     "world_labels": {
@@ -7045,5 +7045,8 @@
         "text-halo-blur": 1
       }
     }
-  ]
+  ],
+  "projection": {
+    "type": "globe"
+  }
 }

@@ -1,7 +1,7 @@
 {
   "version": 8,
   "name": "Light Gray Basemap",
-  "glyphs": "https://assets.storypath.studio/glyphs/{fontstack}/{range}.pbf",
+  "glyphs": "https://data.storypath.studio/glyphs/{fontstack}/{range}.pbf",
   "sprite": "http://localhost:8080/basemaps/light-gray/sprites/basemap",
   "sources": {
     "world_labels": {
@@ -7559,5 +7559,8 @@
         "text-halo-blur": 1
       }
     }
-  ]
+  ],
+  "projection": {
+    "type": "globe"
+  }
 }
