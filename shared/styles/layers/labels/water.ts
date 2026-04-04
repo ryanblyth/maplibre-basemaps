@@ -3,6 +3,7 @@
  */
 
 import type { LayerSpecification } from "maplibre-gl";
+import type { ExpressionSpecification, FilterSpecification } from "@maplibre/maplibre-gl-style-spec";
 import type { Theme } from "../../theme.js";
 import { createTextField } from "../../baseStyle.js";
 import { filters } from "../expressions.js";
@@ -12,71 +13,131 @@ import { filters } from "../expressions.js";
 // ============================================================================
 
 /** Complex text-size expression for water_name labels */
-function createWaterNameSizeExpression(): unknown {
-  const sizeAtZoom = (baseSize: number) => [
-    "let", "name", ["coalesce", ["get", "name:en"], ["get", "name"], ""],
-    ["case",
-      ["has", "rank"],
-      ["case",
-        ["<=", ["get", "rank"], 1], baseSize + 6,
-        ["<=", ["get", "rank"], 2], baseSize + 4,
-        ["<=", ["get", "rank"], 3], baseSize + 3,
-        ["<=", ["get", "rank"], 4], baseSize + 2,
-        ["<=", ["get", "rank"], 6], baseSize + 1,
-        baseSize
-      ],
-      ["case",
-        ["in", "Sea", ["var", "name"]], baseSize + 4,
-        ["in", "sea", ["var", "name"]], baseSize + 4,
-        ["in", "Gulf", ["var", "name"]], baseSize + 3,
-        ["in", "gulf", ["var", "name"]], baseSize + 3,
-        ["in", "Bay", ["var", "name"]], baseSize + 2,
-        ["in", "bay", ["var", "name"]], baseSize + 2,
-        ["==", ["get", "class"], "bay"], baseSize + 2,
-        ["==", ["get", "class"], "lake"], baseSize + 3,
-        baseSize + 1
-      ]
-    ]
-  ];
-  
-  return ["interpolate", ["linear"], ["zoom"], 4, sizeAtZoom(7), 6, sizeAtZoom(13), 10, sizeAtZoom(18)];
+function createWaterNameSizeExpression(): ExpressionSpecification {
+  const sizeAtZoom = (baseSize: number): ExpressionSpecification =>
+    [
+      "let",
+      "name",
+      ["coalesce", ["get", "name:en"], ["get", "name"], ""],
+      [
+        "case",
+        ["has", "rank"],
+        [
+          "case",
+          ["<=", ["get", "rank"], 1],
+          baseSize + 6,
+          ["<=", ["get", "rank"], 2],
+          baseSize + 4,
+          ["<=", ["get", "rank"], 3],
+          baseSize + 3,
+          ["<=", ["get", "rank"], 4],
+          baseSize + 2,
+          ["<=", ["get", "rank"], 6],
+          baseSize + 1,
+          baseSize,
+        ] as ExpressionSpecification,
+        [
+          "case",
+          ["in", "Sea", ["var", "name"]],
+          baseSize + 4,
+          ["in", "sea", ["var", "name"]],
+          baseSize + 4,
+          ["in", "Gulf", ["var", "name"]],
+          baseSize + 3,
+          ["in", "gulf", ["var", "name"]],
+          baseSize + 3,
+          ["in", "Bay", ["var", "name"]],
+          baseSize + 2,
+          ["in", "bay", ["var", "name"]],
+          baseSize + 2,
+          ["==", ["get", "class"], "bay"],
+          baseSize + 2,
+          ["==", ["get", "class"], "lake"],
+          baseSize + 3,
+          baseSize + 1,
+        ] as ExpressionSpecification,
+      ] as ExpressionSpecification,
+    ] as ExpressionSpecification;
+
+  return [
+    "interpolate",
+    ["linear"],
+    ["zoom"],
+    4,
+    sizeAtZoom(7),
+    6,
+    sizeAtZoom(13),
+    10,
+    sizeAtZoom(18),
+  ] as ExpressionSpecification;
 }
 
 /** Complex text-size expression for US major water labels */
-function createUSMajorWaterSizeExpression(): unknown {
-  const sizeExpr = (pondSize: number, reservoirSize: number, defaultSize: number, rankSizes: number[]) => [
-    "let", "name", ["coalesce", ["get", "name:en"], ["get", "name"], ""],
-    ["case",
-      ["in", "Pond", ["var", "name"]], pondSize,
-      ["in", "pond", ["var", "name"]], pondSize,
-      ["in", "Pool", ["var", "name"]], pondSize,
-      ["in", "pool", ["var", "name"]], pondSize,
-      ["in", "Puddle", ["var", "name"]], pondSize - 1,
-      ["in", "puddle", ["var", "name"]], pondSize - 1,
-      ["case",
-        ["has", "rank"],
-        ["case",
-          ["<=", ["get", "rank"], 1], rankSizes[0],
-          ["<=", ["get", "rank"], 2], rankSizes[1],
-          ["<=", ["get", "rank"], 3], rankSizes[2],
-          ["<=", ["get", "rank"], 4], rankSizes[3],
-          rankSizes[4]
-        ],
-        ["case",
-          ["in", "Reservoir", ["var", "name"]], reservoirSize,
-          ["in", "reservoir", ["var", "name"]], reservoirSize,
-          defaultSize
-        ]
-      ]
-    ]
-  ];
-  
-  return ["interpolate", ["linear"], ["zoom"],
-    6, sizeExpr(6, 11, 10, [16, 14, 12, 10, 8]),
-    10, sizeExpr(6, 14, 13, [22, 19, 16, 13, 10]),
-    12, sizeExpr(7, 18, 17, [26, 23, 20, 17, 13]),
-    15, sizeExpr(8, 19, 18, [30, 26, 22, 18, 14])
-  ];
+function createUSMajorWaterSizeExpression(): ExpressionSpecification {
+  const sizeExpr = (
+    pondSize: number,
+    reservoirSize: number,
+    defaultSize: number,
+    rankSizes: number[]
+  ): ExpressionSpecification =>
+    [
+      "let",
+      "name",
+      ["coalesce", ["get", "name:en"], ["get", "name"], ""],
+      [
+        "case",
+        ["in", "Pond", ["var", "name"]],
+        pondSize,
+        ["in", "pond", ["var", "name"]],
+        pondSize,
+        ["in", "Pool", ["var", "name"]],
+        pondSize,
+        ["in", "pool", ["var", "name"]],
+        pondSize,
+        ["in", "Puddle", ["var", "name"]],
+        pondSize - 1,
+        ["in", "puddle", ["var", "name"]],
+        pondSize - 1,
+        [
+          "case",
+          ["has", "rank"],
+          [
+            "case",
+            ["<=", ["get", "rank"], 1],
+            rankSizes[0],
+            ["<=", ["get", "rank"], 2],
+            rankSizes[1],
+            ["<=", ["get", "rank"], 3],
+            rankSizes[2],
+            ["<=", ["get", "rank"], 4],
+            rankSizes[3],
+            rankSizes[4],
+          ] as ExpressionSpecification,
+          [
+            "case",
+            ["in", "Reservoir", ["var", "name"]],
+            reservoirSize,
+            ["in", "reservoir", ["var", "name"]],
+            reservoirSize,
+            defaultSize,
+          ] as ExpressionSpecification,
+        ] as ExpressionSpecification,
+      ] as ExpressionSpecification,
+    ] as ExpressionSpecification;
+
+  return [
+    "interpolate",
+    ["linear"],
+    ["zoom"],
+    6,
+    sizeExpr(6, 11, 10, [16, 14, 12, 10, 8]),
+    10,
+    sizeExpr(6, 14, 13, [22, 19, 16, 13, 10]),
+    12,
+    sizeExpr(7, 18, 17, [26, 23, 20, 17, 13]),
+    15,
+    sizeExpr(8, 19, 18, [30, 26, 22, 18, 14]),
+  ] as ExpressionSpecification;
 }
 
 // ============================================================================
@@ -129,7 +190,12 @@ export function createWaterLabelLayersFromBasemapSources(theme: Theme): LayerSpe
 
   const waterLabelPaint = { "text-color": c.label.water.color, "text-halo-color": c.label.water.halo, "text-halo-width": haloWidth, "text-halo-blur": haloBlur, "text-opacity": 0.9 };
   const waterLabelPaintThin = { ...waterLabelPaint, "text-halo-width": haloWidthThin };
-  const hasClassFilter = ["case", ["has", "class"], ["match", ["get", "class"], ["ocean", "sea", "gulf", "bay"], true, false], true];
+  const hasClassFilter: FilterSpecification = [
+    "case",
+    ["has", "class"],
+    ["match", ["get", "class"], ["ocean", "sea", "gulf", "bay"], true, false],
+    true,
+  ];
   
   // Use theme-configured font for water labels, with fallback to italic
   const waterFont = theme.labelFonts?.water ?? theme.labelFonts?.default ?? theme.fonts.italic;
@@ -168,13 +234,27 @@ export function createWaterwayLabelLayers(theme: Theme): LayerSpecification[] {
     "symbol-spacing": 200 
   };
   
-  const sizeByClass = (river: number, canal: number, stream: number, ditch: number) => 
-    ["match", ["get", "class"], "river", river, "canal", canal, "stream", stream, "ditch", ditch, "drain", ditch, stream];
-  
+  const sizeByClass = (river: number, canal: number, stream: number, ditch: number): ExpressionSpecification =>
+    [
+      "match",
+      ["get", "class"],
+      "river",
+      river,
+      "canal",
+      canal,
+      "stream",
+      stream,
+      "ditch",
+      ditch,
+      "drain",
+      ditch,
+      stream,
+    ] as ExpressionSpecification;
+
   return [
-    { id: "waterway-label-world", type: "symbol", source: "world_low", "source-layer": "waterway", minzoom: 6, maxzoom: 6.5, filter: ["all", filters.hasName], layout: { ...baseLayout, "text-field": createTextField(), "text-size": ["interpolate", ["linear"], ["zoom"], 6, sizeByClass(10, 8, 7, 6), 6.5, sizeByClass(12, 10, 8, 7)] }, paint: waterwayLabelPaint },
-    { id: "waterway-label-world-mid", type: "symbol", source: "world_mid", "source-layer": "waterway", minzoom: 6, filter: ["all", filters.hasName], layout: { ...baseLayout, "text-field": createTextField(), "text-size": ["interpolate", ["linear"], ["zoom"], 6, sizeByClass(12, 10, 9, 8), 10, sizeByClass(16, 13, 11, 10)] }, paint: waterwayLabelPaint },
-    { id: "waterway-label-us", type: "symbol", source: "us_high", "source-layer": "waterway", minzoom: 10, filter: ["all", filters.hasName], layout: { ...baseLayout, "text-field": createTextField(), "text-size": ["interpolate", ["linear"], ["zoom"], 10, sizeByClass(10, 8, 7, 6), 12, sizeByClass(12, 10, 8, 7), 15, sizeByClass(14, 11, 9, 8)] }, paint: waterwayLabelPaint },
+    { id: "waterway-label-world", type: "symbol", source: "world_low", "source-layer": "waterway", minzoom: 6, maxzoom: 6.5, filter: ["all", filters.hasName], layout: { ...baseLayout, "text-field": createTextField(), "text-size": ["interpolate", ["linear"], ["zoom"], 6, sizeByClass(10, 8, 7, 6), 6.5, sizeByClass(12, 10, 8, 7)] as ExpressionSpecification }, paint: waterwayLabelPaint },
+    { id: "waterway-label-world-mid", type: "symbol", source: "world_mid", "source-layer": "waterway", minzoom: 6, filter: ["all", filters.hasName], layout: { ...baseLayout, "text-field": createTextField(), "text-size": ["interpolate", ["linear"], ["zoom"], 6, sizeByClass(12, 10, 9, 8), 10, sizeByClass(16, 13, 11, 10)] as ExpressionSpecification }, paint: waterwayLabelPaint },
+    { id: "waterway-label-us", type: "symbol", source: "us_high", "source-layer": "waterway", minzoom: 10, filter: ["all", filters.hasName], layout: { ...baseLayout, "text-field": createTextField(), "text-size": ["interpolate", ["linear"], ["zoom"], 10, sizeByClass(10, 8, 7, 6), 12, sizeByClass(12, 10, 8, 7), 15, sizeByClass(14, 11, 9, 8)] as ExpressionSpecification }, paint: waterwayLabelPaint },
   ];
 }
 

@@ -6,6 +6,7 @@
  */
 
 import type { StyleSpecification, LayerSpecification, SourceSpecification } from "maplibre-gl";
+import type { ExpressionSpecification } from "@maplibre/maplibre-gl-style-spec";
 
 /** Configuration options for base style */
 export interface BaseStyleConfig {
@@ -78,7 +79,7 @@ export function createBaseStyle(config: BaseStyleConfig = defaultConfig): StyleS
 /**
  * Utility: Creates a standard text field expression with English fallback
  */
-export function createTextField(): unknown[] {
+export function createTextField(): ExpressionSpecification {
   return ["coalesce", ["get", "name:en"], ["get", "name"]];
 }
 
@@ -86,7 +87,7 @@ export function createTextField(): unknown[] {
  * Utility: Creates the direction/street abbreviation text field expression
  * Used for road labels, city names, etc. to abbreviate common words
  */
-export function createAbbreviatedTextField(): unknown[] {
+export function createAbbreviatedTextField(): ExpressionSpecification {
   return [
     "let",
     "name", ["coalesce", ["get", "name:en"], ["get", "name"]],
@@ -137,7 +138,7 @@ export function createAbbreviatedTextField(): unknown[] {
         ]
       ]
     ]
-  ];
+  ] as ExpressionSpecification;
 }
 
 /**

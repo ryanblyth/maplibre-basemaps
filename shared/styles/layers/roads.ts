@@ -4,23 +4,24 @@
 
 import type { LayerSpecification } from "maplibre-gl";
 import type { Theme } from "../theme.js";
-import { 
-  roadColorExpr, 
-  roadColorWithTertiaryExpr, 
-  buildingFillColor, 
-  tunnelColorExpr, 
-  bridgeColorExpr, 
+import type { ExpressionSpecification } from "@maplibre/maplibre-gl-style-spec";
+import {
+  roadColorExpr,
+  roadColorWithTertiaryExpr,
+  buildingFillColor,
+  tunnelColorExpr,
+  bridgeColorExpr,
   filters,
   roadWidthExpr,
   roadWidthExprRealWorld,
   roadCasingWidthExpr,
   roadCasingWidthExprRealWorld,
-  zoomWidthExpr
+  zoomWidthExpr,
 } from "./expressions.js";
 import type { RoadClassWidths } from "../theme.js";
 
 /** Helper to get road width expression based on theme settings */
-function getRoadWidthExpr(widths: RoadClassWidths, theme: Theme): unknown {
+function getRoadWidthExpr(widths: RoadClassWidths, theme: Theme): ExpressionSpecification {
   if (theme.settings?.realWorldScale) {
     const minZoom = theme.settings.realWorldScaleMinZoom ?? 15;
     return roadWidthExprRealWorld(widths, minZoom);
@@ -30,7 +31,7 @@ function getRoadWidthExpr(widths: RoadClassWidths, theme: Theme): unknown {
 
 // Casing width helper - currently uses fixed scaling (not real-world)
 // Real-world casing scaling can be revisited in the future if needed
-function getRoadCasingWidthExpr(widths: RoadClassWidths, _theme: Theme): unknown {
+function getRoadCasingWidthExpr(widths: RoadClassWidths, _theme: Theme): ExpressionSpecification {
   return roadCasingWidthExpr(widths);
 }
 
@@ -51,8 +52,8 @@ export function createUSRoadLayers(theme: Theme): LayerSpecification[] {
   
   // Use road colors by default for tunnels/bridges, with optional overrides
   const roadColor = roadColorWithTertiaryExpr(c);
-  const tunnelColor = c.road.tunnel ? tunnelColorExpr(c) : roadColor;
-  const bridgeColor = c.road.bridge ? bridgeColorExpr(c) : roadColor;
+  const tunnelColor = c.road.tunnel ? tunnelColorExpr(c.road.tunnel) : roadColor;
+  const bridgeColor = c.road.bridge ? bridgeColorExpr(c.road.bridge) : roadColor;
   
   // Use road casing color for tunnel/bridge casings, or override if specified
   const tunnelCasingColor = c.road.tunnelCasing || c.road.casing;
@@ -156,7 +157,7 @@ export function createUSOverlayRoadLayers(theme: Theme): LayerSpecification[] {
   const roadColor = roadColorWithTertiaryExpr(c);
   
   // Use road colors by default for bridges, with optional overrides
-  const bridgeColor = c.road.bridge ? bridgeColorExpr(c) : roadColor;
+  const bridgeColor = c.road.bridge ? bridgeColorExpr(c.road.bridge) : roadColor;
   
   // Use bridge-specific widths if defined, otherwise inherit from road
   const bridgeWidths = w.bridgeRoad || w.road;

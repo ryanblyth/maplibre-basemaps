@@ -39,6 +39,8 @@
 export const fonts = {
   regular: ["Noto Sans Regular"] as [string],
   semibold: ["Noto Sans SemiBold"] as [string],
+  /** Alias for semibold (used by highway shield labels; no separate Noto Bold stack in CDN set) */
+  bold: ["Noto Sans SemiBold"] as [string],
   italic: ["Noto Sans Italic"] as [string],
   // Cormorant Garamond family
   cormorantRegular: ["Cormorant Garamond Regular"] as [string],
