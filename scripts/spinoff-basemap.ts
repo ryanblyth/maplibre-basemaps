@@ -388,6 +388,10 @@ const projectRoot = join(__dirname, "..");
 const DEFAULT_GLYPHS_CDN = "https://assets.storypath.studio";
 const resolvedGlyphsBaseUrl = process.env.GLYPHS_CDN ?? DEFAULT_GLYPHS_CDN;
 
+const DEFAULT_HILLSHADE_RASTER_CDN = "https://data.storypath.studio";
+const resolvedHillshadeRasterBaseUrl =
+  process.env.HILLSHADE_RASTER_CDN ?? DEFAULT_HILLSHADE_RASTER_CDN;
+
 /** Configuration for production build */
 const productionConfig: BaseStyleConfig = {
   glyphsBaseUrl: resolvedGlyphsBaseUrl,
@@ -395,6 +399,7 @@ const productionConfig: BaseStyleConfig = {
   spriteBaseUrl: "http://localhost:8080",
   spritePath: "sprites/basemap",
   dataBaseUrl: "https://data.storypath.studio",
+  hillshadeRasterBaseUrl: resolvedHillshadeRasterBaseUrl,
 };
 
 /** Configuration for local development */
@@ -404,6 +409,7 @@ const localConfig: BaseStyleConfig = {
   spriteBaseUrl: "http://localhost:8080",
   spritePath: "sprites/basemap",
   dataBaseUrl: "https://data.storypath.studio",
+  hillshadeRasterBaseUrl: resolvedHillshadeRasterBaseUrl,
 };
 
 function ensureDir(filePath: string): void {
@@ -1217,17 +1223,21 @@ The build script uses two configurations:
 \`\`\`typescript
 const DEFAULT_GLYPHS_CDN = "https://assets.storypath.studio";
 const resolvedGlyphsBaseUrl = process.env.GLYPHS_CDN ?? DEFAULT_GLYPHS_CDN;
+const DEFAULT_HILLSHADE_RASTER_CDN = "https://data.storypath.studio";
+const resolvedHillshadeRasterBaseUrl =
+  process.env.HILLSHADE_RASTER_CDN ?? DEFAULT_HILLSHADE_RASTER_CDN;
 
 const localConfig = {
   glyphsBaseUrl: resolvedGlyphsBaseUrl,
   glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",
   dataBaseUrl: "https://data.storypath.studio",
+  hillshadeRasterBaseUrl: resolvedHillshadeRasterBaseUrl,
 };
 \`\`\`
 
 - Sprites served from local dev server
-- Glyphs from assets CDN (override with \`GLYPHS_CDN\`); tile data from data CDN
+- Glyphs from assets CDN (override with \`GLYPHS_CDN\`); TileJSON and hillshade PNG tiles from data CDN (override raster tile host with \`HILLSHADE_RASTER_CDN\`)
 
 ### Production Config
 
@@ -1238,16 +1248,20 @@ NODE_ENV=production npm run build:styles
 \`\`\`typescript
 const DEFAULT_GLYPHS_CDN = "https://assets.storypath.studio";
 const resolvedGlyphsBaseUrl = process.env.GLYPHS_CDN ?? DEFAULT_GLYPHS_CDN;
+const DEFAULT_HILLSHADE_RASTER_CDN = "https://data.storypath.studio";
+const resolvedHillshadeRasterBaseUrl =
+  process.env.HILLSHADE_RASTER_CDN ?? DEFAULT_HILLSHADE_RASTER_CDN;
 
 const productionConfig = {
   glyphsBaseUrl: resolvedGlyphsBaseUrl,
   glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",  // Update for production
   dataBaseUrl: "https://data.storypath.studio",
+  hillshadeRasterBaseUrl: resolvedHillshadeRasterBaseUrl,
 };
 \`\`\`
 
-For production, update \`spriteBaseUrl\` to your CDN or hosting URL. Set \`GLYPHS_CDN\` if glyphs are not on \`assets.storypath.studio\`.
+For production, update \`spriteBaseUrl\` to your CDN or hosting URL. Set \`GLYPHS_CDN\` if glyphs are not on \`assets.storypath.studio\`. Set \`HILLSHADE_RASTER_CDN\` if hillshade raster tiles are not served from \`data.storypath.studio\`.
 
 ## Generated Files
 
@@ -1459,6 +1473,7 @@ const productionConfig = {
   glyphsPath: "glyphs",
   spriteBaseUrl: "https://your-cdn.com",  // Your CDN URL
   dataBaseUrl: "https://data.storypath.studio",
+  hillshadeRasterBaseUrl: process.env.HILLSHADE_RASTER_CDN ?? "https://data.storypath.studio",
 };
 \`\`\`
 

@@ -19,6 +19,11 @@ export interface BaseStyleConfig {
   spritePath?: string;
   /** Base URL for vector/raster TileJSON on the CDN (e.g., "https://data.storypath.studio") */
   dataBaseUrl: string;
+  /**
+   * When set, the `world-hillshade` source includes inline `tiles` pointing here so raster PNGs load from this host
+   * while TileJSON still loads from `dataBaseUrl`. MapLibre uses style `tiles` over TileJSON `tiles`. Other sources unchanged.
+   */
+  hillshadeRasterBaseUrl?: string;
 }
 
 /** TileJSON document URL: `{dataBaseUrl}/{path}.json` (no `pmtiles://`; Worker serves TileJSON at `.json`). */

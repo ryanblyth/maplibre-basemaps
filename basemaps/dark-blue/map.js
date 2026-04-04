@@ -66,6 +66,47 @@ const bearing = (typeof window !== 'undefined' && window.mapBearing !== undefine
 // Register PMTiles protocol
 const protocol = new pmtiles.Protocol();
 maplibregl.addProtocol("pmtiles", protocol.tile);
+// HTTP 204 / zero-byte hillshade PNGs become 1×1 images in MapLibre → dem dimension mismatch (#1551).
+// Replace with a valid 256×256 Mapbox-terrain-RGB flat tile until the CDN stops returning 204 for gaps.
+(function installWorldMtnHillshadeEmptyResponseWorkaround() {
+  if (typeof window === "undefined" || window.__maplibreHillshadeFetchWorkaround) return;
+  window.__maplibreHillshadeFetchWorkaround = true;
+  const b64 = "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAFMklEQVR4nO3cwQ3DMAwEQW/zqoOlpoa8+OAAKiBYr2BLvMvXGwuBrmrwrf8CC4FsABIgkDcACRDIJxAJEMgZgAQI5BBMAgRyC0QCBHINSgIEMgcgAQIZhJEAgUyCSYBAohAkQCBZIBIgkDAcCRBIGpQECCQOTQIE0gcgAQIpxJAAgTTCSIBAKpEkQCCdYBKkkK0UT4JubwP/CrH/DKxsABIgkDcACRDIJxAJEMgZgAQI5BBMAgRyC0QCBHINSgIEMgcgAQIZhJEAgUyCSYBAohAkQCBZIBIgkDAcCRBIGpQECCQOTQIE0gcgAQIpxJAAgTTCSIBAKpEkQCCdYBKkjqwUT4JubwP/CrH/DKxsABIgkDcACRDIJxAJEMgZgAQI5BBMAgRyC0QCBHINSgIEMgcgAQIZhJEAgUyCSYBAohAkQCBZIBIgkDAcCRBIGpQECCQOTQIE0gcgAQIpxJAAgTTCSIBAKpEkQCCdYBKkjqwUT4JubwP/CrH/DKxsABIgkDcACRDIJxAJEMgZgAQI5BBMAgRyC0QCBHINSgIEMgcgAQIZhJEAgUyCSYBAohAkQCBZIBIgkDAcCRBIGpQECCQOTQIE0gcgAQIpxJAAAY0wEiAwKpEkQGB0gkmAgFI8Cd71beBfIfafgZUNQAIE8gYgAQL5BCIBAjkDkACBHIJJgEBugUiAQK5BSYBA5gAkQCCDMBIgkEkwCRBIFIIECCQLRAIEEoYjAQJJg5IAgcShSYBA+gAkQCCFGBIgkEYYCRBIJZIECKQTTILUkZXiSdDtbeBfIfafgZUNQAIE8gYgAQL5BCIBAjkDkACBHIJJgEBugUiAQK5BSYBA5gAkQCCDMBIgkEkwCRBIFIIECCQLRAIEEoYjAQJJg5IAgcShSYBA+gAkQCCFGBIgkEYYCRBIJZIECKQTTILUkZXiSdDtbeBfIfafgZUNQAIE8gYgAQL5BCIBAjkDkACBHIJJgEBugUiAQK5BSYBA5gAkQCCDMBIgkEkwCRBIFIIECCQLRAIEEoYjAQJJg5IAgcShSYBA+gAkQCCFGBIgkEYYCRBIJZIECKQTTILUkZXiSdDtbeBfIfafgZUNQAIE8gYgAQL5BCIBAjkDkACBHIJJgEBugUiAQK5BSYBA5gAkQCCDMBIgkEkwCRBIFIIECCQLRAIEEoYjAQJJg5IAgcShSYBA+gAkQCCFGBIgkEYYCRBIJZIECKQTTILUkZXiSdDtbeBfIfafgZUNQAIE8gYgAQL5BCIBAjkDkACBHIJJgEBugUiAQK5BSYBA5gAkQCCDMBIgkEkwCRBIFIIECCQLRAIEEoYjAQJJg5IAgcShSYBA+gAkQCCFGBIgkEYYCRBIJZIECKQTTILUkZXiSdDtbeBfIfafgZUNQAIE8gYgAQL5BCIBAjkDkACBHIJJgEBugUiAQK5BSYBA5gAkQCCDMBIgkEkwCRBIFIIECCQLRAIEEoYjAQLSoCRAYMShSYDA6AOQAIFRiCEBAqMRRgIERiWSBAiMTjAJEFCKJ8G7vg38K8T+M7CyAUiAQN4AJEAgn0AkQCBnABIgkEMwCRDILRAJEMg1KAkQyByABAhkEEYCBDIJJgECiUKQAIFkgUiAQMJwJEAgaVASIJA4NAkQSB+ABAikEEMCBNIIIwECqUSSAIF0gkmQOrJSPAm6vQ38K8T+M7CyAUiAQN4AJEAgn0AkQCBnABIgkEMwCRDILRAJEMg1KAkQyByABAhkEEYCBDIJJgECiUKQAIFkgUiAQP9vgx+h1RFKR3X0EAAAAABJRU5ErkJggg==";
+  const placeholder = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+  const orig = window.fetch.bind(window);
+  window.fetch = async function (input, init) {
+    const res = await orig(input, init);
+    const url =
+      typeof input === "string"
+        ? input
+        : input instanceof Request
+          ? input.url
+          : String(input);
+    const isHillshade =
+      url.includes("world_mtn_hillshade") && url.includes(".png");
+    if (!isHillshade) return res;
+
+    if (res.status === 204) {
+      return new Response(placeholder, {
+        status: 200,
+        statusText: "OK",
+        headers: { "Content-Type": "image/png" },
+      });
+    }
+
+    const cl = res.headers.get("content-length");
+    if (res.ok && cl === "0") {
+      return new Response(placeholder, {
+        status: 200,
+        statusText: "OK",
+        headers: { "Content-Type": "image/png" },
+      });
+    }
+
+    return res;
+  };
+})();
+
 
 // Initialize map (disable default attribution control)
 // maxZoom set high to allow overzooming beyond source limits (6 for world, 15 for US)
@@ -124,46 +165,6 @@ map.on('style.load', () => {
 
 // Error handling
 map.on("error", (e) => console.error("Map error:", e?.error || e));
-
-// ============================================================================
-// Debug: Log zoom level changes
-// ============================================================================
-let lastZoom = null;
-let zoomInterval = null;
-
-function setupZoomLogging() {
-  if (zoomInterval) return; // Already set up
-  
-  // Log initial zoom and center
-  try {
-    const z = map.getZoom();
-    const center = map.getCenter();
-    console.log(`[Zoom] Initial: ${z.toFixed(2)}`);
-    console.log(`[Center] [${center.lng.toFixed(4)}, ${center.lat.toFixed(4)}]`);
-    lastZoom = z;
-  } catch (e) {
-    // Map not ready yet
-  }
-  
-  // Poll zoom level and center (more reliable than events in some cases)
-  zoomInterval = setInterval(() => {
-    try {
-      const currentZoom = map.getZoom();
-      const currentCenter = map.getCenter();
-      if (lastZoom === null || Math.abs(currentZoom - lastZoom) >= 0.05) {
-        console.log(`[Zoom] ${currentZoom.toFixed(2)}`);
-        console.log(`[Center] [${currentCenter.lng.toFixed(4)}, ${currentCenter.lat.toFixed(4)}]`);
-        lastZoom = currentZoom;
-      }
-    } catch (e) {
-      // Silently fail if map not ready
-    }
-  }, 500);
-}
-
-// Setup when map is ready
-map.on('load', setupZoomLogging);
-map.on('style.load', setupZoomLogging);
 
 // ============================================================================
 // Debug: Inspect bathymetry source data

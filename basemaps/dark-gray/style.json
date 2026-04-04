@@ -33,8 +33,10 @@
     "world-hillshade": {
       "type": "raster-dem",
       "url": "https://data.storypath.studio/world_mtn_hillshade.json",
-      "minzoom": 0,
-      "maxzoom": 12
+      "minzoom": 1,
+      "maxzoom": 6,
+      "tileSize": 256,
+      "tiles": ["https://data.storypath.studio/world_mtn_hillshade/{z}/{x}/{y}.png"]
     }
   },
   "layers": [
@@ -49,7 +51,7 @@
       "id": "hillshade",
       "type": "hillshade",
       "source": "world-hillshade",
-      "minzoom": 0,
+      "minzoom": 1,
       "maxzoom": 13,
       "paint": {
         "hillshade-illumination-direction": 335,
@@ -58,7 +60,7 @@
           "interpolate",
           ["linear"],
           ["zoom"],
-          0, 0.0625,
+          1, 0.0625,
           12, 0.0625,
           13, 0
         ],

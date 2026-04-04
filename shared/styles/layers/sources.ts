@@ -81,11 +81,18 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
   
   // Only add hillshade source if enabled in theme
   if (theme?.hillshade?.enabled) {
+    const hillshadeTiles = config.hillshadeRasterBaseUrl
+      ? [`${config.hillshadeRasterBaseUrl}/world_mtn_hillshade/{z}/{x}/{y}.png`]
+      : undefined;
+    const hillshadeSourceMaxZoom =
+      theme.hillshade.rasterSourceMaxZoom ?? theme.hillshade.maxZoom;
     sources["world-hillshade"] = {
       type: "raster-dem",
       url: tileJsonSourceUrl(config.dataBaseUrl, "world_mtn_hillshade"),
       minzoom: theme.hillshade.minZoom ?? 0,
-      maxzoom: theme.hillshade.maxZoom,
+      maxzoom: hillshadeSourceMaxZoom,
+      tileSize: 256,
+      ...(hillshadeTiles ? { tiles: hillshadeTiles } : {}),
     };
   }
   

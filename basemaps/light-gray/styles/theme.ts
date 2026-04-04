@@ -671,11 +671,14 @@ export const lightGrayHillshade = {
   /** Whether to show hillshade at all */
   enabled: true,
   
-  /** Minimum zoom level to show hillshade */
-  minZoom: 0,
+  /** Minimum zoom level to show hillshade (TileJSON minzoom is 1; z0 has no tiles) */
+  minZoom: 1,
   
   /** Maximum zoom level to show hillshade (fades out after this) */
   maxZoom: 12,
+
+  /** Native tiles for world_mtn_hillshade only exist through z6 (see TileJSON maxzoom). */
+  rasterSourceMaxZoom: 6,
   
   /** Base opacity for hillshade (0.0 to 1.0) - reduced for light theme */
   opacity: 0.33,
