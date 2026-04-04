@@ -384,9 +384,13 @@ import { formatJSON } from "./format-json.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, "..");
 
+/** Override with env GLYPHS_CDN when building for another glyphs host. */
+const DEFAULT_GLYPHS_CDN = "https://assets.storypath.studio";
+const resolvedGlyphsBaseUrl = process.env.GLYPHS_CDN ?? DEFAULT_GLYPHS_CDN;
+
 /** Configuration for production build */
 const productionConfig: BaseStyleConfig = {
-  glyphsBaseUrl: "https://data.storypath.studio",
+  glyphsBaseUrl: resolvedGlyphsBaseUrl,
   glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",
   spritePath: "sprites/basemap",
@@ -395,7 +399,7 @@ const productionConfig: BaseStyleConfig = {
 
 /** Configuration for local development */
 const localConfig: BaseStyleConfig = {
-  glyphsBaseUrl: "https://data.storypath.studio",
+  glyphsBaseUrl: resolvedGlyphsBaseUrl,
   glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",
   spritePath: "sprites/basemap",
@@ -1211,8 +1215,11 @@ The build script uses two configurations:
 ### Development Config (default)
 
 \`\`\`typescript
+const DEFAULT_GLYPHS_CDN = "https://assets.storypath.studio";
+const resolvedGlyphsBaseUrl = process.env.GLYPHS_CDN ?? DEFAULT_GLYPHS_CDN;
+
 const localConfig = {
-  glyphsBaseUrl: "https://data.storypath.studio",
+  glyphsBaseUrl: resolvedGlyphsBaseUrl,
   glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",
   dataBaseUrl: "https://data.storypath.studio",
@@ -1220,7 +1227,7 @@ const localConfig = {
 \`\`\`
 
 - Sprites served from local dev server
-- Glyphs and data from CDN
+- Glyphs from assets CDN (override with \`GLYPHS_CDN\`); tile data from data CDN
 
 ### Production Config
 
@@ -1229,15 +1236,18 @@ NODE_ENV=production npm run build:styles
 \`\`\`
 
 \`\`\`typescript
+const DEFAULT_GLYPHS_CDN = "https://assets.storypath.studio";
+const resolvedGlyphsBaseUrl = process.env.GLYPHS_CDN ?? DEFAULT_GLYPHS_CDN;
+
 const productionConfig = {
-  glyphsBaseUrl: "https://data.storypath.studio",
+  glyphsBaseUrl: resolvedGlyphsBaseUrl,
   glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",  // Update for production
   dataBaseUrl: "https://data.storypath.studio",
 };
 \`\`\`
 
-For production, update \`spriteBaseUrl\` to your CDN or hosting URL.
+For production, update \`spriteBaseUrl\` to your CDN or hosting URL. Set \`GLYPHS_CDN\` if glyphs are not on \`assets.storypath.studio\`.
 
 ## Generated Files
 
@@ -1445,7 +1455,7 @@ If you're hosting sprites on a CDN, update the sprite URL in \`scripts/build-sty
 
 \`\`\`typescript
 const productionConfig = {
-  glyphsBaseUrl: "https://data.storypath.studio",
+  glyphsBaseUrl: process.env.GLYPHS_CDN ?? "https://assets.storypath.studio",
   glyphsPath: "glyphs",
   spriteBaseUrl: "https://your-cdn.com",  // Your CDN URL
   dataBaseUrl: "https://data.storypath.studio",
@@ -1703,7 +1713,7 @@ For different environments, you can use environment variables:
 \`\`\`typescript
 // scripts/build-styles.ts
 const productionConfig = {
-  glyphsBaseUrl: process.env.GLYPHS_CDN || "https://data.storypath.studio",
+  glyphsBaseUrl: process.env.GLYPHS_CDN ?? "https://assets.storypath.studio",
   spriteBaseUrl: process.env.SPRITE_CDN || "http://localhost:8080",
   // ...
 };
