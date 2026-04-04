@@ -3,6 +3,7 @@
  */
 
 import type { LayerSpecification } from "maplibre-gl";
+import type { ExpressionSpecification, PropertyValueSpecification } from "@maplibre/maplibre-gl-style-spec";
 import type { Theme } from "../theme.js";
 
 /**
@@ -32,16 +33,19 @@ export function createHillshadeLayers(theme: Theme): LayerSpecification[] {
   const effectiveExaggeration = baseExaggeration * opacity;
   
   // For fade-out at maxZoom, use zoom-based exaggeration
-  let exaggerationExpr: unknown;
+  let exaggerationExpr: PropertyValueSpecification<number>;
   if (hillshade.maxZoom !== undefined) {
     exaggerationExpr = [
       "interpolate",
       ["linear"],
       ["zoom"],
-      hillshade.minZoom ?? 0, effectiveExaggeration,
-      hillshade.maxZoom, effectiveExaggeration,
-      hillshade.maxZoom + 1, 0.0,  // Fade out by reducing exaggeration to 0
-    ];
+      hillshade.minZoom ?? 0,
+      effectiveExaggeration,
+      hillshade.maxZoom,
+      effectiveExaggeration,
+      hillshade.maxZoom + 1,
+      0.0, // Fade out by reducing exaggeration to 0
+    ] as ExpressionSpecification;
   } else {
     exaggerationExpr = effectiveExaggeration;
   }

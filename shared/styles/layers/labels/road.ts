@@ -3,15 +3,41 @@
  */
 
 import type { LayerSpecification } from "maplibre-gl";
+import type { ExpressionSpecification, FilterSpecification } from "@maplibre/maplibre-gl-style-spec";
 import type { Theme } from "../../theme.js";
 import { createAbbreviatedTextField } from "../../baseStyle.js";
+import { interpolateLinearZoomNumeric } from "../expressions.js";
 
 export function createRoadLabelLayers(theme: Theme): LayerSpecification[] {
   const c = theme.colors;
-  const majorFilter = ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["match", ["get", "class"], ["motorway", "trunk", "primary"], true, false], ["has", "name"]];
-  const secondaryFilter = ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["==", ["get", "class"], "secondary"], ["has", "name"]];
-  const tertiaryFilter = ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["match", ["get", "class"], ["tertiary", "residential"], true, false], ["has", "name"]];
-  const otherFilter = ["all", ["!=", ["get", "brunnel"], "tunnel"], ["!=", ["get", "brunnel"], "bridge"], ["!", ["match", ["get", "class"], ["motorway", "trunk", "primary", "secondary", "tertiary", "residential"], true, false]], ["has", "name"]];
+  const majorFilter: FilterSpecification = [
+    "all",
+    ["!=", ["get", "brunnel"], "tunnel"],
+    ["!=", ["get", "brunnel"], "bridge"],
+    ["match", ["get", "class"], ["motorway", "trunk", "primary"], true, false],
+    ["has", "name"],
+  ];
+  const secondaryFilter: FilterSpecification = [
+    "all",
+    ["!=", ["get", "brunnel"], "tunnel"],
+    ["!=", ["get", "brunnel"], "bridge"],
+    ["==", ["get", "class"], "secondary"],
+    ["has", "name"],
+  ];
+  const tertiaryFilter: FilterSpecification = [
+    "all",
+    ["!=", ["get", "brunnel"], "tunnel"],
+    ["!=", ["get", "brunnel"], "bridge"],
+    ["match", ["get", "class"], ["tertiary", "residential"], true, false],
+    ["has", "name"],
+  ];
+  const otherFilter: FilterSpecification = [
+    "all",
+    ["!=", ["get", "brunnel"], "tunnel"],
+    ["!=", ["get", "brunnel"], "bridge"],
+    ["!", ["match", ["get", "class"], ["motorway", "trunk", "primary", "secondary", "tertiary", "residential"], true, false]],
+    ["has", "name"],
+  ];
   
   // Use theme-configured font for road labels, with fallback to default fonts
   const roadFont = theme.labelFonts?.road ?? theme.labelFonts?.default ?? theme.fonts.regular;
@@ -30,10 +56,10 @@ export function createRoadLabelLayers(theme: Theme): LayerSpecification[] {
   };
   
   return [
-    { id: "road-label-major", type: "symbol", source: "us_high", "source-layer": "transportation_name", minzoom: 8, filter: majorFilter, layout: { ...baseLabelLayout, "text-field": createAbbreviatedTextField(), "text-size": ["interpolate", ["linear"], ["zoom"], 8, 9, 12, 11, 15, 13] }, paint: { ...baseLabelPaint, "text-color": c.label.road.major.color, "text-opacity": c.label.road.major.opacity } },
-    { id: "road-label-secondary", type: "symbol", source: "us_high", "source-layer": "transportation_name", minzoom: 10, filter: secondaryFilter, layout: { ...baseLabelLayout, "text-field": createAbbreviatedTextField(), "text-size": ["interpolate", ["linear"], ["zoom"], 10, 8, 12, 10, 15, 12] }, paint: { ...baseLabelPaint, "text-color": c.label.road.secondary.color, "text-opacity": c.label.road.secondary.opacity } },
-    { id: "road-label-tertiary", type: "symbol", source: "us_high", "source-layer": "transportation_name", minzoom: 12, filter: tertiaryFilter, layout: { ...baseLabelLayout, "text-field": createAbbreviatedTextField(), "text-size": ["interpolate", ["linear"], ["zoom"], 12, 8, 15, 10] }, paint: { ...baseLabelPaint, "text-color": c.label.road.tertiary.color, "text-opacity": c.label.road.tertiary.opacity } },
-    { id: "road-label-other", type: "symbol", source: "us_high", "source-layer": "transportation_name", minzoom: 14, filter: otherFilter, layout: { ...baseLabelLayout, "text-field": createAbbreviatedTextField(), "text-size": ["interpolate", ["linear"], ["zoom"], 14, 7, 15, 8] }, paint: { ...baseLabelPaint, "text-color": c.label.road.other.color, "text-opacity": c.label.road.other.opacity } },
+    { id: "road-label-major", type: "symbol", source: "us_high", "source-layer": "transportation_name", minzoom: 8, filter: majorFilter, layout: { ...baseLabelLayout, "text-field": createAbbreviatedTextField(), "text-size": interpolateLinearZoomNumeric(8, 9, 12, 11, 15, 13) }, paint: { ...baseLabelPaint, "text-color": c.label.road.major.color, "text-opacity": c.label.road.major.opacity } },
+    { id: "road-label-secondary", type: "symbol", source: "us_high", "source-layer": "transportation_name", minzoom: 10, filter: secondaryFilter, layout: { ...baseLabelLayout, "text-field": createAbbreviatedTextField(), "text-size": interpolateLinearZoomNumeric(10, 8, 12, 10, 15, 12) }, paint: { ...baseLabelPaint, "text-color": c.label.road.secondary.color, "text-opacity": c.label.road.secondary.opacity } },
+    { id: "road-label-tertiary", type: "symbol", source: "us_high", "source-layer": "transportation_name", minzoom: 12, filter: tertiaryFilter, layout: { ...baseLabelLayout, "text-field": createAbbreviatedTextField(), "text-size": interpolateLinearZoomNumeric(12, 8, 15, 10) }, paint: { ...baseLabelPaint, "text-color": c.label.road.tertiary.color, "text-opacity": c.label.road.tertiary.opacity } },
+    { id: "road-label-other", type: "symbol", source: "us_high", "source-layer": "transportation_name", minzoom: 14, filter: otherFilter, layout: { ...baseLabelLayout, "text-field": createAbbreviatedTextField(), "text-size": interpolateLinearZoomNumeric(14, 7, 15, 8) }, paint: { ...baseLabelPaint, "text-color": c.label.road.other.color, "text-opacity": c.label.road.other.opacity } },
   ];
 }
 
@@ -57,9 +83,9 @@ export function createHighwayShieldLayers(theme: Theme): LayerSpecification[] {
   const stateHighwayConfig = shields?.stateHighway || { enabled: true, sprite: "shield-state", textColor: "#1a4d1a", minZoom: 8 };
   
   // Filter for roads that have a ref (route number)
-  const interstateFilter = ["all", ["has", "ref"], ["==", ["get", "network"], "us-interstate"]];
-  const usHighwayFilter = ["all", ["has", "ref"], ["==", ["get", "network"], "us-highway"]];
-  const stateHighwayFilter = ["all", ["has", "ref"], ["match", ["get", "network"], ["us-state", "US:US", "US"], true, false]];
+  const interstateFilter: FilterSpecification = ["all", ["has", "ref"], ["==", ["get", "network"], "us-interstate"]];
+  const usHighwayFilter: FilterSpecification = ["all", ["has", "ref"], ["==", ["get", "network"], "us-highway"]];
+  const stateHighwayFilter: FilterSpecification = ["all", ["has", "ref"], ["match", ["get", "network"], ["us-state", "US:US", "US"], true, false]];
   
   // Base layout shared by all shields (can be overridden per-shield)
   const baseShieldLayout = {
@@ -71,14 +97,14 @@ export function createHighwayShieldLayers(theme: Theme): LayerSpecification[] {
     "symbol-spacing": 400,
     "text-field": ["get", "ref"],
     "icon-text-fit": "both" as const,
-    "icon-size": ["interpolate", ["linear"], ["zoom"], 6, 0.8, 10, 1.0, 14, 1.2],
+    "icon-size": interpolateLinearZoomNumeric(6, 0.8, 10, 1.0, 14, 1.2),
     "text-letter-spacing": 0.05,
   };
   
   // Helper to build text-size interpolation from config [minZoom, minSize, maxZoom, maxSize]
-  const buildTextSize = (config?: [number, number, number, number]) => {
-    if (!config) return ["interpolate", ["linear"], ["zoom"], 6, 9, 14, 13];
-    return ["interpolate", ["linear"], ["zoom"], config[0], config[1], config[2], config[3]];
+  const buildTextSize = (config?: [number, number, number, number]): ExpressionSpecification => {
+    if (!config) return interpolateLinearZoomNumeric(6, 9, 14, 13);
+    return interpolateLinearZoomNumeric(config[0], config[1], config[2], config[3]);
   };
   
   const layers: LayerSpecification[] = [];

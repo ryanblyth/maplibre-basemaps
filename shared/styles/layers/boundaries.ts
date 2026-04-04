@@ -3,11 +3,14 @@
  */
 
 import type { LayerSpecification } from "maplibre-gl";
+import type { DataDrivenPropertyValueSpecification } from "@maplibre/maplibre-gl-style-spec";
 import type { Theme, ZoomWidths } from "../theme.js";
 import { filters, zoomWidthExpr } from "./expressions.js";
 
 /** Helper to create opacity expression from ZoomWidths or number */
-function opacityExpr(opacity: ZoomWidths | number): unknown {
+function opacityExpr(
+  opacity: ZoomWidths | number
+): DataDrivenPropertyValueSpecification<number> {
   if (typeof opacity === "number") return opacity;
   return zoomWidthExpr(opacity);
 }

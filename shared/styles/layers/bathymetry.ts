@@ -3,6 +3,8 @@
  */
 
 import type { LayerSpecification } from "maplibre-gl";
+import type { ExpressionSpecification } from "@maplibre/maplibre-gl-style-spec";
+import type { ColorPaintValue } from "./expressions.js";
 import type { Theme } from "../theme.js";
 
 /**
@@ -146,10 +148,9 @@ export function createBathymetryLayers(theme: Theme): LayerSpecification[] {
   }
   
   // Create color stops array for MapLibre expression
-  const colorStops: unknown[] = [];
+  const colorStops: (number | string)[] = [];
   for (let i = 0; i < depthStops.length; i++) {
-    colorStops.push(depthStops[i]);
-    colorStops.push(ramp[i]);
+    colorStops.push(depthStops[i], ramp[i]);
   }
   
   // All 12 source-layers from the PMTiles metadata
@@ -237,39 +238,46 @@ export function createBathymetryLayers(theme: Theme): LayerSpecification[] {
     const layerDepth = sourceLayerDepths[sourceLayer] ?? 0;
     const layerOpacity = getOpacityForDepth(layerDepth);
     
+    const fillColor: ColorPaintValue = [
+      "interpolate",
+      ["linear"],
+      [
+        "case",
+        ["has", "depth"],
+        [
+          "case",
+          [">=", ["get", "depth"], 0],
+          ["get", "depth"],
+          ["*", ["get", "depth"], -1],
+        ],
+        0, // Fallback if depth property doesn't exist
+      ],
+      ...colorStops,
+    ] as ExpressionSpecification;
+
+    const fillOpacity: ExpressionSpecification = [
+      "interpolate",
+      ["linear"],
+      ["zoom"],
+      bathy.minZoom ?? 0,
+      layerOpacity * (baseOpacityMin / baseOpacityMax),
+      bathy.maxZoom ?? 6,
+      layerOpacity,
+      (bathy.maxZoom ?? 6) + 1,
+      0.0,
+    ] as ExpressionSpecification;
+
     layers.push({
       id: `bathymetry-fill-${sourceLayer}`,
       type: "fill",
       source: "ne-bathy",
       "source-layer": sourceLayer,
       minzoom: bathy.minZoom ?? 0,
-      maxzoom: (bathy.maxZoom ?? 6) + 1,  // Add 1 for fade-out
+      maxzoom: (bathy.maxZoom ?? 6) + 1, // Add 1 for fade-out
       paint: {
-        "fill-color": [
-          "interpolate",
-          ["linear"],
-          [
-            "case",
-            ["has", "depth"],
-            [
-              "case",
-              [">=", ["get", "depth"], 0],
-              ["get", "depth"],
-              ["*", ["get", "depth"], -1]
-            ],
-            0  // Fallback if depth property doesn't exist
-          ],
-          ...colorStops  // Using theme-based colors
-        ],
-        "fill-opacity": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          bathy.minZoom ?? 0, layerOpacity * (baseOpacityMin / baseOpacityMax),  // Scale opacity at minZoom
-          bathy.maxZoom ?? 6, layerOpacity,  // Full layer opacity at maxZoom
-          (bathy.maxZoom ?? 6) + 1, 0.0   // Fade out after maxZoom
-        ]
-      }
+        "fill-color": fillColor,
+        "fill-opacity": fillOpacity,
+      },
     });
   }
   

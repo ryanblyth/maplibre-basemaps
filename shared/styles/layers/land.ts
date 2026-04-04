@@ -3,6 +3,7 @@
  */
 
 import type { LayerSpecification } from "maplibre-gl";
+import type { FilterSpecification } from "@maplibre/maplibre-gl-style-spec";
 import type { Theme } from "../theme.js";
 import { landcoverFillColor, landuseFillColor } from "./expressions.js";
 
@@ -20,11 +21,10 @@ export function createLandcoverLayers(theme: Theme): LayerSpecification[] {
   const luFill = landuseFillColor(c, landuseConfig);
   
   // Filter out ice class from landcover if ice layers are enabled
-  // This prevents duplicate/conflicting ice rendering
-  const excludeIceFilter = theme.ice?.enabled 
+  const excludeIceFilter: FilterSpecification | undefined = theme.ice?.enabled
     ? ["!=", ["get", "class"], "ice"]
-    : true; // Show all if ice is disabled
-  
+    : undefined;
+
   return [
     { 
       id: "landcover-world", 
@@ -33,7 +33,7 @@ export function createLandcoverLayers(theme: Theme): LayerSpecification[] {
       "source-layer": "landcover", 
       minzoom: 0, 
       maxzoom: 6.5,
-      filter: excludeIceFilter,
+      ...(excludeIceFilter !== undefined ? { filter: excludeIceFilter } : {}),
       paint: { 
         "fill-color": lcFill, 
         "fill-opacity": landcoverOpacity,
@@ -47,7 +47,7 @@ export function createLandcoverLayers(theme: Theme): LayerSpecification[] {
       source: "world_mid", 
       "source-layer": "landcover", 
       minzoom: 6,
-      filter: excludeIceFilter,
+      ...(excludeIceFilter !== undefined ? { filter: excludeIceFilter } : {}),
       paint: { 
         "fill-color": lcFill, 
         "fill-opacity": landcoverOpacity,
@@ -72,11 +72,10 @@ export function createUSLandLayers(theme: Theme): LayerSpecification[] {
   const lcFill = landcoverFillColor(c, landConfig);
   const luFill = landuseFillColor(c, landuseConfig);
   
-  // Filter out ice class from landcover if ice layers are enabled
-  const excludeIceFilter = theme.ice?.enabled 
+  const excludeIceFilter: FilterSpecification | undefined = theme.ice?.enabled
     ? ["!=", ["get", "class"], "ice"]
-    : true;
-  
+    : undefined;
+
   return [
     { 
       id: "landcover-us", 
@@ -84,7 +83,7 @@ export function createUSLandLayers(theme: Theme): LayerSpecification[] {
       source: "us_high", 
       "source-layer": "landcover", 
       minzoom: 6,
-      filter: excludeIceFilter,
+      ...(excludeIceFilter !== undefined ? { filter: excludeIceFilter } : {}),
       paint: { 
         "fill-color": lcFill, 
         "fill-opacity": landcoverOpacity,

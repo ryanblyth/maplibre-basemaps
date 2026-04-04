@@ -2,7 +2,8 @@
  * Place label layers (continents, countries, states, cities)
  */
 
-import type { FilterSpecification, LayerSpecification } from "maplibre-gl";
+import type { LayerSpecification } from "maplibre-gl";
+import type { ExpressionSpecification, FilterSpecification } from "@maplibre/maplibre-gl-style-spec";
 import type { Theme } from "../../theme.js";
 import { createAbbreviatedTextField } from "../../baseStyle.js";
 import { filters } from "../expressions.js";
@@ -12,7 +13,7 @@ import { filters } from "../expressions.js";
 // ============================================================================
 
 /** State name text field with line breaks for two-word states */
-function createStateTextField(): unknown {
+function createStateTextField(): ExpressionSpecification {
   return [
     "case",
     ["==", ["coalesce", ["get", "name:en"], ["get", "name"]], "New York"], "NEW\nYORK",
@@ -26,39 +27,161 @@ function createStateTextField(): unknown {
     ["==", ["coalesce", ["get", "name:en"], ["get", "name"]], "West Virginia"], "WEST\nVIRGINIA",
     ["==", ["coalesce", ["get", "name:en"], ["get", "name"]], "Rhode Island"], "RHODE\nISLAND",
     ["upcase", ["coalesce", ["get", "name:en"], ["get", "name"]]]
-  ];
+  ] as ExpressionSpecification;
 }
 
 /** Place size expression for cities/towns/villages */
-function createPlaceSizeExpression(): unknown {
-  const rankSize = (r1: number, r2: number, r4: number, r6: number, r8: number, r10: number, def: number) => [
-    "case",
-    ["has", "rank"],
-    ["case", ["<=", ["get", "rank"], 1], r1, ["<=", ["get", "rank"], 2], r2, ["<=", ["get", "rank"], 4], r4, ["<=", ["get", "rank"], 6], r6, ["<=", ["get", "rank"], 8], r8, ["<=", ["get", "rank"], 10], r10, def],
-    ["match", ["get", "class"], "city", r1 - 0.8, "town", r4, r6]
-  ];
-  
-  return ["interpolate", ["linear"], ["zoom"],
-    6, rankSize(10.4, 8.8, 7.6, 6.8, 7.2, 6, 5.6),
-    10, rankSize(19, 16, 14, 12, 13, 11, 10),
-    15, rankSize(22, 19, 16, 15, 16, 13, 12)
-  ];
+function createPlaceSizeExpression(): ExpressionSpecification {
+  const rankSize = (
+    r1: number,
+    r2: number,
+    r4: number,
+    r6: number,
+    r8: number,
+    r10: number,
+    def: number
+  ): ExpressionSpecification =>
+    [
+      "case",
+      ["has", "rank"],
+      [
+        "case",
+        ["<=", ["get", "rank"], 1],
+        r1,
+        ["<=", ["get", "rank"], 2],
+        r2,
+        ["<=", ["get", "rank"], 4],
+        r4,
+        ["<=", ["get", "rank"], 6],
+        r6,
+        ["<=", ["get", "rank"], 8],
+        r8,
+        ["<=", ["get", "rank"], 10],
+        r10,
+        def,
+      ] as ExpressionSpecification,
+      ["match", ["get", "class"], "city", r1 - 0.8, "town", r4, r6],
+    ] as ExpressionSpecification;
+
+  return [
+    "interpolate",
+    ["linear"],
+    ["zoom"],
+    6,
+    rankSize(10.4, 8.8, 7.6, 6.8, 7.2, 6, 5.6),
+    10,
+    rankSize(19, 16, 14, 12, 13, 11, 10),
+    15,
+    rankSize(22, 19, 16, 15, 16, 13, 12),
+  ] as ExpressionSpecification;
 }
 
 /** US states filter */
-const usStatesFilter = ["match", ["coalesce", ["get", "name:en"], ["get", "name"]], 
-  "Alabama", true, "Alaska", true, "Arizona", true, "Arkansas", true, "California", true, 
-  "Colorado", true, "Connecticut", true, "Delaware", true, "Florida", true, "Georgia", true, 
-  "Hawaii", true, "Idaho", true, "Illinois", true, "Indiana", true, "Iowa", true, 
-  "Kansas", true, "Kentucky", true, "Louisiana", true, "Maine", true, "Maryland", true, 
-  "Massachusetts", true, "Michigan", true, "Minnesota", true, "Mississippi", true, "Missouri", true, 
-  "Montana", true, "Nebraska", true, "Nevada", true, "New Hampshire", true, "New Jersey", true, 
-  "New Mexico", true, "New York", true, "North Carolina", true, "North Dakota", true, "Ohio", true, 
-  "Oklahoma", true, "Oregon", true, "Pennsylvania", true, "Rhode Island", true, "South Carolina", true, 
-  "South Dakota", true, "Tennessee", true, "Texas", true, "Utah", true, "Vermont", true, 
-  "Virginia", true, "Washington", true, "West Virginia", true, "Wisconsin", true, "Wyoming", true, 
-  false
-];
+const usStatesFilter = [
+  "match",
+  ["coalesce", ["get", "name:en"], ["get", "name"]],
+  "Alabama",
+  true,
+  "Alaska",
+  true,
+  "Arizona",
+  true,
+  "Arkansas",
+  true,
+  "California",
+  true,
+  "Colorado",
+  true,
+  "Connecticut",
+  true,
+  "Delaware",
+  true,
+  "Florida",
+  true,
+  "Georgia",
+  true,
+  "Hawaii",
+  true,
+  "Idaho",
+  true,
+  "Illinois",
+  true,
+  "Indiana",
+  true,
+  "Iowa",
+  true,
+  "Kansas",
+  true,
+  "Kentucky",
+  true,
+  "Louisiana",
+  true,
+  "Maine",
+  true,
+  "Maryland",
+  true,
+  "Massachusetts",
+  true,
+  "Michigan",
+  true,
+  "Minnesota",
+  true,
+  "Mississippi",
+  true,
+  "Missouri",
+  true,
+  "Montana",
+  true,
+  "Nebraska",
+  true,
+  "Nevada",
+  true,
+  "New Hampshire",
+  true,
+  "New Jersey",
+  true,
+  "New Mexico",
+  true,
+  "New York",
+  true,
+  "North Carolina",
+  true,
+  "North Dakota",
+  true,
+  "Ohio",
+  true,
+  "Oklahoma",
+  true,
+  "Oregon",
+  true,
+  "Pennsylvania",
+  true,
+  "Rhode Island",
+  true,
+  "South Carolina",
+  true,
+  "South Dakota",
+  true,
+  "Tennessee",
+  true,
+  "Texas",
+  true,
+  "Utah",
+  true,
+  "Vermont",
+  true,
+  "Virginia",
+  true,
+  "Washington",
+  true,
+  "West Virginia",
+  true,
+  "Wisconsin",
+  true,
+  "Wyoming",
+  true,
+  false,
+] as unknown as FilterSpecification;
 
 // ============================================================================
 // PLACE LABEL LAYERS
@@ -102,15 +225,30 @@ export function createPlaceLabelLayers(theme: Theme): LayerSpecification[] {
   const villageMaxRank = placeLabelsConfig?.villageMaxRank ?? DEFAULT_VILLAGE_MAX_RANK;
   const allPlacesMinZoom = placeLabelsConfig?.minZoom ?? DEFAULT_ALL_PLACES_MIN_ZOOM;
 
-  const settlementClassMatch = ["match", ["get", "class"], ...settlementClasses.flatMap((cls) => [cls, true]), false];
+  const settlementClassMatch = [
+    "match",
+    ["get", "class"],
+    ...settlementClasses.flatMap((cls) => [cls, true as const]),
+    false,
+  ] as unknown as FilterSpecification;
 
-  const cityLabelUsAllFilter: unknown[] = [
+  const cityLabelUsAllFilter = [
     "all",
     filters.hasName,
     settlementClassMatch,
-    ["case", ["==", ["get", "class"], "suburb"], ["all", ["has", "rank"], ["<=", ["get", "rank"], suburbMaxRank]], true],
-    ["case", ["==", ["get", "class"], "village"], ["case", ["has", "rank"], ["<=", ["get", "rank"], villageMaxRank], true], true],
-  ];
+    [
+      "case",
+      ["==", ["get", "class"], "suburb"],
+      ["all", ["has", "rank"], ["<=", ["get", "rank"], suburbMaxRank]],
+      true,
+    ],
+    [
+      "case",
+      ["==", ["get", "class"], "village"],
+      ["case", ["has", "rank"], ["<=", ["get", "rank"], villageMaxRank], true],
+      true,
+    ],
+  ] as FilterSpecification;
 
   // Use theme-configured font for place labels, with fallback to default fonts
   const placeFont = theme.labelFonts?.place ?? theme.labelFonts?.default ?? theme.fonts.regular;
@@ -129,7 +267,7 @@ export function createPlaceLabelLayers(theme: Theme): LayerSpecification[] {
     { id: "country-label", type: "symbol", source: "us_high", "source-layer": "place", minzoom: 6, filter: ["==", ["get", "class"], "country"], layout: { "text-field": createAbbreviatedTextField(), "text-font": placeFont, "text-size": ["interpolate", ["linear"], ["zoom"], 2, 12, 6, 18, 10, 24], "text-transform": "uppercase", "text-letter-spacing": 0.1 }, paint: { ...placeLabelPaint, "text-opacity": 0.75 } },
     
     // State labels (US states filter for world_low)
-    { id: "state-label-us-world", type: "symbol", source: "world_low", "source-layer": "place", minzoom: 3.33, maxzoom: 6.5, filter: ["all", ["==", ["get", "class"], "state"], usStatesFilter], layout: { "text-field": createStateTextField(), "text-font": placeFont, "text-size": ["interpolate", ["linear"], ["zoom"], 3.33, 8, 6, 12], "text-transform": "none", "text-letter-spacing": 0.05 }, paint: { ...placeLabelPaint, "text-opacity": 0.5 } },
+    { id: "state-label-us-world", type: "symbol", source: "world_low", "source-layer": "place", minzoom: 3.33, maxzoom: 6.5, filter: ["all", ["==", ["get", "class"], "state"], usStatesFilter] as FilterSpecification, layout: { "text-field": createStateTextField(), "text-font": placeFont, "text-size": ["interpolate", ["linear"], ["zoom"], 3.33, 8, 6, 12], "text-transform": "none", "text-letter-spacing": 0.05 }, paint: { ...placeLabelPaint, "text-opacity": 0.5 } },
     
     // State labels (us_high)
     { id: "state-label-us", type: "symbol", source: "us_high", "source-layer": "place", minzoom: 4, filter: ["==", ["get", "class"], "state"], layout: { "text-field": createStateTextField(), "text-font": placeFont, "text-size": ["interpolate", ["linear"], ["zoom"], 4, 8, 8, 16, 12, 18], "text-transform": "none", "text-letter-spacing": 0.05 }, paint: { ...placeLabelPaint, "text-opacity": 0.5 } },
@@ -141,7 +279,7 @@ export function createPlaceLabelLayers(theme: Theme): LayerSpecification[] {
     { id: "city-label-us-rank1-2", type: "symbol", source: "us_high", "source-layer": "place", minzoom: 4, filter: ["all", filters.hasName, ["==", ["get", "class"], "city"], ["<=", ["coalesce", ["get", "rank"], 10], 2]], layout: { "text-field": createAbbreviatedTextField(), "text-font": placeFont, "text-size": ["interpolate", ["linear"], ["zoom"], 4, ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 15, 12], 8, ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 25, 20], 12, ["case", ["==", ["coalesce", ["get", "rank"], 1], 1], 32, 26]], "text-transform": "none", "text-letter-spacing": 0.05 }, paint: { ...placeLabelPaintThin, "text-opacity": 0.75 } },
     
     // Settlement-level places (configurable via theme.placeLabels)
-    { id: "city-label-us-all", type: "symbol", source: "us_high", "source-layer": "place", minzoom: allPlacesMinZoom, filter: cityLabelUsAllFilter as FilterSpecification, layout: { "text-field": createAbbreviatedTextField(), "text-font": placeFont, "text-size": createPlaceSizeExpression(), "text-transform": "none", "text-letter-spacing": 0.05 }, paint: { ...placeLabelPaintThin, "text-opacity": 0.6 } }
+    { id: "city-label-us-all", type: "symbol", source: "us_high", "source-layer": "place", minzoom: allPlacesMinZoom, filter: cityLabelUsAllFilter, layout: { "text-field": createAbbreviatedTextField(), "text-font": placeFont, "text-size": createPlaceSizeExpression(), "text-transform": "none", "text-letter-spacing": 0.05 }, paint: { ...placeLabelPaintThin, "text-opacity": 0.6 } }
   ];
 }
 
