@@ -17,7 +17,7 @@ Grid lines provide latitude and longitude reference lines, creating a coordinate
 Grid line data comes from graticule tiles:
 
 - **Source**: `world-grid`
-- **PMTiles URL**: `pmtiles://https://data.storypath.studio/pmtiles/graticules.pmtiles`
+- **TileJSON URL**: `https://data.storypath.studio/graticules.json`
 - **Zoom Range**: 0-8 (configurable via theme)
 - **Source Layer**: `graticules` - Contains both latitude and longitude lines
 
@@ -376,7 +376,7 @@ Note: The interval must match one of the available `step` values in the PMTiles 
 
 3. **Check CORS** - Ensure PMTiles server allows cross-origin requests
 
-4. **Check Network tab** - Look for `graticules.pmtiles` request (should be 200 status)
+4. **Check Network tab** - Look for `graticules.json` (TileJSON, should be 200) and subsequent tile requests
 
 ## Related Documentation
 

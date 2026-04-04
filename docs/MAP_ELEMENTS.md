@@ -75,7 +75,7 @@ Use a PMTiles URL in the style: `pmtiles:///path/file.pmtiles`.
 - **What**: tiny PBF files with SDF glyphs per font + character range.
 - **Why**: WebGL text needs glyph atlases; CSS/web fonts don't apply.
 - **Where**: top-level `glyphs` URL; your symbol layers' `"text-font"` must match a hosted font family.
-- **Available fonts** (from CDN at `https://data.storypath.studio/glyphs/`):
+- **Available fonts** (from CDN at `https://assets.storypath.studio/glyphs/`):
   - Noto Sans: Regular, SemiBold, Italic (default)
   - Cormorant Garamond: Regular, SemiBold, Italic, Bold, Bold Italic
   - IM FELL English: Regular, Italic, SC Regular (small caps)

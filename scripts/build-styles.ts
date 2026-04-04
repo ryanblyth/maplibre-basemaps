@@ -2,6 +2,11 @@
  * Build script for generating static JSON style files
  * 
  * Usage: npm run build:styles
+ *
+ * Optional: GLYPHS_CDN=https://example.com — overrides default glyphs host
+ * (defaults to https://assets.storypath.studio).
+ * Optional: HILLSHADE_RASTER_CDN=https://example.com — base URL for hillshade raster PNG tiles only
+ * (TileJSON stays on dataBaseUrl; defaults to same host as dataBaseUrl).
  * 
  * This script imports the TypeScript style functions and outputs
  * static JSON files that can be used for:
@@ -22,20 +27,30 @@ import { formatJSON } from "./format-json.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, "..");
 
+/** Override with env GLYPHS_CDN when building for another glyphs host. */
+const DEFAULT_GLYPHS_CDN = "https://assets.storypath.studio";
+const resolvedGlyphsBaseUrl = process.env.GLYPHS_CDN ?? DEFAULT_GLYPHS_CDN;
+
+const DEFAULT_HILLSHADE_RASTER_CDN = "https://data.storypath.studio";
+const resolvedHillshadeRasterBaseUrl =
+  process.env.HILLSHADE_RASTER_CDN ?? DEFAULT_HILLSHADE_RASTER_CDN;
+
 /** Configuration for production build */
 const productionConfig: BaseStyleConfig = {
-  glyphsBaseUrl: "https://data.storypath.studio",
+  glyphsBaseUrl: resolvedGlyphsBaseUrl,
   glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",
   dataBaseUrl: "https://data.storypath.studio",
+  hillshadeRasterBaseUrl: resolvedHillshadeRasterBaseUrl,
 };
 
 /** Configuration for local development */
 const localConfig: BaseStyleConfig = {
-  glyphsBaseUrl: "https://data.storypath.studio",
+  glyphsBaseUrl: resolvedGlyphsBaseUrl,
   glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",
   dataBaseUrl: "https://data.storypath.studio",
+  hillshadeRasterBaseUrl: resolvedHillshadeRasterBaseUrl,
 };
 
 interface StyleBuild {

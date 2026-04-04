@@ -12,7 +12,7 @@
 /**
  * Available font stacks (shared across all basemaps)
  * 
- * All fonts available from CDN at https://data.storypath.studio/glyphs/
+ * All fonts available from CDN at https://assets.storypath.studio/glyphs/
  * 
  * Noto Sans (default):
  *   - "Noto Sans Regular"
@@ -874,6 +874,12 @@ export interface ThemeHillshade {
   minZoom?: number;
   /** Maximum zoom level to show hillshade (fades out after this) */
   maxZoom?: number;
+  /**
+   * Max zoom for the `raster-dem` source (native tiles on the CDN). When unset, the source uses `maxZoom`.
+   * Set lower than `maxZoom` when TileJSON only lists tiles up to e.g. z6 but the hillshade layer should still
+   * appear at higher map zooms via overscaling.
+   */
+  rasterSourceMaxZoom?: number;
   /** Base opacity for hillshade (0.0 to 1.0) */
   opacity?: number;
   /** Illumination direction (0-360 degrees, where 0 is north, 90 is east) */

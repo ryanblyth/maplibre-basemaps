@@ -384,22 +384,32 @@ import { formatJSON } from "./format-json.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, "..");
 
+/** Override with env GLYPHS_CDN when building for another glyphs host. */
+const DEFAULT_GLYPHS_CDN = "https://assets.storypath.studio";
+const resolvedGlyphsBaseUrl = process.env.GLYPHS_CDN ?? DEFAULT_GLYPHS_CDN;
+
+const DEFAULT_HILLSHADE_RASTER_CDN = "https://data.storypath.studio";
+const resolvedHillshadeRasterBaseUrl =
+  process.env.HILLSHADE_RASTER_CDN ?? DEFAULT_HILLSHADE_RASTER_CDN;
+
 /** Configuration for production build */
 const productionConfig: BaseStyleConfig = {
-  glyphsBaseUrl: "https://data.storypath.studio",
+  glyphsBaseUrl: resolvedGlyphsBaseUrl,
   glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",
   spritePath: "sprites/basemap",
   dataBaseUrl: "https://data.storypath.studio",
+  hillshadeRasterBaseUrl: resolvedHillshadeRasterBaseUrl,
 };
 
 /** Configuration for local development */
 const localConfig: BaseStyleConfig = {
-  glyphsBaseUrl: "https://data.storypath.studio",
+  glyphsBaseUrl: resolvedGlyphsBaseUrl,
   glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",
   spritePath: "sprites/basemap",
   dataBaseUrl: "https://data.storypath.studio",
+  hillshadeRasterBaseUrl: resolvedHillshadeRasterBaseUrl,
 };
 
 function ensureDir(filePath: string): void {
@@ -831,8 +841,8 @@ This map is designed to work with Cloudflare Pages or any static hosting.
 
 - **Local files**: Sprites (bundled in \`sprites/\`)
 - **CDN files**: 
-  - Glyphs (fonts): \`https://data.storypath.studio/glyphs/\`
-  - Starfield script: \`https://data.storypath.studio/js/maplibre-gl-starfield.js\`
+  - Glyphs (fonts): \`https://assets.storypath.studio/glyphs/\`
+  - Starfield script: \`https://assets.storypath.studio/js/maplibre-gl-starfield.js\`
   - PMTiles data: External URLs in \`style.json\`
 
 ### Using in Production
@@ -868,8 +878,8 @@ See [docs/deploying.md](docs/deploying.md) for detailed deployment guide.
 
 This map uses external CDN assets to reduce bundle size:
 
-- **Glyphs** (fonts): Loaded from \`https://data.storypath.studio/glyphs/\`
-- **Starfield**: Loaded from \`https://data.storypath.studio/js/maplibre-gl-starfield.js\`
+- **Glyphs** (fonts): Loaded from \`https://assets.storypath.studio/glyphs/\`
+- **Starfield**: Loaded from \`https://assets.storypath.studio/js/maplibre-gl-starfield.js\`
 - **PMTiles data**: Map data loaded from external URLs
 
 These are loaded on-demand and cached by the browser.
@@ -1211,16 +1221,23 @@ The build script uses two configurations:
 ### Development Config (default)
 
 \`\`\`typescript
+const DEFAULT_GLYPHS_CDN = "https://assets.storypath.studio";
+const resolvedGlyphsBaseUrl = process.env.GLYPHS_CDN ?? DEFAULT_GLYPHS_CDN;
+const DEFAULT_HILLSHADE_RASTER_CDN = "https://data.storypath.studio";
+const resolvedHillshadeRasterBaseUrl =
+  process.env.HILLSHADE_RASTER_CDN ?? DEFAULT_HILLSHADE_RASTER_CDN;
+
 const localConfig = {
-  glyphsBaseUrl: "https://data.storypath.studio",
+  glyphsBaseUrl: resolvedGlyphsBaseUrl,
   glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",
   dataBaseUrl: "https://data.storypath.studio",
+  hillshadeRasterBaseUrl: resolvedHillshadeRasterBaseUrl,
 };
 \`\`\`
 
 - Sprites served from local dev server
-- Glyphs and data from CDN
+- Glyphs from assets CDN (override with \`GLYPHS_CDN\`); TileJSON and hillshade PNG tiles from data CDN (override raster tile host with \`HILLSHADE_RASTER_CDN\`)
 
 ### Production Config
 
@@ -1229,15 +1246,22 @@ NODE_ENV=production npm run build:styles
 \`\`\`
 
 \`\`\`typescript
+const DEFAULT_GLYPHS_CDN = "https://assets.storypath.studio";
+const resolvedGlyphsBaseUrl = process.env.GLYPHS_CDN ?? DEFAULT_GLYPHS_CDN;
+const DEFAULT_HILLSHADE_RASTER_CDN = "https://data.storypath.studio";
+const resolvedHillshadeRasterBaseUrl =
+  process.env.HILLSHADE_RASTER_CDN ?? DEFAULT_HILLSHADE_RASTER_CDN;
+
 const productionConfig = {
-  glyphsBaseUrl: "https://data.storypath.studio",
+  glyphsBaseUrl: resolvedGlyphsBaseUrl,
   glyphsPath: "glyphs",
   spriteBaseUrl: "http://localhost:8080",  // Update for production
   dataBaseUrl: "https://data.storypath.studio",
+  hillshadeRasterBaseUrl: resolvedHillshadeRasterBaseUrl,
 };
 \`\`\`
 
-For production, update \`spriteBaseUrl\` to your CDN or hosting URL.
+For production, update \`spriteBaseUrl\` to your CDN or hosting URL. Set \`GLYPHS_CDN\` if glyphs are not on \`assets.storypath.studio\`. Set \`HILLSHADE_RASTER_CDN\` if hillshade raster tiles are not served from \`data.storypath.studio\`.
 
 ## Generated Files
 
@@ -1423,8 +1447,8 @@ The map uses a hybrid approach for assets:
 
 ### External Assets (loaded from CDN)
 
-- **Glyphs** (fonts) - \`https://data.storypath.studio/glyphs/\`
-- **Starfield script** - \`https://data.storypath.studio/js/maplibre-gl-starfield.js\`
+- **Glyphs** (fonts) - \`https://assets.storypath.studio/glyphs/\`
+- **Starfield script** - \`https://assets.storypath.studio/js/maplibre-gl-starfield.js\`
 - **PMTiles data** - Map data URLs in \`style.json\`
 
 ## Deployment Steps
@@ -1445,10 +1469,11 @@ If you're hosting sprites on a CDN, update the sprite URL in \`scripts/build-sty
 
 \`\`\`typescript
 const productionConfig = {
-  glyphsBaseUrl: "https://data.storypath.studio",
+  glyphsBaseUrl: process.env.GLYPHS_CDN ?? "https://assets.storypath.studio",
   glyphsPath: "glyphs",
   spriteBaseUrl: "https://your-cdn.com",  // Your CDN URL
   dataBaseUrl: "https://data.storypath.studio",
+  hillshadeRasterBaseUrl: process.env.HILLSHADE_RASTER_CDN ?? "https://data.storypath.studio",
 };
 \`\`\`
 
@@ -1601,7 +1626,7 @@ Enable gzip compression for:
   
   <script src="https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.js"></script>
   <script src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
-  <script src="https://data.storypath.studio/js/maplibre-gl-starfield.js"></script>
+  <script src="https://assets.storypath.studio/js/maplibre-gl-starfield.js"></script>
   <script src="./map-config.js"></script>
   <script>
     const protocol = new pmtiles.Protocol();
@@ -1643,7 +1668,7 @@ The map loads these assets from CDN:
 ### Glyphs (Fonts)
 
 \`\`\`
-https://data.storypath.studio/glyphs/{fontstack}/{range}.pbf
+https://assets.storypath.studio/glyphs/{fontstack}/{range}.pbf
 \`\`\`
 
 These are loaded on-demand as the map needs different character ranges.
@@ -1651,21 +1676,21 @@ These are loaded on-demand as the map needs different character ranges.
 ### Starfield Script
 
 \`\`\`
-https://data.storypath.studio/js/maplibre-gl-starfield.js
+https://assets.storypath.studio/js/maplibre-gl-starfield.js
 \`\`\`
 
 Required for globe projection with starfield effect.
 
-### PMTiles Data
+### Map data (TileJSON)
 
-Map data sources are referenced in \`style.json\`:
+Vector (and raster-dem) sources use TileJSON URLs on the CDN. They are referenced in \`style.json\`:
 
 \`\`\`json
 {
   "sources": {
     "world_low": {
       "type": "vector",
-      "url": "pmtiles://https://data.storypath.studio/pmtiles/world.pmtiles"
+      "url": "https://data.storypath.studio/world.json"
     }
   }
 }
@@ -1703,7 +1728,7 @@ For different environments, you can use environment variables:
 \`\`\`typescript
 // scripts/build-styles.ts
 const productionConfig = {
-  glyphsBaseUrl: process.env.GLYPHS_CDN || "https://data.storypath.studio",
+  glyphsBaseUrl: process.env.GLYPHS_CDN ?? "https://assets.storypath.studio",
   spriteBaseUrl: process.env.SPRITE_CDN || "http://localhost:8080",
   // ...
 };

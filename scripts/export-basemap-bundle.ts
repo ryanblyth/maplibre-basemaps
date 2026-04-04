@@ -88,7 +88,7 @@ function exportBasemapBundle(basemapName: string): void {
  * Dependencies (must be loaded before this script):
  * - MapLibre GL JS: https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.js
  * - PMTiles: https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js
- * - Starfield: https://data.storypath.studio/js/maplibre-gl-starfield.js
+ * - Starfield: https://assets.storypath.studio/js/maplibre-gl-starfield.js
  */
 
 // Configuration constants
@@ -258,7 +258,7 @@ html, body {
   
   <script src="https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.js"></script>
   <script src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
-  <script src="https://data.storypath.studio/js/maplibre-gl-starfield.js"></script>
+  <script src="https://assets.storypath.studio/js/maplibre-gl-starfield.js"></script>
   <!-- Option 1: Use separate map.js file (recommended for frameworks like Astro) -->
   <script src="./map.js"></script>
   
@@ -336,8 +336,8 @@ The following are loaded from CDN and do not need to be bundled:
 - **MapLibre GL JS**: \`https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.js\`
 - **MapLibre GL CSS**: \`https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.css\`
 - **PMTiles library**: \`https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js\`
-- **Starfield script**: \`https://data.storypath.studio/js/maplibre-gl-starfield.js\`
-- **Glyphs**: \`https://data.storypath.studio/glyphs/{fontstack}/{range}.pbf\` (referenced in style.json)
+- **Starfield script**: \`https://assets.storypath.studio/js/maplibre-gl-starfield.js\`
+- **Glyphs**: \`https://assets.storypath.studio/glyphs/{fontstack}/{range}.pbf\` (referenced in style.json)
 - **PMTiles data**: All data sources use external URLs (referenced in style.json)
 
 ## Usage
@@ -398,7 +398,7 @@ For static HTML, simply include the script after dependencies:
 \`\`\`html
 <script src="https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.js"></script>
 <script src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
-<script src="https://data.storypath.studio/js/maplibre-gl-starfield.js"></script>
+<script src="https://assets.storypath.studio/js/maplibre-gl-starfield.js"></script>
 <script src="./map.js"></script>
 \`\`\`
 

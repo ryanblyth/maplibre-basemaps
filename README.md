@@ -66,16 +66,16 @@ npm run build:styles
 
 See `docs/creating-basemap.md` for detailed documentation.
 
-## PMTiles Sources
+## Vector tile sources (CDN)
 
-This project uses PMTiles hosted on Cloudflare CDN. PMTiles sources are configured in each style's `sources` section:
+Production map data uses **TileJSON** documents on Cloudflare (`https://data.storypath.studio/<path>.json`). MapLibre fetches each `url` as TileJSON and requests tiles from the template your Worker provides. Sources are configured in each style's `sources` section:
 
 ```json
 {
   "sources": {
     "openmaptiles": {
       "type": "vector",
-      "url": "pmtiles://https://data.storypath.studio/pmtiles/colorado.pmtiles"
+      "url": "https://data.storypath.studio/colorado.json"
     }
   }
 }
@@ -87,7 +87,7 @@ This project uses PMTiles hosted on Cloudflare CDN. PMTiles sources are configur
 Font glyphs are stored in `/shared/assets/glyphs/` and shared across all basemaps. Each font family has its own directory with PBF files for character ranges.
 
 - **Local development**: Files are served from `shared/assets/glyphs/` via the development server
-- **Production**: Glyphs are hosted on CDN at `https://data.storypath.studio/glyphs/`
+- **Production**: Glyphs are hosted on CDN at `https://assets.storypath.studio/glyphs/`
 - Local files are the source of truth and required for build scripts
 
 ### Sprites
@@ -114,7 +114,7 @@ See `docs/DOCKER.md` for Docker-based sprite building instructions.
 The starfield background script for globe projection is located in `/shared/js/maplibre-gl-starfield.js`.
 
 - **Local development**: File is served from `shared/js/` via the development server
-- **Production**: Script is hosted on CDN at `https://data.storypath.studio/js/maplibre-gl-starfield.js`
+- **Production**: Script is hosted on CDN at `https://assets.storypath.studio/js/maplibre-gl-starfield.js`
 - Local file is the source of truth and required for development
 
 ## Asset Hosting
@@ -161,7 +161,7 @@ The `serve.js` server handles:
 - Serving basemap files from `/basemaps/*`
 - Serving shared assets from `/shared/*`
 - CORS headers for asset loading
-- HTTP Range requests for PMTiles
+- HTTP Range requests for local `.pmtiles` files (PMTiles archives) when using `serve.js`
 
 ### Style Development
 - Edit TypeScript style source files in `/basemaps/*/styles/`
@@ -255,10 +255,10 @@ See `docs/spinning-off-basemaps.md` for detailed documentation.
 
 - **Assets not loading**: Verify paths in `style.json` match your environment:
   - **Local development**: Use `http://localhost:8080/shared/assets/glyphs/...` and `http://localhost:8080/shared/assets/sprites/...`
-  - **Production**: Use CDN URLs like `https://data.storypath.studio/glyphs/...` and `https://data.storypath.studio/...`
+  - **Production**: Use CDN URLs like `https://assets.storypath.studio/glyphs/...` and `https://data.storypath.studio/...`
   - Verify which environment you're targeting and that the appropriate server/CDN is accessible
 
-- **PMTiles errors**: Ensure the server supports HTTP Range requests (serve.js handles this)
+- **Tile / CDN errors**: Confirm TileJSON URLs return JSON (200) and that tile URLs from the document load; for local `pmtiles://` archives, the server must support HTTP Range requests (`serve.js` handles this)
 
 ## License
 

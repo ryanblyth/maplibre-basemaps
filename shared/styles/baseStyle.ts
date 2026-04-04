@@ -17,8 +17,18 @@ export interface BaseStyleConfig {
   spriteBaseUrl: string;
   /** Sprite path relative to spriteBaseUrl (e.g., "basemaps/dark-blue/sprites/basemap"). Defaults to "shared/assets/sprites/basemap" for backward compatibility */
   spritePath?: string;
-  /** Base URL for PMTiles data (e.g., "https://data.storypath.studio") */
+  /** Base URL for vector/raster TileJSON on the CDN (e.g., "https://data.storypath.studio") */
   dataBaseUrl: string;
+  /**
+   * When set, the `world-hillshade` source includes inline `tiles` pointing here so raster PNGs load from this host
+   * while TileJSON still loads from `dataBaseUrl`. MapLibre uses style `tiles` over TileJSON `tiles`. Other sources unchanged.
+   */
+  hillshadeRasterBaseUrl?: string;
+}
+
+/** TileJSON document URL: `{dataBaseUrl}/{path}.json` (no `pmtiles://`; Worker serves TileJSON at `.json`). */
+export function tileJsonSourceUrl(dataBaseUrl: string, pathWithoutExtension: string): string {
+  return `${dataBaseUrl}/${pathWithoutExtension}.json`;
 }
 
 /** Default configuration for local development */
@@ -35,7 +45,7 @@ export function createGlobalSources(config: BaseStyleConfig): Record<string, Sou
   return {
     world_labels: {
       type: "vector",
-      url: `pmtiles://${config.dataBaseUrl}/pmtiles/world-labels_z0-10.pmtiles`,
+      url: tileJsonSourceUrl(config.dataBaseUrl, "world-labels_z0-10"),
       minzoom: 0,
       maxzoom: 10,
     },

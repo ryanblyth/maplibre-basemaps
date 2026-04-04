@@ -16,7 +16,7 @@ Contours provide elevation lines showing the topography of land areas. The syste
 Contour data comes from Natural Earth topographic contour tiles:
 
 - **Source**: `world-contours`
-- **PMTiles URL**: `pmtiles://https://data.storypath.studio/pmtiles/world_mtn_contours_z6-12_mj500_mn200_z6-8_20251227.pmtiles`
+- **TileJSON URL**: `https://data.storypath.studio/world_contours_z4-10_mj800_mn350_minz6.json`
 - **Zoom Range**: 6-12 (fades out at zoom 13)
 - **Source Layers**: 2 layers representing different contour intervals:
   - `major` - Major contours (500m intervals, z6-12)
@@ -300,7 +300,7 @@ Contours fade out smoothly at the maximum zoom:
 
 3. **Check CORS** - Ensure PMTiles server allows cross-origin requests
 
-4. **Check Network tab** - Look for `world_mtn_contours_z6-12_mj500_mn200_z6-8_20251227.pmtiles` request (should be 200 status)
+4. **Check Network tab** - Look for `world_contours_z4-10_mj800_mn350_minz6.json` (TileJSON, should be 200) and subsequent tile requests
 
 ## Related Documentation
 

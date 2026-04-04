@@ -1,13 +1,11 @@
 /**
  * Grid layers (latitude and longitude lines)
  * 
- * Uses a PMTiles source with a single source-layer "graticules" containing
- * LineString features with properties:
+ * Uses a vector source (TileJSON at `{dataBaseUrl}/graticules.json`) with a single
+ * source-layer "graticules" containing LineString features with properties:
  * - kind: "parallel" (latitude) or "meridian" (longitude)
  * - step: interval in degrees ("1", "5", "10", "30")
  * - value: coordinate value
- * 
- * PMTiles URL: pmtiles://{dataBaseUrl}/pmtiles/graticules.pmtiles
  */
 
 import type { LayerSpecification } from "maplibre-gl";

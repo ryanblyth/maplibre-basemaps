@@ -3,7 +3,7 @@
  */
 
 import type { SourceSpecification } from "maplibre-gl";
-import type { BaseStyleConfig } from "../baseStyle.js";
+import { tileJsonSourceUrl, type BaseStyleConfig } from "../baseStyle.js";
 import type { Theme } from "../theme.js";
 
 /**
@@ -17,23 +17,23 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
   const sources: Record<string, SourceSpecification> = {
     world_low: {
       type: "vector",
-      url: `pmtiles://${config.dataBaseUrl}/pmtiles/world_z0-6.pmtiles`,
+      url: tileJsonSourceUrl(config.dataBaseUrl, "world_z0-6"),
       minzoom: 0,
     },
     world_mid: {
       type: "vector",
-      url: `pmtiles://${config.dataBaseUrl}/pmtiles/world_z6-10.pmtiles`,
+      url: tileJsonSourceUrl(config.dataBaseUrl, "world_z6-10"),
       minzoom: 6,
     },
     us_high: {
       type: "vector",
-      url: `pmtiles://${config.dataBaseUrl}/pmtiles/us_z0-15.pmtiles`,
+      url: tileJsonSourceUrl(config.dataBaseUrl, "us_z0-15"),
       minzoom: 6,
       maxzoom: 15,
     },
     poi_us: {
       type: "vector",
-      url: `pmtiles://${config.dataBaseUrl}/pmtiles/poi_us_z12-15.pmtiles`,
+      url: tileJsonSourceUrl(config.dataBaseUrl, "poi_us_z12-15"),
       minzoom: 12,
       maxzoom: 15,
     },
@@ -43,7 +43,7 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
   if (theme?.bathymetry?.enabled) {
     sources["ne-bathy"] = {
       type: "vector",
-      url: `pmtiles://${config.dataBaseUrl}/pmtiles/ne_bathy_z0-6.pmtiles`,
+      url: tileJsonSourceUrl(config.dataBaseUrl, "ne_bathy_z0-6"),
       minzoom: 0,
       maxzoom: 6,
     };
@@ -53,7 +53,7 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
   if (theme?.contours?.enabled) {
     sources["world-contours"] = {
       type: "vector",
-      url: `pmtiles://${config.dataBaseUrl}/pmtiles/world_contours_z4-10_mj800_mn350_minz6.pmtiles`,
+      url: tileJsonSourceUrl(config.dataBaseUrl, "world_contours_z4-10_mj800_mn350_minz6"),
       minzoom: 4,
       maxzoom: 10,
     };
@@ -63,7 +63,7 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
   if (theme?.ice?.enabled) {
     sources["ne-ice"] = {
       type: "vector",
-      url: `pmtiles://${config.dataBaseUrl}/pmtiles/ne_ice_z0-6.pmtiles`,
+      url: tileJsonSourceUrl(config.dataBaseUrl, "ne_ice_z0-6"),
       minzoom: 0,
       maxzoom: 6,
     };
@@ -73,7 +73,7 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
   if (theme?.grid?.enabled) {
     sources["world-grid"] = {
       type: "vector",
-      url: `pmtiles://${config.dataBaseUrl}/pmtiles/graticules.pmtiles`,
+      url: tileJsonSourceUrl(config.dataBaseUrl, "graticules"),
       minzoom: theme.grid.minZoom ?? 0,
       maxzoom: theme.grid.maxZoom ?? 10,
     };
@@ -81,11 +81,18 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
   
   // Only add hillshade source if enabled in theme
   if (theme?.hillshade?.enabled) {
+    const hillshadeTiles = config.hillshadeRasterBaseUrl
+      ? [`${config.hillshadeRasterBaseUrl}/world_mtn_hillshade/{z}/{x}/{y}.png`]
+      : undefined;
+    const hillshadeSourceMaxZoom =
+      theme.hillshade.rasterSourceMaxZoom ?? theme.hillshade.maxZoom;
     sources["world-hillshade"] = {
       type: "raster-dem",
-      url: `pmtiles://${config.dataBaseUrl}/pmtiles/world_mtn_hillshade.pmtiles`,
+      url: tileJsonSourceUrl(config.dataBaseUrl, "world_mtn_hillshade"),
       minzoom: theme.hillshade.minZoom ?? 0,
-      maxzoom: theme.hillshade.maxZoom,
+      maxzoom: hillshadeSourceMaxZoom,
+      tileSize: 256,
+      ...(hillshadeTiles ? { tiles: hillshadeTiles } : {}),
     };
   }
   
@@ -93,7 +100,7 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
   if (theme?.aeroway?.enabled) {
     sources["aeroway-world"] = {
       type: "vector",
-      url: `pmtiles://${config.dataBaseUrl}/pmtiles/aeroway-world.pmtiles`,
+      url: tileJsonSourceUrl(config.dataBaseUrl, "aeroway-world"),
       minzoom: 6,
       maxzoom: 15,
     };

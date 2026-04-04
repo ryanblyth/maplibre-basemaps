@@ -16,7 +16,7 @@ Ice layers provide visualization for glaciers, ice sheets, and ice shelves. The 
 Ice data comes from Natural Earth ice tiles:
 
 - **Source**: `ne-ice`
-- **PMTiles URL**: `pmtiles://https://data.storypath.studio/pmtiles/ne_ice_z0-6.pmtiles`
+- **TileJSON URL**: `https://data.storypath.studio/ne_ice_z0-6.json`
 - **Zoom Range**: 0-6 (fades out at zoom 7)
 - **Source Layers**: 3 layers representing different ice types:
   - `glaciated` - Glaciers and ice caps (polygons)
@@ -256,7 +256,7 @@ For light themes, you may want to use darker blue tones or white with subtle tin
 
 3. **Check CORS** - Ensure PMTiles server allows cross-origin requests
 
-4. **Check Network tab** - Look for `ne_ice_z0-6.pmtiles` request (should be 200 status)
+4. **Check Network tab** - Look for `ne_ice_z0-6.json` (TileJSON, should be 200) and subsequent tile requests
 
 ## Related Documentation
 
