@@ -680,7 +680,7 @@ function generatePackageJson(spinoffDir: string, spinoffName: string): void {
     },
     devDependencies: {
       "@types/node": "^20.10.0",
-      "maplibre-gl": "^4.0.0",
+      "maplibre-gl": "^5.13.0",
       sharp: "^0.34.5",
       tsx: "^4.6.0",
       typescript: "^5.3.0",
