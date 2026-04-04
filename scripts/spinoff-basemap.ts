@@ -836,7 +836,7 @@ This map is designed to work with Cloudflare Pages or any static hosting.
 - **Local files**: Sprites (bundled in \`sprites/\`)
 - **CDN files**: 
   - Glyphs (fonts): \`https://assets.storypath.studio/glyphs/\`
-  - Starfield script: \`https://data.storypath.studio/js/maplibre-gl-starfield.js\`
+  - Starfield script: \`https://assets.storypath.studio/js/maplibre-gl-starfield.js\`
   - PMTiles data: External URLs in \`style.json\`
 
 ### Using in Production
@@ -873,7 +873,7 @@ See [docs/deploying.md](docs/deploying.md) for detailed deployment guide.
 This map uses external CDN assets to reduce bundle size:
 
 - **Glyphs** (fonts): Loaded from \`https://assets.storypath.studio/glyphs/\`
-- **Starfield**: Loaded from \`https://data.storypath.studio/js/maplibre-gl-starfield.js\`
+- **Starfield**: Loaded from \`https://assets.storypath.studio/js/maplibre-gl-starfield.js\`
 - **PMTiles data**: Map data loaded from external URLs
 
 These are loaded on-demand and cached by the browser.
@@ -1434,7 +1434,7 @@ The map uses a hybrid approach for assets:
 ### External Assets (loaded from CDN)
 
 - **Glyphs** (fonts) - \`https://assets.storypath.studio/glyphs/\`
-- **Starfield script** - \`https://data.storypath.studio/js/maplibre-gl-starfield.js\`
+- **Starfield script** - \`https://assets.storypath.studio/js/maplibre-gl-starfield.js\`
 - **PMTiles data** - Map data URLs in \`style.json\`
 
 ## Deployment Steps
@@ -1611,7 +1611,7 @@ Enable gzip compression for:
   
   <script src="https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.js"></script>
   <script src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
-  <script src="https://data.storypath.studio/js/maplibre-gl-starfield.js"></script>
+  <script src="https://assets.storypath.studio/js/maplibre-gl-starfield.js"></script>
   <script src="./map-config.js"></script>
   <script>
     const protocol = new pmtiles.Protocol();
@@ -1661,7 +1661,7 @@ These are loaded on-demand as the map needs different character ranges.
 ### Starfield Script
 
 \`\`\`
-https://data.storypath.studio/js/maplibre-gl-starfield.js
+https://assets.storypath.studio/js/maplibre-gl-starfield.js
 \`\`\`
 
 Required for globe projection with starfield effect.

@@ -114,7 +114,7 @@ See `docs/DOCKER.md` for Docker-based sprite building instructions.
 The starfield background script for globe projection is located in `/shared/js/maplibre-gl-starfield.js`.
 
 - **Local development**: File is served from `shared/js/` via the development server
-- **Production**: Script is hosted on CDN at `https://data.storypath.studio/js/maplibre-gl-starfield.js`
+- **Production**: Script is hosted on CDN at `https://assets.storypath.studio/js/maplibre-gl-starfield.js`
 - Local file is the source of truth and required for development
 
 ## Asset Hosting
