@@ -68,14 +68,13 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
   
   const layers: LayerSpecification[] = [];
   
-  // Primary POI source (dedicated POI PMTiles) and fallback sources
   const globalMinZoom = poiThemeConfig.minZoom || 12;
   const sources = [
-    { name: "poi_us", minZoom: globalMinZoom },      // Dedicated POI source (z12-15)
-    { name: "us_high", minZoom: globalMinZoom },     // Fallback: US high detail tiles
-    { name: "world_mid", minZoom: globalMinZoom },   // Fallback: World mid detail tiles
-    { name: "world_low", minZoom: globalMinZoom },   // Fallback: World low detail tiles
-  ];
+    { name: "poi_us", minZoom: globalMinZoom, hasPoiLayer: true, hasPlaceLayer: false },
+    { name: "us_high", minZoom: globalMinZoom, hasPoiLayer: true, hasPlaceLayer: true },
+    { name: "world_mid", minZoom: globalMinZoom, hasPoiLayer: false, hasPlaceLayer: true },
+    { name: "world_low", minZoom: globalMinZoom, hasPoiLayer: false, hasPlaceLayer: true },
+  ] as const;
   
   // Park sources - only use us_high which has the park layer with national/state parks
   // Using only one source prevents duplicate labels
@@ -92,7 +91,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
   
   for (const source of sources) {
     // Airport POIs from POI layer
-    if (isPOIEnabled('airport')) {
+    if (source.hasPoiLayer && isPOIEnabled('airport')) {
       const airportMinZoom = poiThemeConfig.airport?.minZoom || source.minZoom;
       layers.push({
         id: `poi-airport-${source.name}`,
@@ -123,7 +122,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
     }
     
     // Airfield POIs from POI layer
-    if (isPOIEnabled('airfield')) {
+    if (source.hasPoiLayer && isPOIEnabled('airfield')) {
       const airfieldMinZoom = poiThemeConfig.airfield?.minZoom || source.minZoom;
       layers.push({
         id: `poi-airfield-${source.name}`,
@@ -150,7 +149,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
     }
     
     // Airport POIs from PLACE layer
-    if (isPOIEnabled('airport')) {
+    if (source.hasPlaceLayer && isPOIEnabled('airport')) {
       const airportMinZoom = poiThemeConfig.airport?.minZoom || source.minZoom;
       layers.push({
         id: `place-airport-${source.name}`,
@@ -184,7 +183,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
     // This layer is created separately after the loop (see below)
     
     // Hospital POIs - Rank 1 (major hospitals only) at zoom 12+
-    if (isPOIEnabled('hospital')) {
+    if (source.hasPoiLayer && isPOIEnabled('hospital')) {
       const hospitalMinZoom = poiThemeConfig.hospital?.minZoom || source.minZoom;
       // Only show actual hospitals, not clinics or doctors
       layers.push({
@@ -365,7 +364,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
     }
     
     // Museum POIs - Rank 1 museums at zoom 14+
-    if (isPOIEnabled('museum')) {
+    if (source.hasPoiLayer && isPOIEnabled('museum')) {
       const museumMinZoom = poiThemeConfig.museum?.minZoom || source.minZoom;
       layers.push({
       id: `poi-museum-rank1-${source.name}`,
@@ -495,7 +494,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
     } // End of if (isPOIEnabled('museum'))
     
     // Zoo POIs
-    if (isPOIEnabled('zoo')) {
+    if (source.hasPoiLayer && isPOIEnabled('zoo')) {
       const zooMinZoom = poiThemeConfig.zoo?.minZoom || source.minZoom;
       // Zoos have class='zoo' with subclass='zoo'
       layers.push({
@@ -520,7 +519,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
     }
     
     // Stadium POIs
-    if (isPOIEnabled('stadium')) {
+    if (source.hasPoiLayer && isPOIEnabled('stadium')) {
       const stadiumMinZoom = poiThemeConfig.stadium?.minZoom || source.minZoom;
       // Stadiums can have various class/subclass combinations
       layers.push({
@@ -571,7 +570,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
     }
     
     // Stadium POIs from PLACE layer
-    if (isPOIEnabled('stadium')) {
+    if (source.hasPlaceLayer && isPOIEnabled('stadium')) {
       const stadiumMinZoom = poiThemeConfig.stadium?.minZoom || source.minZoom;
       layers.push({
         id: `place-stadium-${source.name}`,
@@ -603,7 +602,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
     }
     
     // Park POIs from POI layer (if parks are stored as points in POI layer)
-    if (isPOIEnabled('park')) {
+    if (source.hasPoiLayer && isPOIEnabled('park')) {
       const parkMinZoom = poiThemeConfig.park?.minZoom || source.minZoom;
       layers.push({
         id: `poi-park-${source.name}`,
@@ -636,7 +635,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
     }
     
     // Railway station POIs - Rank 1 stations at zoom 14+
-    if (isPOIEnabled('rail')) {
+    if (source.hasPoiLayer && isPOIEnabled('rail')) {
       const railMinZoom = poiThemeConfig.rail?.minZoom || 14;
       layers.push({
         id: `poi-rail-rank1-${source.name}`,
@@ -806,7 +805,7 @@ export function createPOILayers(theme: Theme): LayerSpecification[] {
     } // End of if (isPOIEnabled('rail'))
     
     // School/Educational institution POIs - Rank 1 colleges/universities at zoom 14+
-    if (isPOIEnabled('school')) {
+    if (source.hasPoiLayer && isPOIEnabled('school')) {
       const schoolMinZoom = poiThemeConfig.school?.minZoom || 14;
       // Colleges/universities have class='college' with subclass='university' or 'college'
       layers.push({
