@@ -130,10 +130,21 @@ map.addControl(new maplibregl.NavigationControl(), "top-right");
 
 // Add attribution control
 const attributionControl = new maplibregl.AttributionControl({
-  compact: false,
+  compact: true,
   customAttribution: "<a href='https://maplibre.org/'>MapLibre</a> | © <a href='https://storypath.studio/'>StoryPath Studio</a> | © <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors | © <a href='https://openmaptiles.org/'>OpenMapTiles</a> | <a href='https://www.naturalearthdata.com/'>Natural Earth</a>"
 });
 map.addControl(attributionControl);
+
+// Compact mode defaults to expanded; align initial state with MapLibre's toggle (collapsed).
+function collapseCompactAttribution() {
+  const el = map.getContainer().querySelector(".maplibregl-ctrl-attrib.maplibregl-compact");
+  if (el?.classList.contains("maplibregl-compact-show")) {
+    el.classList.remove("maplibregl-compact-show");
+    el.setAttribute("open", "");
+  }
+}
+map.once("load", () => queueMicrotask(collapseCompactAttribution));
+map.once("idle", () => queueMicrotask(collapseCompactAttribution));
 
 // Setup globe projection and starfield
 const starryBg = new MapLibreStarryBackground();
@@ -287,10 +298,21 @@ html, body {
 
     // Add attribution control
     const attributionControl = new maplibregl.AttributionControl({
-      compact: false,
+      compact: true,
       customAttribution: "<a href='https://maplibre.org/'>MapLibre</a> | © <a href='https://storypath.studio/'>StoryPath Studio</a> | © <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors | © <a href='https://openmaptiles.org/'>OpenMapTiles</a> | <a href='https://www.naturalearthdata.com/'>Natural Earth</a>"
     });
     map.addControl(attributionControl);
+
+    // Compact mode defaults to expanded; align initial state with MapLibre's toggle (collapsed).
+    function collapseCompactAttribution() {
+      const el = map.getContainer().querySelector(".maplibregl-ctrl-attrib.maplibregl-compact");
+      if (el?.classList.contains("maplibregl-compact-show")) {
+        el.classList.remove("maplibregl-compact-show");
+        el.setAttribute("open", "");
+      }
+    }
+    map.once("load", () => queueMicrotask(collapseCompactAttribution));
+    map.once("idle", () => queueMicrotask(collapseCompactAttribution));
 
     // Setup globe projection and starfield
     const starryBg = new MapLibreStarryBackground();

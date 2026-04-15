@@ -18,6 +18,12 @@
     *, *::before, *::after {
       box-sizing: border-box;
     }
+    main {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
     #map-container { 
       position: absolute; 
       top: 0; 
@@ -48,9 +54,11 @@
   </style>
 </head>
 <body>
-  <div id="starfield-container"></div>
-  <div id="globe-glow"></div>
-  <div id="map-container"></div>
+  <main>
+    <div id="starfield-container"></div>
+    <div id="globe-glow"></div>
+    <div id="map-container"></div>
+  </main>
   <script src="https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.js"></script>
   <script src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
   <script src="https://assets.storypath.studio/js/maplibre-gl-starfield.js"></script>
