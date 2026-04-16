@@ -19,23 +19,27 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
       type: "vector",
       url: tileJsonSourceUrl(config.dataBaseUrl, "world_z0-6"),
       minzoom: 0,
+      attribution: "",
     },
     world_mid: {
       type: "vector",
       url: tileJsonSourceUrl(config.dataBaseUrl, "world_z6-10"),
       minzoom: 6,
+      attribution: "",
     },
     us_high: {
       type: "vector",
       url: tileJsonSourceUrl(config.dataBaseUrl, "us_z0-15"),
       minzoom: 6,
       maxzoom: 15,
+      attribution: "",
     },
     poi_us: {
       type: "vector",
       url: tileJsonSourceUrl(config.dataBaseUrl, "poi_us_z12-15"),
       minzoom: 12,
       maxzoom: 15,
+      attribution: "",
     },
   };
   
@@ -46,6 +50,7 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
       url: tileJsonSourceUrl(config.dataBaseUrl, "ne_bathy_z0-6"),
       minzoom: 0,
       maxzoom: 6,
+      attribution: "",
     };
   }
   
@@ -56,6 +61,7 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
       url: tileJsonSourceUrl(config.dataBaseUrl, "world_contours_z4-10_mj800_mn350_minz6"),
       minzoom: 4,
       maxzoom: 10,
+      attribution: "",
     };
   }
   
@@ -66,6 +72,7 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
       url: tileJsonSourceUrl(config.dataBaseUrl, "ne_ice_z0-6"),
       minzoom: 0,
       maxzoom: 6,
+      attribution: "",
     };
   }
   
@@ -76,6 +83,7 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
       url: tileJsonSourceUrl(config.dataBaseUrl, "graticules"),
       minzoom: theme.grid.minZoom ?? 0,
       maxzoom: theme.grid.maxZoom ?? 10,
+      attribution: "",
     };
   }
   
@@ -92,6 +100,7 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
       minzoom: theme.hillshade.minZoom ?? 0,
       maxzoom: hillshadeSourceMaxZoom,
       tileSize: 256,
+      attribution: "",
       ...(hillshadeTiles ? { tiles: hillshadeTiles } : {}),
     };
   }
@@ -103,6 +112,7 @@ export function createBasemapSources(config: BaseStyleConfig, theme?: Theme): Re
       url: tileJsonSourceUrl(config.dataBaseUrl, "aeroway-world"),
       minzoom: 6,
       maxzoom: 15,
+      attribution: "",
     };
   }
   

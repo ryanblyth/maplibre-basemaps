@@ -49,6 +49,7 @@ export function createGlobalSources(config: BaseStyleConfig): Record<string, Sou
       url: tileJsonSourceUrl(config.dataBaseUrl, "world-labels_z0-10"),
       minzoom: 0,
       maxzoom: 10,
+      attribution: "",
     },
   };
 }
