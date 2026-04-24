@@ -26,7 +26,7 @@ import {
 
 export const vintageGreenSettings: ThemeSettings = {
   /** Map projection type - "mercator" for flat map, "globe" for 3D globe */
-  projection: "globe",
+  projection: "mercator",
   
   /** Minimum zoom level - different for globe vs mercator */
   minZoom: {
@@ -121,125 +121,119 @@ export const vintageGreenLabelFonts: ThemeLabelFonts = {
 
 export const vintageGreenColors: ThemeColors = {
   // Background - light gray base
-  background: "#fafafa",
+  background: "hsl(40deg 41% 80%)",
   
-  // Land/terrain - subtle gray variations
   land: {
-    wood: "#e8e8e8",      // Slightly darker - forests
-    grass: "#ededed",     // Light gray
-    scrub: "#eaeaea",     // Between wood and grass
-    cropland: "#efefef",  // Light
-    farmland: "#efefef",  // Same as cropland
-    rock: "#e0e0e0",      // Darker - rocky terrain
-    sand: "#f2f2f2",      // Lighter
-    wetland: "#e5e5e5",   // Darker - wet areas
-    default: "#f0f0f0",   // Default landcover
+    wood:     "hsl(90, 28%, 70%)",   // Shift hue green, darker — forest canopy
+    grass:    "hsl(72, 25%, 76%)",   // Echoes water hue lightly — open meadow
+    scrub:    "hsl(80, 22%, 73%)",   // Midpoint between wood and grass
+    cropland: "hsl(55, 32%, 78%)",   // Warm straw yellow — cultivated fields
+    farmland: "hsl(55, 32%, 78%)",   // Matches cropland
+    rock:     "hsl(35, 18%, 66%)",   // Desaturated, darker — exposed stone
+    sand:     "hsl(45, 48%, 87%)",   // Lighter, more yellow — dry sandy areas
+    wetland:  "hsl(68, 22%, 72%)",   // Leans toward water hue — marshy ground
+    default:  "hsl(40, 41%, 80%)",   // Base land color
   },
   
-  // Landuse - monochrome gray variations
   landuse: {
-    park: "#e8e8e8",        // Gray (was green)
-    cemetery: "#eaeaea",    // Gray
-    pitch: "#e5e5e5",       // Sports fields - slightly darker
-    stadium: "#e5e5e5",     // Same as pitch
-    residential: "#f2f2f2", // Very light gray
-    // Additional landuse classes - subtle gray variations
-    college: "#ebedeb",     // Light gray
-    commercial: "#f0f0f0",  // Light gray
-    construction: "#e8e8e8", // Gray
-    dam: "#e0e0e0",         // Darker gray
-    farmland: "#efefef",    // Light (matches land.cropland)
-    grass: "#ededed",       // Light (matches land.grass)
-    hospital: "#ececec",    // Light gray
-    industrial: "#e8e8e8",  // Gray
-    military: "#e5e5e5",    // Gray
-    neighbourhood: "#f2f2f2", // Light gray
-    quarry: "#e0e0e0",      // Darker gray
-    quarter: "#f2f2f2",     // Light gray
-    railway: "#e8e8e8",     // Gray
-    retail: "#f0f0f0",      // Light gray
-    school: "#ebedeb",      // Light gray
-    suburb: "#f2f2f2",      // Light gray
-    theme_park: "#e8e8e8",  // Gray
-    track: "#ededed",       // Light gray
-    university: "#ebedeb",  // Light gray
-    zoo: "#e8e8e8",         // Gray
-    default: "#f0f0f0",     // Light gray
+    park:         "hsl(88, 26%, 73%)",  // Green, slightly lighter than wood
+    cemetery:     "hsl(62, 18%, 73%)",  // Muted yellow-green, somber
+    pitch:        "hsl(92, 26%, 71%)",  // Slightly more saturated green
+    stadium:      "hsl(92, 26%, 71%)",  // Matches pitch
+    residential:  "hsl(38, 30%, 84%)",  // Warm, very light — built area
+    college:      "hsl(44, 32%, 82%)",  // Warm cream
+    commercial:   "hsl(36, 30%, 80%)",  // Slightly cooler than residential
+    construction: "hsl(28, 32%, 74%)",  // Darker orange-tan — disturbed earth
+    dam:          "hsl(38, 14%, 67%)",  // Neutral, dark — hard structure
+    farmland:     "hsl(55, 32%, 78%)",  // Matches land.cropland
+    grass:        "hsl(72, 25%, 76%)",  // Matches land.grass
+    hospital:     "hsl(38, 24%, 85%)",  // Light, clean, warm white
+    industrial:   "hsl(38, 13%, 75%)",  // Desaturated, neutral
+    military:     "hsl(68, 20%, 68%)",  // Olive tone — restricted land
+    neighbourhood:"hsl(40, 28%, 84%)",  // Very light warm
+    quarry:       "hsl(34, 16%, 65%)",  // Dark, rocky, desaturated
+    quarter:      "hsl(40, 28%, 84%)",  // Matches neighbourhood
+    railway:      "hsl(38, 18%, 74%)",  // Neutral tan — corridor
+    retail:       "hsl(35, 28%, 80%)",  // Slightly cooler warm
+    school:       "hsl(44, 30%, 81%)",  // Matches college
+    suburb:       "hsl(40, 28%, 84%)",  // Matches residential family
+    theme_park:   "hsl(50, 36%, 78%)",  // Warmer, slightly saturated
+    track:        "hsl(42, 32%, 80%)",  // Neutral warm — path/trail
+    university:   "hsl(44, 30%, 81%)",  // Matches college/school
+    zoo:          "hsl(85, 24%, 72%)",  // Natural green, close to park
+    default:      "hsl(40, 41%, 80%)",  // Base land color
   },
   
   // Water - grayscale based on #dadada
   water: {
-    fill: "#dadada",
-    line: "#c8c8c8",
-    labelColor: "#707070",
-    labelHalo: "#fafafa",
-    // Water class colors - subtle gray variations
-    ocean: "#dadada",     // Base water color
-    sea: "#dcdcdc",       // Slightly lighter
-    lake: "#d8d8d8",      // Slightly darker
-    pond: "#d6d6d6",      // Slightly darker
-    river: "#d5d5d5",     // Darker for rivers
-    canal: "#d5d5d5",     // Same as river
-    stream: "#d3d3d3",    // Slightly darker
-    ditch: "#d0d0d0",     // Darker
-    drain: "#d0d0d0",     // Same as ditch
-    bay: "#dcdcdc",       // Same as sea
-    gulf: "#dcdcdc",      // Same as sea
-    reservoir: "#d8d8d8", // Same as lake
-    default: "#dadada",   // Default water color
+    fill:       "hsl(72, 21%, 63%)",   // Base water
+    line:       "hsl(0deg 0% 0%)",   // Darker stroke for water edges
+    labelColor: "hsl(72, 28%, 32%)",   // Dark sage — readable on water
+    labelHalo:  "hsl(40, 38%, 88%)",   // Warm parchment — echoes land color
+  
+    ocean:      "hsl(72, 21%, 65%)",   // Slightly lighter — vast open water
+    sea:        "hsl(72, 21%, 64%)",   // Just above base
+    bay:        "hsl(73, 21%, 63%)",   // Base
+    gulf:       "hsl(73, 21%, 63%)",   // Matches bay
+    lake:       "hsl(74, 22%, 61%)",   // Slightly darker — enclosed
+    reservoir:  "hsl(74, 22%, 61%)",   // Matches lake
+    pond:       "hsl(75, 22%, 59%)",   // Darker — smaller enclosed
+    river:      "hsl(76, 23%, 57%)",   // Darker — flowing water
+    canal:      "hsl(76, 23%, 57%)",   // Matches river
+    stream:     "hsl(78, 22%, 55%)",   // Darker — smaller flow
+    ditch:      "hsl(78, 20%, 52%)",   // Darkest — minor drainage
+    drain:      "hsl(78, 20%, 52%)",   // Matches ditch
+    default:    "hsl(72, 21%, 63%)",   // Base water
   },
   
-  // Boundaries - gray tones
+  // Boundaries - warm brown tones
   boundary: {
-    country: "#a0a0a0",
-    state: "#b8b8b8",
+    country: "hsl(40, 22%, 52%)",   // Warm mid-brown — clear but not harsh
+    state:   "hsl(40, 18%, 66%)",   // Lighter, less saturated — subordinate
   },
   
-  // Roads - moderate gray fills (visible without casings at high zoom)
+  // Roads - warm brown tones
   road: {
-    motorway: "#e0e0e0",   // Darkest - major roads
-    trunk: "#e2e2e2",      // Slightly lighter
-    primary: "#e5e5e5",    // Medium gray
-    secondary: "#e8e8e8",  // Lighter
-    tertiary: "#e8e8e8",   // Lighter
-    residential: "#e8e8e8", 
-    service: "#ebebeb", 
-    parkingAisle: "#eaeaea",  // Slightly darker than service
-    other: "#ebebeb", 
-    casing: "#c0c0c0",
-    
-    // Tunnel colors - slightly muted grays
+    motorway:    "hsl(38, 28%, 62%)",   // Darkest, most saturated — major arterial
+    trunk:       "hsl(38, 24%, 66%)",   // Slightly lighter
+    primary:     "hsl(38, 20%, 70%)",   // Medium
+    secondary:   "hsl(38, 16%, 74%)",   // Lighter
+    tertiary:    "hsl(38, 16%, 74%)",   // Matches secondary
+    residential: "hsl(38, 13%, 77%)",   // Light — local streets
+    service:     "hsl(38, 11%, 79%)",   // Very light — driveways/alleys
+    parkingAisle:"hsl(38, 11%, 78%)",   // Slightly darker than service
+    other:       "hsl(38, 11%, 79%)",   // Matches service
+    casing:      "hsl(38, 32%, 48%)",   // Warm brown — clear edge definition
+  
+    // Tunnel colors - warm brown tones
     tunnel: {
-      motorway: "#d8d8d8",
-      trunk: "#dadada",
-      primary: "#dedede",
-      secondary: "#e0e0e0",
-      tertiary: "#e0e0e0",
-      residential: "#e0e0e0",
-      service: "#e2e2e2",
-      default: "#e2e2e2",
+      motorway:    "hsl(38, 18%, 56%)",  // Muted, darker — underground feel
+      trunk:       "hsl(38, 15%, 60%)",
+      primary:     "hsl(38, 13%, 64%)",
+      secondary:   "hsl(38, 11%, 67%)",
+      tertiary:    "hsl(38, 11%, 67%)",
+      residential: "hsl(38, 10%, 70%)",
+      service:     "hsl(38, 10%, 72%)",
+      default:     "hsl(38, 10%, 72%)",
     },
-    
-    // Bridge colors - same as road
+  
+    // Bridge colors - warm brown tones
     bridge: {
-      motorway: "#e0e0e0",
-      trunk: "#e2e2e2",
-      primary: "#e5e5e5",
-      secondary: "#e8e8e8",
-      tertiary: "#e8e8e8",
-      residential: "#e8e8e8",
-      default: "#e8e8e8",
-      casing: "#b0b0b0",
+      motorway:    "hsl(38, 28%, 62%)",  // Matches road
+      trunk:       "hsl(38, 24%, 66%)",
+      primary:     "hsl(38, 20%, 70%)",
+      secondary:   "hsl(38, 16%, 74%)",
+      tertiary:    "hsl(38, 16%, 74%)",
+      residential: "hsl(38, 13%, 77%)",
+      default:     "hsl(38, 13%, 77%)",
+      casing:      "hsl(38, 34%, 42%)",  // Darker than road casing — bridge edge pops
     },
-    
-    tunnelCasing: "#c8c8c8",
+  
+    tunnelCasing: "hsl(38, 22%, 54%)",  // Between tunnel fill and road casing
   },
   
-  // Paths - medium gray
-  path: "#d0d0d0",
-  
-  // Railway - darker gray for visibility
-  railway: "#a0a0a0",
+  path:    "hsl(40, 16%, 72%)",   // Subtle warm trace — footpaths and trails
+  railway: "hsl(38, 20%, 50%)",   // Noticeably darker — distinct from all road classes
   
   // Buildings - gray fills
   building: {
@@ -258,32 +252,32 @@ export const vintageGreenColors: ThemeColors = {
   // Labels - dark grays on light background
   label: {
     place: {
-      color: "#505050",
-      halo: "#fafafa",
+      color: "hsl(38, 28%, 28%)",    // Warm dark brown — strong, readable over land
+      halo:  "hsl(40, 38%, 90%)",    // Warm parchment — softer than white
       // haloWidth: 2,        // Optional: override place label halo width
       // haloBlur: 1,         // Optional: override place label halo blur
     },
     // Optional: place label display config (uncomment to customize)
     // placeLabels: { suburbMaxRank: 8, villageMaxRank: 15, minZoom: 8 },
     road: {
-      major: { color: "#606060", opacity: 0.9 },
-      secondary: { color: "#707070", opacity: 0.85 },
-      tertiary: { color: "#808080", opacity: 0.8 },
-      other: { color: "#909090", opacity: 0.75 },
-      halo: "#fafafa",
+      major:     { color: "hsl(38, 24%, 34%)", opacity: 0.9  },  // Dark warm brown
+      secondary: { color: "hsl(38, 20%, 42%)", opacity: 0.85 },  // Slightly lighter
+      tertiary:  { color: "hsl(38, 16%, 50%)", opacity: 0.8  },  // Mid warm
+      other:     { color: "hsl(38, 13%, 58%)", opacity: 0.75 },  // Lightest — minor roads
+      halo:      "hsl(40, 38%, 90%)",  // Matches place halo
     },
     water: {
-      color: "#707070",
-      halo: "#fafafa",
+      color: "hsl(72, 30%, 28%)",    // Deep sage — reads on water without clashing
+      halo:  "hsl(72, 18%, 72%)",    // Water-toned halo — stays in the water family
       // haloWidth: 2,        // Optional: override water label halo width
       // haloBlur: 1,         // Optional: override water label halo blur
     },
     poi: {
-      iconColor: "#707070",            // Medium gray for icons
-      iconSize: 0.8,                   // Slightly smaller icons
-      textColor: "#606060",            // Dark gray for labels
-      textHalo: "#fafafa",             // Light halo for contrast
-      textHaloWidth: 1.5,
+      iconColor:      "hsl(38, 22%, 44%)",   // Warm mid-brown — unobtrusive
+      iconSize:       0.8,
+      textColor:      "hsl(38, 24%, 34%)",   // Matches place label color
+      textHalo:       "hsl(40, 38%, 90%)",   // Matches place halo
+      textHaloWidth:  1.5,
     },
   },
 };
@@ -407,50 +401,47 @@ export const vintageGreenShields = {
   /** Global minimum zoom for all shields */
   minZoom: 6,
   
-  /** Interstate shields (I-70, I-95, etc.) */
+  /** Interstate shield settings */
   interstate: {
     enabled: true,
     sprite: "shield-interstate-custom",
-    textColor: "#fafafa",                 // Light text on dark background
+    textColor: "hsl(40, 38%, 92%)",        // Warm off-white — easier on the eye than pure white
     minZoom: 6,
-    textPadding: [5, 5, 5, 5] as [number, number, number, number],  // [top, right, bottom, left]
-    textSize: [6, 9, 14, 13] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
-    textFont: ["Noto Sans SemiBold"],     // Font family
-    // Custom shield appearance - grayscale two-tone
-    upperBackground: "#b5b5b5",           // Medium gray top
-    lowerBackground: "#c5c5c5",           // Lighter gray bottom
-    strokeColor: "#b5b5b5",               
+    textPadding: [5, 5, 5, 5] as [number, number, number, number],
+    textSize: [6, 9, 14, 13] as [number, number, number, number],
+    textFont: ["Noto Sans SemiBold"],
+    upperBackground: "hsl(38, 28%, 38%)",  // Dark warm brown — strong top band
+    lowerBackground: "hsl(38, 22%, 48%)",  // Lighter warm brown — two-tone separation reads clearly
+    strokeColor:     "hsl(38, 32%, 30%)",  // Darker border — anchors the shield
     strokeWidth: 2,
   },
   
-  /** US Highway shields (US-1, US-66, etc.) */
+  /** US Highway shield settings */
   usHighway: {
     enabled: true,
     sprite: "shield-ushighway-custom",
-    textColor: "#404040",                 // Dark gray text
+    textColor: "hsl(38, 30%, 22%)",        // Very dark warm brown — high contrast on light bg
     minZoom: 7,
-    textPadding: [5, 5, 5, 5] as [number, number, number, number],  // [top, right, bottom, left]
-    textSize: [6, 9, 14, 13] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
-    textFont: ["Noto Sans SemiBold"],     // Font family
-    // Custom shield appearance - light gray with dark outline
-    background: "#f0f0f0",                // Light gray background
-    strokeColor: "#606060",               // Medium gray border
+    textPadding: [5, 5, 5, 5] as [number, number, number, number],
+    textSize: [6, 9, 14, 13] as [number, number, number, number],
+    textFont: ["Noto Sans SemiBold"],
+    background:  "hsl(40, 38%, 90%)",      // Warm parchment — echoes land color
+    strokeColor: "hsl(38, 28%, 40%)",      // Mid warm brown — clear pentagon outline
     strokeWidth: 2.5,
   },
   
-  /** State Highway shields */
+  /** State Highway shield settings */
   stateHighway: {
     enabled: true,
     sprite: "shield-state-custom",
-    textColor: "#404040",                 // Dark gray text
+    textColor: "hsl(38, 30%, 22%)",        // Matches US Highway text — consistent family
     minZoom: 8,
-    textPadding: [4, 4, 4, 4] as [number, number, number, number],  // [top, right, bottom, left]
-    textSize: [8, 8, 14, 12] as [number, number, number, number],  // [minZoom, minSize, maxZoom, maxSize]
-    textFont: ["Noto Sans SemiBold"],     // Font family
-    // Custom shield appearance - light gray oval with gray border
-    background: "#f0f0f0",                // Light gray background
-    strokeColor: "#808080",               // Gray border
-    strokeWidth: 2,                       // Border thickness
+    textPadding: [4, 4, 4, 4] as [number, number, number, number],
+    textSize: [8, 8, 14, 12] as [number, number, number, number],
+    textFont: ["Noto Sans SemiBold"],
+    background:  "hsl(40, 32%, 88%)",      // Slightly cooler than US Highway — subtle distinction
+    strokeColor: "hsl(38, 22%, 52%)",      // Lighter than US Highway border — lower visual hierarchy
+    strokeWidth: 2,
   },
 };
 
@@ -564,25 +555,27 @@ export const vintageGreenBathymetry = {
   
   /** Custom colors for each depth level - grayscale */
   colors: {
-    shallow: "#dadada",  // 0m - shallowest (lighter)
-    shelf: "#d1d1d1",    // 200m - shelf
-    slope: "#d1d1d1",    // 1000m - slope
-    deep1: "#d2d2d2",    // 2000m - deep1
-    deep2: "#d3d3d3",    // 4000m - deep2
-    abyss: "#d4d4d4",    // 6000m - abyss
-    trench: "#d6d6d6",   // 10000m - trench (deepest/darkest)
+    // shallow: "hsl(72, 21%, 63%)",   // 0m — base water, lightest
+    shallow: "hsl(88deg 14% 51%)",   // 0m — base water, lightest
+    // shelf:   "hsl(74, 23%, 58%)",   // 200m — slightly darker, more saturated
+    shelf:   "hsl(78deg 17% 57%)",   // 200m — slightly darker, more saturated
+    // slope:   "hsl(76, 25%, 53%)",   // 1000m — noticeably deeper
+    slope:   "hsl(72deg 20% 61%)",   // 1000m — noticeably deeper
+    // deep1:   "hsl(78, 27%, 47%)",   // 2000m — rich mid-depth
+    // deep2:   "hsl(80, 29%, 41%)",   // 4000m — dark sage
+    // abyss:   "hsl(82, 31%, 35%)",   // 6000m — very dark
+    // trench:  "hsl(84, 33%, 28%)",   // 10000m — darkest, most saturated
   },
   
-  /** Custom opacity for each depth level */
-  depthOpacities: {
-    shallow: 0.3,    // 0m - shallowest (most transparent)
-    shelf: 0.35,     // 200m
-    slope: 0.45,     // 1000m
-    deep1: 0.55,     // 2000m
-    deep2: 0.7,     // 4000m
-    abyss: 0.85,     // 6000m
-    trench: 1,    // 10000m - deepest (most opaque)
-  },
+  // depthOpacities: {
+  //   shallow: 0.3,
+  //   shelf:   0.35,
+  //   slope:   0.45,
+  //   deep1:   0.55,
+  //   deep2:   0.7,
+  //   abyss:   0.85,
+  //   trench:  1,
+  // },
 };
 
 // ============================================================================

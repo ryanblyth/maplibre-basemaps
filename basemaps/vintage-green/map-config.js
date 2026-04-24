@@ -10,7 +10,7 @@
 
 // Projection setting from theme.ts -> vintageGreenSettings.projection
 // Options: "mercator" (flat map) or "globe" (3D globe)
-window.mapProjection = "globe";
+window.mapProjection = "mercator";
 
 // Minimum zoom levels from theme.ts -> vintageGreenSettings.minZoom
 // Different values for mercator vs globe projections
