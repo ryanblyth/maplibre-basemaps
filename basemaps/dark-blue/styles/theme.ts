@@ -270,10 +270,10 @@ export const darkBlueColors: ThemeColors = {
     // Optional: place label display config (uncomment to customize)
     // placeLabels: { suburbMaxRank: 8, villageMaxRank: 15, minZoom: 8 },
     road: {
-      major: { color: "#7a8ba3", opacity: 0.8 },
-      secondary: { color: "#6b7a90", opacity: 0.7 },
-      tertiary: { color: "#5d6b7d", opacity: 0.6 },
-      other: { color: "#5d6b7d", opacity: 0.5 },
+      major: { color: "#7a8ba3", opacity: 0.0 },
+      secondary: { color: "#6b7a90", opacity: 0.0 },
+      tertiary: { color: "#5d6b7d", opacity: 0.0 },
+      other: { color: "#5d6b7d", opacity: 0.0 },
       halo: "#0b0f14",
     },
     water: {
@@ -393,8 +393,8 @@ export const darkBlueOpacities: ThemeOpacities = {
   
   label: {
     place: 0.75,
-    water: 0.9,
-    waterway: 0.85,
+    water: 0,
+    waterway: 0,
   },
 };
 
@@ -406,7 +406,7 @@ export const darkBlueOpacities: ThemeOpacities = {
 
 export const darkBlueShields = {
   /** Whether to show highway shields */
-  enabled: true,
+  enabled: false,
   
   /** Global minimum zoom for all shields */
   minZoom: 6,
@@ -486,7 +486,7 @@ export const darkBlueStarfield = {
 
 export const darkBluePOIs: ThemePOIs = {
   /** Whether to show POIs at all */
-  enabled: true,
+  enabled: false,
   
   /** Global minimum zoom for all POIs */
   minZoom: 12,
@@ -918,6 +918,9 @@ export const darkBlueTheme: Theme = {
   name: "Dark Blue Basemap",
   fonts,
   labelFonts: darkBlueLabelFonts,
+  placeLabels: {
+    enabled: false,
+  },
   colors: darkBlueColors,
   widths: darkBlueWidths,
   opacities: darkBlueOpacities,

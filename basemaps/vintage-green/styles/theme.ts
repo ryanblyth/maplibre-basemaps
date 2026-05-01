@@ -97,22 +97,22 @@ export const vintageGreenSettings: ThemeSettings = {
  */
 export const vintageGreenLabelFonts: ThemeLabelFonts = {
   /** Default font for all labels (fallback when specific label fonts not set) */
-  default: ["Noto Sans Regular"],
+  default: ["Junicode Regular"],
   
   /** Font for place labels (continents, countries, cities, etc.) */
-  place: ["Noto Sans Regular"],
+  place: ["Junicode Regular"],
   
   /** Font for road labels */
-  road: ["Noto Sans Regular"],
+  road: ["Junicode Regular"],
   
   /** Font for water labels (oceans, lakes, rivers) - uses italic by default */
-  water: ["Noto Sans Italic"],
+  water: ["Junicode Italic"],
   
   /** Font for POI labels */
-  poi: ["Noto Sans Regular"],
+  poi: ["Junicode Regular"],
   
   /** Font for grid labels (latitude/longitude) */
-  grid: ["Noto Sans Regular"],
+  grid: ["Junicode Regular"],
 };
 
 // ============================================================================
@@ -166,16 +166,16 @@ export const vintageGreenColors: ThemeColors = {
   
   // Water - grayscale based on #dadada
   water: {
-    fill:       "hsl(72, 21%, 63%)",   // Base water
+    fill:       "hsl(88deg 14% 51%)",   // Base water
     line:       "hsl(0deg 0% 0%)",   // Darker stroke for water edges
     labelColor: "hsl(72, 28%, 32%)",   // Dark sage — readable on water
     labelHalo:  "hsl(40, 38%, 88%)",   // Warm parchment — echoes land color
   
-    ocean:      "hsl(72, 21%, 65%)",   // Slightly lighter — vast open water
-    sea:        "hsl(72, 21%, 64%)",   // Just above base
-    bay:        "hsl(73, 21%, 63%)",   // Base
-    gulf:       "hsl(73, 21%, 63%)",   // Matches bay
-    lake:       "hsl(74, 22%, 61%)",   // Slightly darker — enclosed
+    ocean:      "hsl(88deg 14% 51%)",   // Slightly lighter — vast open water
+    sea:        "hsl(88deg 14% 51%)",   // Just above base
+    bay:        "hsl(88deg 14% 51%)",   // Base
+    gulf:       "hsl(88deg 14% 51%)",   // Matches bay
+    lake:       "hsl(88deg 14% 51%)",   // Slightly darker — enclosed
     reservoir:  "hsl(74, 22%, 61%)",   // Matches lake
     pond:       "hsl(75, 22%, 59%)",   // Darker — smaller enclosed
     river:      "hsl(76, 23%, 57%)",   // Darker — flowing water
@@ -254,8 +254,8 @@ export const vintageGreenColors: ThemeColors = {
     place: {
       color: "hsl(38, 28%, 28%)",    // Warm dark brown — strong, readable over land
       halo:  "hsl(40, 38%, 90%)",    // Warm parchment — softer than white
-      // haloWidth: 2,        // Optional: override place label halo width
-      // haloBlur: 1,         // Optional: override place label halo blur
+      haloWidth: .5,        // Optional: override place label halo width
+      haloBlur: 1,         // Optional: override place label halo blur
     },
     // Optional: place label display config (uncomment to customize)
     // placeLabels: { suburbMaxRank: 8, villageMaxRank: 15, minZoom: 8 },
@@ -269,15 +269,15 @@ export const vintageGreenColors: ThemeColors = {
     water: {
       color: "hsl(72, 30%, 28%)",    // Deep sage — reads on water without clashing
       halo:  "hsl(72, 18%, 72%)",    // Water-toned halo — stays in the water family
-      // haloWidth: 2,        // Optional: override water label halo width
-      // haloBlur: 1,         // Optional: override water label halo blur
+      haloWidth: .5,        // Optional: override water label halo width
+      haloBlur: 1,         // Optional: override water label halo blur
     },
     poi: {
       iconColor:      "hsl(38, 22%, 44%)",   // Warm mid-brown — unobtrusive
       iconSize:       0.8,
       textColor:      "hsl(38, 24%, 34%)",   // Matches place label color
       textHalo:       "hsl(40, 38%, 90%)",   // Matches place halo
-      textHaloWidth:  1.5,
+      textHaloWidth:  .5,
     },
   },
 };
@@ -556,15 +556,15 @@ export const vintageGreenBathymetry = {
   /** Custom colors for each depth level - grayscale */
   colors: {
     // shallow: "hsl(72, 21%, 63%)",   // 0m — base water, lightest
-    shallow: "hsl(88deg 14% 51%)",   // 0m — base water, lightest
+    // shallow: "hsl(83deg 15% 51%)",   // 0m — base water, lightest
     // shelf:   "hsl(74, 23%, 58%)",   // 200m — slightly darker, more saturated
-    shelf:   "hsl(78deg 17% 57%)",   // 200m — slightly darker, more saturated
+    // shelf:   "hsl(78deg 17% 57%)",   // 200m — slightly darker, more saturated
     // slope:   "hsl(76, 25%, 53%)",   // 1000m — noticeably deeper
-    slope:   "hsl(72deg 20% 61%)",   // 1000m — noticeably deeper
-    // deep1:   "hsl(78, 27%, 47%)",   // 2000m — rich mid-depth
-    // deep2:   "hsl(80, 29%, 41%)",   // 4000m — dark sage
-    // abyss:   "hsl(82, 31%, 35%)",   // 6000m — very dark
-    // trench:  "hsl(84, 33%, 28%)",   // 10000m — darkest, most saturated
+    slope:   "hsl(78deg 17% 57%)",   // 1000m — noticeably deeper
+    deep1:   "hsl(72deg 21% 63%)",   // 2000m — rich mid-depth
+    deep2:   "hsl(72deg 21% 63%)",   // 4000m — dark sage
+    abyss:   "hsl(72deg 21% 63%)",   // 6000m — very dark
+    trench:  "hsl(72deg 21% 63%)",   // 10000m — darkest, most saturated
   },
   
   // depthOpacities: {
@@ -621,7 +621,7 @@ export const vintageGreenContours = {
 
 export const vintageGreenIce = {
   /** Whether to show ice at all */
-  enabled: false,
+  enabled: true,
   
   /** Minimum zoom level to show ice */
   minZoom: 0,
@@ -637,20 +637,20 @@ export const vintageGreenIce = {
   
   /** Glaciated areas (glaciers, ice caps) */
   glaciated: {
-    color: "#f8f8f8",  // Very light gray (almost white)
+    color: "hsl(42deg 12% 88%)",  // Very light gray (almost white)
     opacity: 0.9,
   },
   
   /** Ice shelves */
   iceShelves: {
-    color: "#f0f0f0",  // Light gray
+    color: "hsl(111deg 12% 78%)",  // Light gray
     opacity: 0.9,
   },
   
   /** Ice edge (outline) - set to null or enabled: false to disable */
   iceEdge: {
     enabled: false,  // Outline of ice shelves (Antarctica only)
-    color: "#c0c0c0",  // Medium gray
+    color: "#ff8800",  // Medium gray
     width: 1.0,  // Increased from 0.5 for better visibility
     opacity: 0.8,  // Increased from 0.6 for better visibility
   },
@@ -891,7 +891,7 @@ export const vintageGreenAeroway = {
   label: {
     color: "#404040",        // Dark gray text (matches place labels)
     haloColor: "#ffffff",    // White halo for contrast
-    haloWidth: 1,
+    haloWidth: .5,
     opacity: 0.9,
     majorSize: { min: 10, max: 12 },      // Font size for major airports (z8-9)
     detailedSize: { min: 10, max: 12 },   // Font size for detailed labels (z13+)
