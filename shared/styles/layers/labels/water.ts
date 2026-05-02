@@ -150,13 +150,14 @@ const DEFAULT_WATER_HALO_BLUR = 1;
 
 export function createWaterLabelLayersFromWorldLabels(theme: Theme): LayerSpecification[] {
   const c = theme.colors;
+  const waterLabelOpacity = theme.opacities?.label?.water ?? 0.9;
   const haloWidth = c.label.water.haloWidth ?? DEFAULT_WATER_HALO_WIDTH;
   const haloBlur = c.label.water.haloBlur ?? DEFAULT_WATER_HALO_BLUR;
   const haloWidthThin = c.label.water.haloWidth !== undefined
     ? Math.max(0, haloWidth * 0.75)
     : DEFAULT_WATER_HALO_WIDTH_THIN;
 
-  const waterLabelPaint = { "text-color": c.label.water.color, "text-halo-color": c.label.water.halo, "text-halo-width": haloWidth, "text-halo-blur": haloBlur, "text-opacity": 0.9 };
+  const waterLabelPaint = { "text-color": c.label.water.color, "text-halo-color": c.label.water.halo, "text-halo-width": haloWidth, "text-halo-blur": haloBlur, "text-opacity": waterLabelOpacity };
   
   // Use theme-configured font for water labels, with fallback to italic
   const waterFont = theme.labelFonts?.water ?? theme.labelFonts?.default ?? theme.fonts.italic;
@@ -169,10 +170,10 @@ export function createWaterLabelLayersFromWorldLabels(theme: Theme): LayerSpecif
     { id: "marine-label-world-labels-place", type: "symbol", source: "world_labels", "source-layer": "place", minzoom: 4, maxzoom: 10, filter: ["all", filters.hasName, ["any", ["match", ["get", "class"], ["sea", "gulf", "bay"], true, false], ["==", ["get", "class"], "lake"]]], layout: { "text-field": createTextField(), "text-font": waterFont, "text-size": ["interpolate", ["linear"], ["zoom"], 4, ["match", ["get", "class"], "sea", 10, "gulf", 8, "bay", 6, "lake", 9, 7], 6, ["match", ["get", "class"], "sea", 15, "gulf", 11, "bay", 9, "lake", 13, 11], 10, ["match", ["get", "class"], "sea", 25, "gulf", 20, "bay", 17, "lake", 23, 20]], "symbol-placement": "point", "text-padding": 10 }, paint: waterLabelPaint },
     
     // Ocean labels from water_name layer (name-based detection)
-    { id: "water-label-world-labels-watername-ocean", type: "symbol", source: "world_labels", "source-layer": "water_name", minzoom: 1, maxzoom: 10, filter: ["all", filters.hasName, ["let", "name", ["coalesce", ["get", "name:en"], ["get", "name"], ""], ["any", ["in", "Ocean", ["var", "name"]], ["in", "ocean", ["var", "name"]]]]], layout: { "text-field": createTextField(), "text-font": waterFont, "text-size": ["interpolate", ["linear"], ["zoom"], 1, 11, 3, 16, 6, 22, 10, 26], "symbol-placement": "point", "text-padding": 8 }, paint: { ...waterLabelPaint, "text-halo-width": 1.5 } },
+    { id: "water-label-world-labels-watername-ocean", type: "symbol", source: "world_labels", "source-layer": "water_name", minzoom: 1, maxzoom: 10, filter: ["all", filters.hasName, ["let", "name", ["coalesce", ["get", "name:en"], ["get", "name"], ""], ["any", ["in", "Ocean", ["var", "name"]], ["in", "ocean", ["var", "name"]]]]], layout: { "text-field": createTextField(), "text-font": waterFont, "text-size": ["interpolate", ["linear"], ["zoom"], 1, 11, 3, 16, 6, 22, 10, 26], "symbol-placement": "point", "text-padding": 8 }, paint: { ...waterLabelPaint, "text-halo-width": haloWidthThin } },
     
     // Other water labels from water_name layer
-    { id: "water-label-world-labels-watername", type: "symbol", source: "world_labels", "source-layer": "water_name", minzoom: 4, maxzoom: 10, filter: ["all", filters.hasName, ["let", "name", ["coalesce", ["get", "name:en"], ["get", "name"], ""], ["all", ["!", ["in", "Ocean", ["var", "name"]]], ["!", ["in", "ocean", ["var", "name"]]]]]], layout: { "text-field": createTextField(), "text-font": waterFont, "text-size": createWaterNameSizeExpression(), "symbol-placement": "point", "text-padding": 8 }, paint: { ...waterLabelPaint, "text-halo-width": 1.5 } },
+    { id: "water-label-world-labels-watername", type: "symbol", source: "world_labels", "source-layer": "water_name", minzoom: 4, maxzoom: 10, filter: ["all", filters.hasName, ["let", "name", ["coalesce", ["get", "name:en"], ["get", "name"], ""], ["all", ["!", ["in", "Ocean", ["var", "name"]]], ["!", ["in", "ocean", ["var", "name"]]]]]], layout: { "text-field": createTextField(), "text-font": waterFont, "text-size": createWaterNameSizeExpression(), "symbol-placement": "point", "text-padding": 8 }, paint: { ...waterLabelPaint, "text-halo-width": haloWidthThin } },
   ];
 }
 
@@ -182,13 +183,14 @@ export function createWaterLabelLayersFromWorldLabels(theme: Theme): LayerSpecif
 
 export function createWaterLabelLayersFromBasemapSources(theme: Theme): LayerSpecification[] {
   const c = theme.colors;
+  const waterLabelOpacity = theme.opacities?.label?.water ?? 0.9;
   const haloWidth = c.label.water.haloWidth ?? DEFAULT_WATER_HALO_WIDTH;
   const haloBlur = c.label.water.haloBlur ?? DEFAULT_WATER_HALO_BLUR;
   const haloWidthThin = c.label.water.haloWidth !== undefined
     ? Math.max(0, haloWidth * 0.75)
     : DEFAULT_WATER_HALO_WIDTH_THIN;
 
-  const waterLabelPaint = { "text-color": c.label.water.color, "text-halo-color": c.label.water.halo, "text-halo-width": haloWidth, "text-halo-blur": haloBlur, "text-opacity": 0.9 };
+  const waterLabelPaint = { "text-color": c.label.water.color, "text-halo-color": c.label.water.halo, "text-halo-width": haloWidth, "text-halo-blur": haloBlur, "text-opacity": waterLabelOpacity };
   const waterLabelPaintThin = { ...waterLabelPaint, "text-halo-width": haloWidthThin };
   const hasClassFilter: FilterSpecification = [
     "case",
@@ -217,11 +219,12 @@ export function createWaterLabelLayersFromBasemapSources(theme: Theme): LayerSpe
 
 export function createWaterwayLabelLayers(theme: Theme): LayerSpecification[] {
   const c = theme.colors;
+  const waterwayLabelOpacity = theme.opacities?.label?.waterway ?? 0.85;
   const haloWidth = c.label.water.haloWidth !== undefined
     ? Math.max(0, (c.label.water.haloWidth ?? DEFAULT_WATER_HALO_WIDTH) * 0.75)
     : DEFAULT_WATER_HALO_WIDTH_THIN;
   const haloBlur = c.label.water.haloBlur ?? DEFAULT_WATER_HALO_BLUR;
-  const waterwayLabelPaint = { "text-color": c.label.water.color, "text-halo-color": c.label.water.halo, "text-halo-width": haloWidth, "text-halo-blur": haloBlur, "text-opacity": 0.85 };
+  const waterwayLabelPaint = { "text-color": c.label.water.color, "text-halo-color": c.label.water.halo, "text-halo-width": haloWidth, "text-halo-blur": haloBlur, "text-opacity": waterwayLabelOpacity };
   
   // Use theme-configured font for water labels, with fallback to italic
   const waterFont = theme.labelFonts?.water ?? theme.labelFonts?.default ?? theme.fonts.italic;
