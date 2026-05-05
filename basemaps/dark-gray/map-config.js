@@ -30,10 +30,10 @@ window.mapBearing = 0;
 // Starfield configuration from theme.ts -> darkGrayStarfield
 window.starfieldConfig = {
   glowColors: {
-    inner: "rgba(200, 200, 200, 0.9)",
-    middle: "rgba(150, 150, 150, 0.7)",
-    outer: "rgba(100, 100, 100, 0.4)",
-    fade: "rgba(50, 50, 50, 0)"
+    inner: "rgba(184, 192, 200, 0.85)",
+    middle: "rgba(132, 142, 154, 0.55)",
+    outer: "rgba(82, 90, 102, 0.3)",
+    fade: "rgba(26, 30, 36, 0)"
   },
   starCount: 200,
   glowIntensity: 0.5,
