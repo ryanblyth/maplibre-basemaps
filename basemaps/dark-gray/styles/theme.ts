@@ -17,7 +17,8 @@ import {
   type ThemeOpacities,
   type ThemePOIs,
   type ThemeSettings,
-  type ThemeLabelFonts
+  type ThemeLabelFonts,
+  type ThemeWorldLowZoomLand,
 } from "../../../shared/styles/theme.js";
 
 // ============================================================================
@@ -871,6 +872,59 @@ export const darkGrayAeroway = {
 };
 
 // ============================================================================
+// WORLD LOW-ZOOM LAND (z0–~5.5)
+// ============================================================================
+
+/**
+ * Low-zoom globe: lighter `background` where tiles have no landcover polygons, plus
+ * +56 RGB landcover/landuse vs base so land reads clearly vs water (#12161c) through ~z5.5.
+ */
+export const darkGrayWorldLowZoomLand: ThemeWorldLowZoomLand = {
+  blendEndZoom: 5.5,
+  /** Solid base under sparse landcover (see MAP_ELEMENTS.md); oceans still use water fills */
+  backgroundAtZ0: "#2e3644",
+  landcover: {
+    wood: "#5e636a",
+    grass: "#6a7078",
+    scrub: "#676d75",
+    cropland: "#6d737c",
+    farmland: "#6d737c",
+    rock: "#626870",
+    sand: "#707881",
+    wetland: "#60666e",
+    default: "#646a72",
+  },
+  landuse: {
+    park: "#686e77",
+    cemetery: "#6b717a",
+    pitch: "#656b74",
+    stadium: "#656b74",
+    residential: "#6e747e",
+    college: "#6a7078",
+    commercial: "#6c727b",
+    construction: "#666c76",
+    dam: "#60666e",
+    farmland: "#6d737c",
+    grass: "#6a7078",
+    hospital: "#6b717a",
+    industrial: "#666c76",
+    military: "#626870",
+    neighbourhood: "#6e747e",
+    quarry: "#60666e",
+    quarter: "#6e747e",
+    railway: "#666c76",
+    retail: "#6c727b",
+    school: "#6a7078",
+    suburb: "#6e747e",
+    theme_park: "#686e77",
+    track: "#6b717a",
+    university: "#6a7078",
+    zoo: "#686e77",
+    default: "#646a72",
+  },
+};
+
+// ============================================================================
 // COMPLETE THEME
 // ============================================================================
 
@@ -896,4 +950,5 @@ export const darkGrayTheme: Theme = {
   water: darkGrayWater,
   aeroway: darkGrayAeroway,
   starfield: darkGrayStarfield,
+  worldLowZoomLand: darkGrayWorldLowZoomLand,
 };

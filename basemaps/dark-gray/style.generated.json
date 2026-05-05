@@ -59,7 +59,13 @@
       "id": "background",
       "type": "background",
       "paint": {
-        "background-color": "#1a1e24"
+        "background-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0, "#2e3644",
+          5.5, "#1a1e24"
+        ]
       }
     },
     {
@@ -92,9 +98,21 @@
       "minzoom": 0,
       "maxzoom": 6.5,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "wood", "#262b32", "grass", "#323840", "scrub", "#2f353d", "scrubland", "#2f353d", "cropland", "#353b44", "farmland", "#353b44", "rock", "#2a3038", "sand", "#384049", "wetland", "#282e36", "#2c323a"],
+        "fill-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0, ["match", ["get", "class"], "wood", "#5e636a", "grass", "#6a7078", "scrub", "#676d75", "scrubland", "#676d75", "cropland", "#6d737c", "farmland", "#6d737c", "rock", "#626870", "sand", "#707881", "wetland", "#60666e", "#646a72"],
+          5.5, ["match", ["get", "class"], "wood", "#262b32", "grass", "#323840", "scrub", "#2f353d", "scrubland", "#2f353d", "cropland", "#353b44", "farmland", "#353b44", "rock", "#2a3038", "sand", "#384049", "wetland", "#282e36", "#2c323a"]
+        ],
         "fill-opacity": 0.6,
-        "fill-outline-color": ["match", ["get", "class"], "wood", "#262b32", "grass", "#323840", "scrub", "#2f353d", "scrubland", "#2f353d", "cropland", "#353b44", "farmland", "#353b44", "rock", "#2a3038", "sand", "#384049", "wetland", "#282e36", "#2c323a"]
+        "fill-outline-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0, ["match", ["get", "class"], "wood", "#5e636a", "grass", "#6a7078", "scrub", "#676d75", "scrubland", "#676d75", "cropland", "#6d737c", "farmland", "#6d737c", "rock", "#626870", "sand", "#707881", "wetland", "#60666e", "#646a72"],
+          5.5, ["match", ["get", "class"], "wood", "#262b32", "grass", "#323840", "scrub", "#2f353d", "scrubland", "#2f353d", "cropland", "#353b44", "farmland", "#353b44", "rock", "#2a3038", "sand", "#384049", "wetland", "#282e36", "#2c323a"]
+        ]
       }
     },
     {
@@ -104,9 +122,21 @@
       "source-layer": "landcover",
       "minzoom": 6,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "wood", "#262b32", "grass", "#323840", "scrub", "#2f353d", "scrubland", "#2f353d", "cropland", "#353b44", "farmland", "#353b44", "rock", "#2a3038", "sand", "#384049", "wetland", "#282e36", "#2c323a"],
+        "fill-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0, ["match", ["get", "class"], "wood", "#5e636a", "grass", "#6a7078", "scrub", "#676d75", "scrubland", "#676d75", "cropland", "#6d737c", "farmland", "#6d737c", "rock", "#626870", "sand", "#707881", "wetland", "#60666e", "#646a72"],
+          5.5, ["match", ["get", "class"], "wood", "#262b32", "grass", "#323840", "scrub", "#2f353d", "scrubland", "#2f353d", "cropland", "#353b44", "farmland", "#353b44", "rock", "#2a3038", "sand", "#384049", "wetland", "#282e36", "#2c323a"]
+        ],
         "fill-opacity": 0.6,
-        "fill-outline-color": ["match", ["get", "class"], "wood", "#262b32", "grass", "#323840", "scrub", "#2f353d", "scrubland", "#2f353d", "cropland", "#353b44", "farmland", "#353b44", "rock", "#2a3038", "sand", "#384049", "wetland", "#282e36", "#2c323a"]
+        "fill-outline-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0, ["match", ["get", "class"], "wood", "#5e636a", "grass", "#6a7078", "scrub", "#676d75", "scrubland", "#676d75", "cropland", "#6d737c", "farmland", "#6d737c", "rock", "#626870", "sand", "#707881", "wetland", "#60666e", "#646a72"],
+          5.5, ["match", ["get", "class"], "wood", "#262b32", "grass", "#323840", "scrub", "#2f353d", "scrubland", "#2f353d", "cropland", "#353b44", "farmland", "#353b44", "rock", "#2a3038", "sand", "#384049", "wetland", "#282e36", "#2c323a"]
+        ]
       }
     },
     {
@@ -117,7 +147,13 @@
       "minzoom": 0,
       "maxzoom": 6.5,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "park", "#30363f", "cemetery", "#333942", "pitch", "#2d333c", "stadium", "#2d333c", "residential", "#363c46", "college", "#323840", "commercial", "#343a43", "construction", "#2e343e", "dam", "#282e36", "farmland", "#353b44", "grass", "#323840", "hospital", "#333942", "industrial", "#2e343e", "military", "#2a3038", "neighbourhood", "#363c46", "quarry", "#282e36", "quarter", "#363c46", "railway", "#2e343e", "retail", "#343a43", "school", "#323840", "suburb", "#363c46", "theme_park", "#30363f", "track", "#333942", "university", "#323840", "zoo", "#30363f", "#2c323a"],
+        "fill-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0, ["match", ["get", "class"], "park", "#686e77", "cemetery", "#6b717a", "pitch", "#656b74", "stadium", "#656b74", "residential", "#6e747e", "college", "#6a7078", "commercial", "#6c727b", "construction", "#666c76", "dam", "#60666e", "farmland", "#6d737c", "grass", "#6a7078", "hospital", "#6b717a", "industrial", "#666c76", "military", "#626870", "neighbourhood", "#6e747e", "quarry", "#60666e", "quarter", "#6e747e", "railway", "#666c76", "retail", "#6c727b", "school", "#6a7078", "suburb", "#6e747e", "theme_park", "#686e77", "track", "#6b717a", "university", "#6a7078", "zoo", "#686e77", "#646a72"],
+          5.5, ["match", ["get", "class"], "park", "#30363f", "cemetery", "#333942", "pitch", "#2d333c", "stadium", "#2d333c", "residential", "#363c46", "college", "#323840", "commercial", "#343a43", "construction", "#2e343e", "dam", "#282e36", "farmland", "#353b44", "grass", "#323840", "hospital", "#333942", "industrial", "#2e343e", "military", "#2a3038", "neighbourhood", "#363c46", "quarry", "#282e36", "quarter", "#363c46", "railway", "#2e343e", "retail", "#343a43", "school", "#323840", "suburb", "#363c46", "theme_park", "#30363f", "track", "#333942", "university", "#323840", "zoo", "#30363f", "#2c323a"]
+        ],
         "fill-opacity": 0.6
       }
     },
@@ -128,7 +164,13 @@
       "source-layer": "landuse",
       "minzoom": 6,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "park", "#30363f", "cemetery", "#333942", "pitch", "#2d333c", "stadium", "#2d333c", "residential", "#363c46", "college", "#323840", "commercial", "#343a43", "construction", "#2e343e", "dam", "#282e36", "farmland", "#353b44", "grass", "#323840", "hospital", "#333942", "industrial", "#2e343e", "military", "#2a3038", "neighbourhood", "#363c46", "quarry", "#282e36", "quarter", "#363c46", "railway", "#2e343e", "retail", "#343a43", "school", "#323840", "suburb", "#363c46", "theme_park", "#30363f", "track", "#333942", "university", "#323840", "zoo", "#30363f", "#2c323a"],
+        "fill-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0, ["match", ["get", "class"], "park", "#686e77", "cemetery", "#6b717a", "pitch", "#656b74", "stadium", "#656b74", "residential", "#6e747e", "college", "#6a7078", "commercial", "#6c727b", "construction", "#666c76", "dam", "#60666e", "farmland", "#6d737c", "grass", "#6a7078", "hospital", "#6b717a", "industrial", "#666c76", "military", "#626870", "neighbourhood", "#6e747e", "quarry", "#60666e", "quarter", "#6e747e", "railway", "#666c76", "retail", "#6c727b", "school", "#6a7078", "suburb", "#6e747e", "theme_park", "#686e77", "track", "#6b717a", "university", "#6a7078", "zoo", "#686e77", "#646a72"],
+          5.5, ["match", ["get", "class"], "park", "#30363f", "cemetery", "#333942", "pitch", "#2d333c", "stadium", "#2d333c", "residential", "#363c46", "college", "#323840", "commercial", "#343a43", "construction", "#2e343e", "dam", "#282e36", "farmland", "#353b44", "grass", "#323840", "hospital", "#333942", "industrial", "#2e343e", "military", "#2a3038", "neighbourhood", "#363c46", "quarry", "#282e36", "quarter", "#363c46", "railway", "#2e343e", "retail", "#343a43", "school", "#323840", "suburb", "#363c46", "theme_park", "#30363f", "track", "#333942", "university", "#323840", "zoo", "#30363f", "#2c323a"]
+        ],
         "fill-opacity": 0.6
       }
     },
@@ -1049,9 +1091,21 @@
       "source-layer": "landcover",
       "minzoom": 6,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "wood", "#262b32", "grass", "#323840", "scrub", "#2f353d", "scrubland", "#2f353d", "cropland", "#353b44", "farmland", "#353b44", "rock", "#2a3038", "sand", "#384049", "wetland", "#282e36", "#2c323a"],
+        "fill-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0, ["match", ["get", "class"], "wood", "#5e636a", "grass", "#6a7078", "scrub", "#676d75", "scrubland", "#676d75", "cropland", "#6d737c", "farmland", "#6d737c", "rock", "#626870", "sand", "#707881", "wetland", "#60666e", "#646a72"],
+          5.5, ["match", ["get", "class"], "wood", "#262b32", "grass", "#323840", "scrub", "#2f353d", "scrubland", "#2f353d", "cropland", "#353b44", "farmland", "#353b44", "rock", "#2a3038", "sand", "#384049", "wetland", "#282e36", "#2c323a"]
+        ],
         "fill-opacity": 0.6,
-        "fill-outline-color": ["match", ["get", "class"], "wood", "#262b32", "grass", "#323840", "scrub", "#2f353d", "scrubland", "#2f353d", "cropland", "#353b44", "farmland", "#353b44", "rock", "#2a3038", "sand", "#384049", "wetland", "#282e36", "#2c323a"]
+        "fill-outline-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0, ["match", ["get", "class"], "wood", "#5e636a", "grass", "#6a7078", "scrub", "#676d75", "scrubland", "#676d75", "cropland", "#6d737c", "farmland", "#6d737c", "rock", "#626870", "sand", "#707881", "wetland", "#60666e", "#646a72"],
+          5.5, ["match", ["get", "class"], "wood", "#262b32", "grass", "#323840", "scrub", "#2f353d", "scrubland", "#2f353d", "cropland", "#353b44", "farmland", "#353b44", "rock", "#2a3038", "sand", "#384049", "wetland", "#282e36", "#2c323a"]
+        ]
       }
     },
     {
@@ -1061,7 +1115,13 @@
       "source-layer": "landuse",
       "minzoom": 6,
       "paint": {
-        "fill-color": ["match", ["get", "class"], "park", "#30363f", "cemetery", "#333942", "pitch", "#2d333c", "stadium", "#2d333c", "residential", "#363c46", "college", "#323840", "commercial", "#343a43", "construction", "#2e343e", "dam", "#282e36", "farmland", "#353b44", "grass", "#323840", "hospital", "#333942", "industrial", "#2e343e", "military", "#2a3038", "neighbourhood", "#363c46", "quarry", "#282e36", "quarter", "#363c46", "railway", "#2e343e", "retail", "#343a43", "school", "#323840", "suburb", "#363c46", "theme_park", "#30363f", "track", "#333942", "university", "#323840", "zoo", "#30363f", "#2c323a"],
+        "fill-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0, ["match", ["get", "class"], "park", "#686e77", "cemetery", "#6b717a", "pitch", "#656b74", "stadium", "#656b74", "residential", "#6e747e", "college", "#6a7078", "commercial", "#6c727b", "construction", "#666c76", "dam", "#60666e", "farmland", "#6d737c", "grass", "#6a7078", "hospital", "#6b717a", "industrial", "#666c76", "military", "#626870", "neighbourhood", "#6e747e", "quarry", "#60666e", "quarter", "#6e747e", "railway", "#666c76", "retail", "#6c727b", "school", "#6a7078", "suburb", "#6e747e", "theme_park", "#686e77", "track", "#6b717a", "university", "#6a7078", "zoo", "#686e77", "#646a72"],
+          5.5, ["match", ["get", "class"], "park", "#30363f", "cemetery", "#333942", "pitch", "#2d333c", "stadium", "#2d333c", "residential", "#363c46", "college", "#323840", "commercial", "#343a43", "construction", "#2e343e", "dam", "#282e36", "farmland", "#353b44", "grass", "#323840", "hospital", "#333942", "industrial", "#2e343e", "military", "#2a3038", "neighbourhood", "#363c46", "quarry", "#282e36", "quarter", "#363c46", "railway", "#2e343e", "retail", "#343a43", "school", "#323840", "suburb", "#363c46", "theme_park", "#30363f", "track", "#333942", "university", "#323840", "zoo", "#30363f", "#2c323a"]
+        ],
         "fill-opacity": 0.6
       }
     },

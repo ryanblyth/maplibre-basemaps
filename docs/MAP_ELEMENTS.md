@@ -69,6 +69,8 @@ Use a PMTiles URL in the style: `pmtiles:///path/file.pmtiles`.
 10. water/road names  
 11. place labels (cities, countries)
 
+**Low-zoom land vs `landcover`/`landuse`:** In typical OpenMapTiles-style world tiles, `landcover` and `landuse` are **classified overlays** (forest, grass, urban, etc.), not a full land polygon. At z0–z2 many land pixels have **no** features in those layers; the visible base is usually the **`background`** layer (with **water** fills drawn on top for oceans). Styling only `landcover`/`landuse` therefore affects sparse regions unless you also tune `background` (e.g. `ThemeWorldLowZoomLand.backgroundAtZ0` in this repo).
+
 ---
 
 ## Glyphs (text rendering)
