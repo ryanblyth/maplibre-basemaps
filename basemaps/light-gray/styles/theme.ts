@@ -441,20 +441,17 @@ export const lightGrayShields = {
 // ============================================================================
 
 export const lightGrayStarfield = {
-  /** Starfield glow colors - subtle gray scheme for light-gray theme */
+  /** Deep neutral “space” — well below darkest map water (~#b4bac2) */
+  containerBackground: "#2e2e2e",
   glowColors: {
-    inner: "rgba(168, 174, 182, 0.4)",
-    middle: "rgba(148, 154, 162, 0.3)",
-    outer: "rgba(128, 134, 142, 0.2)",
-    fade: "rgba(108, 114, 122, 0)",
+    inner: "rgba(198, 198, 198, 0.38)",
+    middle: "rgba(95, 95, 95, 0.48)",
+    outer: "rgba(52, 52, 52, 0.46)",
+    fade: "rgba(46, 46, 46, 0)",
   },
-  /** Number of stars in the starfield */
   starCount: 100,
-  /** Glow intensity (0.0 to 1.0) - reduced for light theme */
-  glowIntensity: 0.3,
-  /** Glow size multiplier relative to globe */
+  glowIntensity: 0.44,
   glowSizeMultiplier: 1.15,
-  /** Glow blur multiplier */
   glowBlurMultiplier: 0.08,
 };
 

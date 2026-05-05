@@ -13,7 +13,8 @@
       padding: 0;
       overflow: hidden;
       box-sizing: border-box;
-      background-color: #27313f; 
+      /* Sync with lightGrayStarfield.containerBackground */
+      background-color: #2e2e2e;
     }
     *, *::before, *::after {
       box-sizing: border-box;
@@ -61,7 +62,8 @@
   </main>
   <script src="https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.js"></script>
   <script src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
-  <script src="https://assets.storypath.studio/js/maplibre-gl-starfield.js"></script>
+  <!-- Local script matches repo; use npm run serve: /basemaps/light-gray/preview.html -->
+  <script src="/shared/js/maplibre-gl-starfield.js"></script>
   <script src="./map-config.js"></script>
   <script src="./map.js"></script>
 </body>
