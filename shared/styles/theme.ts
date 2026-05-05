@@ -597,6 +597,8 @@ export interface ThemeStarfield {
   glowSizeMultiplier?: number;
   /** Glow blur multiplier */
   glowBlurMultiplier?: number;
+  /** Fill color behind stars (globe sits on top); separates “space” from the map sphere */
+  containerBackground?: string;
 }
 
 // ============================================================================

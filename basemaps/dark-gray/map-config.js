@@ -29,14 +29,15 @@ window.mapPitch = 0;
 window.mapBearing = 0;
 // Starfield configuration from theme.ts -> darkGrayStarfield
 window.starfieldConfig = {
+  containerBackground: "#3e4754",
   glowColors: {
-    inner: "rgba(184, 192, 200, 0.85)",
-    middle: "rgba(132, 142, 154, 0.55)",
-    outer: "rgba(82, 90, 102, 0.3)",
-    fade: "rgba(26, 30, 36, 0)"
+    inner: "rgba(152, 152, 152, 0.55)",
+    middle: "rgba(112, 112, 112, 0.42)",
+    outer: "rgba(78, 78, 78, 0.3)",
+    fade: "rgba(62, 71, 84, 0)"
   },
   starCount: 200,
   glowIntensity: 0.5,
-  glowSizeMultiplier: 1.25,
-  glowBlurMultiplier: 0.1
+  glowSizeMultiplier: 1.2,
+  glowBlurMultiplier: 0.12
 };

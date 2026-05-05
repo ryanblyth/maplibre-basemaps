@@ -455,10 +455,14 @@ async function generateMapConfig(): Promise<void> {
     let starfieldConfigSection = "";
     if (starfield) {
       const glowColors = starfield.glowColors;
+      const containerBgLine =
+        starfield.containerBackground !== undefined
+          ? \`  containerBackground: "\${starfield.containerBackground}",\\n\`
+          : "";
       starfieldConfigSection = \`
 // Starfield configuration
 window.starfieldConfig = {
-  glowColors: {
+\${containerBgLine}  glowColors: {
     inner: "\${glowColors.inner}",
     middle: "\${glowColors.middle}",
     outer: "\${glowColors.outer}",

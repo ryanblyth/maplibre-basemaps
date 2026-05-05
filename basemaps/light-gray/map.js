@@ -159,6 +159,11 @@ const starfieldConfig = (typeof window !== 'undefined' && window.starfieldConfig
       }
     };
 
+if (typeof document !== "undefined" && starfieldConfig.containerBackground) {
+  const starEl = document.getElementById("starfield-container");
+  if (starEl) starEl.style.backgroundColor = starfieldConfig.containerBackground;
+}
+
 const starryBg = new MapLibreStarryBackground(starfieldConfig);
 
 // Override glowColors if provided in config (works with CDN version)
