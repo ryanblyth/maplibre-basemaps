@@ -562,3 +562,7 @@ class MapLibreStarryBackground {
   }
 
 }
+
+if (typeof globalThis !== "undefined") {
+  globalThis.MapLibreStarryBackground = MapLibreStarryBackground;
+}

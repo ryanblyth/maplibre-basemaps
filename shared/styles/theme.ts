@@ -597,6 +597,8 @@ export interface ThemeStarfield {
   glowSizeMultiplier?: number;
   /** Glow blur multiplier */
   glowBlurMultiplier?: number;
+  /** Fill color behind stars (globe sits on top); separates “space” from the map sphere */
+  containerBackground?: string;
 }
 
 // ============================================================================
@@ -760,6 +762,27 @@ export interface ThemeGrid {
 }
 
 // ============================================================================
+// WORLD LOW-ZOOM LAND (z0–~6)
+// ============================================================================
+
+/**
+ * Optional low-zoom globe tuning: landcover/landuse and/or map background.
+ * Blends linearly from z0 to blendEndZoom into theme.colors.land / landuse / background.
+ *
+ * At low zoom, `landcover`/`landuse` tiles are often sparse (classified polygons only);
+ * **backgroundAtZ0** affects the solid base where those layers have no geometry (oceans
+ * still get water fills on top).
+ */
+export interface ThemeWorldLowZoomLand {
+  /** Zoom at which the main palette is reached (default 5.5); clamps for z6+ */
+  blendEndZoom?: number;
+  /** Interpolate `background-color` from this at z0 to `theme.colors.background` at blendEndZoom */
+  backgroundAtZ0?: string;
+  landcover?: Partial<ThemeColors["land"]>;
+  landuse?: Partial<ThemeColors["landuse"]>;
+}
+
+// ============================================================================
 // COMPLETE THEME TYPE
 // ============================================================================
 
@@ -802,6 +825,8 @@ export interface Theme {
   aeroway?: ThemeAeroway;
   /** Starfield configuration - optional, for globe projection background */
   starfield?: ThemeStarfield;
+  /** Lighter world land at low zoom (optional) */
+  worldLowZoomLand?: ThemeWorldLowZoomLand;
 }
 
 // ============================================================================

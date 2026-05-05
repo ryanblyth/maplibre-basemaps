@@ -17,8 +17,9 @@ export function createLandcoverLayers(theme: Theme): LayerSpecification[] {
   const landcoverOpacity = landConfig?.transparent ? 0 : o.landcover;
   const landuseOpacity = landuseConfig?.transparent ? 0 : o.landuse;
   
-  const lcFill = landcoverFillColor(c, landConfig);
-  const luFill = landuseFillColor(c, landuseConfig);
+  const wlz = theme.worldLowZoomLand;
+  const lcFill = landcoverFillColor(c, landConfig, wlz);
+  const luFill = landuseFillColor(c, landuseConfig, wlz);
   
   // Filter out ice class from landcover if ice layers are enabled
   const excludeIceFilter: FilterSpecification | undefined = theme.ice?.enabled
@@ -69,8 +70,9 @@ export function createUSLandLayers(theme: Theme): LayerSpecification[] {
   const landcoverOpacity = landConfig?.transparent ? 0 : o.landcover;
   const landuseOpacity = landuseConfig?.transparent ? 0 : o.landuse;
   
-  const lcFill = landcoverFillColor(c, landConfig);
-  const luFill = landuseFillColor(c, landuseConfig);
+  const wlz = theme.worldLowZoomLand;
+  const lcFill = landcoverFillColor(c, landConfig, wlz);
+  const luFill = landuseFillColor(c, landuseConfig, wlz);
   
   const excludeIceFilter: FilterSpecification | undefined = theme.ice?.enabled
     ? ["!=", ["get", "class"], "ice"]

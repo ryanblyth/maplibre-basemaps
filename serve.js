@@ -118,12 +118,15 @@ const server = http.createServer((req, res) => {
         }
       });
       
+      const devNoCache =
+        ext === '.html' || ext === '.js' || ext === '.json' || ext === '.css';
       res.writeHead(200, {
         'Content-Type': contentType,
         'Content-Length': stat.size,
         'Accept-Ranges': 'bytes',
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, HEAD, OPTIONS'
+        'Access-Control-Allow-Methods': 'GET, HEAD, OPTIONS',
+        ...(devNoCache ? { 'Cache-Control': 'no-store' } : {}),
       });
       
       stream.pipe(res);

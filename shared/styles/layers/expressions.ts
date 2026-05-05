@@ -8,7 +8,14 @@ import type {
   ExpressionSpecification,
   FilterSpecification,
 } from "@maplibre/maplibre-gl-style-spec";
-import type { ThemeColors, ZoomWidths, RoadClassWidths } from "../theme.js";
+import type {
+  ThemeColors,
+  ThemeLand,
+  ThemeLanduse,
+  ThemeWorldLowZoomLand,
+  ZoomWidths,
+  RoadClassWidths,
+} from "../theme.js";
 
 /** Fill/line color paint values: literal hex string or expression */
 export type ColorPaintValue = string | ExpressionSpecification;
@@ -176,72 +183,112 @@ export function roadCasingWidthExprRealWorld(
 // COLOR EXPRESSIONS
 // ============================================================================
 
+function landcoverMatchExpr(land: ThemeColors["land"]): ExpressionSpecification {
+  return [
+    "match",
+    ["get", "class"],
+    "wood", land.wood,
+    "grass", land.grass,
+    "scrub", land.scrub,
+    "scrubland", land.scrub,
+    "cropland", land.cropland,
+    "farmland", land.farmland ?? land.cropland,
+    "rock", land.rock ?? land.scrub,
+    "sand", land.sand ?? land.default,
+    "wetland", land.wetland ?? land.default,
+    land.default,
+  ] as ExpressionSpecification;
+}
+
+function landuseMatchExpr(lu: ThemeColors["landuse"]): ExpressionSpecification {
+  return [
+    "match",
+    ["get", "class"],
+    "park", lu.park ?? lu.default,
+    "cemetery", lu.cemetery,
+    "pitch", lu.pitch,
+    "stadium", lu.stadium ?? lu.default,
+    "residential", lu.residential,
+    "college", lu.college ?? lu.default,
+    "commercial", lu.commercial ?? lu.default,
+    "construction", lu.construction ?? lu.default,
+    "dam", lu.dam ?? lu.default,
+    "farmland", lu.farmland ?? lu.default,
+    "grass", lu.grass ?? lu.default,
+    "hospital", lu.hospital ?? lu.default,
+    "industrial", lu.industrial ?? lu.default,
+    "military", lu.military ?? lu.default,
+    "neighbourhood", lu.neighbourhood ?? lu.default,
+    "quarry", lu.quarry ?? lu.default,
+    "quarter", lu.quarter ?? lu.default,
+    "railway", lu.railway ?? lu.default,
+    "retail", lu.retail ?? lu.default,
+    "school", lu.school ?? lu.default,
+    "suburb", lu.suburb ?? lu.default,
+    "theme_park", lu.theme_park ?? lu.default,
+    "track", lu.track ?? lu.default,
+    "university", lu.university ?? lu.default,
+    "zoo", lu.zoo ?? lu.default,
+    lu.default,
+  ] as ExpressionSpecification;
+}
+
 /** Creates landcover fill color expression */
 export function landcoverFillColor(
   c: ThemeColors,
-  landConfig?: { useOverrideColor?: boolean; overrideColor?: string }
+  landConfig?: ThemeLand,
+  worldLowZoom?: ThemeWorldLowZoomLand
 ): ColorPaintValue {
-  // If override color is enabled, use it for all land types
   if (landConfig?.useOverrideColor && landConfig?.overrideColor) {
     return landConfig.overrideColor;
   }
 
-  return [
-    "match",
-    ["get", "class"],
-    "wood", c.land.wood,
-    "grass", c.land.grass,
-    "scrub", c.land.scrub,
-    "scrubland", c.land.scrub, // Alternative name for scrub
-    "cropland", c.land.cropland,
-    "farmland", c.land.farmland ?? c.land.cropland,
-    "rock", c.land.rock ?? c.land.scrub,
-    "sand", c.land.sand ?? c.land.default,
-    "wetland", c.land.wetland ?? c.land.default,
-    c.land.default,
-  ] as ExpressionSpecification;
+  const base = c.land;
+  const lowPartial = worldLowZoom?.landcover;
+  if (lowPartial && Object.keys(lowPartial).length > 0) {
+    const lowPalette = { ...base, ...lowPartial } as ThemeColors["land"];
+    const blendEnd = worldLowZoom?.blendEndZoom ?? 5.5;
+    return [
+      "interpolate",
+      ["linear"],
+      ["zoom"],
+      0,
+      landcoverMatchExpr(lowPalette),
+      blendEnd,
+      landcoverMatchExpr(base),
+    ] as ExpressionSpecification;
+  }
+
+  return landcoverMatchExpr(base);
 }
 
 /** Creates landuse fill color expression */
 export function landuseFillColor(
   c: ThemeColors,
-  landConfig?: { useOverrideColor?: boolean; overrideColor?: string }
+  landConfig?: ThemeLanduse,
+  worldLowZoom?: ThemeWorldLowZoomLand
 ): ColorPaintValue {
-  // If override color is enabled, use it for all land types
   if (landConfig?.useOverrideColor && landConfig?.overrideColor) {
     return landConfig.overrideColor;
   }
 
-  return [
-    "match",
-    ["get", "class"],
-    "park", c.landuse.park ?? c.landuse.default,
-    "cemetery", c.landuse.cemetery,
-    "pitch", c.landuse.pitch,
-    "stadium", c.landuse.stadium ?? c.landuse.default,
-    "residential", c.landuse.residential,
-    "college", c.landuse.college ?? c.landuse.default,
-    "commercial", c.landuse.commercial ?? c.landuse.default,
-    "construction", c.landuse.construction ?? c.landuse.default,
-    "dam", c.landuse.dam ?? c.landuse.default,
-    "farmland", c.landuse.farmland ?? c.landuse.default,
-    "grass", c.landuse.grass ?? c.landuse.default,
-    "hospital", c.landuse.hospital ?? c.landuse.default,
-    "industrial", c.landuse.industrial ?? c.landuse.default,
-    "military", c.landuse.military ?? c.landuse.default,
-    "neighbourhood", c.landuse.neighbourhood ?? c.landuse.default,
-    "quarry", c.landuse.quarry ?? c.landuse.default,
-    "quarter", c.landuse.quarter ?? c.landuse.default,
-    "railway", c.landuse.railway ?? c.landuse.default,
-    "retail", c.landuse.retail ?? c.landuse.default,
-    "school", c.landuse.school ?? c.landuse.default,
-    "suburb", c.landuse.suburb ?? c.landuse.default,
-    "theme_park", c.landuse.theme_park ?? c.landuse.default,
-    "track", c.landuse.track ?? c.landuse.default,
-    "university", c.landuse.university ?? c.landuse.default,
-    "zoo", c.landuse.zoo ?? c.landuse.default,
-    c.landuse.default,
-  ] as ExpressionSpecification;
+  const base = c.landuse;
+  const lowPartial = worldLowZoom?.landuse;
+  if (lowPartial && Object.keys(lowPartial).length > 0) {
+    const lowPalette = { ...base, ...lowPartial } as ThemeColors["landuse"];
+    const blendEnd = worldLowZoom?.blendEndZoom ?? 5.5;
+    return [
+      "interpolate",
+      ["linear"],
+      ["zoom"],
+      0,
+      landuseMatchExpr(lowPalette),
+      blendEnd,
+      landuseMatchExpr(base),
+    ] as ExpressionSpecification;
+  }
+
+  return landuseMatchExpr(base);
 }
 
 /** Road color expression (motorway, trunk, primary, secondary) */
