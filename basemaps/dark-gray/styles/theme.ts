@@ -124,44 +124,44 @@ export const darkGrayColors: ThemeColors = {
   background: "#1a1e24",
   
   land: {
-    wood: "#1e232a",
-    grass: "#2a3038",
-    scrub: "#272d35",
-    cropland: "#2d333c",
-    farmland: "#2d333c",
-    rock: "#222830",
-    sand: "#303841",
-    wetland: "#20262e",
-    default: "#242a32",
+    wood: "#262b32",
+    grass: "#323840",
+    scrub: "#2f353d",
+    cropland: "#353b44",
+    farmland: "#353b44",
+    rock: "#2a3038",
+    sand: "#384049",
+    wetland: "#282e36",
+    default: "#2c323a",
   },
   
   landuse: {
-    park: "#282e37",
-    cemetery: "#2b313a",
-    pitch: "#252b34",
-    stadium: "#252b34",
-    residential: "#2e343e",
-    college: "#2a3038",
-    commercial: "#2c323b",
-    construction: "#262c35",
-    dam: "#20262e",
-    farmland: "#2d333c",
-    grass: "#2a3038",
-    hospital: "#2b313a",
-    industrial: "#262c35",
-    military: "#222830",
-    neighbourhood: "#2e343e",
-    quarry: "#20262e",
-    quarter: "#2e343e",
-    railway: "#262c35",
-    retail: "#2c323b",
-    school: "#2a3038",
-    suburb: "#2e343e",
-    theme_park: "#282e37",
-    track: "#2b313a",
-    university: "#2a3038",
-    zoo: "#282e37",
-    default: "#242a32",
+    park: "#30363f",
+    cemetery: "#333942",
+    pitch: "#2d333c",
+    stadium: "#2d333c",
+    residential: "#363c46",
+    college: "#323840",
+    commercial: "#343a43",
+    construction: "#2e343e",
+    dam: "#282e36",
+    farmland: "#353b44",
+    grass: "#323840",
+    hospital: "#333942",
+    industrial: "#2e343e",
+    military: "#2a3038",
+    neighbourhood: "#363c46",
+    quarry: "#282e36",
+    quarter: "#363c46",
+    railway: "#2e343e",
+    retail: "#343a43",
+    school: "#323840",
+    suburb: "#363c46",
+    theme_park: "#30363f",
+    track: "#333942",
+    university: "#323840",
+    zoo: "#30363f",
+    default: "#2c323a",
   },
   
   water: {
@@ -772,7 +772,7 @@ export const darkGrayLand = {
   /** Whether to use a single override color for all landcover types */
   useOverrideColor: false,  // Set to true to use overrideColor for all landcover types
   /** Override color to use for all landcover types when useOverrideColor is true */
-  overrideColor: "#242a32",
+  overrideColor: "#2c323a",
 };
 
 // ============================================================================
@@ -790,7 +790,7 @@ export const darkGrayLanduse = {
   /** Whether to use a single override color for all landuse types */
   useOverrideColor: false,  // Set to true to use overrideColor for all landuse types
   /** Override color to use for all landuse types when useOverrideColor is true */
-  overrideColor: "#242a32",
+  overrideColor: "#2c323a",
 };
 
 // ============================================================================
