@@ -414,10 +414,26 @@ class MapLibreStarryBackground {
   calculateGlowRadius(map) {
     if (!map) return 200; // Default fallback value
 
-    const transform = map._getTransformForUpdate();
-    if (!transform) return 200; // Another fallback if transform is not available
+    let worldSize;
+    let lat;
 
-    const radius = this.getGlobeRadiusPixels(transform.worldSize, transform.center.lat);
+    if (typeof map._getTransformForUpdate === "function") {
+      // MapLibre GL JS v5 and earlier expose this internal transform accessor.
+      const transform = map._getTransformForUpdate();
+      if (!transform) return 200; // Another fallback if transform is not available
+      worldSize = transform.worldSize;
+      lat = transform.center.lat;
+    } else {
+      // MapLibre GL JS v6+ removed the internal `_getTransformForUpdate()` accessor
+      // (Map now composes a Camera instead of extending/exposing its transform).
+      // Derive the same values from the public API instead. `worldSize` is the
+      // pixel width of the whole world at the current zoom, using MapLibre's
+      // standard 512px tile size: worldSize = tileSize * 2^zoom.
+      worldSize = 512 * Math.pow(2, map.getZoom());
+      lat = map.getCenter().lat;
+    }
+
+    const radius = this.getGlobeRadiusPixels(worldSize, lat);
     return Math.ceil(radius);
   }
 
