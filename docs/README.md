@@ -18,6 +18,7 @@ A modular, TypeScript-based style system for creating MapLibre GL basemaps.
 - [Exporting Basemaps](./exporting-basemaps.md) - Export basemap bundles for use in other codebases
 - [Spinning Off Basemaps](./spinning-off-basemaps.md) - Create standalone projects for other repositories
 - [Map Elements Cheat Sheet](./MAP_ELEMENTS.md) - Quick reference for MapLibre concepts
+- [The Globe Projection GPU Warning](./globe-projection-gpu-warning.md) - Why globe maps logged a repeating "READ-usage buffer" warning, and why upgrading to MapLibre GL JS v6.1.0+ fixes it
 
 ## Overview
 
