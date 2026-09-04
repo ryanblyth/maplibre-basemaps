@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dark Gray Basemap Preview</title>
-  <link href="https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.css" rel="stylesheet" />
+  <link href="https://unpkg.com/maplibre-gl@6.7.0/dist/maplibre-gl.css" rel="stylesheet" />
   <style>
     html, body { 
       height: 100%; 
@@ -60,12 +60,15 @@
     <div id="globe-glow"></div>
     <div id="map-container"></div>
   </main>
-  <script src="https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.js"></script>
-  <script src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
+  <script type="module">
+    import * as maplibregl from 'https://unpkg.com/maplibre-gl@6.7.0/dist/maplibre-gl.mjs';
+    window.maplibregl = maplibregl;
+  </script>
+  <script defer src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
   <!-- Local script matches repo behavior; use npm run serve and open /basemaps/dark-gray/preview.html -->
-  <script src="/shared/js/maplibre-gl-starfield.js"></script>
-  <script src="./map-config.js"></script>
-  <script src="./map.js"></script>
+  <script defer src="/shared/js/maplibre-gl-starfield.js"></script>
+  <script defer src="./map-config.js"></script>
+  <script defer src="./map.js"></script>
 </body>
 </html>
 
