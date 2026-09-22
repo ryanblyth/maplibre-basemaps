@@ -99,8 +99,30 @@ Neither of these was related to the GPU warning itself — they were just the pr
 
 One more thing surfaced during this pass that turned out to be unrelated entirely: after upgrading, `dark-blue` appeared to have no place labels or POI icons, which looked like a regression. It wasn't — `basemaps/dark-blue/styles/theme.ts` had `placeLabels.enabled: false`, `pois.enabled: false`, and road label opacity set to `0.0`, independent of any MapLibre version. Comparing against `dark-gray`'s theme (which does show labels) and aligning the settings fixed it. Worth mentioning only because it's a good example of how easy it is to misattribute a pre-existing configuration choice to "the thing I just changed."
 
+## The warning was one bug fix in a much bigger release
+
+It's worth saying plainly: the `atan`-precision fix in v6.1.0 was a single line item in a release cycle that shipped a lot of other globe-projection work. If your maps use globe projection, several other rough edges got fixed along the way that are easy to miss because none of them logged a console warning to point at them:
+
+- Dragging the globe from the empty space around it used to barely move the map, and often in the wrong direction — fixed in 6.5.0.
+- The globe would zoom itself in when panned away from a pole at the minimum zoom — fixed in 6.5.0.
+- Scroll-wheel or pinch zoom on the globe drifted away from the pointer instead of keeping the location under it, most noticeably when the globe was small on screen — fixed in 6.3.0.
+- Panning near and across the poles used to invert direction and stall; it's now rotated with a versor so drag direction stays consistent at every latitude, easing off (instead of stopping dead) as the cursor crosses the globe's edge — fixed in 6.4.0.
+- Globe tile selection measured distance from the wrong reference point, over-refining some views and leaving others coarser than they should be — fixed in 6.6.0.
+
+None of these were things we'd filed as bugs — they're the kind of rough edges you adapt around without quite noticing. Upgrading past v6.1.0 to the current 6.7.0 means picking all of them up for free, alongside the readback warning fix.
+
+There's also a real security fix worth calling out on its own, separate from anything performance-related: in 6.4.1, `DOM.sanitize` had a bug where it iterated a live `NamedNodeMap` while removing attributes, which skipped whatever attribute came immediately after one it had just removed. A second dangerous attribute — an `ontoggle` handler, for example — could survive sanitization intact and later execute. That's a legitimate reason to be on `6.4.1+` even for a project that couldn't care less about globe projection or GPU warnings at all.
+
+A few other changes stood out as relevant to a tile-based basemap project like this one, even though none of them were things we went looking for:
+
+- Non-power-of-two raster tiles now get mipmaps, reducing aliasing at high pitch (6.0.0).
+- Mercator rendering skips a redundant clipping-mask border pass (6.2.0).
+- A permanent frame-rate degradation after switching styles — every sprite reload used to mark *all* images as "updated forever," forcing every visible tile to re-check and re-upload them on every subsequent frame — was fixed in 6.4.0. Relevant to anything that calls `setStyle` to switch basemaps live rather than reloading the page.
+- The TypeScript build target moved to ES2022 and `package.json` now marks `sideEffects` as CSS-only, both trimming bundle size a bit — a small win for pages loading MapLibre straight from a CDN.
+
 ## Takeaways
 
 - Console *warnings* are worth reading even when the map looks fine. A warning that fires once is noise; a warning that fires on every animation frame for the life of the map is a real, ongoing cost, and it's usually pointing at something specific enough to be worth 20 minutes of investigation.
 - Sometimes the right fix genuinely is "upgrade the library," not "work around the library." Once we confirmed the warning's entire code path lived inside `node_modules`, there was no local workaround worth attempting — the fix belonged upstream, and MapLibre had already shipped it.
 - Major version upgrades of libraries that change their module format (UMD to ESM-only, here) or that you've ever reached into via private/underscored APIs will cost you a real migration pass, even when the headline feature you wanted was "free." Grep your codebase for anything touching a library's internals before you upgrade past a major version — it's usually the first thing to break.
+- The bug that sends you looking is rarely the only thing waiting for you in the changelog. Chasing down one warning got us a handful of globe-interaction fixes and a real sanitization security fix we weren't even looking for — reading the full release notes between your current version and the target, not just the entry that matches your symptom, is worth the ten minutes.
